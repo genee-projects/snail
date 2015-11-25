@@ -1,0 +1,11 @@
+monitor:
+  image: stenote/docker-lemp
+  restart: always
+  dns:
+    - 172.17.0.1
+  volumes:
+    - .:/var/www
+    - /etc/localtime:/etc/localtime:ro
+  container_name: crm
+  environment:
+    - VIRTUAL_HOST=crm.reserva.genee.cn,crm.reserva.genee.in
