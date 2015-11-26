@@ -6,33 +6,32 @@
     <base href="http://parrot:8000/">
     <link rel="stylesheet" href="asserts/3rd/bootstrap/dist/css/bootstrap.min.css">
     <script src="asserts/3rd/jquery/dist/jquery.min.js"></script>
-    <script src="asserts/3rd/angular/angular.min.js"></script>
-    <script src="asserts/3rd/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    
+
+    <script src="asserts/3rd/bootstrap/dist/js/bootstrap.min.js"></script>
+
     <script src="asserts/3rd/holderjs/holder.js"></script>
     <link rel="stylesheet" href="asserts/3rd/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="asserts/css/crm.css">
 
     <link href="asserts/css/timeline.css" rel="stylesheet">
 
+
+    <link href="asserts/3rd/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+
+    <script src="asserts/3rd/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+
     <script src="asserts/js/crm.js"></script>
-
-
 </head>
 <body>
+
 
     <div id="wrapper">
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; position: fixed;">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">Genee CRM V0.0.1</a>
+            <div class="navbar-header ">
+                <a class="navbar-brand" href="/" style="margin: 0px auto;">Genee CRM V0.0.1</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -44,43 +43,25 @@
                     <ul class="nav">
 
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> 总览</a>
+                            <a href="/"><i class="fa fa-dashboard fa-fw"></i> 总览</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-users fa-fw"></i> 客户管理</a>
+                            <a href="/clients"><i class="fa fa-users fa-fw"></i> 客户管理</a>
                         </li>
 
 
                         <li>
-                            <a href="#"><i class="fa fa-server fa-fw"></i> 服务器管理</a>
+                            <a href="/servers"><i class="fa fa-server fa-fw"></i> 服务器管理</a>
 
-                        </li>
-
-                        <li>
-                            <a href="#"><i class="fa fa-cubes"></i> 产品管理</a>
                         </li>
 
                         <li>
-                            <a href="#" id="bars"><i class="fa fa-chevron-circle-left fa-fw"></i> 收起菜单</a>
+                            <a href="products"><i class="fa fa-cubes"></i> 产品管理</a>
                         </li>
 
-                        <script type="text/javascript">
-
-                            $('#bars').bind('click', function(e) {
-                                $(this).parents('[role=navigation]').hide();
-
-                                $('#page-wrapper').css('margin-left', '0px');
-
-                                e.stopPropagation();
-
-                                $('#hehe').removeClass('hide');
-
-                                return false;
-
-                            });
-
-                        </script>
-
+                        <li>
+                            <a href="#" id="close-menu"><i class="fa fa-chevron-circle-left fa-fw"></i> 收起菜单</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -88,29 +69,19 @@
             <!-- /.navbar-static-side -->
         </nav>
 
-        <button class="btn btn-primary hide btn-sm" id="hehe" style="position: fixed; left: 8px; bottom: 8px; z-index: 10;">
+        <button class="btn btn-primary hide btn-sm" id="show-menu">
             <i class="fa fa-fw fa-chevron-circle-right">&#160;</i>
         </button>
 
+        <div class="" style="position: fixed; top: 8px; right: 14px; z-index: 10;">
 
-        <div id="page-wrapper" style="min-height: 253px;">
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+            </div>
+        </div>
 
-
-            <script type="text/javascript">
-                $('#hehe').on('click', function(e) {
-                    $(this).addClass('hide');
-
-                    $('#bars').show();
-
-                    $('#bars').parents('[role=navigation]').show();
-
-                    $('#page-wrapper').css('margin-left', '250px');
-                    e.stopPropagation();
-                    return false;
-                });
-            </script>
-
-
+        <div id="page-wrapper" style="min-height: 660px;">
              @yield('content')
         </div>
     </div>

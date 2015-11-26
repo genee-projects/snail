@@ -172,132 +172,152 @@
                 <i class="fa fa-user"> 详细信息</i>
             </div>
             <div class="panel panel-body">
-                <uib-tabset>
 
-                    <uib-tab heading="服务器信息">
-                        <uib-tab-heading>
-                            <i class="fa fa-server"></i> 服务器信息
-                        </uib-tab-heading>
-                        <div class="panel panel-body">
-                            <table class="table table-hover table-bordered table-striped">
-                                <tr>
-                                    <td colspan="2" class="text-left">
-                                        <button type="button" class="btn btn-warning">
-                                            <i class="fa fa-plus-circle"></i> 追加服务器
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">&#160;</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 20%">服务器提供方 (公司/自备)</td>
-                                    <td>hell</td>
-                                </tr>
 
-                                <tr>
-                                    <td>服务器条形码</td>
-                                    <td></td>
-                                </tr>
+                <div id="myTabs">
 
-                                <tr>
-                                    <td>服务器条形码</td>
-                                    <td></td>
-                                </tr>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#server" aria-controls="server" role="tab" data-toggle="tab">
+                                <i class="fa fa-server"></i> 服务器信息
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#info" aria-controls="info" role="tab" data-toggle="tab">
+                                <i class="fa fa-info"></i> 信息变动
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#trello" aria-controls="trello" role="tab" data-toggle="tab">
+                                <i class="fa fa-wrench"></i> 部署情况
+                            </a>
+                        </li>
+                    </ul>
 
-                                <tr>
-                                    <td>服务器序列号</td>
-                                    <td></td>
-                                </tr>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
 
-                                <tr>
-                                    <td>服务器 CPU</td>
-                                    <td></td>
-                                </tr>
+                        <!-- server -->
+                        <div role="tabpanel" class="tab-pane active" id="server">
+                            <div class="panel panel-body">
+                                <table class="table table-hover table-bordered table-striped">
+                                    <tr>
+                                        <td colspan="2" class="text-left">
+                                            <button type="button" class="btn btn-warning">
+                                                <i class="fa fa-plus-circle"></i> 追加服务器
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">&#160;</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 20%">服务器提供方 (公司/自备)</td>
+                                        <td>hell</td>
+                                    </tr>
 
-                                <tr>
-                                    <td>服务器内存</td>
-                                    <td></td>
-                                </tr>
+                                    <tr>
+                                        <td>服务器条形码</td>
+                                        <td></td>
+                                    </tr>
 
-                                <tr>
-                                    <td>服务器硬盘</td>
-                                    <td></td>
-                                </tr>
+                                    <tr>
+                                        <td>服务器条形码</td>
+                                        <td></td>
+                                    </tr>
 
-                                <tr>
-                                    <td>服务器操作系统</td>
-                                    <td></td>
-                                </tr>
+                                    <tr>
+                                        <td>服务器序列号</td>
+                                        <td></td>
+                                    </tr>
 
-                                <tr>
-                                    <td>数据库</td>
-                                    <td></td>
-                                </tr>
+                                    <tr>
+                                        <td>服务器 CPU</td>
+                                        <td></td>
+                                    </tr>
 
-                                <tr>
-                                    <td>FQDN</td>
-                                    <td></td>
-                                </tr>
+                                    <tr>
+                                        <td>服务器内存</td>
+                                        <td></td>
+                                    </tr>
 
-                                <tr>
-                                    <td>VPN</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="text-right">
-                                        <button type="button" class="btn btn-primary">
-                                            <i class="fa fa-edit"></i> 提交修改
-                                        </button>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>服务器硬盘</td>
+                                        <td></td>
+                                    </tr>
 
-                            </table>
+                                    <tr>
+                                        <td>服务器操作系统</td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>数据库</td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>FQDN</td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>VPN</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="text-right">
+                                            <button type="button" class="btn btn-primary">
+                                                <i class="fa fa-edit"></i> 提交修改
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                    </uib-tab>
+                        <!-- server end -->
 
-                    <uib-tab>
-                        <uib-tab-heading>
-                            <i class="fa fa-info"></i> 信息变动
-                        </uib-tab-heading>
-                        <ul class="timeline">
-                            <li>
-                                <div class="timeline-badge info"><i class="fa fa-flag"></i>
-                                </div>
-                                <div class="timeline-panel">
-                                    <div class="timeline-heading">
-                                        <h4 class="timeline-title">信息修改</h4>
-                                        <p><small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Rui Ma</small></p>
+                        <!-- info -->
+                        <div role="tabpanel" class="tab-pane" id="info">
+                            <ul class="timeline">
+                                <li>
+                                    <div class="timeline-badge info"><i class="fa fa-flag"></i>
                                     </div>
-                                    <div class="timeline-body">
-                                        <p> 修改用户信息 <mark>「广东大学」</mark>-&gt;<mark>「广西大学」</mark></p>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">信息修改</h4>
+                                            <p><small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Rui Ma</small></p>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p> 修改用户信息 <mark>「广东大学」</mark>-&gt;<mark>「广西大学」</mark></p>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="timeline-inverted">
-                                <div class="timeline-badge warning"><i class="fa fa-flag"></i>
-                                </div>
-                                <div class="timeline-panel">
-                                    <div class="timeline-heading">
-                                        <h4 class="timeline-title"> 信息修改</h4>
-                                        <p><small class="text-muted"><i class="fa fa-check-o"></i> 12 hours age via Rui Ma</small></p>
+                                </li>
+                                <li class="timeline-inverted">
+                                    <div class="timeline-badge warning"><i class="fa fa-flag"></i>
                                     </div>
-                                    <div class="timeline-body">
-                                        <p>创建新客户</p>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title"> 信息修改</h4>
+                                            <p><small class="text-muted"><i class="fa fa-check-o"></i> 12 hours age via Rui Ma</small></p>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>创建新客户</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </uib-tab>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- info end-->
 
-                    <uib-tab>
-                        <uib-tab-heading>
-                            <i class="fa fa-wrench"></i> 部署情况
-                        </uib-tab-heading>
-                        对接 Trello
-                    </uib-tab>
-
-                </uib-tabset>
+                        <!-- trello -->
+                        <div role="tabpanel" class="tab-pane" id="trello">
+                            对接 Trello
+                        </div>
+                        <!-- trello end-->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -305,6 +325,14 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+
+
+    $('li[role=presentation] a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+
+
     $('*').delegate('.edit', 'click focus', function(e) {
         $this = $(this);
         $this.attr('contenteditable', true);

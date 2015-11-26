@@ -2,6 +2,12 @@ body{
     min-width:970px;
 }
 
+#show-menu {
+    position: fixed;
+    left: 8px;
+    bottom: 8px;
+    z-index: 10;
+}
 
 .container{
     min-width:970px;
@@ -186,7 +192,7 @@ body {
 @media(min-width:768px) {
     #page-wrapper {
         position: inherit;
-        margin: 0 0 0 250px;
+        margin: 0 0 0 200px;
         padding: 0 30px;
         border-left: 1px solid #e7e7e7;
     }
@@ -292,7 +298,7 @@ body {
     .sidebar {
         z-index: 1;
         position: absolute;
-        width: 250px;
+        width: 200px;
         margin-top: 80px;
     }
 

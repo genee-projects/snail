@@ -11,12 +11,19 @@
 |
 */
 
-Route::get('/', 'ClientController@clients');
+#clients
+Route::get('/', 'DashboardController@index');
+
+
 Route::get('/clients', 'ClientController@clients');
 Route::get('/clients/add', 'ClientController@add');
 Route::get('/clients/profile', 'ClientController@profile');
 
-Route::group(['prefix'=> 'api/v1'], function ($app) {
-    $app->get('client', 'ClientAPIController@index');
-    $app->get('client/refreshLatestBackupTime', 'ClientAPIController@refreshLatestBackupTime');
-});
+#products
+Route::get('/products', 'ProductController@products');
+Route::get('/products/profile', 'ProductController@profile');
+
+
+#servers
+Route::get('/servers', 'ServerController@servers');
+Route::get('/servers/profile', 'ServerController@profile');

@@ -1,2 +1,5 @@
 public/asserts/3rd
 vendor
+storage/
+.DS_Store
+.idea/*

@@ -18,10 +18,8 @@
   "dependencies": {
     "jquery": "~2.1.4",
     "font-awesome": "fontawesome#~4.4.0",
-    "angular-bootstrap": "~0.14.3",
     "bootstrap": "~3.3.5",
-    "morris.js": "morrisjs#~0.5.1",
-    "raphael": "~2.1.4",
-    "holderjs": "~2.9.0"
+    "holderjs": "~2.9.0",
+    "bootstrap-select": "~1.7.5"
   }
 }
