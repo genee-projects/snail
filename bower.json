@@ -20,7 +20,6 @@
     "font-awesome": "fontawesome#~4.4.0",
     "angular-bootstrap": "~0.14.3",
     "bootstrap": "~3.3.5",
-    "metisMenu": "~2.2.0",
     "morris.js": "morrisjs#~0.5.1",
     "raphael": "~2.1.4",
     "holderjs": "~2.9.0"

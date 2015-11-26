@@ -1,3 +1,168 @@
+body{
+    min-width:970px;
+}
+
+
+.container{
+    min-width:970px;
+}
+
+.container-fluid,.container{
+    max-width:none !important;
+}
+.container-fluid .navbar-header,.container .navbar-header,.container-fluid .navbar-collapse,.container .navbar-collapse{
+    margin-right:0;
+    margin-left:0;
+}
+.navbar-header{float:left}.navbar-collapse{
+    display:block !important;
+    height:auto !important;
+    padding-bottom:0;
+    overflow:visible !important;
+}
+
+.navbar-toggle{
+    display:none;
+}
+
+.navbar-collapse{
+    border-top:0;
+}
+
+.navbar-brand{
+    margin-left:-15px;
+}
+
+.navbar-nav{
+    float:left;
+    margin:0;
+}
+
+.navbar-nav>li{
+    float:left;
+}
+
+.navbar-nav>li>a{
+    padding:15px;
+}
+
+.navbar-nav.navbar-right{
+    float:right;
+}
+
+.navbar .navbar-nav .open .dropdown-menu{
+    position:absolute;
+    float:left;
+    background-color:#fff;
+    border:1px solid #ccc;
+    border:1px solid rgba(0,0,0,0.15);
+    border-radius:0 0 4px 4px;
+    -webkit-box-shadow:0 6px 12px rgba(0,0,0,0.175);
+    box-shadow:0 6px 12px rgba(0,0,0,0.175);
+}
+
+.navbar .navbar-nav .open .dropdown-menu>li>a{
+    padding:3px 20px;
+    color:#000;
+}
+
+body,h1,h2,h3,h4,h5,h6{
+    font-family:'LantingHei SC','Microsoft Yahei','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
+.nowrap{
+    white-space:nowrap;
+}
+
+.vertical-middle{
+    vertical-align:middle;
+}
+
+table.table>thead>tr>th.vertical-middle,table.table>tbody>tr>th.vertical-middle,table.table>tfoot>tr>th.vertical-middle,table.table>thead>tr>td.vertical-middle,table.table>tbody>tr>td.vertical-middle,table.table>tfoot>tr>td.vertical-middle{
+    vertical-align:middle;
+}
+
+.btn{
+    border-width:0 0 2px;
+}
+
+.input-group-unity{
+    position:relative;
+    display:block;
+    overflow:auto;
+}
+
+.input-group-unity .form-control{
+    z-index:0;
+}
+
+.input-group-unity .form-control{
+    padding-left:35px;
+}
+
+.input-group-unity .form-control:last-child{
+    padding-left:35px;
+    border-radius:4px;
+}
+
+.input-group-unity .input-group-addon{
+    position:absolute;
+    left:0;
+    top:4px;
+    z-index:1;
+    border-width:0;
+    background-color:transparent;
+}
+
+.input-group-unity .input-group-btn{
+    position:absolute;
+    left:0;
+    top:0;
+    display:block;
+    width:auto;
+}
+
+.input-group-unity .input-group-btn .btn{
+    background-color:transparent;
+    border-width:0;
+    color:#ccc;
+}
+
+.input-group-unity-right .form-control{
+    padding-left:12px;
+    padding-right:35px;
+}
+
+.input-group-unity-right .form-control:last-child{
+    padding-left:35px;
+    border-radius:4px;
+}
+
+.input-group-unity-right .input-group-addon{
+    left:auto;
+    right:0;
+}
+
+.input-group-unity-right .input-group-btn{
+    left:auto;
+    right:0;
+}
+
+.popover{
+    background-color:#fff;
+    border-width:1px 1px 3px;
+    box-shadow:none;
+    max-width: none;
+}
+
+.popover.bottom .arrow:after{
+    border-bottom-color:#fff;
+}
+
+.popover-content {
+    white-space: nowrap;
+}
+
 /*!
  * Start Bootstrap - SB Admin 2 Bootstrap Admin Theme (http://startbootstrap.com)
  * Code licensed under the Apache License v2.0.
@@ -90,10 +255,6 @@ body {
     padding-left: 0;
 }
 
-.sidebar .sidebar-search {
-    padding: 15px;
-}
-
 .sidebar ul li {
     border-bottom: 1px solid #e7e7e7;
 }
@@ -132,7 +293,7 @@ body {
         z-index: 1;
         position: absolute;
         width: 250px;
-        margin-top: 51px;
+        margin-top: 80px;
     }
 
     .navbar-top-links .dropdown-messages,
@@ -351,4 +512,8 @@ table.dataTable thead .sorting:after {
 
 .panel-yellow a:hover {
     color: #df8a13;
+}
+
+.navbar-default {
+    border: 0px;
 }
