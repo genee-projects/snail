@@ -1,10 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 use App\Product;
 
-class DatabaseSeeder extends Seeder
+class Products extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,9 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
-
-        // $this->call(UserTableSeeder::class);
         $products = [
             'LIMS-CF' => 'LIMS-CF 是一款专门面向科研实验室公共仪器的智能化管理系统。本系统将公共仪器平台的各项必要工作流程整合在一起，显著提高仪器设备的管理和使用效率。',
             'LIMS' => 'LIMS 以实验室为中心，结合应用软件与互联网技术，根据科研人员的工作需要，将多个影响实验室运作的必要因素有机地结合起来，从而大幅度提高实验室管理效率和自动化水平，为您的实验室实现简易便捷的无纸化管理环境。',
@@ -32,7 +28,5 @@ class DatabaseSeeder extends Seeder
             $product->description = $description;
             $product->save();
         }
-
-        Model::reguard();
     }
 }

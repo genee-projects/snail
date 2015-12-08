@@ -61,7 +61,7 @@
                         <i class="fa fa-cubes fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">124</div>
+                        <div class="huge">{{ count($products) }}</div>
                         <div>产品列表</div>
                     </div>
                 </div>

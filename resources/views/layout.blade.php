@@ -20,11 +20,15 @@
 
     <script src="asserts/3rd/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 
+    <script src="asserts/3rd/clipboard/dist/clipboard.min.js"></script>
+
+
+    <link href="asserts/3rd/bootstrap-toggle/css/bootstrap-toggle.css" rel="stylesheet">
+    <script src="asserts/3rd/bootstrap-toggle/js/bootstrap-toggle.js"></script>
 
     <script src="asserts/js/crm.js"></script>
 </head>
 <body>
-
 
     <div id="wrapper">
 
@@ -56,7 +60,16 @@
                         </li>
 
                         <li>
-                            <a href="products"><i class="fa fa-cubes"></i> 产品管理</a>
+                            <a href="products"><i class="fa fa-cubes"></i> 产品管理
+
+                                <span class="badge pull-right">
+                                    5
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="templates"><i class="fa fa-file-code-o"></i> 模板生成器</a>
                         </li>
 
                         <li>
@@ -73,13 +86,9 @@
             <i class="fa fa-fw fa-chevron-circle-right">&#160;</i>
         </button>
 
-        <div class="" style="position: fixed; top: 8px; right: 14px; z-index: 10;">
-
-            <div class="alert alert-info alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
-            </div>
-        </div>
+        @if (session('message_content'))
+        @include('message')
+        @endif
 
         <div id="page-wrapper" style="min-height: 660px;">
              @yield('content')

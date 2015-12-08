@@ -4,6 +4,8 @@ namespace app\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use App\Product;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -14,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+	    //view()->share('products_count', Product::count());
     }
 
     /**
