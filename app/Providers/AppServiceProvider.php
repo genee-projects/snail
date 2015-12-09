@@ -3,7 +3,6 @@
 namespace app\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
 use App\Product;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,8 +14,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-	    //view()->share('products_count', Product::count());
+        //非 CLI 下进行 view 加载
+        if (PHP_SAPI != 'cli') {
+            view()->share('products', Product::all());
+
+            view()->share('products_count', Product::count());
+        }
     }
 
     /**

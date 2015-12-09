@@ -6,9 +6,9 @@
     <label for="server-customer-provide" class="col-sm-1 control-label">提供方</label>
     <div class="col-sm-2">
         <input
-                @if (isset($server->customer_provide) && $server->customer_provide)
-                    checked
-                @endif
+            @if (isset($server->customer_provide) && $server->customer_provide)
+                checked
+            @endif
         id="server-customer-provide" name="customer-provide" type="checkbox" data-toggle="toggle" data-on="客户自备" data-width="100" data-off="公司提供" data-onstyle="danger" data-offstyle="info">
     </div>
 </div>

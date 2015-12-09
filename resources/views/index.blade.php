@@ -36,7 +36,7 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-server fa-5x"></i>
+                        <i class="fa fa-linux fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">12</div>

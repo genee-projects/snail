@@ -11,13 +11,16 @@
 |
 */
 
-#clients
+#dashboard
 Route::get('/', 'DashboardController@index');
 
 
+#clients
 Route::get('/clients', 'ClientController@clients');
-Route::get('/clients/profile', 'ClientController@profile');
+Route::get('/clients/profile/{id}', 'ClientController@profile');
 Route::post('/clients/add', 'ClientController@add');
+Route::post('/clients/edit', 'ClientController@edit');
+Route::get('/clients/delete/{id}', 'ClientController@delete');
 
 
 #products
@@ -35,6 +38,18 @@ Route::post('/servers/edit', 'ServerController@edit');
 Route::get('/servers/delete/{id}', 'ServerController@delete');
 
 
+#comments
+Route::post('/comments/add', 'CommentController@add');
+Route::get('/comments/delete/{id}', 'CommentController@delete');
+Route::get('/comments/profile/{id}', 'CommentController@profile');
+
+
 #templates
 Route::get('/templates', 'TemplateController@index');
 Route::get('/templates/generate', 'TemplateController@generate');
+
+
+#projects
+Route::get('/projects', 'ProjectController@index');
+Route::post('/projects/add', 'ProjectController@add');
+Route::get('/projects/profile/{id}', 'ProjectController@profile');

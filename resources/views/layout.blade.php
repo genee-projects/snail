@@ -7,7 +7,12 @@
     <link rel="stylesheet" href="asserts/3rd/bootstrap/dist/css/bootstrap.min.css">
     <script src="asserts/3rd/jquery/dist/jquery.min.js"></script>
 
+    <script src="asserts/3rd/moment/min/moment.min.js"></script>
+
     <script src="asserts/3rd/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script src="asserts/3rd/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="asserts/3rd/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
 
     <script src="asserts/3rd/holderjs/holder.js"></script>
     <link rel="stylesheet" href="asserts/3rd/font-awesome/css/font-awesome.min.css">
@@ -27,6 +32,8 @@
     <script src="asserts/3rd/bootstrap-toggle/js/bootstrap-toggle.js"></script>
 
     <script src="asserts/js/crm.js"></script>
+
+    <script src="asserts/3rd/vue/dist/vue.min.js"></script>
 </head>
 <body>
 
@@ -49,21 +56,23 @@
                         <li>
                             <a href="/"><i class="fa fa-dashboard fa-fw"></i> 总览</a>
                         </li>
+
                         <li>
                             <a href="/clients"><i class="fa fa-users fa-fw"></i> 客户管理</a>
                         </li>
 
+                        <li>
+                            <a href="/projects"><i class="fa fa-fw fa-list-alt"></i> 项目管理</a>
+                        </li>
 
                         <li>
-                            <a href="/servers"><i class="fa fa-server fa-fw"></i> 服务器管理</a>
-
+                            <a href="/servers"><i class="fa fa-linux fa-fw"></i> 服务器管理</a>
                         </li>
 
                         <li>
                             <a href="products"><i class="fa fa-cubes"></i> 产品管理
-
                                 <span class="badge pull-right">
-                                    5
+                                    {{ $products_count}}
                                 </span>
                             </a>
                         </li>
@@ -87,7 +96,7 @@
         </button>
 
         @if (session('message_content'))
-        @include('message')
+            @include('message')
         @endif
 
         <div id="page-wrapper" style="min-height: 660px;">

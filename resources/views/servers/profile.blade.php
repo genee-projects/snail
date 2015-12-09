@@ -11,7 +11,7 @@
         <div class="panel panel-default">
             <div class="panel-heading ">
                 <span>
-                    <i class="fa fa-server"></i>
+                    <i class="fa fa-linux"></i>
                 </span>
                 <span class="pull-right">
                     <a href="#" data-toggle="modal" data-target="#edit-server">

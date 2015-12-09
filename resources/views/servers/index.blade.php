@@ -13,7 +13,7 @@
             <div class="panel-heading ">
                 <p class="vertical-middle">
                     <span>
-                        <i class="fa fa-server"> </i>
+                        <i class="fa fa-linux"> </i>
                     </span>
 
                     <span class="pull-right">

@@ -9,7 +9,7 @@ use App\Product;
 class ProductController extends Controller
 {
     public function products() {
-        return view('products/products', ['products' => Product::all()]);
+        return view('products/index', ['products' => Product::all()]);
     }
 
     public function profile() {
@@ -28,6 +28,7 @@ class ProductController extends Controller
     }
 
     public function delete(Request $request) {
+
         $product = Product::find($request->input('id'));
 
         if ($product->delete()) {
