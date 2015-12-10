@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Client;
 use App\Product;
 use App\Server;
+use App\Project;
 
 class DashboardController extends Controller
 {
@@ -14,7 +15,8 @@ class DashboardController extends Controller
         return view('index', [
             'products_count'=> Product::count(),
             'servers_count'=> Server::count(),
-            'clients_count'=> Client::count(),
+            'clients_count'=> Client::where('parent_id', 0)->count(),
+            'projects_count'=> Project::count(),
         ]);
     }
 }
