@@ -36,4 +36,8 @@ class Client extends Model
 
         return $root;
     }
+
+    public function projects() {
+        return $this->hasMany('App\Project', 'client_id');
+    }
 }

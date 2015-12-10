@@ -33,6 +33,8 @@
 
     <script src="asserts/js/crm.js"></script>
 
+    <script src="asserts/3rd/bootstrap3-typeahead/bootstrap3-typeahead.min.js"></script>
+
     <script src="asserts/3rd/vue/dist/vue.min.js"></script>
 </head>
 <body>
@@ -71,9 +73,11 @@
 
                         <li>
                             <a href="products"><i class="fa fa-cubes"></i> 产品管理
-                                <span class="badge pull-right">
-                                    {{ $products_count}}
-                                </span>
+
+                                {{--<span class="badge pull-right">--}}
+                                    {{--{{ $products_count}}--}}
+                                {{--</span>--}}
+                                {{----}}
                             </a>
                         </li>
 

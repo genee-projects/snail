@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use App\Project;
 use App\Client;
+use App\Server;
 
 class ProjectController extends Controller
 {
@@ -33,6 +34,7 @@ class ProjectController extends Controller
         $project->product()->associate($product);
         $project->client()->associate($client);
 
+        $project->ref_no = $request->input('ref_no');
         $project->name = $request->input('name');
         $project->seller = $request->input('seller');
         $project->contact = $request->input('contact');
@@ -40,15 +42,37 @@ class ProjectController extends Controller
         $project->description = $request->input('description');
 
         if ($project->save()) {
-            return redirect('/');
+            return redirect(sprintf('/projects/profile/%d', $project->id));
         }
     }
 
     public function profile($id) {
-        
+
         $project = Project::find($id);
 
         return view('/projects/profile', ['project'=> $project]);
+    }
+
+    public function server($id, Request $request) {
+        $project = Project::find($id);
+
+        $server = Server::find($request->input('server_id'));
+
+        if (! $project->servers()->find($request->input('server_id'))) {
+            $project->servers()->save($server, ['usage'=> $request->input('usage')]);
+
+            return redirect(route('project.profile', ['id'=> $project->id]))
+                ->with('message_content', '关联成功!')
+                ->with('message_type', 'info');
+
+        }
+
+        return redirect(route('project.profile', ['id'=> $project->id]))
+            ->with('message_content', '已关联服务器, 无法再次关联')
+            ->with('message_type', 'danger');
+
+
+
     }
 
 }

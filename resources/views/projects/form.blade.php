@@ -1,4 +1,11 @@
 <div class="form-group">
+    <label for="project-ref-no" class="col-sm-2 control-label">项目编号</label>
+    <div class="col-sm-10">
+        <input value="{{ $project->ref_no or '' }}" name="ref_no" type="text" class="form-control" id="project-ref-no" placeholder="LIMS201533">
+    </div>
+</div>
+
+<div class="form-group">
     <label for="project-name" class="col-sm-2 control-label">项目名称</label>
     <div class="col-sm-10">
         <input value="{{ $project->name or '' }}" name="name" type="text" class="form-control" id="project-name" placeholder="南开大学大型仪器管理系统">

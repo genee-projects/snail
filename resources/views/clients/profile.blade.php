@@ -147,19 +147,16 @@
                             <td>签约时间</td>
                         </tr>
 
+                        @foreach($client->projects as $project)
                         <tr>
-                            <td>天津理工大学大型仪器管理系统</td>
-                            <td>Lims-CF</td>
-                            <td>2015-12-12 12:12:12</td>
+                            <td><a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a></td>
+                            <td>{{ $project->product->name }}</td>
+                            <td>{{ $project->time }}</td>
                         </tr>
-
+                        @endforeach
                     </table>
-
-
                 </div>
-
             </div>
-
         </div>
 
         <div class="col-lg-12">

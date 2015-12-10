@@ -17,4 +17,8 @@ class Server extends Model
     public function comments() {
         return $this->morphMany('App\Comment', 'object');
     }
+
+    public function projects() {
+        return $this->belongsToMany('App\Project')->withPivot('usage');
+    }
 }

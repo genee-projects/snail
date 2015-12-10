@@ -20,4 +20,8 @@ class Project extends Model
     public function client() {
         return $this->belongsTo('App\Client', 'client_id');
     }
+
+    public function servers() {
+        return $this->belongsToMany('App\Server')->withPivot('usage');
+    }
 }

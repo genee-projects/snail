@@ -16,24 +16,51 @@ Route::get('/', 'DashboardController@index');
 
 
 #clients
-Route::get('/clients', 'ClientController@clients');
-Route::get('/clients/profile/{id}', 'ClientController@profile');
+Route::get('/clients', [
+    'as'=> 'clients',
+    'uses'=> 'ClientController@clients',
+]);
+
+Route::get('/clients/profile/{id}', [
+    'uses'=> 'ClientController@profile',
+    'as'=> 'client.profile',
+]);
+
 Route::post('/clients/add', 'ClientController@add');
 Route::post('/clients/edit', 'ClientController@edit');
 Route::get('/clients/delete/{id}', 'ClientController@delete');
 
 
 #products
-Route::get('/products', 'ProductController@products');
+Route::get('/products', [
+    'as'=> 'products',
+    'uses'=> 'ProductController@products',
+]);
+
 Route::get('/products/profile', 'ProductController@profile');
 Route::get('/products/add', 'ProductController@add');
 Route::get('/products/delete', 'ProductController@delete');
 
 
 #servers
-Route::get('/servers', 'ServerController@servers');
+Route::get('/servers', [
+    'as'=> 'servers',
+    'uses'=> 'ServerController@servers',
+]);
+
+Route::get('/servers.json', [
+    'as'=> 'servers.json',
+    'uses'=> 'ServerController@servers_json',
+
+]);
+
 Route::post('/servers/add', 'ServerController@add');
-Route::get('/servers/profile/{id}', 'ServerController@profile');
+
+Route::get('/servers/profile/{id}', [
+    'as'=> 'server.profile',
+    'uses'=> 'ServerController@profile',
+]);
+
 Route::post('/servers/edit', 'ServerController@edit');
 Route::get('/servers/delete/{id}', 'ServerController@delete');
 
@@ -41,8 +68,6 @@ Route::get('/servers/delete/{id}', 'ServerController@delete');
 #comments
 Route::post('/comments/add', 'CommentController@add');
 Route::get('/comments/delete/{id}', 'CommentController@delete');
-Route::get('/comments/profile/{id}', 'CommentController@profile');
-
 
 #templates
 Route::get('/templates', 'TemplateController@index');
@@ -52,4 +77,12 @@ Route::get('/templates/generate', 'TemplateController@generate');
 #projects
 Route::get('/projects', 'ProjectController@index');
 Route::post('/projects/add', 'ProjectController@add');
-Route::get('/projects/profile/{id}', 'ProjectController@profile');
+Route::get('/projects/profile/{id}', [
+    'as'=> 'project.profile',
+    'uses'=> 'ProjectController@profile',
+]);
+
+Route::post('/projects/{project_id}/servers', [
+    'as'=> 'project.server',
+    'uses'=> 'ProjectController@server',
+]);

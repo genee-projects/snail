@@ -17,7 +17,7 @@
                         <i class="fa fa-users fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">26</div>
+                        <div class="huge">{{ $clients_count }}</div>
                         <div>客户</div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                         <i class="fa fa-linux fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">12</div>
+                        <div class="huge">{{ $servers_count }}</div>
                         <div>服务器</div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                         <i class="fa fa-cubes fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">{{ count($products) }}</div>
+                        <div class="huge">{{ $products_count }}</div>
                         <div>产品列表</div>
                     </div>
                 </div>

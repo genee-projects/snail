@@ -11,7 +11,7 @@
         <div class="panel panel-default">
             <div class="panel-heading ">
                 <span>
-                    <i class="fa fa-linux"></i>
+                    <i class="fa fa-linux"></i> 基本信息
                 </span>
                 <span class="pull-right">
                     <a href="#" data-toggle="modal" data-target="#edit-server">
@@ -119,6 +119,35 @@
                 </table>
             </div>
         </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading ">
+            <span>
+                <i class="fa fa-linux"></i> 项目信息
+            </span>
+        </div>
+        <div class="panel panel-body">
+
+            <table class="table table-hover table-striped table-bordered">
+
+                <tr>
+                    <td>项目编号</td>
+                    <td>项目名称</td>
+                    <td>部署原因</td>
+                </tr>
+
+                @foreach($server->projects as $project)
+                    <tr>
+                        <td>{{ $project->ref_no }}</td>
+                        <td><a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a></td>
+                        <td>{{ $project->pivot->usage }}</td>
+                    </tr>
+                @endforeach
+
+            </table>
+        </div>
+    </div>
     </div>
 
 

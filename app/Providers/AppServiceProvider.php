@@ -16,9 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //非 CLI 下进行 view 加载
         if (PHP_SAPI != 'cli') {
-            view()->share('products', Product::all());
-
-            view()->share('products_count', Product::count());
+            //view()->share('products_count', Product::count());
         }
     }
 

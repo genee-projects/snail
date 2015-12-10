@@ -22,16 +22,16 @@
                 <table class="table table-hover table-striped table-bordered">
                     <tr>
                         <td>项目编号</td>
-                        <td>签约客户</td>
                         <td>项目名称</td>
+                        <td>签约客户</td>
                         <td>项目联系人</td>
                         <td>签约时间</td>
                     </tr>
                     @foreach($projects as $project)
                         <tr>
                             <td>{{ $project->ref_no }}</td>
-                            <td><a href="/clients/profile/{{ $project->client->id }}">{{ $project->client->name }}</a></td>
-                            <td><a href="/projects/profile/{{ $project->id }}">{{ $project->name }}</a></td>
+                            <td><a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a></td>
+                            <td><a href="{{ route('client.profile', ['id'=> $project->client->id]) }}">{{ $project->client->name }}</a></td>
                             <td>{{ $project->contact }}</td>
                             <td>{{ $project->time }}</td>
                         </tr>

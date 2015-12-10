@@ -5,6 +5,7 @@ namespace app\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Client;
+use App\Product;
 
 class ClientController extends Controller
 {
@@ -56,7 +57,10 @@ class ClientController extends Controller
 
         $client = Client::find($id);
 
-        return view('clients/profile', ['client'=> $client]);
+        return view('clients/profile', [
+            'client'=> $client,
+            'products'=> Product::all(),
+        ]);
     }
 
     public function delete($id) {
