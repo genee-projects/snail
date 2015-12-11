@@ -8,6 +8,11 @@ use App\Product;
 
 class ProductController extends Controller
 {
+
+    public function index() {
+        return response()->json(Product::all());
+    }
+
     public function products() {
         return view('products/index', ['products' => Product::all()]);
     }

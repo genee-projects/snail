@@ -1,5 +1,5 @@
-monitor:
-  image: stenote/docker-lemp
+crm:
+  image: genee/crm
   restart: always
   dns:
     - 172.17.0.1

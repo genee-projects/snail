@@ -55,28 +55,6 @@
     </div>
 
     <div class="col-lg-3 col-md-6">
-        <div class="panel panel-green">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-linux fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">{{ $servers_count }}</div>
-                        <div>服务器</div>
-                    </div>
-                </div>
-            </div>
-            <a href="/servers">
-                <div class="panel-footer">
-                    <span class="pull-left">查看详情</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
         <div class="panel panel-yellow">
             <div class="panel-heading">
                 <div class="row">
@@ -90,6 +68,29 @@
                 </div>
             </div>
             <a href="/products">
+                <div class="panel-footer">
+                    <span class="pull-left">查看详情</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-linux fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ $servers_count }}</div>
+                        <div>服务器</div>
+                    </div>
+                </div>
+            </div>
+            <a href="/servers">
                 <div class="panel-footer">
                     <span class="pull-left">查看详情</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

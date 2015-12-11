@@ -3,3 +3,4 @@ vendor
 storage/
 .DS_Store
 .idea/*
+public/docs/

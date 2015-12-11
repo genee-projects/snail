@@ -86,3 +86,9 @@ Route::post('/projects/{project_id}/servers', [
     'as'=> 'project.server',
     'uses'=> 'ProjectController@server',
 ]);
+
+
+Route::group(['namespace'=> 'API', 'prefix'=> 'api'], function() {
+
+    Route::resource('products', 'ProductsController');
+});
