@@ -20,6 +20,12 @@
 </div>
 
 <div class="form-group">
+    <label form="client-seller-url" class="col-sm-2 control-label">纷享销客链接</label>
+    <div class="col-sm-10">
+        <input value="{{ $client->seller_url or '' }}" name="seller_url" type="text" class="form-control" id="client-seller-url" placeholder="http://www.fxiaoke.com/XV/Home/Index#customers/home">
+    </div>
+</div>
+<div class="form-group">
     <label for="client-description" class="col-sm-2 control-label">备注</label>
     <div class="col-sm-10">
         <textarea id="client-description" class="col-sm-2 form-control" rows="3" name="description">{{ $client->description or ''}}</textarea>

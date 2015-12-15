@@ -29,6 +29,7 @@ class ClientController extends Controller
         $client->description = $request->input('description');
         $client->address = $request->input('address');
         $client->url = $request->input('url');
+        $client->seller_url = $request->input('seller_url');
 
         if ($client->save()) {
             return redirect('/clients')
@@ -39,13 +40,13 @@ class ClientController extends Controller
 
     public function edit(Request $request) {
 
-
         $client = Client::find($request->input('id'));
 
         $client->name = $request->input('name');
         $client->description = $request->input('description');
         $client->address = $request->input('address');
         $client->url = $request->input('url');
+        $client->seller_url = $request->input('seller_url');
 
         if ($client->save()) {
             return redirect(sprintf('/clients/profile/%d', $client->id))

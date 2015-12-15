@@ -53,9 +53,14 @@
                         </tr>
 
                         <tr>
+                            <td>纷享销客链接</td>
+                            <td><a href="{{ $client->seller_url }}">{{ $client->seller_url }}</a></td>
+                        </tr>
+                        <tr>
                             <td>客户地址</td>
                             <td>{{ $client->address }}</td>
                         </tr>
+
                         <tr>
                             <td>备注信息</td>
                             <td>{{ $client->description }}</td>

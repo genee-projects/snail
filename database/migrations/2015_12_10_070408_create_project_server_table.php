@@ -20,7 +20,8 @@ class CreateProjectServerTable extends Migration
             $table->integer('server_id')->unsigned()->index();
             $table->foreign('server_id')->references('id')->on('servers');
 
-            $table->string('usage')->nullable();
+            $table->string('usage')->nullable();        //用途
+            $table->dateTime('time')->nullable();       //部署时间
         });
     }
 
