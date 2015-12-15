@@ -27,7 +27,7 @@
     <label for="project-time" class="col-sm-2 control-label">签约时间</label>
     <div class="col-sm-10">
         <div class="input-group date datetimepicker">
-            <input type="text" class="form-control" name="time">
+            <input type="text" class="form-control" name="signed_time">
             <span class="input-group-addon">
                 <i class="fa fa-calendar"></i>
             </span>
@@ -35,6 +35,17 @@
     </div>
 </div>
 
+<div class="form-group">
+    <label for="project-time" class="col-sm-2 control-label">合同到期时间</label>
+    <div class="col-sm-10">
+        <div class="input-group date datetimepicker">
+            <input type="text" class="form-control" name="divorced_time">
+            <span class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+            </span>
+        </div>
+    </div>
+</div>
 <div class="form-group">
     <label for="project-contact" class="col-sm-2 control-label">联系人</label>
     <div class="col-sm-10">

@@ -22,7 +22,8 @@ class CreateProjectsTable extends Migration
             $table->integer('client_id');               // 客户
             $table->string('contact')->nullable();      // 联系人
             $table->string('description')->nullable();  // 备注
-            $table->dateTime('time');                   // 签约时间 //TODO, 可能有多个时间
+            $table->dateTime('signed_time');            // 签约时间
+            $table->dateTime('divorced_time');          // 服务停止时间
             $table->softDeletes();
         });
     }

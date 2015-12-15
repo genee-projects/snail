@@ -149,13 +149,15 @@
                             <td>项目名称</td>
                             <td>产品类型</td>
                             <td>签约时间</td>
+                            <td>合约到期时间</td>
                         </tr>
 
                         @foreach($client->projects as $project)
                         <tr>
                             <td><a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a></td>
                             <td>{{ $project->product->name }}</td>
-                            <td>{{ $project->time }}</td>
+                            <td>{{ date('Y/m/d', strtotime($project->signed_time)) }}</td>
+                            <td>{{ date('Y/m/d', strtotime($project->divorced_time)) }}</td>
                         </tr>
                         @endforeach
                     </table>

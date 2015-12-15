@@ -40,7 +40,8 @@ class ProjectController extends Controller
         $project->name = $request->input('name');
         $project->seller = $request->input('seller');
         $project->contact = $request->input('contact');
-        $project->time = $request->input('time');
+        $project->signed_time = $request->input('signed_time');
+        $project->divorced_time = $request->input('divorced_time');
         $project->description = $request->input('description');
 
         if ($project->save()) {
