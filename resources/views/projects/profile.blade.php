@@ -10,107 +10,108 @@
             <div class="panel-heading">
                 <i class="fa fa-user"> 基本信息</i>
                 <span class="pull-right">
+
+                     <a href="#" data-toggle="modal" data-target="#edit-project">
+                         <i class="fa fa-fw fa-edit"></i>
+                     </a>
+
+
                     <a href="{{ route('project.delete', ['id'=> $project->id]) }}">
                         <i class="fa fa-fw fa-times"></i>
                     </a>
                     <div class="clearfix"></div>
+
+                    <div class="modal fade" id="edit-project" tabindex="-1" role="dialog" aria-labelledby="edit-project-modal-label">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="edit-server-modal-label">修改客户信息</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="edit-client-form" class="form-horizontal" method="post" action="/projects/edit">
+                                        <input type="hidden" name="id" value="{{ $project->id }}">
+                                        @include('projects/full_form', ['project'=> $project, 'products'=> $products])
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                    <button type="submit" class="btn btn-primary" form="edit-client-form">修改</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </span>
             </div>
             <div class="panel panel-body">
                 <table class="table table-striped table-bordered table-hover">
                     <tr>
                         <td style="width: 20%;">客户名称</td>
-                        <td class="edit" colspan="2" tabindex="1"><a href="{{ route('client.profile', ['id'=> $project->client->id]) }}">{{ $project->client->name }}</a></td>
+                        <td colspan="2"><a href="{{ route('client.profile', ['id'=> $project->client->id]) }}">{{ $project->client->name }}</a></td>
                     </tr>
                     <tr>
                         <td>项目名称</td>
-                        <td class="edit" colspan="2" tabindex="2">{{ $project->name }}</td>
+                        <td colspan="2">{{ $project->name }}</td>
                     </tr>
                     <tr>
                         <td>产品类型</td>
-                        <td class="edit" colspan="2" tabindex="3"><a href="{{ route('products') }}">{{ $project->product->name }}</a></td>
+                        <td colspan="2"><a href="{{ route('products') }}">{{ $project->product->name }}</a></td>
                     </tr>
                     <tr>
                         <td>版本</td>
-                        <td class="edit" colspan="2" tabindex="4">CF-2.0</td>
+                        <td colspan="2">{{ $project->product_version }}</td>
                     </tr>
                     <tr>
                         <td>客户类型</td>
-                        <td class="edit" colspan="2" tabindex="5">高校</td>
+                        <td colspan="2">{{ $project->client_type }}</td>
                     </tr>
                     <tr>
                         <td>所在区域</td>
-                        <td class="edit" colspan="2" tabindex="6">西南</td>
+                        <td colspan="2">{{ $project->position }}</td>
                     </tr>
                     <tr>
                         <td>联系人</td>
-                        <td class="edit" colspan="2" tabindex="7">覃戟</td>
+                        <td colspan="2">{{ $project->contact }}</td>
                     </tr>
                     <tr>
                         <td>联系电话</td>
-                        <td class="edit" colspan="2" tabindex="8">18978909016</td>
+                        <td colspan="2">{{ $project->contact_phone }}</td>
                     </tr>
                     <tr>
                         <td>邮箱</td>
-                        <td class="edit" colspan="2" tabindex="9">27131884@qq.com</td>
+                        <td colspan="2">{{ $project->contact_email }}</td>
                     </tr>
                     <tr>
-                        <td>IP 地址(内网) web 访问</td>
-                        <td class="edit" colspan="2" tabindex="10">http://172.18.194.2/lims</td>
-                    </tr>
-                    <tr>
-                        <td>IP 地址(内网) 仪器连接</td>
-                        <td class="edit" colspan="2" tabindex="11">172.18.194.2</td>
-                    </tr>
-                    <tr>
-                        <td>IP 地址(外网) web 访问</td>
-                        <td class="edit" colspan="2" tabindex="12">http://210.36.22.87/lims</td>
-                    </tr>
-                    <tr>
-                        <td>IP 地址(外网) 前台访问</td>
-                        <td class="edit" colspan="2" tabindex="13">http://gxpt.gxu.edu.cn/</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">软件保修期限</td>
-                        <td>默认模块</td>
-                        <td tabindex="15">2015-7-2签合同，2015-11-05正式验收，验收后维保一年</td>
-                    </tr>
-                    <tr>
-                        <td>增加模块</td>
-                        <td class="edit" tabindex="16">同上</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="4">硬件保修期限</td>
-                        <td style="width: 15%;">电源控制器</td>
-                        <td class="edit" tabindex="17">部署三套，2015-11-3部署</td>
-                    </tr>
-                    <tr>
-                        <td>摄像头</td>
-                        <td class="edit" tabindex="18">调试接入海康监控，不需要我们维保</td>
-                    </tr>
-                    <tr>
-                        <td>门禁</td>
-                        <td class="edit" tabindex="19">暂无</td>
-                    </tr>
-                    <tr>
-                        <td>温度监控</td>
-                        <td class="edit" tabindex="20">暂无</td>
-                    </tr>
-                    <tr>
-                        <td>商务负责人</td>
-                        <td class="edit" colspan="2" tabindex="21">马玥</td>
+                        <td>销售</td>
+                        <td colspan="2">{{ $project->seller }}</td>
                     </tr>
                     <tr>
                         <td>工程师负责人</td>
-                        <td class="edit" colspan="2" tabindex="22">陈晨</td>
+                        <td colspan="2">{{  $project->engineer }}</td>
                     </tr>
                     <tr>
-                        <td>地址</td>
-                        <td class="edit" colspan="2" tabindex="23">广西壮族自治区南宁市大学东路100号</td>
+                        <td>IP 地址(内网) web 访问</td>
+                        <td colspan="2">http://172.18.194.2/lims</td>
+                    </tr>
+                    <tr>
+                        <td>IP 地址(内网) 仪器连接</td>
+                        <td colspan="2">172.18.194.2</td>
+                    </tr>
+                    <tr>
+                        <td>IP 地址(外网) web 访问</td>
+                        <td colspan="2">http://210.36.22.87/lims</td>
+                    </tr>
+                    <tr>
+                        <td>IP 地址(外网) 前台访问</td>
+                        <td colspan="2">http://gxpt.gxu.edu.cn/</td>
+                    </tr>
+                    <tr>
+                        <td>部署地址</td>
+                        <td colspan="2">{{ $project->address }}</td>
                     </tr>
                     <tr>
                         <td>乘车路线</td>
-                        <td class="edit" colspan="2" tabindex="24">乘飞机至南宁吴圩机场，乘机场大巴1号线至火车站（维也纳酒店），下车往回走50米，在朝阳济南路口站，乘10/8路至广西大学站</td>
+                        <td colspan="2">{{ $project->way }}</td>
                     </tr>
                 </table>
             </div>
@@ -143,6 +144,18 @@
                         </li>
 
                         <li role="presentation">
+                            <a href="#software" aria-controls="software" role="tab" data-toggle="tab">
+                                <i class="fa fa-bolt"></i> 软件信息
+                            </a>
+                        </li>
+
+                        <li role="presentation">
+                            <a href="#hardware" aria-controls="hardware" role="tab" data-toggle="tab">
+                                <i class="fa fa-archive"></i> 硬件信息
+                            </a>
+                        </li>
+
+                        <li role="presentation">
                             <a href="#info" aria-controls="info" role="tab" data-toggle="tab">
                                 <i class="fa fa-info"></i> 信息变动
                             </a>
@@ -154,7 +167,7 @@
                             </a>
                         </li>
                     </ul>
-                    
+
                     <!-- Tab panes -->
                     <div class="tab-content">
 
@@ -194,12 +207,22 @@
                             </div>
                         </div>
 
+                        <div role="tabpanel" class="tab-pane" id="software">
+                            <div class="panel panel-body">
+                                软件信息, 等待完善
+                            </div>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane" id="hardware">
+                            <div class="panel panel-body">
+                                硬件信息, 等待完善
+                            </div>
+                        </div>
+
+
                         <!-- server -->
                         <div role="tabpanel" class="tab-pane" id="server">
                             <div class="panel panel-body">
-
-
-
 
                                 <table class="table table-hover table-bordered table-striped">
 

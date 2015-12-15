@@ -10,22 +10,6 @@ class Client extends Model
 
     use SoftDeletes;
 
-    static public $progress = [
-        1 => '初步沟通',
-        2 => '见面拜访',
-        3 => '确定意向',
-        4 => '正式报价',
-        5 => '商务洽谈',
-        6 => '签约成交',
-        7 => '售后服务',
-        8 => '停滞客户',
-        9 => '流失客户',
-    ];
-
-    static function progress_label($p) {
-        return self::$progress[$p];
-    }
-
     public $timestamps = false;
 
     protected $dates = ['deleted_at'];

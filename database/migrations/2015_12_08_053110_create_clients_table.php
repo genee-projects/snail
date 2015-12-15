@@ -21,7 +21,6 @@ class CreateClientsTable extends Migration
             $table->string('url')->nullable();          // 地址
             $table->integer('parent_id')->nullable()->default(0);   // 父级 client 的 id
             $table->index('parent_id');
-            $table->index('progress')->nullable()->default(1);      // 客户进度, 1 表示初步沟通
             $table->softDeletes();
         });
     }

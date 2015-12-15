@@ -29,7 +29,7 @@
                                 <div class="modal-body">
                                     <form id="edit-client-form" class="form-horizontal" method="post" action="/clients/edit">
                                         <input type="hidden" name="id" value="{{ $client->id }}">
-                                        @include('clients/form', ['client'=> $client])
+                                        @include('clients/form', ['client'=> $client, 'products'=> $products])
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -44,25 +44,21 @@
                     <table class="table table-striped table-bordered table-hover">
                         <tr>
                             <td style="width: 20%;">客户名称</td>
-                            <td class="edit">{{ $client->name }}</td>
+                            <td>{{ $client->name }}</td>
                         </tr>
 
                         <tr>
                             <td>网站/链接</td>
-                            <td class="edit"><a href="{{ $client->url }}">{{ $client->url }}</a></td>
-                        </tr>
-                        <tr>
-                            <td>销售进度</td>
-                            <td>{{ App\Client::progress_label($client->progress) }}</td>
+                            <td><a href="{{ $client->url }}">{{ $client->url }}</a></td>
                         </tr>
 
                         <tr>
                             <td>客户地址</td>
-                            <td class="edit">{{ $client->address }}</td>
+                            <td>{{ $client->address }}</td>
                         </tr>
                         <tr>
                             <td>备注信息</td>
-                            <td class="edit">{{ $client->description }}</td>
+                            <td>{{ $client->description }}</td>
                         </tr>
                     </table>
                 </div>
@@ -77,12 +73,12 @@
                 </div>
 
                 <div class="panel panel-body">
-                    <p><a href="/clients/profile/{{ $client->id }}">{{ $client->name }} ({{ \App\Client::progress_label($client->progress) }})</a></p>
+                    <p><a href="/clients/profile/{{ $client->id }}">{{ $client->name }}</a></p>
 
                     @foreach($client->root()->children as $c)
-                        <p class="col-sm-offset-1">├ <a href="/clients/profile/{{ $c->id }}">{{ $c->name }} ({{ \App\Client::progress_label($c->progress)}})</a></p>
+                        <p class="col-sm-offset-1">├ <a href="/clients/profile/{{ $c->id }}">{{ $c->name }}</a></p>
                             @foreach($c->children as $_c)
-                                <p class="col-sm-offset-2">├ <a href="/clients/profile/{{$_c->id}}">{{ $_c->name }} ({{ \App\Client::progress_label($_c->progress)}})</a></p>
+                                <p class="col-sm-offset-2">├ <a href="/clients/profile/{{$_c->id}}">{{ $_c->name }}</a></p>
                         @endforeach
                     @endforeach
                 </div>
@@ -153,7 +149,6 @@
                         @foreach($client->projects as $project)
                         <tr>
                             <td><a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a></td>
-                            <td>{{ debug($project->product) }}</td>
                             <td>{{ $project->product->name }}</td>
                             <td>{{ $project->time }}</td>
                         </tr>

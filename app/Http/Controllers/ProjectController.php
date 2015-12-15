@@ -22,7 +22,9 @@ class ProjectController extends Controller
     public function index()
     {
         //
-        return view('projects/index', ['projects'=> Project::all()]);
+        return view('projects/index', [
+            'projects'=> Project::all(),
+        ]);
     }
 
     public function add(Request $request) {
@@ -50,7 +52,10 @@ class ProjectController extends Controller
 
         $project = Project::find($id);
 
-        return view('/projects/profile', ['project'=> $project]);
+        return view('/projects/profile', [
+            'project'=> $project,
+            'products'=> Product::all(),
+        ]);
     }
 
     public function server($id, Request $request) {

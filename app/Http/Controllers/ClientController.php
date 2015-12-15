@@ -13,7 +13,6 @@ class ClientController extends Controller
 
         return view('clients/index', [
             'clients'=> Client::where('parent_id', 0)->get(),
-            'ps'=> Client::$progress,
         ]);
     }
 
@@ -30,7 +29,6 @@ class ClientController extends Controller
         $client->description = $request->input('description');
         $client->address = $request->input('address');
         $client->url = $request->input('url');
-        $client->progress = $request->input('progress');
 
         if ($client->save()) {
             return redirect('/clients')
@@ -48,7 +46,6 @@ class ClientController extends Controller
         $client->description = $request->input('description');
         $client->address = $request->input('address');
         $client->url = $request->input('url');
-        $client->progress = $request->input('progress');
 
         if ($client->save()) {
             return redirect(sprintf('/clients/profile/%d', $client->id))
@@ -65,7 +62,6 @@ class ClientController extends Controller
         return view('clients/profile', [
             'client'=> $client,
             'products'=> Product::all(),
-            'ps'=> Client::$progress,
         ]);
     }
 
