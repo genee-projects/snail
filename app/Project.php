@@ -17,6 +17,10 @@ class Project extends Model
         return $this->belongsTo('App\Product', 'product_id');
     }
 
+    public function comments() {
+        return $this->morphMany('App\Comment', 'object');
+    }
+
     public function client() {
         return $this->belongsTo('App\Client', 'client_id');
     }

@@ -9,6 +9,12 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-user"> 基本信息</i>
+                <span class="pull-right">
+                    <a href="{{ route('project.delete', ['id'=> $project->id]) }}">
+                        <i class="fa fa-fw fa-times"></i>
+                    </a>
+                    <div class="clearfix"></div>
+                </span>
             </div>
             <div class="panel panel-body">
                 <table class="table table-striped table-bordered table-hover">
@@ -106,13 +112,6 @@
                         <td>乘车路线</td>
                         <td class="edit" colspan="2" tabindex="24">乘飞机至南宁吴圩机场，乘机场大巴1号线至火车站（维也纳酒店），下车往回走50米，在朝阳济南路口站，乘10/8路至广西大学站</td>
                     </tr>
-                    <tr>
-                        <td colspan="3" class="text-right">
-                            <button type="button" class="btn btn-primary">
-                                <i class="fa fa-edit"></i> 提交修改
-                            </button>
-                        </td>
-                    </tr>
                 </table>
             </div>
         </div>
@@ -121,55 +120,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-comment"> 备注信息</i>
-            </div>
-            <div class="panel panel-body">
-
-                <div class="media">
-                    <div class="media-left media-middle">
-                        <img data-src="holder.js/64x64">
-                    </div>
-
-                    <div class="media-body">
-                        <h4 class="media-heading">标题</h4>
-                        内容
-                    </div>
-                </div>
-
-                <div class="media">
-                    <div class="media-left media-middle">
-                        <img data-src="holder.js/64x64">
-                    </div>
-
-                    <div class="media-body">
-                        <h4 class="media-heading">标题</h4>
-                        内容
-                    </div>
-                </div>
-
-                <hr />
-
-                <div class="form-group">
-                    <input type="text" placeholder="标题" class="form-control" />
-                </div>
-
-                <div class="form-group">
-                    <textarea class="form-control" rows="3" placeholder="内容"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <button type="button" class="btn btn-warning">
-                        <i class="fa fa-plus"></i> 备注追加
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <i class="fa fa-user"> 详细信息</i>
+                <i class="fa fa-user"> 其他信息</i>
             </div>
             <div class="panel panel-body">
 
@@ -178,28 +129,73 @@
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active">
+
+                        <li role="presentation"  class="active">
+                            <a href="#comments" aria-controls="comments" role="tab" data-toggle="tab">
+                                <i class="fa fa-comment-o"></i> 备注信息
+                            </a>
+                        </li>
+
+                        <li role="presentation">
                             <a href="#server" aria-controls="server" role="tab" data-toggle="tab">
                                 <i class="fa fa-linux"></i> 服务器信息
                             </a>
                         </li>
+
                         <li role="presentation">
                             <a href="#info" aria-controls="info" role="tab" data-toggle="tab">
                                 <i class="fa fa-info"></i> 信息变动
                             </a>
                         </li>
+
                         <li role="presentation">
                             <a href="#trello" aria-controls="trello" role="tab" data-toggle="tab">
                                 <i class="fa fa-wrench"></i> 部署情况
                             </a>
                         </li>
                     </ul>
-
+                    
                     <!-- Tab panes -->
                     <div class="tab-content">
 
+                        <div role="tabpanel" class="tab-pane active" id="comments">
+                            <div class="panel panel-body">
+
+
+                                @foreach($project->comments as $comment)
+                                    <div class="media">
+                                        <div class="media-left media-middle">
+                                            <img data-src="holder.js/40x40">
+                                        </div>
+
+                                        <div class="media-body">
+                                            {{ $comment->content }}
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                                <hr />
+
+                                <form method="post" action="/comments/add">
+
+                                    <input type="hidden" name="object_type" value="{{ get_class($project) }}" />
+                                    <input type="hidden" name="object_id" value="{{ $project->id }}" />
+
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="content" rows="3" placeholder="内容"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-warning">
+                                            <i class="fa fa-plus"></i> 备注追加
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                         <!-- server -->
-                        <div role="tabpanel" class="tab-pane active" id="server">
+                        <div role="tabpanel" class="tab-pane" id="server">
                             <div class="panel panel-body">
 
 
@@ -329,31 +325,5 @@
         </div>
     </div>
 </div>
-
-<!--
-<script type="text/javascript">
-$(document).ready(function() {
-
-
-    $('li[role=presentation] a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    });
-
-
-    $('*').delegate('.edit', 'click focus', function(e) {
-        $this = $(this);
-        $this.attr('contenteditable', true);
-
-        $this.on('blur', function() {
-            $this.attr('contenteditable', false);
-        });
-
-        e.preventDefault();
-        return false;
-    });
-});
-</script>
--->
 
 @endsection

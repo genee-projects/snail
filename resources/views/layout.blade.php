@@ -20,7 +20,6 @@
 
     <link href="asserts/css/timeline.css" rel="stylesheet">
 
-
     <link href="asserts/3rd/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
     <script src="asserts/3rd/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
@@ -34,8 +33,6 @@
     <script src="asserts/js/crm.js"></script>
 
     <script src="asserts/3rd/bootstrap3-typeahead/bootstrap3-typeahead.min.js"></script>
-
-    <script src="asserts/3rd/vue/dist/vue.min.js"></script>
 </head>
 <body>
 
@@ -81,9 +78,9 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a href="templates"><i class="fa fa-file-code-o"></i> 模板生成器</a>
-                        </li>
+                        {{--<li>--}}
+                            {{--<a href="templates"><i class="fa fa-file-code-o"></i> 模板生成器</a>--}}
+                        {{--</li>--}}
 
                         <li>
                             <a href="#" id="close-menu"><i class="fa fa-chevron-circle-left fa-fw"></i> 收起菜单</a>

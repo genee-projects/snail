@@ -70,9 +70,19 @@ class ProjectController extends Controller
         return redirect(route('project.profile', ['id'=> $project->id]))
             ->with('message_content', '已关联服务器, 无法再次关联')
             ->with('message_type', 'danger');
-
-
-
     }
 
+    public function delete($id) {
+        $project = Project::find($id);
+
+        if ($project->delete()) {
+            return redirect(route('projects'))
+                ->with('message_content', '已解约该项目!')
+                ->with('message_type', 'danger');
+        }
+
+        return redirect(route('projects.profile', ['id'=> $id]))
+            ->with('message_content', '内部错误, 无法解约!')
+            ->with('message_type', 'danger');
+    }
 }

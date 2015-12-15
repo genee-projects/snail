@@ -43,7 +43,7 @@
 </div>
 
 <div class="form-group">
-    <label for="project-seller" class="col-sm-2 control-label">签约人</label>
+    <label for="project-seller" class="col-sm-2 control-label">销售</label>
     <div class="col-sm-10">
         <input value="{{ $project->seller or '' }}" name="seller" type="text" class="form-control" id="project-seller" placeholder="刘玉川">
     </div>

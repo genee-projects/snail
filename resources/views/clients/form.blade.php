@@ -19,6 +19,16 @@
     </div>
 </div>
 <div class="form-group">
+    <label for="client-progress" class="col-sm-2 control-label">销售进度</label>
+    <div class="col-sm-10">
+        <select name="progress" value="{{ $client->progress or 1 }}">
+            @foreach($ps as $k => $v)
+                <option value="{{ $k }}">{{ $v }}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+<div class="form-group">
     <label for="client-description" class="col-sm-2 control-label">备注</label>
     <div class="col-sm-10">
         <textarea id="client-description" class="col-sm-2 form-control" rows="3" name="description">{{ $client->description or ''}}</textarea>

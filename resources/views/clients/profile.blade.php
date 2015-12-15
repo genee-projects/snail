@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">{{ $client->name }}</h1>
+            <h1 class="page-header">{{ $client->name }} </h1>
         </div>
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -51,6 +51,10 @@
                             <td>网站/链接</td>
                             <td class="edit"><a href="{{ $client->url }}">{{ $client->url }}</a></td>
                         </tr>
+                        <tr>
+                            <td>销售进度</td>
+                            <td>{{ App\Client::progress_label($client->progress) }}</td>
+                        </tr>
 
                         <tr>
                             <td>客户地址</td>
@@ -73,12 +77,12 @@
                 </div>
 
                 <div class="panel panel-body">
-                    <p><a href="/clients/profile/{{ $client->id }}">{{ $client->name }}</a></p>
+                    <p><a href="/clients/profile/{{ $client->id }}">{{ $client->name }} ({{ \App\Client::progress_label($client->progress) }})</a></p>
 
                     @foreach($client->root()->children as $c)
-                        <p class="col-sm-offset-1">├ <a href="/clients/profile/{{ $c->id }}">{{ $c->name }}</a></p>
+                        <p class="col-sm-offset-1">├ <a href="/clients/profile/{{ $c->id }}">{{ $c->name }} ({{ \App\Client::progress_label($c->progress)}})</a></p>
                             @foreach($c->children as $_c)
-                                <p class="col-sm-offset-2">├ <a href="/clients/profile/{{$_c->id}}">{{ $_c->name }}</a></p>
+                                <p class="col-sm-offset-2">├ <a href="/clients/profile/{{$_c->id}}">{{ $_c->name }} ({{ \App\Client::progress_label($_c->progress)}})</a></p>
                         @endforeach
                     @endforeach
                 </div>
@@ -112,7 +116,6 @@
                 </div>
 
                 <div class="panel panel-body">
-
                     <p>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#add-project">
                             <i class="fa fa-plus"></i> 签约项目
@@ -133,7 +136,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    <button type="submit" class="btn btn-primary" form="add-project-form">修改</button>
+                                    <button type="submit" class="btn btn-primary" form="add-project-form">签约</button>
                                 </div>
                             </div>
                         </div>
@@ -150,6 +153,7 @@
                         @foreach($client->projects as $project)
                         <tr>
                             <td><a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a></td>
+                            <td>{{ debug($project->product) }}</td>
                             <td>{{ $project->product->name }}</td>
                             <td>{{ $project->time }}</td>
                         </tr>
@@ -204,6 +208,10 @@
                                     <hr />
 
                                     <form method="post" action="/comments/add">
+
+                                        <input type="hidden" name="object_type" value="{{ get_class($client) }}" />
+                                        <input type="hidden" name="object_id" value="{{ $client->id }}" />
+
                                         <div class="form-group">
                                             <textarea class="form-control" name="content" rows="3" placeholder="内容"></textarea>
                                         </div>

@@ -24,7 +24,6 @@
     "ace": "~1.2.2",
     "clipboard": "~1.5.5",
     "bootstrap-toggle": "~2.2.1",
-    "vue": "~1.0.10",
     "eonasdan-bootstrap-datetimepicker": "~4.17.37",
     "bootstrap3-typeahead": "https://github.com/bassjobsen/Bootstrap-3-Typeahead.git#master"
   }

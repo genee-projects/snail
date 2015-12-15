@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Comment;
+use App\Server;
+use App\Product;
+use App\Project;
 use App\Client;
 
 
@@ -22,10 +25,16 @@ class CommentController extends Controller
         //
         $comment = new Comment();
 
-        $comment->object()->associate(Client::find(1));
+        $object_name = ucwords($request->input('object_type'));
+        $object_id = $request->input('object_id');
 
+        $object = $object_name::find($object_id);
+
+        $comment->object()->associate($object);
         $comment->content = $request->input('content');
 
         $comment->save();
+
+        return redirect()->back();
     }
 }

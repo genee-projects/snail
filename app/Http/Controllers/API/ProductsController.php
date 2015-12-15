@@ -110,11 +110,18 @@ class ProductsController extends Controller
      * @apiVersion 0.0.1
      * @apiParam {Number}  id Product 的 ID
      * @apiSuccessExample {json} Success-Response:
-     *     HTTP/1.1 204 No Content
+     *     HTTP/1.1 200 OK
+     * @apiErrorExample {json} Error-Response:
+     *     HTTP/1/1 404 Not Found
      *
      */
     public function destroy($id)
     {
         //
+        if (Product::destroy($id)) {
+            return response('OK', 200);
+        }
+
+        return response('Not Found', 404);
     }
 }

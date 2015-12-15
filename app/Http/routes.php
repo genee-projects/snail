@@ -75,7 +75,11 @@ Route::get('/templates/generate', 'TemplateController@generate');
 
 
 #projects
-Route::get('/projects', 'ProjectController@index');
+Route::get('/projects', [
+    'as' => 'projects',
+    'uses'=> 'ProjectController@index',
+]);
+
 Route::post('/projects/add', 'ProjectController@add');
 Route::get('/projects/profile/{id}', [
     'as'=> 'project.profile',
@@ -87,8 +91,12 @@ Route::post('/projects/{project_id}/servers', [
     'uses'=> 'ProjectController@server',
 ]);
 
+Route::get('/projects/delete/{id}', [
+    'as'=> 'project.delete',
+    'uses'=> 'ProjectController@delete',
+]);
 
 Route::group(['namespace'=> 'API', 'prefix'=> 'api'], function() {
-
     Route::resource('products', 'ProductsController');
+    Route::resource('servers', 'ServersController');
 });
