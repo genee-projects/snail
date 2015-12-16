@@ -86,7 +86,7 @@ Route::get('/projects/profile/{id}', [
     'uses'=> 'ProjectController@profile',
 ]);
 
-Route::post('/projects/{project_id}/servers', [
+Route::post('/projects/{id}/servers', [
     'as'=> 'project.server',
     'uses'=> 'ProjectController@server',
 ]);

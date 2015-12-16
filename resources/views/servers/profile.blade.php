@@ -135,6 +135,7 @@
                     <td>项目编号</td>
                     <td>项目名称</td>
                     <td>部署原因</td>
+                    <td>部署时间</td>
                 </tr>
 
                 @foreach($server->projects as $project)
@@ -142,6 +143,7 @@
                         <td>{{ $project->ref_no }}</td>
                         <td><a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a></td>
                         <td>{{ $project->pivot->usage }}</td>
+                        <td>{{ date('Y/m/d', strtotime($project->pivot->usage)) }}</td>
                     </tr>
                 @endforeach
 

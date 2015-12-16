@@ -19,6 +19,7 @@ class Server extends Model
     }
 
     public function projects() {
-        return $this->belongsToMany('App\Project')->withPivot('usage');
+        return $this->belongsToMany('App\Project')
+            ->withPivot('usage', 'deploy_time');
     }
 }

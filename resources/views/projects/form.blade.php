@@ -49,7 +49,7 @@
 <div class="form-group">
     <label for="project-contact" class="col-sm-2 control-label">联系人</label>
     <div class="col-sm-10">
-        <input value="{{ $project->contact or '' }}" name="contact" type="text" class="form-control" id="project-contact" placeholder="胡宁">
+        <input value="{{ $project->contact_user or '' }}" name="contact_user" type="text" class="form-control" id="project-contact" placeholder="胡宁">
     </div>
 </div>
 
@@ -80,13 +80,3 @@
 </div>
 
 <input type="hidden" name="client_id" value="{{ $client->id }}">
-
-<script type="text/javascript">
-    $(function () {
-        $('.datetimepicker').datetimepicker({
-            format: 'YYYY/MM/DD'
-        });
-
-        $('.selectpicker').selectpicker();
-    });
-</script>

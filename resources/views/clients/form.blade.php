@@ -36,7 +36,7 @@
 <div class="form-group">
     <label form="client-region" class="col-sm-2 control-label">客户区域</label>
     <div class="col-sm-10">
-        <input value="{{ $client->region or '' }}" name="type" type="text" class="form-control" id="client-region" placeholder="西南">
+        <input value="{{ $client->region or '' }}" name="region" type="text" class="form-control" id="client-region" placeholder="西南">
     </div>
 </div>
 

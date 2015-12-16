@@ -37,7 +37,7 @@ class ProjectController extends Controller
         $project->ref_no = $request->input('ref_no');
         $project->name = $request->input('name');
         $project->seller = $request->input('seller');
-        $project->contact = $request->input('contact');
+        $project->contact_user = $request->input('contact_user');
         $project->signed_time = $request->input('signed_time');
         $project->cancelled_time = $request->input('cancelled_time');
         $project->description = $request->input('description');
@@ -92,7 +92,10 @@ class ProjectController extends Controller
         $server = Server::find($request->input('server_id'));
 
         if (! $project->servers()->find($request->input('server_id'))) {
-            $project->servers()->save($server, ['usage'=> $request->input('usage')]);
+            $project->servers()->save($server, [
+                'usage'=> $request->input('usage'),
+                'deploy_time'=> $request->input('deploy_time'),
+            ]);
 
             return redirect(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '关联成功!')

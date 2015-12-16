@@ -28,5 +28,11 @@ $(document).ready(function() {
 
     });
 
+    //所有的 select 都是用 bootstrap-selector
     $('select').selectpicker();
+
+    //input 为 .datatimepicker 的使用 datetimepicker
+    $('.datetimepicker').datetimepicker({
+        format: 'YYYY/MM/DD'
+    });
 });

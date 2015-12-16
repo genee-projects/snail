@@ -20,7 +20,7 @@ class CreateClientsTable extends Migration
             $table->string('description')->nullable();  // 备注
             $table->string('url')->nullable();          // 网站/链接
             $table->string('seller_url')->nullable();   // 销售试用的纷享销客的 URL
-            $table->integer('type')->nullable();        //客户类型
+            $table->string('type')->nullable();         //客户类型
             $table->string('region')->nullable();       //所在区域
             $table->integer('parent_id')->nullable()->default(0);   // 父级 client 的 id
             $table->index('parent_id');
