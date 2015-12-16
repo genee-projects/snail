@@ -15,7 +15,6 @@
                          <i class="fa fa-fw fa-edit"></i>
                      </a>
 
-
                     <a href="{{ route('project.delete', ['id'=> $project->id]) }}">
                         <i class="fa fa-fw fa-times"></i>
                     </a>
@@ -29,7 +28,7 @@
                                     <h4 class="modal-title" id="edit-server-modal-label">修改客户信息</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="edit-client-form" class="form-horizontal" method="post" action="/projects/edit">
+                                    <form id="edit-client-form" class="form-horizontal" method="post" action="{{ route('project.edit') }}">
                                         <input type="hidden" name="id" value="{{ $project->id }}">
                                         @include('projects/full_form', ['project'=> $project, 'products'=> $products])
                                     </form>
@@ -50,39 +49,27 @@
                         <td colspan="2"><a href="{{ route('client.profile', ['id'=> $project->client->id]) }}">{{ $project->client->name }}</a></td>
                     </tr>
                     <tr>
-                        <td>项目名称</td>
-                        <td colspan="2">{{ $project->name }}</td>
+                        <td>项目名称 (编号)</td>
+                        <td colspan="2">{{ $project->name }} ({{ $project->ref_no }})</td>
                     </tr>
                     <tr>
-                        <td>产品类型</td>
-                        <td colspan="2"><a href="{{ route('products') }}">{{ $project->product->name }}</a></td>
-                    </tr>
-                    <tr>
-                        <td>版本</td>
-                        <td colspan="2">{{ $project->product_version }}</td>
-                    </tr>
-                    <tr>
-                        <td>客户类型</td>
-                        <td colspan="2">{{ $project->client_type }}</td>
-                    </tr>
-                    <tr>
-                        <td>所在区域</td>
-                        <td colspan="2">{{ $project->position }}</td>
+                        <td>产品类型 (版本)</td>
+                        <td colspan="2"><a href="{{ route('products') }}">{{ $project->product->name }} ( {{ $project->version }})</a></td>
                     </tr>
                     <tr>
                         <td>联系人</td>
-                        <td colspan="2">{{ $project->contact }}</td>
+                        <td colspan="2">{{ $project->contact_user }}</td>
                     </tr>
                     <tr>
                         <td>联系电话</td>
                         <td colspan="2">{{ $project->contact_phone }}</td>
                     </tr>
                     <tr>
-                        <td>邮箱</td>
+                        <td>联系邮箱</td>
                         <td colspan="2">{{ $project->contact_email }}</td>
                     </tr>
                     <tr>
-                        <td>销售</td>
+                        <td>销售负责人</td>
                         <td colspan="2">{{ $project->seller }}</td>
                     </tr>
                     <tr>
@@ -90,24 +77,8 @@
                         <td colspan="2">{{  $project->engineer }}</td>
                     </tr>
                     <tr>
-                        <td>IP 地址(内网) web 访问</td>
-                        <td colspan="2">http://172.18.194.2/lims</td>
-                    </tr>
-                    <tr>
-                        <td>IP 地址(内网) 仪器连接</td>
-                        <td colspan="2">172.18.194.2</td>
-                    </tr>
-                    <tr>
-                        <td>IP 地址(外网) web 访问</td>
-                        <td colspan="2">http://210.36.22.87/lims</td>
-                    </tr>
-                    <tr>
-                        <td>IP 地址(外网) 前台访问</td>
-                        <td colspan="2">http://gxpt.gxu.edu.cn/</td>
-                    </tr>
-                    <tr>
                         <td>部署地址</td>
-                        <td colspan="2">{{ $project->address }}</td>
+                        <td colspan="2">{{ $project->deploy_address }}</td>
                     </tr>
                     <tr>
                         <td>乘车路线</td>

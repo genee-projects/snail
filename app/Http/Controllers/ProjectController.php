@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Product;
@@ -41,12 +39,41 @@ class ProjectController extends Controller
         $project->seller = $request->input('seller');
         $project->contact = $request->input('contact');
         $project->signed_time = $request->input('signed_time');
-        $project->divorced_time = $request->input('divorced_time');
+        $project->cancelled_time = $request->input('cancelled_time');
         $project->description = $request->input('description');
 
         if ($project->save()) {
             return redirect(sprintf('/projects/profile/%d', $project->id));
         }
+    }
+
+    public function edit(Request $request) {
+
+        $project = Project::find($request->input('id'));
+        $product = Product::find($request->input('product_id'));
+
+
+        $project->ref_no = $request->input('ref_no');               // 项目编号
+        $project->name = $request->input('name');                   // 项目名称
+        $project->product()->associate($product);                   // 产品类型
+        $project->version = $request->input('version');             // 项目版本
+        $project->contact_user = $request->input('contact_user');   // 联系人
+        $project->contact_phone = $request->input('contact_phone'); // 联系电话
+        $project->contact_email = $request->input('contact_email'); // 联系邮箱
+        $project->signed_time = $request->input('signed_time');     // 签约时间
+        $project->cancelled_time = $request->input('cancelled_time');   // 服务到期时间
+        $project->seller = $request->input('seller');               // 销售人员
+        $project->engineer = $request->input('engineer');           // 工程师
+        $project->description = $request->input('description'); //
+        $project->deploy_address = $request->input('deploy_address');
+        $project->way = $request->input('way');
+
+        if ($project->save()) {
+            return redirect(route('project.profile', ['id'=> $project->id]))
+                ->with('message_content', '修改成功!')
+                ->with('message_type', 'info');
+        }
+
     }
 
     public function profile($id) {

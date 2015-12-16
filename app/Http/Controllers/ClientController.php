@@ -30,6 +30,8 @@ class ClientController extends Controller
         $client->address = $request->input('address');
         $client->url = $request->input('url');
         $client->seller_url = $request->input('seller_url');
+        $client->type = $request->input('type');
+        $client->region = $request->input('region');
 
         if ($client->save()) {
             return redirect('/clients')
@@ -47,6 +49,8 @@ class ClientController extends Controller
         $client->address = $request->input('address');
         $client->url = $request->input('url');
         $client->seller_url = $request->input('seller_url');
+        $client->type = $request->input('type');
+        $client->region = $request->input('region');
 
         if ($client->save()) {
             return redirect(sprintf('/clients/profile/%d', $client->id))

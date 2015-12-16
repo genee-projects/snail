@@ -45,6 +45,9 @@
                     <tr>
                         <td>客户名称</td>
                         <td>网站/链接</td>
+                        <td>纷享销客链接</td>
+                        <td>类型</td>
+                        <td>区域</td>
                         <td>地址</td>
                     </tr>
 
@@ -59,8 +62,14 @@
                                 <a href="{{ $client->url }}}">
                                     {{ $client->url}}
                                 </a>
-
                             </td>
+                            <td>
+                                <a href="{{ $client->seller_url }}">
+                                    {{ $client->seller_url }}
+                                </a>
+                            </td>
+                            <td>{{ $client->type }}</td>
+                            <td>{{ $client->region }}</td>
                             <td>{{ $client->address}}</td>
                         </tr>
                     @endforeach

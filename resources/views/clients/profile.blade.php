@@ -57,6 +57,14 @@
                             <td><a href="{{ $client->seller_url }}">{{ $client->seller_url }}</a></td>
                         </tr>
                         <tr>
+                            <td>客户类型</td>
+                            <td>{{ $client->type }}</td>
+                        </tr>
+                        <tr>
+                            <td>客户区域</td>
+                            <td>{{ $client->region }}</td>
+                        </tr>
+                        <tr>
                             <td>客户地址</td>
                             <td>{{ $client->address }}</td>
                         </tr>
@@ -98,7 +106,7 @@
 
                 <div class="panel panel-body">
                     <form class="form-horizontal" method="post" action="/clients/add">
-                        @include('clients/form', ['client'=> new \App\Client, 'parent'=> $client])
+                        @include('clients/form_lite', ['client'=> new \App\Client, 'parent'=> $client])
                         <div class="form-group">
                             <label for="client-name" class="col-sm-2 control-label"></label>
                             <div class="col-sm-10">

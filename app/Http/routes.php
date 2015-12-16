@@ -96,6 +96,11 @@ Route::get('/projects/delete/{id}', [
     'uses'=> 'ProjectController@delete',
 ]);
 
+Route::post('/projects/edit', [
+    'as'=> 'project.edit',
+    'uses'=> 'ProjectController@edit'
+]);
+
 Route::group(['namespace'=> 'API', 'prefix'=> 'api'], function() {
     Route::resource('products', 'ProductsController');
     Route::resource('servers', 'ServersController');
