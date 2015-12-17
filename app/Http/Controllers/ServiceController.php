@@ -26,6 +26,7 @@ class ServiceController extends Controller
     }
 
     public function add(Request $request) {
+
         $service = new Service();
 
         $service->name = $request->input('name');
@@ -34,7 +35,7 @@ class ServiceController extends Controller
         $object_name = ucwords($request->input('object_type'));
         $object_id = $request->input('object_id');
 
-        $object = $object_name::find($object_id);
+        $object = $object_name::where('id', '=', $object_id)->withTrashed()->first();
 
         $service->object()->associate($object);
         $service->save();

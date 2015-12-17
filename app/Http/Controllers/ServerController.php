@@ -9,7 +9,12 @@ use App\Server;
 class ServerController extends Controller
 {
     public function servers() {
-        return view('servers/index', ['servers'=> Server::all()]);
+        $root = Server::root();
+
+        return view('servers/index', [
+            'servers'=> Server::all(),
+            'root'=> $root,
+        ]);
     }
 
     public function profile($id) {
@@ -32,6 +37,19 @@ class ServerController extends Controller
         $server->fqdn = $request->input('fqdn');
         $server->vpn = $request->input('vpn');
         $server->description = $request->input('description');
+
+        foreach(Server::root()->services as $service) {
+
+            $_s = $service->replicate();
+            $_s->push();
+            $server->services()->save($_s);
+
+            foreach($service->items as $item) {
+                $_t = $item->replicate();
+                $_t->push();
+                $_s->items()->save($_t);
+            }
+        }
 
         if ($server->save()) {
             return redirect('/servers')

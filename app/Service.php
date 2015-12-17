@@ -21,4 +21,12 @@ class Service extends Model
     public function items() {
         return $this->morphMany('App\Item', 'object');
     }
+
+    public function delete() {
+
+        foreach($this->items as $item) {
+            $item->delete();
+        }
+        return parent::delete();
+    }
 }
