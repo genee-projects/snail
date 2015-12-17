@@ -64,12 +64,18 @@ Route::get('/servers', [
     'uses'=> 'ServerController@servers',
 ]);
 
+Route::get('/servers.json', [
+    'as'=> 'servers.json',
+    'uses'=> 'ServerController@servers_json',
+]);
+
 Route::post('/servers/add', 'ServerController@add');
 
 Route::get('/servers/profile/{id}', [
     'as'=> 'server.profile',
     'uses'=> 'ServerController@profile',
 ]);
+
 
 Route::post('/servers/edit', 'ServerController@edit');
 Route::get('/servers/delete/{id}', 'ServerController@delete');

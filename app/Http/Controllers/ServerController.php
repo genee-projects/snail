@@ -17,6 +17,10 @@ class ServerController extends Controller
         ]);
     }
 
+    public function servers_json() {
+        return response()->json(Server::all());
+    }
+
     public function profile($id) {
         return view('servers/profile', ['server'=> Server::find($id)]);
     }

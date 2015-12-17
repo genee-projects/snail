@@ -26,6 +26,7 @@ class ItemController extends Controller
         $item->object()->associate($object);
         $item->key = $request->input('key');
         $item->value = $request->input('value');
+        $item->name = $request->input('name');
 
         $item->save();
 

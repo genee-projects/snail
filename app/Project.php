@@ -36,4 +36,8 @@ class Project extends Model
     public function modules() {
         return $this->morphMany('App\Module', 'object');
     }
+
+    public function items() {
+        return $this->morphMany('App\Item', 'object');
+    }
 }
