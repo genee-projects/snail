@@ -42,6 +42,8 @@ class ServerController extends Controller
         $server->vpn = $request->input('vpn');
         $server->description = $request->input('description');
 
+        $server->save();
+
         foreach(Server::root()->services as $service) {
 
             $_s = $service->replicate();
@@ -55,11 +57,9 @@ class ServerController extends Controller
             }
         }
 
-        if ($server->save()) {
-            return redirect('/servers')
-                ->with('message_content', '添加成功!')
-                ->with('message_type', 'info');
-        }
+        return redirect('/servers')
+            ->with('message_content', '添加成功!')
+            ->with('message_type', 'info');
     }
 
     public function edit(Request $request) {

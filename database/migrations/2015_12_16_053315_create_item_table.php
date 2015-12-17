@@ -17,7 +17,7 @@ class CreateItemTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('key');
-            $table->string('value');
+            $table->string('value')->nullable();
             $table->string('object_type');
             $table->integer('object_id');
             $table->softDeletes();
