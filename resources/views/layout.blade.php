@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Genee CRM</title>
-    <base href="http://parrot:8000/">
+    <base href="http://crm.reserva.genee.cn/">
     <link rel="stylesheet" href="asserts/3rd/bootstrap/dist/css/bootstrap.min.css">
     <script src="asserts/3rd/jquery/dist/jquery.min.js"></script>
 
