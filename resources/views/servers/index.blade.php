@@ -132,7 +132,7 @@
                                         <tr>
                                             <td colspan="2">
                                             <span class="pull-right">
-                                                <code>{{ $item->key }}</code> / <code>{{ $item->value or NULL'}}</code>
+                                                <code>{{ $item->key }}</code> / <code>{{ $item->value or NULL}}</code>
                                                 <a href="{{ route('item.delete', ['id'=> $item->id]) }}"><i class="fa fa-times"></i></a>
                                             </span>
                                             </td>
