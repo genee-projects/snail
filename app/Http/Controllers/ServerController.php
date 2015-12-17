@@ -29,7 +29,6 @@ class ServerController extends Controller
         $server->memory = $request->input('memory');
         $server->disk = $request->input('disk');
         $server->os = $request->input('os');
-        $server->database = $request->input('database');
         $server->fqdn = $request->input('fqdn');
         $server->vpn = $request->input('vpn');
         $server->description = $request->input('description');
@@ -54,7 +53,6 @@ class ServerController extends Controller
         $server->memory = $request->input('memory');
         $server->disk = $request->input('disk');
         $server->os = $request->input('os');
-        $server->database = $request->input('database');
         $server->fqdn = $request->input('fqdn');
         $server->vpn = $request->input('vpn');
         $server->description = $request->input('description');

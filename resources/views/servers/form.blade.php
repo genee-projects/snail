@@ -61,19 +61,17 @@
     <div class="col-sm-5">
         <input value="{{ $server->os or '' }}" name="os" type="text" class="form-control" id="server-os" placeholder="Ubuntu 14.04.3 LTS">
     </div>
-    <label for="server-database" class="col-sm-1 control-label">数据库</label>
-    <div class="col-sm-5">
-        <input value="{{ $server->database or '' }}" name="database" type="text" class="form-control" id="server-database" placeholder="MySQL 5.6">
-    </div>
-</div>
 
-<div class="form-group">
     <label for="server-fqdn" class="col-sm-1 control-label">FQDN</label>
     <div class="col-sm-5">
         <input value="{{ $server->fqdn or '' }}" name="fqdn" type="text" class="form-control" id="server-fqdn" placeholder="e143502.server.genee.cn">
     </div>
+</div>
+
+<div class="form-group">
+
     <label for="server-vpn" class="col-sm-1 control-label">VPN</label>
-    <div class="col-sm-5">
+    <div class="col-sm-11">
         <input value="{{ $server->vpn or '' }}" name="vpn" type="text" class="form-control" id="server-vpn" placeholder="10.0.10.1">
     </div>
 </div>

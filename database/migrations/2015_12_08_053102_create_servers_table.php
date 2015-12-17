@@ -24,7 +24,6 @@ class CreateServersTable extends Migration
             $table->string('memory')->nullable();               // 内存
             $table->string('disk')->nullable();                 // 硬盘
             $table->string('os')->nullable();                   // 操作系统
-            $table->string('database')->nullable();             // 数据库
             $table->string('fqdn')->nullable();                 // FQDN
             $table->string('vpn')->nullable();                  // VPN IP
             $table->string('description')->nullable();          // 备注信息
