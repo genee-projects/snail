@@ -28,4 +28,12 @@ class Project extends Model
     public function servers() {
         return $this->belongsToMany('App\Server')->withPivot('usage', 'deploy_time');
     }
+
+    public function services() {
+        return $this->morphMany('App\Service', 'object');
+    }
+
+    public function modules() {
+        return $this->morphMany('App\Module', 'object');
+    }
 }

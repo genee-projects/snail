@@ -7,10 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Comment;
-use App\Server;
-use App\Product;
-use App\Project;
-use App\Client;
 
 
 class CommentController extends Controller

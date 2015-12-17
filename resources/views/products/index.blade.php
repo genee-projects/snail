@@ -10,7 +10,7 @@
         <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-cube"></i> {{ $p->name }}
+                    <i class="fa fa-cube"></i> <a href="{{ route('product.profile', ['id'=> $p->id]) }}">{{ $p->name }}</a>
                     <p class="pull-right"><a name="delete" _id="{{ $p->id }}"><i class="fa fa-fw fa-small fa-times">&#160;</i></a></p>
                 </div>
                 <div class="panel panel-body">

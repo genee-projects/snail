@@ -1,10 +1,12 @@
 <?php
 
-namespace app\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
+use App\Module;
+use App\Service;
 
 class ProductController extends Controller
 {
@@ -17,8 +19,11 @@ class ProductController extends Controller
         return view('products/index', ['products' => Product::all()]);
     }
 
-    public function profile() {
-        return view('products/profile');
+    public function profile($id) {
+
+        $product = Product::find($id);
+        
+        return view('products/profile', ['product'=> $product]);
     }
 
     public function add(Request $request) {
@@ -31,6 +36,16 @@ class ProductController extends Controller
             return response()->json(true);
         }
     }
+
+    public function edit(Request $request) {
+        $product = Product::find($request->input('product_id'));
+        $product->name = $request->input('name');
+        $product->description = $request->input('description');
+
+        if ($product->save()) {
+            return redirect()->back();
+        }
+     }
 
     public function delete(Request $request) {
 

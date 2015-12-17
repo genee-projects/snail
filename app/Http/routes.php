@@ -22,8 +22,8 @@ Route::get('/clients', [
 ]);
 
 Route::get('/clients/profile/{id}', [
-    'uses'=> 'ClientController@profile',
     'as'=> 'client.profile',
+    'uses'=> 'ClientController@profile',
 ]);
 
 Route::post('/clients/add', 'ClientController@add');
@@ -37,21 +37,31 @@ Route::get('/products', [
     'uses'=> 'ProductController@products',
 ]);
 
-Route::get('/products/profile', 'ProductController@profile');
-Route::get('/products/add', 'ProductController@add');
-Route::get('/products/delete', 'ProductController@delete');
+Route::get('/products/profile/{id}', [
+    'as'=> 'product.profile',
+    'uses'=> 'ProductController@profile',
+]);
 
+Route::post('/products/add', [
+    'as'=> 'product.add',
+    'uses'=> 'ProductController@add',
+
+]);
+
+Route::get('/products/delete', [
+    'as'=> 'product.delete',
+    'uses'=> 'ProductController@delete',
+]);
+
+Route::post('/products/edit', [
+    'as'=> 'product.edit',
+    'uses'=> 'ProductController@edit',
+]);
 
 #servers
 Route::get('/servers', [
     'as'=> 'servers',
     'uses'=> 'ServerController@servers',
-]);
-
-Route::get('/servers.json', [
-    'as'=> 'servers.json',
-    'uses'=> 'ServerController@servers_json',
-
 ]);
 
 Route::post('/servers/add', 'ServerController@add');
@@ -101,7 +111,55 @@ Route::post('/projects/edit', [
     'uses'=> 'ProjectController@edit'
 ]);
 
-Route::group(['namespace'=> 'API', 'prefix'=> 'api'], function() {
-    Route::resource('products', 'ProductsController');
-    Route::resource('servers', 'ServersController');
-});
+#service start
+Route::post('/services/add', [
+    'as'=> 'service.add',
+    'uses'=> 'ServiceController@add',
+]);
+
+Route::get('/services/delete/{id}', [
+    'as'=> 'service.delete',
+    'uses'=> 'ServiceController@delete',
+]);
+
+Route::post('/services/edit/{id}', [
+    'as'=> 'service.edit',
+    'uses'=> 'ServiceController@edit',
+]);
+# service end
+
+# item start
+Route::post('/items/add', [
+    'as'=> 'item.add',
+    'uses'=> 'ItemController@add',
+]);
+
+Route::get('/items/delete/{id}', [
+    'as'=> 'item.delete',
+    'uses'=> 'ItemController@delete',
+]);
+# item end
+
+# modules start
+Route::post('/modules/add', [
+    'as'=> 'module.add',
+    'uses'=> 'ModuleController@add',
+]);
+
+Route::get('/modules/delete/{id}', [
+    'as'=> 'module.delete',
+    'uses'=> 'ModuleController@delete',
+]);
+
+Route::post('/modules/edit/{id}', [
+    'as'=> 'module.edit',
+    'uses'=> 'ModuleController@edit',
+]);
+
+
+Route::get('/modules/delete/{id}', [
+    'as'=> 'module.delete',
+    'uses'=> 'ModuleController@delete',
+]);
+
+# modules end

@@ -35,4 +35,7 @@ $(document).ready(function() {
     $('.datetimepicker').datetimepicker({
         format: 'YYYY/MM/DD'
     });
+
+
+    new Clipboard('.btn-clip');
 });
