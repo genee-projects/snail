@@ -44,12 +44,15 @@ class ProjectController extends Controller
 
         if ($project->save()) {
 
+            /*
             foreach($product->modules as $module) {
                 $_m = $module->replicate();
                 $_m->push();
                 $project->modules()->save($_m);
             }
+            */
 
+            /*
             foreach($product->services as $service) {
 
                 $_s = $service->replicate();
@@ -62,6 +65,7 @@ class ProjectController extends Controller
                     $_s->items()->save($_t);
                 }
             }
+            */
 
             return redirect(route('project.profile', ['id'=> $project->id]));
         }

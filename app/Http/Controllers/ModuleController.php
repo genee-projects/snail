@@ -29,14 +29,7 @@ class ModuleController extends Controller
 
         $module = new Module();
         $module->name = $request->input('name');
-        $module->code = $request->input('code');
-
-        $object_name = ucwords($request->input('object_type'));
-        $object_id = $request->input('object_id');
-
-        $object = $object_name::find($object_id);
-
-        $module->object()->associate($object);
+        $module->description = $request->input('description');
 
         $module->save();
 
@@ -47,6 +40,12 @@ class ModuleController extends Controller
 
         $module = Module::find($id);
         //TODO
+
+    }
+
+    public function modules() {
+
+        return view('modules/index', ['modules'=> Module::all()]);
 
     }
 }

@@ -1,7 +1,7 @@
 <div class="form-group">
-    <input name="name" type="text" class="form-control" id="project-ref-no" placeholder="名称(人员模块)">
+    <input name="name" type="text" class="form-control" placeholder="名称(成员目录)">
 </div>
 
 <div class="form-group">
-    <input name="code" type="text" class="form-control" id="project-name" placeholder="代码(people)">
+    <input name="description" type="text" class="form-control" placeholder="简述">
 </div>

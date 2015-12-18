@@ -6,7 +6,7 @@
             <h1 class="page-header">项目列表</h1>
         </div>
     </div>
-    <div>
+    <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading ">
                     <span>

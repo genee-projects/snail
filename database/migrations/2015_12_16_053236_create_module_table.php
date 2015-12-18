@@ -16,9 +16,7 @@ class CreateModuleTable extends Migration
         Schema::create('modules', function(Blueprint $table) {
             $table->increments('id');       // 自增 ID
             $table->string('name');         // 名称
-            $table->string('code');         // 代码
-            $table->integer('object_id');   // 所属的对象 ID
-            $table->string('object_type');  // 所属的对象类型
+            $table->string('description');  // 描述
             $table->softDeletes();
         });
     }

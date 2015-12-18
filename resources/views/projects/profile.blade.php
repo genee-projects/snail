@@ -265,58 +265,58 @@
                                         </div>
                                     </div>
                                     <hr />
-                                    <h4>服务列表</h4>
-                                    <div class="row">
+                                    {{--<h4>服务列表</h4>--}}
+                                    {{--<div class="row">--}}
 
-                                        <div class="col-sm-6">
-                                            <form method="post" action="{{ route('item.add') }}">
-                                                <table class="table table-hover table-striped">
+                                        {{--<div class="col-sm-6">--}}
+                                            {{--<form method="post" action="{{ route('item.add') }}">--}}
+                                                {{--<table class="table table-hover table-striped">--}}
 
-                                                    <tr>
-                                                        <td>名称</td>
-                                                        <td>代码</td>
-                                                    </tr>
+                                                    {{--<tr>--}}
+                                                        {{--<td>名称</td>--}}
+                                                        {{--<td>代码</td>--}}
+                                                    {{--</tr>--}}
 
-                                                    @foreach($project->services as $service)
-                                                        <tr>
-                                                            <td>{{ $service->name }}</td>
-                                                            <td>
-                                                                <code>{{ $service->code }}</code>
-                                                                <span class="pull-right">
-                                                                    <a href="{{ route('service.delete', ['id'=> $service->id]) }}">
-                                                                        <i class="fa fa-times"></i>
-                                                                    </a>
-                                                                    <a class="add-item" _id="{{ $service->id }}">
-                                                                        <i class="fa fa-plus"></i>
-                                                                    </a>
-                                                                </span>
-                                                            </td>
-                                                        </tr>
+                                                    {{--@foreach($project->services as $service)--}}
+                                                        {{--<tr>--}}
+                                                            {{--<td>{{ $service->name }}</td>--}}
+                                                            {{--<td>--}}
+                                                                {{--<code>{{ $service->code }}</code>--}}
+                                                                {{--<span class="pull-right">--}}
+                                                                    {{--<a href="{{ route('service.delete', ['id'=> $service->id]) }}">--}}
+                                                                        {{--<i class="fa fa-times"></i>--}}
+                                                                    {{--</a>--}}
+                                                                    {{--<a class="add-item" _id="{{ $service->id }}">--}}
+                                                                        {{--<i class="fa fa-plus"></i>--}}
+                                                                    {{--</a>--}}
+                                                                {{--</span>--}}
+                                                            {{--</td>--}}
+                                                        {{--</tr>--}}
 
-                                                        @foreach($service->items as $item)
-                                                            <tr>
-                                                                <td colspan="2">
-                                                                <span class="pull-right">
-                                                                    <code>{{ $item->key }}</code> : <code>{{ $item->value }}</code>
-                                                                    <a href="{{ route('item.delete', ['id'=> $item->id]) }}"><i class="fa fa-times"></i></a>
-                                                                </span>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                        <input type="hidden" name="object_type" value="{{ get_class($service)}}">
-                                                    @endforeach
-                                                </table>
-                                            </form>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <form method="post" action="{{ route('service.add') }}">
-                                                <input type="hidden" name="object_type" value="{{ get_class($project) }}">
-                                                <input type="hidden" name="object_id" value="{{ $project->id }}">
-                                                @include('services/form')
-                                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> 添加</button>
-                                            </form>
-                                        </div>
-                                    </div>
+                                                        {{--@foreach($service->items as $item)--}}
+                                                            {{--<tr>--}}
+                                                                {{--<td colspan="2">--}}
+                                                                {{--<span class="pull-right">--}}
+                                                                    {{--<code>{{ $item->key }}</code> : <code>{{ $item->value }}</code>--}}
+                                                                    {{--<a href="{{ route('item.delete', ['id'=> $item->id]) }}"><i class="fa fa-times"></i></a>--}}
+                                                                {{--</span>--}}
+                                                                {{--</td>--}}
+                                                            {{--</tr>--}}
+                                                        {{--@endforeach--}}
+                                                        {{--<input type="hidden" name="object_type" value="{{ get_class($service)}}">--}}
+                                                    {{--@endforeach--}}
+                                                {{--</table>--}}
+                                            {{--</form>--}}
+                                        {{--</div>--}}
+                                        {{--<div class="col-sm-6">--}}
+                                            {{--<form method="post" action="{{ route('service.add') }}">--}}
+                                                {{--<input type="hidden" name="object_type" value="{{ get_class($project) }}">--}}
+                                                {{--<input type="hidden" name="object_id" value="{{ $project->id }}">--}}
+                                                {{--@include('services/form')--}}
+                                                {{--<button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> 添加</button>--}}
+                                            {{--</form>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
                                 </div>
                             </div>
 
@@ -470,17 +470,17 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.add-item').bind('click', function() {
-                var service_id = $(this).attr('_id');
+    {{--<script type="text/javascript">--}}
+        {{--$(document).ready(function() {--}}
+            {{--$('.add-item').bind('click', function() {--}}
+                {{--var service_id = $(this).attr('_id');--}}
 
-                var $tr = $(this).parents('tr');
+                {{--var $tr = $(this).parents('tr');--}}
 
-                $tr.after($('<input type="hidden" name="object_id" value="' +  service_id +  '"/>'));
-                $tr.after($('<tr><td colspan="2"><span class="pull-right"><input type="text" name="key" placeholder="key"> <input type="text" name="value" placeholder="value"> <button type="submit" class="btn btn-primary btn-xs">添加</button></span></td></tr>'));
-            });
-        });
-    </script>
+                {{--$tr.after($('<input type="hidden" name="object_id" value="' +  service_id +  '"/>'));--}}
+                {{--$tr.after($('<tr><td colspan="2"><span class="pull-right"><input type="text" name="key" placeholder="key"> <input type="text" name="value" placeholder="value"> <button type="submit" class="btn btn-primary btn-xs">添加</button></span></td></tr>'));--}}
+            {{--});--}}
+        {{--});--}}
+    {{--</script>--}}
 
 @endsection

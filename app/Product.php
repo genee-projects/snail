@@ -15,7 +15,8 @@ class Product extends Model
     protected $dates = ['deleted_at'];
 
     public function modules() {
-        return $this->morphMany('App\Module', 'object');
+        //关系是, hasMany, 包含多个 module 的关系
+        return $this->belongsToMany('App\Module')->withPivot('type');
     }
 
     public function services() {

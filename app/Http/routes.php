@@ -58,6 +58,11 @@ Route::post('/products/edit', [
     'uses'=> 'ProductController@edit',
 ]);
 
+Route::post('/products/{id}/modules', [
+    'as'=> 'product.module',
+    'uses'=> 'ProductController@modules',
+]);
+
 #servers
 Route::get('/servers', [
     'as'=> 'servers',
@@ -78,7 +83,10 @@ Route::get('/servers/profile/{id}', [
 
 
 Route::post('/servers/edit', 'ServerController@edit');
-Route::get('/servers/delete/{id}', 'ServerController@delete');
+Route::get('/servers/delete/{id}', [
+    'as'=> 'server.delete',
+    'uses'=> 'ServerController@delete',
+]);
 
 
 #comments
@@ -147,6 +155,11 @@ Route::get('/items/delete/{id}', [
 # item end
 
 # modules start
+
+Route::get('/modules', [
+   'as'=> 'modules',
+    'uses'=> 'ModuleController@modules'
+]);
 Route::post('/modules/add', [
     'as'=> 'module.add',
     'uses'=> 'ModuleController@add',

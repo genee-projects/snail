@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Genee CRM</title>
-    <base href="http://crm.reserva.genee.cn/">
+    <base href="http://parrot:8000/">
     <link rel="stylesheet" href="asserts/3rd/bootstrap/dist/css/bootstrap.min.css">
     <script src="asserts/3rd/jquery/dist/jquery.min.js"></script>
 
@@ -41,7 +41,7 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; position: fixed;">
             <div class="navbar-header ">
-                <a class="navbar-brand" href="/" style="margin: 0px auto;">Genee CRM V0.0.1</a>
+                <a class="navbar-brand" href="/" style="margin: 0px auto;">Genee CRM V0.1.0</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -69,13 +69,19 @@
                         </li>
 
                         <li>
-                            <a href="products"><i class="fa fa-cubes"></i> 产品管理
-
-                                {{--<span class="badge pull-right">--}}
-                                    {{--{{ $products_count}}--}}
-                                {{--</span>--}}
-                                {{----}}
+                            <a href="#">
+                                <i class="fa fa-cubes"></i> 产品相关
+                                <span class="fa arrow"></span>
                             </a>
+
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="products">产品管理</a>
+                                </li>
+                                <li>
+                                    <a href="modules">模块管理</a>
+                                </li>
+                            </ul>
                         </li>
 
                         {{--<li>--}}

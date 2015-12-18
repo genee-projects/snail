@@ -44,6 +44,7 @@ class ServerController extends Controller
 
         $server->save();
 
+        /* services 暂时先删除
         foreach(Server::root()->services as $service) {
 
             $_s = $service->replicate();
@@ -56,6 +57,7 @@ class ServerController extends Controller
                 $_s->items()->save($_t);
             }
         }
+        */
 
         return redirect('/servers')
             ->with('message_content', '添加成功!')
