@@ -6,6 +6,9 @@ server {
     root /var/www/public;
     charset utf8;
 
+    auth_basic "CRM";
+    auth_basic_user_file /etc/nginx/htpasswd;
+
     location / {
 
         gzip on;
