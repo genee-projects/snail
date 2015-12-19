@@ -21,7 +21,7 @@ class ModuleController extends Controller
         $module = Module::find($id);
 
         if ($module->delete()) {
-            return redirect()->back();
+            return redirect()->to(route('modules'));
         }
     }
 
@@ -33,19 +33,49 @@ class ModuleController extends Controller
 
         $module->save();
 
+        foreach($request->input('modules') as $dep_module_id) {
+            $dep_module = Module::find($dep_module_id);
+            $module->dep_modules()->save($dep_module);
+        }
+
         return redirect()->back();
     }
 
     public function edit($id, Request $request) {
 
         $module = Module::find($id);
-        //TODO
 
+        $module->name = $request->input('name');
+        $module->description = $request->input('description');
+
+        $data = [];
+        foreach($module->dep_modules as $m) {
+            $data[] = $m->id;
+        }
+
+        $module->dep_modules()->detach($data);
+
+        //重新对选定的 module 进行 link, 类型为 type
+        foreach($request->input('modules') as $module_id) {
+
+
+
+            $dep_module = Module::find($module_id);
+
+            $module->dep_modules()->save($dep_module);
+        }
+
+        return redirect()->back();
     }
 
     public function modules() {
-
         return view('modules/index', ['modules'=> Module::all()]);
+    }
 
+    public function profile($id) {
+
+        $module = Module::find($id);
+
+        return view('modules/profile', ['module'=> $module]);
     }
 }

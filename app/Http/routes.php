@@ -175,10 +175,8 @@ Route::post('/modules/edit/{id}', [
     'uses'=> 'ModuleController@edit',
 ]);
 
-
-Route::get('/modules/delete/{id}', [
-    'as'=> 'module.delete',
-    'uses'=> 'ModuleController@delete',
+Route::get('/modules/profile/{id}', [
+    'as'=> 'module.profile',
+    'uses'=> 'ModuleController@profile',
 ]);
-
 # modules end

@@ -15,8 +15,8 @@ class Product extends Model
     protected $dates = ['deleted_at'];
 
     public function modules() {
-        //关系是, hasMany, 包含多个 module 的关系
-        return $this->belongsToMany('App\Module')->withPivot('type');
+        //关系是, belongsToMany, 包含多个 module 的关系
+        return $this->belongsToMany('App\Module', 'product_modules')->withPivot('type');
     }
 
     public function services() {

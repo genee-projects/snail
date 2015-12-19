@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductModuleTable extends Migration
+class CreateModuleDepModulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateProductModuleTable extends Migration
     public function up()
     {
         //
-        Schema::create('product_modules', function(Blueprint $table) {
-            $table->integer('product_id')->unsigned()->index();
-            $table->foreign('product_id')->references('id')->on('products');
-
+        Schema::create('module_dep_modules', function(Blueprint $table) {
             $table->integer('module_id')->unsigned()->index();
             $table->foreign('module_id')->references('id')->on('modules');
 
-            $table->string('type')->nullable();                //用途
+            $table->integer('dep_module_id')->unsigned()->index();
+            $table->foreign('dep_module_id')->references('id')->on('modules');
+
         });
     }
 
@@ -32,6 +31,6 @@ class CreateProductModuleTable extends Migration
     public function down()
     {
         //
-        Schema::drop('product_modules');
+        Schema::drop('module_dep_modules');
     }
 }

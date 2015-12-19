@@ -30,7 +30,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="add-module-modal-label">添加客户</h4>
+                                    <h4 class="modal-title" id="add-module-modal-label">添加模块</h4>
                                 </div>
                                 <div class="modal-body">
                                     <form id="add-module-form" method="post" action="{{ route('module.add') }}">
@@ -54,7 +54,11 @@
                         </tr>
                         @foreach($modules as $module)
                             <tr>
-                                <td>{{ $module->name }}</td>
+                                <td>
+                                    <a href="{{ route('module.profile', ['id'=> $module->id]) }}">
+                                        {{ $module->name }}
+                                    </a>
+                                </td>
                                 <td>{{ $module->description }}</td>
                             </tr>
                         @endforeach

@@ -17,4 +17,8 @@ class Module extends Model
     public function object() {
         return $this->morphTo();
     }
+
+    public function dep_modules() {
+        return $this->belongsToMany('App\Module', 'module_dep_modules', 'module_id', 'dep_module_id');
+    }
 }
