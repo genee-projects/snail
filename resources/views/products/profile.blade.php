@@ -101,7 +101,7 @@
                                             @endif
 
 
-                                            <span _id="{{ $module->id }}" class="module-btn btn {{ $btn_class }} text-center" style="padding: 20px; margin:10px 5px; width:100px;">
+                                            <span _id="{{ $module->id }}" dep_modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center" style="padding: 20px; margin:10px 5px; width:100px;">
                                                 {{ $module->name }}
                                             </span>
 
@@ -195,7 +195,7 @@
                                             @endif
 
 
-                                            <span _id="{{ $module->id }}" class="module-btn btn {{ $btn_class }} text-center" style="padding: 20px; margin:10px 5px; width:100px;">
+                                            <span _id="{{ $module->id }}" dep_modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center" style="padding: 20px; margin:10px 5px; width:100px;">
                                                 {{ $module->name }}
                                             </span>
 
@@ -246,24 +246,78 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $('.module-btn[disabled!="disabled"]').bind('click', function() {
+
+            function check_disabled(dep_modules_ids, form) {
+
+                disabled = false;
+                console.log('[_id=' + dep_modules_ids.join('],[_id=') + ']');
+
+                $('[_id=' + dep_modules_ids.join('],[_id=') + ']', form).each(function() {
+
+                    if (! $(this).hasClass('btn-primary')) {
+                        disabled = true;
+                    }
+                });
+
+                return disabled;
+            }
+
+            function refresh_btn_status() {
+
+                $('.module-btn').each(function() {
+
+
+                    var $btn = $(this);
+
+                    var form = $(this).parents('form');
+
+                    //查看依赖
+
+                    if ($btn.attr('dep_modules')) {
+
+                        var dep_modules = $btn.attr('dep_modules');
+
+                        var dep_modules_ids = dep_modules.split(',');
+
+                        //查找依赖的模块, 查看是否被 check
+                        //如果没被check, 那么 disabled="disabled"
+                        if (check_disabled(dep_modules_ids, form)) {
+                            $btn.attr('disabled', 'disabled');
+                            $btn.removeClass('btn-primary');
+                            $btn.addClass('btn-default');
+                            $btn.next(":input").remove();
+                        }
+                        else {
+                            $btn.removeAttr('disabled');
+                        }
+                    }
+                });
+            }
+
+            refresh_btn_status();
+
+
+            $('.module-btn').bind('click', function() {
                 $input = $('<input type="hidden" name="modules[]" />');
 
                 var $span = $(this);
 
+                if (! $(this).attr('disabled')) {
+                    if ($span.hasClass('btn-default')) {
+                        $span.removeClass('btn-default');
+                        $span.addClass('btn-primary');
+                        $input.val($span.attr('_id'));
 
-                if ($span.hasClass('btn-default')) {
-                    $span.removeClass('btn-default');
-                    $span.addClass('btn-primary');
-                    $input.val($span.attr('_id'));
+                        $span.after($input);
+                    }
+                    else {
+                        $span.removeClass('btn-primary');
+                        $span.addClass('btn-default');
+                        $span.next(":input").remove();
+                    }
+                    refresh_btn_status();
+                }
 
-                    $span.after($input);
-                }
-                else {
-                    $span.removeClass('btn-primary');
-                    $span.addClass('btn-default');
-                    $span.next(":input").remove();
-                }
             });
         });
     </script>
