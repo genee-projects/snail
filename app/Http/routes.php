@@ -48,7 +48,7 @@ Route::post('/products/add', [
 
 ]);
 
-Route::get('/products/delete', [
+Route::get('/products/delete/{id}', [
     'as'=> 'product.delete',
     'uses'=> 'ProductController@delete',
 ]);
@@ -61,6 +61,11 @@ Route::post('/products/edit', [
 Route::post('/products/{id}/modules', [
     'as'=> 'product.module',
     'uses'=> 'ProductController@modules',
+]);
+
+Route::get('/products/{id}/modules/delete/{module_id}', [
+    'as'=> 'product.module.delete',
+    'uses'=> 'ProductController@module_delete',
 ]);
 
 #servers

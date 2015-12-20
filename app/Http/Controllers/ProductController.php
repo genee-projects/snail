@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Module;
-use App\Service;
+//use App\Service;
 
 class ProductController extends Controller
 {
@@ -44,12 +44,14 @@ class ProductController extends Controller
         }
      }
 
-    public function delete(Request $request) {
+    public function delete($id) {
 
         $product = Product::find($request->input('id'));
 
+        $product = Product::find($id);
+
         if ($product->delete()) {
-            return response()->json(true);
+            return redirect()->route('products');
         }
     }
 
@@ -62,14 +64,17 @@ class ProductController extends Controller
         //先把所有的 type 的 module 进行 unlink
 
         $data = [];
+
         foreach($product->modules()->wherePivot('type', '=', $type)->get(['id']) as $module) {
             $data[] = $module->id;
         }
 
-        $product->modules()->detach($data);
+        if (count($data)) {
+            $product->modules()->detach($data);
+        }
 
         //重新对选定的 module 进行 link, 类型为 type
-        foreach($request->input('modules') as $module_id) {
+        foreach($request->input('modules', []) as $module_id) {
 
             $module = Module::find($module_id);
 
@@ -78,6 +83,19 @@ class ProductController extends Controller
             ]);
         }
 
+
         return redirect()->back();
+    }
+
+    public function module_delete($product_id, $module_id) {
+
+        $product = Product::find($product_id);
+        $module = Module::find($module_id);
+
+
+        $product->modules()->detach($module_id);
+
+        return redirect()->route('product.profile', ['id'=> $product->id]);
+
     }
 }

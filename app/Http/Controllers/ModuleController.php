@@ -33,12 +33,13 @@ class ModuleController extends Controller
 
         $module->save();
 
-        foreach($request->input('modules') as $dep_module_id) {
+        foreach($request->input('modules', []) as $dep_module_id) {
+
             $dep_module = Module::find($dep_module_id);
             $module->dep_modules()->save($dep_module);
         }
 
-        return redirect()->back();
+        return redirect()->route('modules');
     }
 
     public function edit($id, Request $request) {

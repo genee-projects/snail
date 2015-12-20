@@ -74,7 +74,6 @@
                                 <i class="fa fa-wrench"></i> 设置模块
                             </button>
                         </span>
-
                     </p>
 
                     <div class="modal fade" id="add-normal-module" tabindex="-1" role="dialog" aria-labelledby="add-normal-module-modal-label">
@@ -88,37 +87,36 @@
                                     <form id="add-normal-module-form" method="post" action="{{ route('product.module', ['id'=> $product->id]) }}">
 
                                         @foreach(\App\Module::all() as $module)
-                                            <span _id="{{ $module->id }}" class="module-btn btn btn-default text-center" style="padding: 20px; margin:10px 5px; width:100px;">
+
+                                            @if($product->modules()->wherePivot('type', '=', 'extra')->get()->contains($module->id))
+                                                {{--*/ continue; /*--}}
+                                            @endif
+
+                                            {{--*/ $selected = false /*--}}
+                                            {{--*/ $btn_class = 'btn-default' /*--}}
+
+                                            @if($product->modules()->wherePivot('type', '=', 'normal')->get()->contains($module->id))
+                                                {{--*/ $selected = true /*--}}
+                                                {{--*/ $btn_class = 'btn-primary' /*--}}
+                                            @endif
+
+
+                                            <span _id="{{ $module->id }}" class="module-btn btn {{ $btn_class }} text-center" style="padding: 20px; margin:10px 5px; width:100px;">
                                                 {{ $module->name }}
                                             </span>
-                                        @endforeach
 
-                                        <input type="hidden" name="type" value="normal"/>
+                                            @if($selected)
+                                                <input type="hidden" name="modules[]" value="{{ $module->id }}" />
+                                            @endif
+
+                                        @endforeach
+                                        <span>
+                                            <input type="hidden" name="type" value="normal"/>
+                                        </span>
+
                                     </form>
 
-                                    <script type="text/javascript">
-                                        $(document).ready(function() {
-                                            $('.module-btn').bind('click', function() {
-                                                $input = $('<input type="hidden" name="modules[]" />');
 
-                                                var $span = $(this);
-
-
-                                                if ($span.hasClass('btn-default')) {
-                                                    $span.removeClass('btn-default');
-                                                    $span.addClass('btn-primary');
-                                                    $input.val($span.attr('_id'));
-
-                                                    $span.after($input);
-                                                }
-                                                else {
-                                                    $span.removeClass('btn-primary');
-                                                    $span.addClass('btn-default');
-                                                    $span.next(":input").remove();
-                                                }
-                                            });
-                                        });
-                                    </script>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -143,7 +141,7 @@
                                 <td>
                                     {{ $module->description }}
                                     <span class="pull-right">
-                                        <a href="{{ route('module.delete', ['id'=> $module->id]) }}">
+                                        <a href="{{ route('product.module.delete', ['id'=> $product->id, 'module_id'=> $module->id]) }}">
                                             <i class="fa fa-times"></i>
                                         </a>
                                     </span>
@@ -162,14 +160,63 @@
                 <div class="panel-heading ">
                     <p>
                         <span>
-                            <i class="fa fa-wrench"></i> 设置模块
+                            <i class="fa fa-wrench"></i> 扩展模块
                         </span>
                         <span class="pull-right">
-                            <button class="btn btn-primary">
-                                <i class="fa fa-wrench"></i> 设置模块
-                            </button>
+                             <button class="btn btn-primary" data-toggle="modal" data-target="#add-extra-module">
+                                 <i class="fa fa-wrench"></i> 设置模块
+                             </button>
                         </span>
                     </p>
+
+                    <div class="modal fade" id="add-extra-module" tabindex="-1" role="dialog" aria-labelledby="add-extra-module-modal-label">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="add-module-modal-label">设置基础模块</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="add-extra-module-form" method="post" action="{{ route('product.module', ['id'=> $product->id]) }}">
+
+                                        @foreach(\App\Module::all() as $module)
+
+                                            @if($product->modules()->wherePivot('type', '=', 'normal')->get()->contains($module->id))
+                                                {{--*/ continue; /*--}}
+                                            @endif
+
+                                            {{--*/ $selected = false /*--}}
+                                            {{--*/ $btn_class = 'btn-default' /*--}}
+
+                                            @if($product->modules()->wherePivot('type', '=', 'extra')->get()->contains($module->id))
+                                                {{--*/ $selected = true /*--}}
+                                                {{--*/ $btn_class = 'btn-primary' /*--}}
+
+                                            @endif
+
+
+                                            <span _id="{{ $module->id }}" class="module-btn btn {{ $btn_class }} text-center" style="padding: 20px; margin:10px 5px; width:100px;">
+                                                {{ $module->name }}
+                                            </span>
+
+                                            @if($selected)
+                                                <input type="hidden" name="modules[]" value="{{ $module->id }}" />
+                                            @endif
+                                        @endforeach
+
+                                        <span>
+                                            <input type="hidden" name="type" value="extra" />
+                                        </span>
+
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                    <button type="submit" class="btn btn-primary" form="add-extra-module-form">设置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="panel panel-body">
                     <table class="table table-hover table-bordered">
@@ -177,12 +224,49 @@
                             <td style="width: 10%;">名称</td>
                             <td>简述</td>
                         </tr>
+                        @foreach($product->modules()->wherePivot('type', '=', 'extra')->get() as $module)
+                            <tr>
+                                <td>{{ $module->name }}</td>
+                                <td>
+                                    {{ $module->description }}
+                                    <span class="pull-right">
+                                        <a href="{{ route('product.module.delete', ['id'=> $product->id, 'module_id'=> $module->id]) }}">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </span>
+                                </td>
+                            </tr>
+                        @endforeach
                     </table>
 
                 </div>
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.module-btn[disabled!="disabled"]').bind('click', function() {
+                $input = $('<input type="hidden" name="modules[]" />');
+
+                var $span = $(this);
+
+
+                if ($span.hasClass('btn-default')) {
+                    $span.removeClass('btn-default');
+                    $span.addClass('btn-primary');
+                    $input.val($span.attr('_id'));
+
+                    $span.after($input);
+                }
+                else {
+                    $span.removeClass('btn-primary');
+                    $span.addClass('btn-default');
+                    $span.next(":input").remove();
+                }
+            });
+        });
+    </script>
 
     {{--<div class="row">--}}
         {{--<div class="col-lg-6">--}}
