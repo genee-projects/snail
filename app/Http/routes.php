@@ -26,9 +26,21 @@ Route::get('/clients/profile/{id}', [
     'uses'=> 'ClientController@profile',
 ]);
 
-Route::post('/clients/add', 'ClientController@add');
-Route::post('/clients/edit', 'ClientController@edit');
-Route::get('/clients/delete/{id}', 'ClientController@delete');
+Route::post('/clients/add', [
+    'as'=> 'client.add',
+    'uses'=> 'ClientController@add',
+]);
+
+Route::post('/clients/edit', [
+    'as'=> 'client.edit',
+    'uses'=> 'ClientController@edit',
+]);
+
+Route::get('/clients/delete/{id}', [
+    'as'=> 'cleint.delete',
+    'uses'=> 'ClientController@delete',
+]);
+#clients end
 
 
 #products
@@ -63,10 +75,21 @@ Route::post('/products/{id}/modules', [
     'uses'=> 'ProductController@modules',
 ]);
 
+Route::post('/products/{id}/params', [
+    'as'=> 'product.param',
+    'uses'=> 'ProductController@params',
+]);
+
 Route::get('/products/{id}/modules/delete/{module_id}', [
     'as'=> 'product.module.delete',
     'uses'=> 'ProductController@module_delete',
 ]);
+
+Route::get('/products/{id}/params/delete/{param_id}', [
+    'as'=> 'product.param.delete',
+    'uses'=> 'ProductController@param_delete',
+]);
+
 
 #servers
 Route::get('/servers', [
@@ -185,3 +208,36 @@ Route::get('/modules/profile/{id}', [
     'uses'=> 'ModuleController@profile',
 ]);
 # modules end
+
+
+#params start
+Route::get('/params', [
+    'as'=> 'params',
+    'uses'=> 'ParamsController@params',
+]);
+
+Route::post('/params/add', [
+    'as'=> 'param.add',
+    'uses'=> 'ParamsController@add',
+]);
+
+Route::get('/params/profile/{id}', [
+    'as'=> 'param.profile',
+    'uses'=> 'ParamsController@profile',
+]);
+
+Route::get('/params/delete/{id}', [
+    'as'=> 'param.delete',
+    'uses'=> 'ParamsController@delete',
+]);
+
+Route::post('/params/edit/{id}', [
+    'as'=> 'param.edit',
+    'uses'=> 'ParamsController@edit',
+]);
+
+Route::get('/params.json', [
+    'as'=> 'params.json',
+    'uses'=> 'ParamsController@params_json',
+]);
+#params end

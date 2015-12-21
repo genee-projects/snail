@@ -40,4 +40,8 @@ class Project extends Model
     public function items() {
         return $this->morphMany('App\Item', 'object');
     }
+
+    public function params() {
+        return $this->belongsToMany('App\Param')->withPivot('value');
+    }
 }

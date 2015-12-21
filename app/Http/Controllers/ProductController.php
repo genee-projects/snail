@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Module;
+use App\Param;
 //use App\Service;
 
 class ProductController extends Controller
@@ -90,12 +91,34 @@ class ProductController extends Controller
     public function module_delete($product_id, $module_id) {
 
         $product = Product::find($product_id);
-        $module = Module::find($module_id);
-
 
         $product->modules()->detach($module_id);
 
         return redirect()->route('product.profile', ['id'=> $product->id]);
 
+    }
+
+    public function param_delete($product_id, $param_id) {
+
+        $product = Product::find($product_id);
+
+
+        $product->params()->detach($param_id);
+
+        return redirect()->route('product.profile', ['id'=> $product->id]);
+
+    }
+
+    public function params($id, Request $request) {
+
+        $product = Product::find($id);
+
+        $param = Param::find($request->input('param_id'));
+
+        $product->params()->save($param, [
+            'value'=> $request->input('value')
+        ]);
+
+        return redirect()->back();
     }
 }

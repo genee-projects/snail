@@ -76,10 +76,13 @@
 
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="products">产品管理</a>
+                                    <a href="{{ route('products') }}">产品管理</a>
                                 </li>
                                 <li>
-                                    <a href="modules">模块管理</a>
+                                    <a href="{{ route('modules') }}">模块管理</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('params') }}">参数管理</a>
                                 </li>
                             </ul>
                         </li>

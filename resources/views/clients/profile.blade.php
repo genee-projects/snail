@@ -14,7 +14,7 @@
                              <i class="fa fa-fw fa-edit"></i>
                          </a>
 
-                        <a href="/clients/delete/{{ $client->id }}">
+                        <a href="{{ route('client.delete', ['id'=> $client->id]) }}">
                             <i class="fa fa-fw fa-times"></i>
                         </a>
                     </span>

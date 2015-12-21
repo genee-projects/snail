@@ -26,4 +26,8 @@ class Product extends Model
     public function comments() {
         return $this->morphMany('App\Comment', 'object');
     }
+
+    public function params() {
+        return $this->belongsToMany('App\Param', 'product_params')->withPivot('value');
+    }
 }

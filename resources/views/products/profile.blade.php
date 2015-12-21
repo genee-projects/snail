@@ -242,6 +242,115 @@
                 </div>
             </div>
         </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading ">
+                    <p>
+                        <span>
+                            <i class="fa fa-wrench"></i> 参数信息
+                        </span>
+                         <span class="pull-right">
+                             <button class="btn btn-primary" data-toggle="modal" data-target="#add-param">
+                                 <i class="fa fa-plus"></i> 追加参数
+                             </button>
+                        </span>
+                    </p>
+
+                    <div class="modal fade" id="add-param" tabindex="-1" role="dialog" aria-labelledby="add-param-modal-label">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="add-module-modal-label">追加参数</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" id="add-param-form" method="post" action="{{ route('product.param', ['id'=> $product->id]) }}">
+                                        <div class="form-group">
+                                            <label for="server_selector" class="col-sm-2 control-label">选择参数</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" data-provide="typeahead" id="server_selector">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="server_usage" class="col-sm-2 control-label">参数值</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text" name="value" >
+                                            </div>
+                                        </div>
+
+                                        <script type="text/javascript">
+
+                                            $.get('/params.json', function(data){
+                                                var $selector = $("#server_selector");
+                                                $selector.typeahead({
+                                                    source:data,
+                                                    displayText: function(item) {
+                                                        return item.name + ' ('+  item.value + ')';
+                                                    },
+                                                    afterSelect: function(item) {
+                                                        //修改 $selector 的 value
+                                                        $selector.val(item.name);
+                                                        //同步设定 value 到 value 输入框
+                                                        $selector.parents('form').find(':input[name=value]').val(item.value);
+
+                                                        var $input = $('<input name="param_id" type="hidden">');
+
+                                                        $input.val(item.id);
+                                                        $selector.after($input);
+                                                    }
+                                                });
+                                            },'json');
+                                        </script>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                    <button type="submit" class="btn btn-primary" form="add-param-form">设置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="panel panel-body">
+                    <table class="table table-hover table-striped">
+                        <tr>
+                            <td>参数名称</td>
+                            <td>参数代码</td>
+                            <td>参数值</td>
+                        </tr>
+
+                        @foreach($product->params as $param)
+                            <tr>
+                                <td>{{ $param->name }}</td>
+                                <td><code>{{ $param->code }}</code></td>
+                                <td>
+                                    <p>
+                                        <span>
+                                            {{ $param->pivot->value }}
+                                        </span>
+
+                                        <span class="pull-right">
+                                            <a href="{{ route('product.param.delete', ['id'=> $product->id, 'param_id'=> $param->id]) }}">
+                                                <i class="fa fa-times"></i>
+                                            </a>
+                                        </span>
+                                    </p>
+                                </td>
+
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script type="text/javascript">
