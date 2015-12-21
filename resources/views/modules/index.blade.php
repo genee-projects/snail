@@ -51,6 +51,7 @@
                         <tr>
                             <td style="width: 10%;">模块名称</td>
                             <td>模块描述</td>
+                            <td>依赖模块</td>
                         </tr>
                         @foreach($modules as $module)
                             <tr>
@@ -60,6 +61,15 @@
                                     </a>
                                 </td>
                                 <td>{{ $module->description }}</td>
+                                <td>
+                                    @foreach($module->dep_modules as $m)
+                                        <code>
+                                            <a href="{{ route('module.profile', ['id'=> $m->id]) }}">
+                                                {{ $m->name }}
+                                            </a>
+                                        </code>
+                                    @endforeach
+                                </td>
                             </tr>
                         @endforeach
                     </table>
