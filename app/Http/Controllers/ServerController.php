@@ -4,16 +4,16 @@ namespace app\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use App\Server;
 
 class ServerController extends Controller
 {
     public function servers() {
-        $root = Server::root();
 
         return view('servers/index', [
             'servers'=> Server::all(),
-            'root'=> $root,
+            //'root'=> Server::root(),
         ]);
     }
 

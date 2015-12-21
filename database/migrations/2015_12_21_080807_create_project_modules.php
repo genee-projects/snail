@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProjectServerTable extends Migration
+class CreateProjectModules extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateProjectServerTable extends Migration
     public function up()
     {
         //
-        Schema::create('project_servers', function(Blueprint $table) {
+        Schema::create('project_modules', function(Blueprint $table) {
             $table->integer('project_id')->unsigned()->index();
             $table->foreign('project_id')->references('id')->on('projects');
 
-            $table->integer('server_id')->unsigned()->index();
-            $table->foreign('server_id')->references('id')->on('servers');
+            $table->integer('module_id')->unsigned()->index();
+            $table->foreign('module_id')->references('id')->on('modules');
 
-            $table->string('usage')->nullable();                //用途
-            $table->dateTime('deploy_time')->nullable();        //部署时间
+            $table->string('type'); //类型
         });
     }
 
@@ -33,6 +32,6 @@ class CreateProjectServerTable extends Migration
     public function down()
     {
         //
-        Schema::drop('project_servers');
+        Schema::drop('project_modules');
     }
 }

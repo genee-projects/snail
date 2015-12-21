@@ -37,11 +37,10 @@ Route::post('/clients/edit', [
 ]);
 
 Route::get('/clients/delete/{id}', [
-    'as'=> 'cleint.delete',
+    'as'=> 'client.delete',
     'uses'=> 'ClientController@delete',
 ]);
 #clients end
-
 
 #products
 Route::get('/products', [
@@ -88,6 +87,11 @@ Route::get('/products/{id}/modules/delete/{module_id}', [
 Route::get('/products/{id}/params/delete/{param_id}', [
     'as'=> 'product.param.delete',
     'uses'=> 'ProductController@param_delete',
+]);
+
+Route::get('/product/{id}/extra_modules.json', [
+    'as'=> 'product.extra_modules.json',
+    'uses'=> 'ProductController@extra_module_json',
 ]);
 
 
@@ -152,6 +156,18 @@ Route::post('/projects/edit', [
     'as'=> 'project.edit',
     'uses'=> 'ProjectController@edit'
 ]);
+
+Route::post('/projects/{id}/modules', [
+    'as'=> 'project.module.add',
+    'uses'=> 'ProjectController@module_add',
+]);
+
+
+Route::get('/projects/{id}/modules/{module_id}', [
+    'as'=> 'project.module.delete',
+    'uses'=> 'ProjectController@module_delete',
+]);
+
 
 #service start
 Route::post('/services/add', [

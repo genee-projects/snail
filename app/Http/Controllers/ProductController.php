@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Module;
 use App\Param;
-//use App\Service;
 
 class ProductController extends Controller
 {
@@ -120,5 +119,13 @@ class ProductController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function extra_module_json($id) {
+        $product = Product::find($id);
+
+        return response()->json($product->modules()
+            ->wherePivot('type', '=', 'extra')
+            ->get());
     }
 }

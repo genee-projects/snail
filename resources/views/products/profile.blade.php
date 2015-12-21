@@ -272,8 +272,7 @@
                                         <div class="form-group">
                                             <label for="server_selector" class="col-sm-2 control-label">选择参数</label>
                                             <div class="col-sm-10">
-                                                <input class="form-control" type="text" data-provide="typeahead" id="server_selector">
-
+                                                <input class="form-control" type="text" data-provide="typeahead" id="param_selector">
                                             </div>
                                         </div>
 
@@ -287,7 +286,7 @@
                                         <script type="text/javascript">
 
                                             $.get('/params.json', function(data){
-                                                var $selector = $("#server_selector");
+                                                var $selector = $("#param_selector");
                                                 $selector.typeahead({
                                                     source:data,
                                                     displayText: function(item) {
@@ -344,7 +343,6 @@
                                         </span>
                                     </p>
                                 </td>
-
                             </tr>
                         @endforeach
                     </table>
@@ -359,7 +357,6 @@
             function check_disabled(dep_modules_ids, form) {
 
                 disabled = false;
-                console.log('[_id=' + dep_modules_ids.join('],[_id=') + ']');
 
                 $('[_id=' + dep_modules_ids.join('],[_id=') + ']', form).each(function() {
 

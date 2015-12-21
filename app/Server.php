@@ -19,10 +19,12 @@ class Server extends Model
     }
 
     public function projects() {
-        return $this->belongsToMany('App\Project')
+        return $this->belongsToMany('App\Project', 'project_servers')
             ->withPivot('usage', 'deploy_time');
     }
 
+
+    /*
     static function root() {
 
         $query = self::where('deleted_at', '0000-00-00 00:00:00')->withTrashed();
@@ -39,6 +41,7 @@ class Server extends Model
 
         return $root;
     }
+    */
 
     public function services() {
         return $this->morphMany('App\Service', 'object');

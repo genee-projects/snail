@@ -9,6 +9,7 @@ use App\Product;
 use App\Project;
 use App\Client;
 use App\Server;
+use App\Module;
 
 class ProjectController extends Controller
 {
@@ -43,6 +44,12 @@ class ProjectController extends Controller
         $project->description = $request->input('description');
 
         if ($project->save()) {
+
+            foreach($product->modules()->wherePivot('type', '=', 'normal')->get() as $module) {
+                $project->modules()->save($module, [
+                    'type'=> 'normal',
+                ]);
+            }
 
             /*
             foreach($product->modules as $module) {
@@ -144,5 +151,27 @@ class ProjectController extends Controller
         return redirect(route('projects.profile', ['id'=> $id]))
             ->with('message_content', '内部错误, 无法解约!')
             ->with('message_type', 'danger');
+    }
+
+    public function module_add($id, Request $request) {
+
+        $project = Project::find($id);
+
+        $module = Module::find($request->input('module_id'));
+
+        $project->modules()->save($module, [
+            'type'=> 'extra',
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function module_delete($project_id, $module_id) {
+
+        $project = Project::find($project_id);
+
+        $project->modules()->detach($module_id);
+
+        return redirect()->back();
     }
 }

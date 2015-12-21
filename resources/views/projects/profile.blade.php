@@ -237,30 +237,66 @@
                                             <table class="table-striped table-hover table">
                                                 <tr>
                                                     <td>名称</td>
-                                                    <td>代码</td>
                                                 </tr>
 
                                                 @foreach($project->modules as $module)
                                                     <tr>
-                                                        <td>{{ $module->name }}</td>
                                                         <td>
-                                                            <code>{{ $module->code }}</code>
-                                                            <span class="pull-right">
-                                                                <a href="{{ route('module.delete', ['id'=> $module->id]) }}">
-                                                                    <i class="fa fa-times"></i>
-                                                                </a>
-                                                            </span>
+                                                            <p>
+                                                                <span>
+                                                                    {{ $module->name }}
+                                                                </span>
+
+                                                                @if($module->pivot->type == 'extra')
+                                                                    <span class="pull-right">
+                                                                        <a href="{{ route('project.module.delete', ['id'=> $project->id, 'module_id'=> $module->id]) }}">
+                                                                            <i class="fa fa-times"></i>
+                                                                        </a>
+                                                                    </span>
+                                                                @endif
+                                                            </p>
                                                         </td>
                                                     </tr>
                                                 @endforeach
                                             </table>
                                         </div>
                                         <div class="col-sm-6">
-                                            <form id="add-client-form" method="post" action="{{ route('module.add') }}">
-                                                <input type="hidden" name="object_type" value="{{ get_class($project) }}">
-                                                <input type="hidden" name="object_id" value="{{ $project->id }}">
-                                                @include('modules/form')
-                                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> 添加</button>
+                                            <form id="add-client-form" method="post" action="{{ route('project.module.add', ['id'=> $project->id]) }}">
+
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" data-provide="typeahead" id="extra_module_selector">
+                                                </div>
+
+                                                <script type="text/javascript">
+
+                                                    $(document).ready(function() {
+
+                                                        $.get('{{ route('product.extra_modules.json', ['id'=> $project->product->id]) }}', function(data){
+
+                                                            var $selector = $("#extra_module_selector");
+                                                            $selector.typeahead({
+                                                                source:data,
+                                                                displayText: function(item) {
+                                                                    return item.name;
+                                                                },
+                                                                afterSelect: function(item) {
+                                                                    //修改 $selector 的 value
+                                                                    $selector.val(item.name);
+                                                                    //同步设定 value 到 value 输入框
+                                                                    $selector.parents('form').find(':input[name=value]').val(item.value);
+
+                                                                    var $input = $('<input name="module_id" type="hidden">');
+
+                                                                    $input.val(item.id);
+                                                                    $selector.after($input);
+                                                                }
+                                                            });
+                                                        },'json');
+                                                    });
+
+                                                </script>
+
+                                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> 添加附加模块</button>
                                             </form>
                                         </div>
                                     </div>
