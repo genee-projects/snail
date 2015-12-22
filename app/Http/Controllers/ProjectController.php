@@ -10,6 +10,7 @@ use App\Project;
 use App\Client;
 use App\Server;
 use App\Module;
+use App\Param;
 
 class ProjectController extends Controller
 {
@@ -48,6 +49,13 @@ class ProjectController extends Controller
             foreach($product->modules()->wherePivot('type', '=', 'normal')->get() as $module) {
                 $project->modules()->save($module, [
                     'type'=> 'normal',
+                ]);
+            }
+
+            foreach($product->params as $param) {
+
+                $project->params()->save($param, [
+                    'value'=> $param->pivot->value,
                 ]);
             }
 
@@ -163,7 +171,9 @@ class ProjectController extends Controller
             'type'=> 'extra',
         ]);
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '模块添加成功!')
+            ->with('message_type', 'info');
     }
 
     public function module_delete($project_id, $module_id) {
@@ -172,6 +182,26 @@ class ProjectController extends Controller
 
         $project->modules()->detach($module_id);
 
+        return redirect()->back()
+            ->with('message_content', '模块删除成功!')
+            ->with('message_type', 'info');
+    }
+
+    public function param_edit($project_id, Request $request) {
+
+        $param_id = $request->input('param_id');
+
+        $project = Project::find($project_id);
+
+        $project->params()->detach($param_id);
+
+        $param = Param::find($param_id);
+
+        $project->params()->save($param, [
+            'value' => $request->input('value'),
+        ]);
+
         return redirect()->back();
     }
+
 }

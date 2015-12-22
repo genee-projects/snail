@@ -174,7 +174,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="add-module-modal-label">设置基础模块</h4>
+                                    <h4 class="modal-title" id="add-module-modal-label">设置扩展模块</h4>
                                 </div>
                                 <div class="modal-body">
                                     <form id="add-extra-module-form" method="post" action="{{ route('product.module', ['id'=> $product->id]) }}">

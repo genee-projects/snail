@@ -301,6 +301,82 @@
                                         </div>
                                     </div>
                                     <hr />
+
+
+                                    <h4>参数列表</h4>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table class="table-striped table-hover table">
+                                                <tr>
+                                                    <td>名称</td>
+                                                    <td>参数值</td>
+                                                </tr>
+
+                                                @foreach($project->params as $param)
+                                                    <tr>
+                                                        <td>
+                                                            {{ $param->name }}
+                                                        </td>
+                                                        <td>
+                                                            <code>{{ $param->pivot->value }}</code>
+                                                            <span class="pull-right">
+                                                                <i class="fa fa-fw fa-edit edit-param" _param_id="{{ $param->id }}" _name="{{ $param->name }}" _value="{{ $param->pivot->value }}"></i>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </table>
+                                        </div>
+                                        <div class="modal fade" id="edit-param" tabindex="-1" role="dialog" aria-labelledby="edit-project-modal-label">
+                                            <div class="modal-dialog modal-sm" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="edit-server-modal-label">修改参数信息</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="edit-project-param-form" class="form-horizontal" method="post" action="{{ route('project.param.edit', ['id'=> $project->id]) }}">
+
+                                                            <div class="form-group">
+                                                                <div class="col-sm-12">
+                                                                    <input type="text" class="form-control" name="name" disabled="disabled">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="col-sm-12">
+                                                                    <input type="text" class="form-control" name="value">
+                                                                </div>
+                                                            </div>
+                                                            <input type="hidden" name="param_id" value="" >
+
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                        <button type="submit" class="btn btn-primary" form="edit-project-param-form">修改</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <script type="text/javascript">
+                                        $(document).ready(function() {
+
+                                            $('.edit-param').bind('click', function() {
+
+                                                var $param_modal = $('#edit-param');
+
+                                                $param_modal.modal({});
+
+                                                $param_modal.find(':input[name=name]').val($(this).attr('_name'));
+                                                $param_modal.find(':input[name=param_id]').val($(this).attr('_param_id'));
+                                                $param_modal.find(':input[name=value]').val($(this).attr('_value'));
+
+                                            });
+                                        });
+                                    </script>
                                     {{--<h4>服务列表</h4>--}}
                                     {{--<div class="row">--}}
 

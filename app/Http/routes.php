@@ -162,10 +162,14 @@ Route::post('/projects/{id}/modules', [
     'uses'=> 'ProjectController@module_add',
 ]);
 
-
 Route::get('/projects/{id}/modules/{module_id}', [
     'as'=> 'project.module.delete',
     'uses'=> 'ProjectController@module_delete',
+]);
+
+Route::post('/projects/{id}/params/', [
+    'as'=> 'project.param.edit',
+    'uses'=> 'ProjectController@param_edit',
 ]);
 
 

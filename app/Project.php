@@ -46,6 +46,6 @@ class Project extends Model
     }
 
     public function params() {
-        return $this->belongsToMany('App\Param')->withPivot('value');
+        return $this->belongsToMany('App\Param', 'project_params')->withPivot('value');
     }
 }
