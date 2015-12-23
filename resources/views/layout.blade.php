@@ -28,11 +28,9 @@
 
             <div class="navbar-default sidebar" role="navigation">
 
-
                 <div class="sidebar-nav navbar-collapse">
 
-                    <ul class="nav">
-
+                    <ul class="nav metismenu" id="side-menu">
                         <li>
                             <a href="/"><i class="fa fa-dashboard fa-fw"></i> 总览</a>
                         </li>
@@ -49,13 +47,9 @@
                             <a href="/servers"><i class="fa fa-linux fa-fw"></i> 服务器管理</a>
                         </li>
 
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-cubes"></i> 产品相关
-                                <span class="fa arrow"></span>
-                            </a>
-
-                            <ul class="nav nav-second-level">
+                        <li class="">
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> 产品相关<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
                                 <li>
                                     <a href="{{ route('products') }}">产品管理</a>
                                 </li>
@@ -69,7 +63,7 @@
                         </li>
 
                         {{--<li>--}}
-                            {{--<a href="templates"><i class="fa fa-file-code-o"></i> 模板生成器</a>--}}
+                        {{--<a href="templates"><i class="fa fa-file-code-o"></i> 模板生成器</a>--}}
                         {{--</li>--}}
 
                         <li>
@@ -81,6 +75,10 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
+
+
+
+
 
         <button class="btn btn-primary hide btn-sm" id="show-menu">
             <i class="fa fa-fw fa-chevron-circle-right">&#160;</i>
@@ -96,7 +94,7 @@
     </div>
 
     <script type="text/javascript">
-        require(['jquery'], function($) {
+        require(['jquery', 'metisMenu'], function($) {
 
             $('#show-menu').on('click', function(e) {
                 $(this).addClass('hide');
@@ -124,6 +122,11 @@
                 return false;
 
             });
+
+            require(['css!../css/metisMenu'], function() {});
+
+            $('#side-menu').metisMenu();
+
         });
     </script>
 </body>

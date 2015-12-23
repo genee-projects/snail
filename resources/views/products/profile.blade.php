@@ -352,8 +352,7 @@
     </div>
 
     <script type="text/javascript">
-        $(document).ready(function() {
-
+        require(['jquery'], function($) {
             function check_disabled(dep_modules_ids, form) {
 
                 disabled = false;
@@ -425,7 +424,10 @@
                 }
 
             });
+
         });
+
+
     </script>
 
     {{--<div class="row">--}}

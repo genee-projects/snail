@@ -66,7 +66,7 @@
                                     </div>
 
                                     <script type="text/javascript">
-                                        $(document).ready(function() {
+                                        require(['jquery'], function($) {
                                             $('.module-btn').bind('click', function() {
                                                 $input = $('<input type="hidden" name="modules[]" />');
 
