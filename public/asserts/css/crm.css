@@ -88,10 +88,6 @@ table.table>thead>tr>th.vertical-middle,table.table>tbody>tr>th.vertical-middle,
     vertical-align:middle;
 }
 
-.btn{
-    border-width:0 0 2px;
-}
-
 .input-group-unity{
     position:relative;
     display:block;
@@ -290,7 +286,8 @@ body {
     padding-left: 37px;
 }
 
-.sidebar .nav-third-level li a {
+.sidebar .nav-third-level li a,
+.sidebar .nav-third-level li p{
     padding-left: 52px;
 }
 
@@ -522,4 +519,8 @@ table.dataTable thead .sorting:after {
 
 .navbar-default {
     border: 0px;
+}
+
+.borderless td, .borderless th {
+    border: none;
 }

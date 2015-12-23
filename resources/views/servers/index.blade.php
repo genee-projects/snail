@@ -68,21 +68,10 @@
                                     <span>
                                         <code id="fqdn_clip_{{ $server->id }}">{{ $server->fqdn }}</code>
                                     </span>
-                                    <span>
-                                        <button class="btn btn-xs btn-clip" data-clipboard-action="copy" data-clipboard-target="#fqdn_clip_{{ $server->id }}">
-                                        <i class="fa fa-fw fa-clipboard"></i>
-                                    </button>
-                                    </span>
                                 </td>
                                 <td>
                                     <span id="vpn_clip_{{ $server->id }}">
                                         {{ $server->vpn }}
-                                    </span>
-
-                                    <span>
-                                        <button class="btn btn-xs btn-clip" data-clipboard-action="copy" data-clipboard-target="#vpn_clip_{{ $server->id }}">
-                                            <i class="fa fa-fw fa-clipboard"></i>
-                                        </button>
                                     </span>
                                 </td>
                                 <td>

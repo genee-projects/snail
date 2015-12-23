@@ -4,3 +4,4 @@ storage/
 .DS_Store
 .idea/*
 public/docs/
+bower_components/

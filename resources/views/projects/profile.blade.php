@@ -1,6 +1,22 @@
 @extends('layout')
 
 @section('content')
+    <script type="text/javascript">
+        require(['jquery', 'bootstrap-datetimepicker'], function($) {
+
+            $('.datetimepicker').datetimepicker({
+                format: 'YYYY/MM/DD'
+            });
+
+            require(['css!../css/bootstrap-datetimepicker.min'], function() {
+
+            });
+
+            require(['css!../css/timeline'], function() {});
+        });
+
+        require(['holder'], function() {});
+    </script>
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">{{ $project->name }}</h1>
@@ -269,7 +285,20 @@
 
                                                 <script type="text/javascript">
 
-                                                    $(document).ready(function() {
+                                                    require(['jquery', 'bootstrap3-typeahead'], function($) {
+
+                                                        $('.edit-param').bind('click', function() {
+
+                                                            var $param_modal = $('#edit-param');
+
+                                                            $param_modal.modal({});
+
+                                                            $param_modal.find(':input[name=name]').val($(this).attr('_name'));
+                                                            $param_modal.find(':input[name=param_id]').val($(this).attr('_param_id'));
+                                                            $param_modal.find(':input[name=value]').val($(this).attr('_value'));
+
+                                                        });
+
 
                                                         $.get('{{ route('product.extra_modules.json', ['id'=> $project->product->id]) }}', function(data){
 
@@ -287,6 +316,21 @@
 
                                                                     var $input = $('<input name="module_id" type="hidden">');
 
+                                                                    $input.val(item.id);
+                                                                    $selector.after($input);
+                                                                }
+                                                            });
+                                                        },'json');
+
+                                                        $.get('/servers.json', function(data){
+                                                            var $selector = $("#server_selector");
+                                                            $selector.typeahead({
+                                                                source:data,
+                                                                displayText: function(item) {
+                                                                    return item.name;
+                                                                },
+                                                                afterSelect: function(item) {
+                                                                    var $input = $('<input name="server_id" type="hidden">');
                                                                     $input.val(item.id);
                                                                     $selector.after($input);
                                                                 }
@@ -361,22 +405,6 @@
                                         </div>
                                     </div>
 
-                                    <script type="text/javascript">
-                                        $(document).ready(function() {
-
-                                            $('.edit-param').bind('click', function() {
-
-                                                var $param_modal = $('#edit-param');
-
-                                                $param_modal.modal({});
-
-                                                $param_modal.find(':input[name=name]').val($(this).attr('_name'));
-                                                $param_modal.find(':input[name=param_id]').val($(this).attr('_param_id'));
-                                                $param_modal.find(':input[name=value]').val($(this).attr('_value'));
-
-                                            });
-                                        });
-                                    </script>
                                     {{--<h4>服务列表</h4>--}}
                                     {{--<div class="row">--}}
 
@@ -491,6 +519,7 @@
                                         <div class="form-group">
                                             <label for="server_deploy_time" class="col-sm-2 control-label">部署时间</label>
                                             <div class="col-sm-10">
+
                                                 <div class="input-group date datetimepicker">
                                                     <input type="text" class="form-control" name="deploy_time" id="server_deploy_time">
                                                     <span class="input-group-addon">
@@ -513,25 +542,6 @@
                                                 </button>
                                             </div>
                                         </div>
-
-                                        <script type="text/javascript">
-
-                                            $.get('/servers.json', function(data){
-                                                var $selector = $("#server_selector");
-                                                $selector.typeahead({
-                                                    source:data,
-                                                    displayText: function(item) {
-                                                        return item.name;
-                                                    },
-                                                    afterSelect: function(item) {
-                                                        var $input = $('<input name="server_id" type="hidden">');
-                                                        $input.val(item.id);
-                                                        $selector.after($input);
-                                                    }
-                                                });
-                                            },'json');
-                                        </script>
-
                                     </form>
                                 </div>
                             </div>

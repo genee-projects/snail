@@ -1,3 +1,16 @@
+<script type="text/javascript">
+    require(['jquery', 'bootstrap-datetimepicker', 'bootstrap-select'], function($) {
+        require(['css!../css/bootstrap-datetimepicker.min'], function() {});
+        require(['css!../css/bootstrap-select.min'], function() {});
+
+        $('.datetimepicker').datetimepicker({
+            format: 'YYYY/MM/DD'
+        });
+
+        $('select').selectpicker();
+
+    });
+</script>
 <div class="form-group">
     <label for="project-ref-no" class="col-sm-2 control-label">项目编号</label>
     <div class="col-sm-10">

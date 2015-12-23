@@ -1,38 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="clients">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Genee CRM</title>
     <base href="http://parrot:8000/">
-    <link rel="stylesheet" href="asserts/3rd/bootstrap/dist/css/bootstrap.min.css">
-    <script src="asserts/3rd/jquery/dist/jquery.min.js"></script>
 
-    <script src="asserts/3rd/moment/min/moment.min.js"></script>
+    <!-- 基础服务 -->
+    <script data-main="asserts/js/main" src="asserts/js/require.js"></script>
 
-    <script src="asserts/3rd/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="asserts/css/bootstrap.min.css">
+    <link rel="stylesheet" href="asserts/css/font-awesome.min.css">
 
-    <script src="asserts/3rd/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-    <link rel="stylesheet" href="asserts/3rd/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
-
-    <script src="asserts/3rd/holderjs/holder.js"></script>
-    <link rel="stylesheet" href="asserts/3rd/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="asserts/css/crm.css">
+    <!-- 基础服务 end -->
 
-    <link href="asserts/css/timeline.css" rel="stylesheet">
-
-    <link href="asserts/3rd/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-
-    <script src="asserts/3rd/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-
-    <script src="asserts/3rd/clipboard/dist/clipboard.min.js"></script>
-
-
-    <link href="asserts/3rd/bootstrap-toggle/css/bootstrap-toggle.css" rel="stylesheet">
-    <script src="asserts/3rd/bootstrap-toggle/js/bootstrap-toggle.js"></script>
-
-    <script src="asserts/js/crm.js"></script>
-
-    <script src="asserts/3rd/bootstrap3-typeahead/bootstrap3-typeahead.min.js"></script>
 </head>
 <body>
 
@@ -113,4 +94,36 @@
              @yield('content')
         </div>
     </div>
+
+    <script type="text/javascript">
+        require(['jquery'], function($) {
+
+            $('#show-menu').on('click', function(e) {
+                $(this).addClass('hide');
+
+                $('#close-menu').show();
+
+                $('#close-menu').parents('[role=navigation]').removeClass('hide');
+
+                $('#page-wrapper').css('margin-left', '200px');
+                e.stopPropagation();
+
+                return false;
+            });
+
+            //关闭按钮
+            $('#close-menu').bind('click', function(e) {
+                $(this).parents('[role=navigation]').addClass('hide');
+
+                $('#page-wrapper').css('margin-left', '0px');
+
+                e.stopPropagation();
+
+                $('#show-menu').removeClass('hide');
+
+                return false;
+
+            });
+        });
+    </script>
 </body>

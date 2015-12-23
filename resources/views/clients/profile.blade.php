@@ -1,6 +1,10 @@
 @extends('layout')
 
 @section('content')
+    <script type="text/javascript">
+        requirejs(['holderjs'], function() {});
+        require(['css!asserts/css/timeline'], function() {});
+    </script>
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">{{ $client->name }} </h1>
