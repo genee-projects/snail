@@ -2,8 +2,8 @@
 
 @section('content')
     <script type="text/javascript">
-        requirejs(['holderjs'], function() {});
-        require(['css!asserts/css/timeline'], function() {});
+        requirejs(['holder'], function() {});
+        require(['css!../css/timeline'], function() {});
     </script>
     <div class="row">
         <div class="col-lg-12">

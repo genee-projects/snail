@@ -285,26 +285,28 @@
 
                                         <script type="text/javascript">
 
-                                            $.get('/params.json', function(data){
-                                                var $selector = $("#param_selector");
-                                                $selector.typeahead({
-                                                    source:data,
-                                                    displayText: function(item) {
-                                                        return item.name + ' ('+  item.value + ')';
-                                                    },
-                                                    afterSelect: function(item) {
-                                                        //修改 $selector 的 value
-                                                        $selector.val(item.name);
-                                                        //同步设定 value 到 value 输入框
-                                                        $selector.parents('form').find(':input[name=value]').val(item.value);
+                                            require(['jquery', 'bootstrap3-typeahead'], function($) {
+                                                $.get('/params.json', function(data){
+                                                    var $selector = $("#param_selector");
+                                                    $selector.typeahead({
+                                                        source:data,
+                                                        displayText: function(item) {
+                                                            return item.name + ' ('+  item.value + ')';
+                                                        },
+                                                        afterSelect: function(item) {
+                                                            //修改 $selector 的 value
+                                                            $selector.val(item.name);
+                                                            //同步设定 value 到 value 输入框
+                                                            $selector.parents('form').find(':input[name=value]').val(item.value);
 
-                                                        var $input = $('<input name="param_id" type="hidden">');
+                                                            var $input = $('<input name="param_id" type="hidden">');
 
-                                                        $input.val(item.id);
-                                                        $selector.after($input);
-                                                    }
-                                                });
-                                            },'json');
+                                                            $input.val(item.id);
+                                                            $selector.after($input);
+                                                        }
+                                                    });
+                                                },'json');
+                                            });
                                         </script>
                                     </form>
                                 </div>
