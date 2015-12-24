@@ -14,12 +14,6 @@ class Module extends Model
 
     protected $dates = ['deleted_at'];
 
-    /*
-    public function object() {
-        return $this->morphTo();
-    }
-    */
-
     //依赖模块
     public function dep_modules() {
         return $this->belongsToMany('App\Module', 'module_dep_modules', 'module_id', 'dep_module_id');

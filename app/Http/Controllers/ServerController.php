@@ -44,21 +44,6 @@ class ServerController extends Controller
 
         $server->save();
 
-        /* services 暂时先删除
-        foreach(Server::root()->services as $service) {
-
-            $_s = $service->replicate();
-            $_s->push();
-            $server->services()->save($_s);
-
-            foreach($service->items as $item) {
-                $_t = $item->replicate();
-                $_t->push();
-                $_s->items()->save($_t);
-            }
-        }
-        */
-
         return redirect('/servers')
             ->with('message_content', '添加成功!')
             ->with('message_type', 'info');

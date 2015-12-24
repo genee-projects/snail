@@ -172,24 +172,6 @@ Route::post('/projects/{id}/params/', [
     'uses'=> 'ProjectController@param_edit',
 ]);
 
-
-#service start
-Route::post('/services/add', [
-    'as'=> 'service.add',
-    'uses'=> 'ServiceController@add',
-]);
-
-Route::get('/services/delete/{id}', [
-    'as'=> 'service.delete',
-    'uses'=> 'ServiceController@delete',
-]);
-
-Route::post('/services/edit/{id}', [
-    'as'=> 'service.edit',
-    'uses'=> 'ServiceController@edit',
-]);
-# service end
-
 # item start
 Route::post('/items/add', [
     'as'=> 'item.add',

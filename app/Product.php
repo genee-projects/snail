@@ -19,10 +19,6 @@ class Product extends Model
         return $this->belongsToMany('App\Module', 'product_modules')->withPivot('type');
     }
 
-    public function services() {
-        return $this->morphMany('App\Service', 'object');
-    }
-
     public function comments() {
         return $this->morphMany('App\Comment', 'object');
     }

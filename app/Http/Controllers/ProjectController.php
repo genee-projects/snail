@@ -59,29 +59,6 @@ class ProjectController extends Controller
                 ]);
             }
 
-            /*
-            foreach($product->modules as $module) {
-                $_m = $module->replicate();
-                $_m->push();
-                $project->modules()->save($_m);
-            }
-            */
-
-            /*
-            foreach($product->services as $service) {
-
-                $_s = $service->replicate();
-                $_s->push();
-                $project->services()->save($_s);
-
-                foreach($service->items as $item) {
-                    $_t = $item->replicate();
-                    $_t->push();
-                    $_s->items()->save($_t);
-                }
-            }
-            */
-
             return redirect(route('project.profile', ['id'=> $project->id]));
         }
     }
