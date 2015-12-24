@@ -16,7 +16,7 @@ class Product extends Model
 
     public function modules() {
         //关系是, belongsToMany, 包含多个 module 的关系
-        return $this->belongsToMany('App\Module', 'product_modules')->withPivot('type');
+        return $this->hasMany('App\Module', 'product_id');
     }
 
     public function params() {

@@ -21,8 +21,12 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <h5>产品类型</h5>
-                            @foreach($product->sub_products as $sub_prodcut)
-                                <p style="margin-left: 20px;">{{ $sub_product->name }}</p>
+                            @foreach($product->sub_products as $sub)
+                                <p style="margin-left: 20px;">
+                                    <a href="{{ route('subproduct.profile', ['id'=> $sub->id]) }}">
+                                        {{ $sub->name }}
+                                    </a>
+                                </p>
                             @endforeach
                         </li>
                     </ul>

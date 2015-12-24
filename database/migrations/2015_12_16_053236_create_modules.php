@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateItemTable extends Migration
+class CreateModules extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateItemTable extends Migration
     public function up()
     {
         //
-        Schema::create('items', function(Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->nullable();
-            $table->string('key');
-            $table->string('value')->nullable();
-            $table->string('object_type');
-            $table->integer('object_id');
+        Schema::create('modules', function(Blueprint $table) {
+            $table->increments('id');       // 自增 ID
+            $table->string('name');         // 名称
+            $table->string('description');  // 描述
+            $table->integer('product_id');  // 模块属于 product
             $table->softDeletes();
         });
     }
@@ -32,6 +30,6 @@ class CreateItemTable extends Migration
     public function down()
     {
         //
-        Schema::drop('items');
+        Schema::drop('modules');
     }
 }

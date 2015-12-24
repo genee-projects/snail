@@ -195,7 +195,7 @@ Route::get('/modules/delete/{id}', [
     'uses'=> 'ModuleController@delete',
 ]);
 
-Route::post('/modules/edit/{id}', [
+Route::post('/modules/edit/', [
     'as'=> 'module.edit',
     'uses'=> 'ModuleController@edit',
 ]);
@@ -238,3 +238,34 @@ Route::get('/params.json', [
     'uses'=> 'ParamsController@params_json',
 ]);
 #params end
+
+
+Route::post('/subproduct/add', [
+    'as'=> 'subproduct.add',
+    'uses'=> 'SubProductController@add',
+]);
+
+Route::get('/subproduct/delete/{id}', [
+    'as'=> 'subproduct.delete',
+    'uses'=> 'SubProductController@delete',
+]);
+
+Route::post('/subproduct/edit', [
+    'as'=> 'subproduct.edit',
+    'uses'=> 'SubProductController@edit',
+]);
+
+Route::get('/subproduct/profile/{id}', [
+    'as'=> 'subproduct.profile',
+    'uses'=> 'SubProductController@profile',
+]);
+
+Route::get('/subproduct/{id}/modules/{module_id}', [
+    'as'=> 'subproduct.module.delete',
+    'uses'=> 'SubProductController@module_delete',
+]);
+
+Route::post('/subporduct/modules', [
+    'as'=> 'subproduct.module',
+    'uses'=> 'SubProductController@modules'
+]);

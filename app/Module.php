@@ -31,4 +31,8 @@ class Module extends Model
         }
         return $data;
     }
+
+    public function product() {
+        return $this->belongsTo('App\Product', 'product_id');
+    }
 }
