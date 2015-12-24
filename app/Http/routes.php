@@ -125,11 +125,6 @@ Route::get('/servers/delete/{id}', [
 Route::post('/comments/add', 'CommentController@add');
 Route::get('/comments/delete/{id}', 'CommentController@delete');
 
-#templates
-Route::get('/templates', 'TemplateController@index');
-Route::get('/templates/generate', 'TemplateController@generate');
-
-
 #projects
 Route::get('/projects', [
     'as' => 'projects',

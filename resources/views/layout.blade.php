@@ -30,41 +30,26 @@
 
                 <div class="sidebar-nav navbar-collapse">
 
-                    <ul class="nav metismenu" id="side-menu">
+                    <ul class="nav metismenu">
                         <li>
                             <a href="/"><i class="fa fa-dashboard fa-fw"></i> 总览</a>
                         </li>
 
                         <li>
-                            <a href="/clients"><i class="fa fa-users fa-fw"></i> 客户管理</a>
+                            <a href="{{ route('clients') }}"><i class="fa fa-users fa-fw"></i> 客户管理</a>
                         </li>
 
                         <li>
-                            <a href="/projects"><i class="fa fa-fw fa-list-alt"></i> 项目管理</a>
+                            <a href="{{ route('projects') }}"><i class="fa fa-fw fa-list-alt"></i> 项目管理</a>
                         </li>
 
                         <li>
-                            <a href="/servers"><i class="fa fa-linux fa-fw"></i> 服务器管理</a>
+                            <a href="{{ route('servers') }}"><i class="fa fa-linux fa-fw"></i> 服务器管理</a>
                         </li>
 
-                        <li class="">
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> 产品相关<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
-                                <li>
-                                    <a href="{{ route('products') }}">产品管理</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('modules') }}">模块管理</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('params') }}">参数管理</a>
-                                </li>
-                            </ul>
+                        <li>
+                            <a href="{{ route('products') }}"><i class="fa fa-wrench fa-fw"></i> 产品管理</a>
                         </li>
-
-                        {{--<li>--}}
-                        {{--<a href="templates"><i class="fa fa-file-code-o"></i> 模板生成器</a>--}}
-                        {{--</li>--}}
 
                         <li>
                             <a href="#" id="close-menu"><i class="fa fa-chevron-circle-left fa-fw"></i> 收起菜单</a>
@@ -75,10 +60,6 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-
-
-
-
 
         <button class="btn btn-primary hide btn-sm" id="show-menu">
             <i class="fa fa-fw fa-chevron-circle-right">&#160;</i>
@@ -122,11 +103,6 @@
                 return false;
 
             });
-
-            require(['css!../css/metisMenu'], function() {});
-
-            $('#side-menu').metisMenu();
-
         });
     </script>
 </body>
