@@ -100,7 +100,7 @@
                 </div>
 
             </div>
-            <div class="panel panel-body">
+            <div class="panel-body">
 
                 <table class="table table-hover table-striped table-bordered">
                     <tr>

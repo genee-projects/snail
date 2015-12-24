@@ -72,9 +72,11 @@ body{
     color:#000;
 }
 
+/*
 body,h1,h2,h3,h4,h5,h6{
     font-family:'LantingHei SC','Microsoft Yahei','Helvetica Neue',Helvetica,Arial,sans-serif;
 }
+*/
 
 .nowrap{
     white-space:nowrap;

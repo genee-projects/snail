@@ -22,4 +22,8 @@ class Product extends Model
     public function params() {
         return $this->belongsToMany('App\Param', 'product_params')->withPivot('value');
     }
+
+    public function sub_products() {
+        return $this->hasMany('App\SubProduct', 'product_id');
+    }
 }

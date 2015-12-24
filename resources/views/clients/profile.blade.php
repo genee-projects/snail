@@ -44,7 +44,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-body">
+                <div class="panel-body">
                     <table class="table table-striped table-bordered table-hover">
                         <tr>
                             <td style="width: 20%;">客户名称</td>
@@ -89,7 +89,7 @@
                     <i class="fa fa-twitter"> 层级结构</i>
                 </div>
 
-                <div class="panel panel-body">
+                <div class="panel-body">
                     <p><a href="/clients/profile/{{ $client->id }}">{{ $client->name }}</a></p>
 
                     @foreach($client->root()->children as $c)
@@ -108,7 +108,7 @@
                     <i class="fa fa-facebook"> 增加子级</i>
                 </div>
 
-                <div class="panel panel-body">
+                <div class="panel-body">
                     <form class="form-horizontal" method="post" action="/clients/add">
                         @include('clients/form_lite', ['client'=> new \App\Client, 'parent'=> $client])
                         <div class="form-group">
@@ -128,7 +128,7 @@
                     <i class="fa fa-list-alt"> 项目信息</i>
                 </div>
 
-                <div class="panel panel-body">
+                <div class="panel-body">
                     <p>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#add-project">
                             <i class="fa fa-plus"></i> 签约项目
@@ -182,7 +182,7 @@
                 <div class="panel-heading">
                     <i class="fa fa-user"> 其他信息</i>
                 </div>
-                <div class="panel panel-body">
+                <div class="panel-body">
 
 
                     <div id="myTabs">
@@ -205,7 +205,7 @@
                         <div class="tab-content">
                             <!-- comment -->
                             <div role="tabpanel" class="tab-pane active" id="comment">
-                                <div class="panel panel-body">
+                                <div class="panel-body">
 
                                     @foreach($client->comments as $comment)
                                         <div class="media">

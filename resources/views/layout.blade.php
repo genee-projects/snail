@@ -75,7 +75,7 @@
     </div>
 
     <script type="text/javascript">
-        require(['jquery', 'metisMenu'], function($) {
+        require(['jquery'], function($) {
 
             $('#show-menu').on('click', function(e) {
                 $(this).addClass('hide');

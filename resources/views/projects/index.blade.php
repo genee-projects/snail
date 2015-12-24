@@ -17,7 +17,7 @@
                         项目添加, 请到 <a href="/clients"> 客户信息</a> 页面进行 <mark>『项目签约』</mark>
                     </span>
             </div>
-            <div class="panel panel-body">
+            <div class="panel-body">
 
                 <table class="table table-hover table-striped table-bordered">
                     <tr>

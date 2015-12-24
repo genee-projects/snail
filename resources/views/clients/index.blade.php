@@ -40,7 +40,7 @@
                 </p>
             </div>
 
-            <div class="panel panel-body">
+            <div class="panel-body">
                 <table class="table table-bordered table-hover table-striped">
                     <tr>
                         <td>客户名称</td>

@@ -58,7 +58,7 @@
                         </div>
                     </span>
                 </div>
-                <div class="panel panel-body">
+                <div class="panel-body">
                     <table class="table table-striped table-bordered table-hover">
                         <tr>
                             <td style="width: 20%;">客户名称</td>
@@ -161,7 +161,7 @@
                 <div class="panel-heading">
                     <i class="fa fa-user"> 其他信息</i>
                 </div>
-                <div class="panel panel-body">
+                <div class="panel-body">
 
 
                     <div id="myTabs">
@@ -210,7 +210,7 @@
                         <div class="tab-content">
 
                             <div role="tabpanel" class="tab-pane" id="comments">
-                                <div class="panel panel-body">
+                                <div class="panel-body">
 
 
                                     @foreach($project->comments as $comment)
@@ -246,7 +246,7 @@
                             </div>
 
                             <div role="tabpanel" class="tab-pane  active" id="software">
-                                <div class="panel panel-body">
+                                <div class="panel-body">
                                     <h4>模块列表</h4>
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -461,7 +461,7 @@
                             </div>
 
                             <div role="tabpanel" class="tab-pane" id="hardware">
-                                <div class="panel panel-body">
+                                <div class="panel-body">
                                     硬件信息, 等待完善
                                 </div>
                             </div>
@@ -469,7 +469,7 @@
 
                             <!-- server -->
                             <div role="tabpanel" class="tab-pane" id="server">
-                                <div class="panel panel-body">
+                                <div class="panel-body">
 
                                     <table class="table table-hover table-bordered table-striped">
 

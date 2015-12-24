@@ -50,9 +50,9 @@
                     </div>
 
                 </div>
-                <div class="panel panel-body">
+                <div class="panel-body">
 
-                    <table class="table table-hover table-striped table-bordered">
+                    <table class="table table-hover table-striped">
                         <tr>
                             <td>简述</td>
                             <td>{{ $product->description }}</td>
@@ -126,9 +126,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-body">
+                <div class="panel-body">
 
-                    <table class="table table-hover table-striped table-bordered">
+                    <table class="table table-hover table-striped">
 
                         <tr>
                             <td style="width: 10%;">名称</td>
@@ -218,8 +218,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-body">
-                    <table class="table table-hover table-bordered">
+                <div class="panel-body">
+                    <table class="table table-hover">
                         <tr>
                             <td style="width: 10%;">名称</td>
                             <td>简述</td>
@@ -320,7 +320,7 @@
 
                 </div>
 
-                <div class="panel panel-body">
+                <div class="panel-body">
                     <table class="table table-hover table-striped">
                         <tr>
                             <td>参数名称</td>
@@ -431,82 +431,4 @@
 
 
     </script>
-
-    {{--<div class="row">--}}
-        {{--<div class="col-lg-6">--}}
-            {{--<div class="panel panel-default">--}}
-                {{--<div class="panel-heading ">--}}
-                    {{--<i class="fa fa-linux"></i> 服务管理--}}
-                {{--</div>--}}
-                {{--<div class="panel panel-body">--}}
-                    {{--<form method="post" action="{{ route('item.add') }}">--}}
-                        {{--<table class="table table-hover table-striped table-bordered">--}}
-
-                            {{--<tr>--}}
-                                {{--<td>名称</td>--}}
-                                {{--<td>代码</td>--}}
-                            {{--</tr>--}}
-
-                            {{--@foreach($product->services as $service)--}}
-                                {{--<tr>--}}
-                                    {{--<td>{{ $service->name }}</td>--}}
-                                    {{--<td>--}}
-                                        {{--<code>{{ $service->code }}</code>--}}
-                                        {{--<span class="pull-right">--}}
-                                            {{--<a href="{{ route('service.delete', ['id'=> $service->id]) }}">--}}
-                                                {{--<i class="fa fa-times"></i>--}}
-                                            {{--</a>--}}
-                                            {{--<a class="add-item" _id="{{ $service->id }}">--}}
-                                                {{--<i class="fa fa-plus"></i>--}}
-                                            {{--</a>--}}
-                                        {{--</span>--}}
-                                    {{--</td>--}}
-                                {{--</tr>--}}
-
-                                {{--@foreach($service->items as $item)--}}
-                                    {{--<tr>--}}
-                                        {{--<td colspan="2">--}}
-                                            {{--<span class="pull-right">--}}
-                                                {{--<code>{{ $item->key }}</code> : <code>{{ $item->value }}</code>--}}
-                                                {{--<a href="{{ route('item.delete', ['id'=> $item->id]) }}"><i class="fa fa-times"></i></a>--}}
-                                            {{--</span>--}}
-                                        {{--</td>--}}
-                                    {{--</tr>--}}
-                                {{--@endforeach--}}
-                                {{--<input type="hidden" name="object_type" value="{{ get_class($service)}}">--}}
-                            {{--@endforeach--}}
-                        {{--</table>--}}
-                    {{--</form>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-        {{--<div class="col-lg-6">--}}
-            {{--<div class="panel panel-default">--}}
-                {{--<div class="panel-heading ">--}}
-                    {{--<i class="fa fa-linux"></i> 服务添加--}}
-                {{--</div>--}}
-                {{--<div class="panel panel-body">--}}
-                    {{--<form method="post" action="{{ route('service.add') }}">--}}
-                        {{--<input type="hidden" name="object_type" value="{{ get_class($product) }}" />--}}
-                        {{--<input type="hidden" name="object_id" value="{{ $product->id }}" />--}}
-                        {{--@include('services/form')--}}
-                        {{--<button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> 添加</button>--}}
-                    {{--</form>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-
-    {{--<script type="text/javascript">--}}
-        {{--$(document).ready(function() {--}}
-            {{--$('.add-item').bind('click', function() {--}}
-                {{--var service_id = $(this).attr('_id');--}}
-
-                {{--var $tr = $(this).parents('tr');--}}
-
-                {{--$tr.after($('<input type="hidden" name="object_id" value="' +  service_id +  '"/>'));--}}
-                {{--$tr.after($('<tr><td colspan="2"><span class="pull-right"><input type="text" name="key" placeholder="key"> <input type="text" name="value" placeholder="value"> <button type="submit" class="btn btn-primary btn-xs">添加</button></span></td></tr>'));--}}
-            {{--});--}}
-        {{--});--}}
-    {{--</script>--}}
 @endsection

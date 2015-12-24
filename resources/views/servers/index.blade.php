@@ -44,7 +44,7 @@
                     </div>
                 </p>
             </div>
-            <div class="panel panel-body">
+            <div class="panel-body">
 
                 <div class="row">
                     <div class="col-sm-12">
