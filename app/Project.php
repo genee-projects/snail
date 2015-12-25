@@ -13,8 +13,9 @@ class Project extends Model
 
     protected $dates = ['deleted_at'];
 
+    //需要注意, 项目的 product 为 SubProduct, 不为的 Product
     public function product() {
-        return $this->belongsTo('App\Product', 'product_id');
+        return $this->belongsTo('App\SubProduct', 'product_id');
     }
 
     public function comments() {

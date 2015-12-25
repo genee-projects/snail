@@ -66,7 +66,6 @@ class ClientController extends Controller
 
         return view('clients/profile', [
             'client'=> $client,
-            'products'=> Product::all(),
         ]);
     }
 

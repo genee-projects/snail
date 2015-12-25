@@ -19,7 +19,6 @@ class CreateProjects extends Migration
             $table->integer('client_id');                   // 客户
             $table->string('name');                         // 项目的名称
             $table->integer('product_id');                  // 产品类型
-            $table->string('version')->nullable();          // (产品)版本
             $table->string('contact_user')->nullable();     // 联系人
             $table->string('contact_phone')->nullable();    //联系电话
             $table->string('contact_email')->nullable();    //邮箱

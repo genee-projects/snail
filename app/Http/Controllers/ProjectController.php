@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Product;
+use App\SubProduct;
 use App\Project;
 use App\Client;
 use App\Server;
@@ -14,14 +14,8 @@ use App\Param;
 
 class ProjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
         return view('projects/index', [
             'projects'=> Project::all(),
         ]);
@@ -29,11 +23,11 @@ class ProjectController extends Controller
 
     public function add(Request $request) {
 
-        $product = Product::find($request->input('product_id'));
+        $sub = SubProduct::find($request->input('product_id'));
         $client = Client::find($request->input('client_id'));
 
         $project = new Project();
-        $project->product()->associate($product);
+        $project->product()->associate($sub);
         $project->client()->associate($client);
 
         $project->ref_no = $request->input('ref_no');
@@ -46,13 +40,13 @@ class ProjectController extends Controller
 
         if ($project->save()) {
 
-            foreach($product->modules()->wherePivot('type', '=', 'normal')->get() as $module) {
+            foreach($sub->modules()->wherePivot('type', '=', 'normal')->get() as $module) {
                 $project->modules()->save($module, [
                     'type'=> 'normal',
                 ]);
             }
 
-            foreach($product->params as $param) {
+            foreach($sub->params as $param) {
 
                 $project->params()->save($param, [
                     'value'=> $param->pivot->value,
@@ -66,13 +60,11 @@ class ProjectController extends Controller
     public function edit(Request $request) {
 
         $project = Project::find($request->input('id'));
-        $product = Product::find($request->input('product_id'));
-
+        $product = SubProduct::find($request->input('product_id'));
 
         $project->ref_no = $request->input('ref_no');               // 项目编号
         $project->name = $request->input('name');                   // 项目名称
         $project->product()->associate($product);                   // 产品类型
-        $project->version = $request->input('version');             // 项目版本
         $project->contact_user = $request->input('contact_user');   // 联系人
         $project->contact_phone = $request->input('contact_phone'); // 联系电话
         $project->contact_email = $request->input('contact_email'); // 联系邮箱
@@ -98,7 +90,6 @@ class ProjectController extends Controller
 
         return view('/projects/profile', [
             'project'=> $project,
-            'products'=> Product::all(),
         ]);
     }
 

@@ -46,7 +46,7 @@
                                     <div class="modal-body">
                                         <form id="edit-client-form" class="form-horizontal" method="post" action="{{ route('project.edit') }}">
                                             <input type="hidden" name="id" value="{{ $project->id }}">
-                                            @include('projects/full_form', ['project'=> $project, 'products'=> $products])
+                                            @include('projects/full_form', ['project'=> $project])
                                         </form>
                                     </div>
                                     <div class="modal-footer">
@@ -69,8 +69,8 @@
                             <td colspan="2">{{ $project->name }} ({{ $project->ref_no }})</td>
                         </tr>
                         <tr>
-                            <td>产品类型 (版本)</td>
-                            <td colspan="2"><a href="{{ route('products') }}">{{ $project->product->name }} ( {{ $project->version }})</a></td>
+                            <td>产品/产品类型</td>
+                            <td colspan="2"><a href="{{ route('subproduct.profile', ['id'=> $project->product->id]) }}">{{ $project->product->name }} ({{ $project->product->product->name }})</a></td>
                         </tr>
                         <tr>
                             <td>联系人</td>
@@ -300,7 +300,7 @@
                                                         });
 
 
-                                                        $.get('{{ route('product.extra_modules.json', ['id'=> $project->product->id]) }}', function(data){
+                                                        $.get('{{ route('subproduct.extra_modules.json', ['id'=> $project->product->id]) }}', function(data){
 
                                                             var $selector = $("#extra_module_selector");
                                                             $selector.typeahead({

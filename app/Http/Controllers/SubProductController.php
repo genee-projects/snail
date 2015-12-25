@@ -125,9 +125,9 @@ class SubProductController extends Controller
     }
 
     public function extra_module_json($id) {
-        $product = Product::find($id);
+        $sub = SubProduct::find($id);
 
-        return response()->json($product->modules()
+        return response()->json($sub->modules()
             ->wherePivot('type', '=', 'extra')
             ->get());
     }

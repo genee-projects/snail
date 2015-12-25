@@ -33,7 +33,7 @@
                                 <div class="modal-body">
                                     <form id="edit-client-form" class="form-horizontal" method="post" action="/clients/edit">
                                         <input type="hidden" name="id" value="{{ $client->id }}">
-                                        @include('clients/form', ['client'=> $client, 'products'=> $products])
+                                        @include('clients/form', ['client'=> $client])
                                     </form>
                                 </div>
                                 <div class="modal-footer">

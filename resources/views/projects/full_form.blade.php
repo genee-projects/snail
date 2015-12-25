@@ -27,17 +27,16 @@
 <div class="form-group">
 
     <label for="project-type" class="col-sm-2 control-label">产品类型</label>
-    <div class="col-sm-4">
+    <div class="col-sm-10">
         <select class="selectpicker" name="product_id">
-            @foreach($products as $product)
-                <option value="{{ $product->id }}">{{ $product->name }}</option>
+            @foreach(\App\Product::all() as $product)
+                <optgroup label="{{ $product->name }}">
+                    @foreach($product->sub_products as $sub)
+                        <option value="{{ $sub->id }}">{{ $sub->name }}</option>
+                    @endforeach
+                </optgroup>
             @endforeach
         </select>
-    </div>
-
-    <label for="project-product-version" class="col-sm-2 control-label">项目版本</label>
-    <div class="col-sm-4">
-        <input value="{{ $project->version or '' }}" name="version" type="text" class="form-control" id="project-product-version" placeholder="南开大学大型仪器管理系统">
     </div>
 </div>
 
