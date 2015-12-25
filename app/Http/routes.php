@@ -265,7 +265,7 @@ Route::get('/subproduct/{id}/modules/{module_id}', [
     'uses'=> 'SubProductController@module_delete',
 ]);
 
-Route::post('/subporduct/modules', [
+Route::post('/subporduct/{id}/modules', [
     'as'=> 'subproduct.module',
     'uses'=> 'SubProductController@modules'
 ]);
