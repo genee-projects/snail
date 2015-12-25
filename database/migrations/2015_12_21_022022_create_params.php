@@ -17,14 +17,11 @@ class CreateParams extends Migration
 
             $table->increments('id');
 
-            $table->string('name')->nullable();     //参数名称 (人数限制)
+            $table->string('name')->nullable();         //参数名称 (人数限制)
             $table->string('description')->nullable();  //参数描述
-
             $table->string('code');                     //参数代码
             $table->string('value')->nullable();        //参数值
-
-            $table->string('object_type');
-            $table->integer('object_id');
+            $table->integer('product_id');              // 所属 product
             $table->softDeletes();
         });
     }

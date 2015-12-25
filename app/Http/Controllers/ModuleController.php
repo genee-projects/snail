@@ -11,20 +11,7 @@ use App\Product;
 
 class ModuleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function delete($id)
-    {
-        //
-        $module = Module::find($id);
 
-        if ($module->delete()) {
-            return redirect()->to(route('modules'));
-        }
-    }
 
     public function add(Request $request) {
 
@@ -42,6 +29,16 @@ class ModuleController extends Controller
             $dep_module = Module::find($dep_module_id);
             $module->dep_modules()->save($dep_module);
         }
+
+        return redirect()->back();
+    }
+
+    public function delete($id)
+    {
+        //
+        $module = Module::find($id);
+
+        $module->delete();
 
         return redirect()->back();
     }
@@ -74,16 +71,5 @@ class ModuleController extends Controller
         }
 
         return redirect()->back();
-    }
-
-    public function modules() {
-        return view('modules/index', ['modules'=> Module::all()]);
-    }
-
-    public function profile($id) {
-
-        $module = Module::find($id);
-
-        return view('modules/profile', ['module'=> $module]);
     }
 }
