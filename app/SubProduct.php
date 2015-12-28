@@ -22,7 +22,7 @@ class SubProduct extends Model
     //可包含多个 module
     public function modules() {
         //关系是, belongsToMany, 包含多个 module 的关系
-        return $this->belongsToMany('App\Module', 'sub_product_modules')->withPivot('type');
+        return $this->belongsToMany('App\Module', 'sub_product_modules');
     }
 
     //可设置 params

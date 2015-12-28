@@ -75,169 +75,64 @@
                     <i class="fa fa-gear"></i> 模块管理
                 </div>
                 <div class="panel-body">
-                    <ul class="nav nav-tabs" role="tablist">
 
-                        <li role="presentation" class="active">
-                            <a href="#normal-modules" aria-controls="normal-modules" role="tab" data-toggle="tab">
-                                <i class="fa fa-comment-o"></i> 基础模块
-                            </a>
-                        </li>
+                    <table class="table table-hover table-striped">
 
-                        <li role="presentation">
-                            <a href="#extra-modules" aria-controls="extra-modules" role="tab" data-toggle="tab">
-                                <i class="fa fa-linux"></i> 附加模块
-                            </a>
-                        </li>
-                    </ul>
+                        <tr>
+                            <td style="width: 10%;">名称</td>
+                            <td>简述</td>
+                        </tr>
 
-                    <div class="tab-content">
+                        @foreach($subproduct->modules as $module)
+                            <tr>
+                                <td>{{ $module->name }}</td>
+                                <td>
+                                    {{ $module->description }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
 
-                        <div role="tabpanel" class="tab-pane active" id="normal-modules">
-                            <div class="panel-body">
+                    <span class="pull-right">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#add-module">
+                            <i class="fa fa-wrench"></i> 设置模块
+                        </button>
+                    </span>
 
-                                <table class="table table-hover table-striped">
-
-                                    <tr>
-                                        <td style="width: 10%;">名称</td>
-                                        <td>简述</td>
-                                    </tr>
-
-                                    @foreach($subproduct->modules()->wherePivot('type', '=', 'normal')->get() as $module)
-                                        <tr>
-                                            <td>{{ $module->name }}</td>
-                                            <td>
-                                                {{ $module->description }}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </table>
-
-                                     <span class="pull-right">
-                                        <button class="btn btn-primary" data-toggle="modal" data-target="#add-normal-module">
-                                            <i class="fa fa-wrench"></i> 设置模块
-                                        </button>
-                                    </span>
-
-                                <div class="modal fade" id="add-normal-module" tabindex="-1" role="dialog" aria-labelledby="add-normal-module-modal-label">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="add-module-modal-label">设置基础模块</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form id="add-normal-module-form" method="post" action="{{ route('subproduct.module.edit', ['id'=> $subproduct->id]) }}">
-
-                                                    @foreach($subproduct->product->modules as $module)
-
-                                                        @if($subproduct->modules()->wherePivot('type', '=', 'extra')->get()->contains($module->id))
-                                                            {{--*/ continue; /*--}}
-                                                        @endif
-
-                                                        {{--*/ $selected = false /*--}}
-                                                        {{--*/ $btn_class = 'btn-default' /*--}}
-
-                                                        @if($subproduct->modules()->wherePivot('type', '=', 'normal')->get()->contains($module->id))
-                                                            {{--*/ $selected = true /*--}}
-                                                            {{--*/ $btn_class = 'btn-primary' /*--}}
-                                                        @endif
-
-
-                                                        <span _id="{{ $module->id }}" dep_modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center" style="padding: 20px; margin:10px 5px; width:100px;">
-                                                                {{ $module->name }}
-                                                            </span>
-
-                                                        @if($selected)
-                                                            <input type="hidden" name="modules[]" value="{{ $module->id }}" />
-                                                        @endif
-
-                                                    @endforeach
-                                                        <span>
-                                                            <input type="hidden" name="type" value="normal"/>
-                                                        </span>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                                <button type="submit" class="btn btn-primary" form="add-normal-module-form">设置</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div class="modal fade" id="add-module" tabindex="-1" role="dialog" aria-labelledby="add-module-modal-label">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="add-module-modal-label">设置基础模块</h4>
                                 </div>
-                            </div>
-                        </div>
+                                <div class="modal-body">
+                                    <form id="add-module-form" method="post" action="{{ route('subproduct.module.edit', ['id'=> $subproduct->id]) }}">
 
-                        <div role="tabpanel" class="tab-pane" id="extra-modules">
-                            <div class="panel-body">
+                                        @foreach($subproduct->product->modules as $module)
 
-                                <table class="table table-hover">
-                                    <tr>
-                                        <td style="width: 10%;">名称</td>
-                                        <td>简述</td>
-                                    </tr>
-                                    @foreach($subproduct->modules()->wherePivot('type', '=', 'extra')->get() as $module)
-                                        <tr>
-                                            <td>{{ $module->name }}</td>
-                                            <td>
-                                                {{ $module->description }}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </table>
+                                            {{--*/ $selected = false /*--}}
+                                            {{--*/ $btn_class = 'btn-default' /*--}}
 
-                                <span class="pull-right">
-                                     <button class="btn btn-primary" data-toggle="modal" data-target="#add-extra-module">
-                                         <i class="fa fa-wrench"></i> 设置模块
-                                     </button>
-                                </span>
+                                            @if($subproduct->modules->contains($module->id))
+                                                {{--*/ $selected = true /*--}}
+                                                {{--*/ $btn_class = 'btn-primary' /*--}}
+                                            @endif
 
-                                <div class="modal fade" id="add-extra-module" tabindex="-1" role="dialog" aria-labelledby="add-extra-module-modal-label">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="add-module-modal-label">设置扩展模块</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form id="add-extra-module-form" method="post" action="{{ route('subproduct.module.edit', ['id'=> $subproduct->id]) }}">
+                                            <span _id="{{ $module->id }}" dep_modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center" style="padding: 20px; margin:10px 5px; width:100px;">
+                                                    {{ $module->name }}
+                                                </span>
 
-                                                    @foreach($subproduct->product->modules as $module)
+                                            @if($selected)
+                                                <input type="hidden" name="modules[]" value="{{ $module->id }}" />
+                                            @endif
 
-                                                        @if($subproduct->modules()->wherePivot('type', '=', 'normal')->get()->contains($module->id))
-                                                            {{--*/ continue; /*--}}
-                                                        @endif
-
-                                                        {{--*/ $selected = false /*--}}
-                                                        {{--*/ $btn_class = 'btn-default' /*--}}
-
-                                                        @if($subproduct->modules()->wherePivot('type', '=', 'extra')->get()->contains($module->id))
-                                                            {{--*/ $selected = true /*--}}
-                                                            {{--*/ $btn_class = 'btn-primary' /*--}}
-
-                                                        @endif
-
-
-                                                        <span _id="{{ $module->id }}" dep_modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center" style="padding: 20px; margin:10px 5px; width:100px;">
-                                                                {{ $module->name }}
-                                                            </span>
-
-                                                        @if($selected)
-                                                            <input type="hidden" name="modules[]" value="{{ $module->id }}" />
-                                                        @endif
-                                                    @endforeach
-
-                                                    <span>
-                                                        <input type="hidden" name="type" value="extra" />
-                                                    </span>
-
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                                <button type="submit" class="btn btn-primary" form="add-extra-module-form">设置</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        @endforeach
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                    <button type="submit" class="btn btn-primary" form="add-module-form">设置</button>
                                 </div>
                             </div>
                         </div>

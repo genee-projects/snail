@@ -67,7 +67,8 @@ class SubProductController extends Controller
 
         $data = [];
 
-        foreach($sub->modules()->wherePivot('type', '=', $type)->get(['id']) as $module) {
+
+        foreach($sub->modules as $module) {
             $data[] = $module->id;
         }
 
@@ -80,9 +81,7 @@ class SubProductController extends Controller
 
             $module = Module::find($module_id);
 
-            $sub->modules()->save($module, [
-                'type'=> $type,
-            ]);
+            $sub->modules()->save($module);
         }
 
         return redirect()->back();
@@ -123,14 +122,5 @@ class SubProductController extends Controller
 
         return redirect()->back();
     }
-
-    public function extra_module_json($id) {
-        $sub = SubProduct::find($id);
-
-        return response()->json($sub->modules()
-            ->wherePivot('type', '=', 'extra')
-            ->get());
-    }
-
 }
 

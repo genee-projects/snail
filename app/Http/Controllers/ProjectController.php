@@ -40,10 +40,8 @@ class ProjectController extends Controller
 
         if ($project->save()) {
 
-            foreach($sub->modules()->wherePivot('type', '=', 'normal')->get() as $module) {
-                $project->modules()->save($module, [
-                    'type'=> 'normal',
-                ]);
+            foreach($sub->modules as $module) {
+                $project->modules()->save($module);
             }
 
             foreach($sub->params as $param) {
@@ -81,7 +79,6 @@ class ProjectController extends Controller
                 ->with('message_content', '修改成功!')
                 ->with('message_type', 'info');
         }
-
     }
 
     public function profile($id) {
@@ -129,29 +126,28 @@ class ProjectController extends Controller
             ->with('message_type', 'danger');
     }
 
-    public function module_add($id, Request $request) {
+    public function module_edit($id, Request $request) {
 
         $project = Project::find($id);
 
-        $module = Module::find($request->input('module_id'));
+        foreach($project->product->product->modules as $module) {
+            $data[] = $module->id;
+        }
 
-        $project->modules()->save($module, [
-            'type'=> 'extra',
-        ]);
+        if (count($data)) {
+            $project->modules()->detach($data);
+        }
+
+        //重新对选定的 module 进行 link, 类型为 type
+        foreach($request->input('modules', []) as $module_id) {
+
+            $module = Module::find($module_id);
+
+            $project->modules()->save($module);
+        }
 
         return redirect()->back()
-            ->with('message_content', '模块添加成功!')
-            ->with('message_type', 'info');
-    }
-
-    public function module_delete($project_id, $module_id) {
-
-        $project = Project::find($project_id);
-
-        $project->modules()->detach($module_id);
-
-        return redirect()->back()
-            ->with('message_content', '模块删除成功!')
+            ->with('message_content', '模块设置成功!')
             ->with('message_type', 'info');
     }
 

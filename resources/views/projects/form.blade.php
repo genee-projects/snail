@@ -25,20 +25,20 @@
     </div>
 </div>
 
-{{--<div class="form-group">--}}
-    {{--<label for="project-type" class="col-sm-2 control-label">产品类型</label>--}}
-    {{--<div class="col-sm-10">--}}
-        {{--<select class="selectpicker" name="product_id">--}}
-            {{--@foreach(\App\Product::all() as $product)--}}
-                {{--<optgroup label="{{ $product->name }}">--}}
-                    {{--@foreach($product->sub_products as $sub)--}}
-                        {{--<option value="{{ $sub->id }}">{{ $sub->name }}</option>--}}
-                    {{--@endforeach--}}
-                {{--</optgroup>--}}
-            {{--@endforeach--}}
-        {{--</select>--}}
-    {{--</div>--}}
-{{--</div>--}}
+<div class="form-group">
+    <label for="project-type" class="col-sm-2 control-label">产品类型</label>
+    <div class="col-sm-10">
+        <select class="selectpicker" name="product_id">
+            @foreach(\App\Product::all() as $product)
+                <optgroup label="{{ $product->name }}">
+                    @foreach($product->sub_products as $sub)
+                        <option value="{{ $sub->id }}">{{ $sub->name }}</option>
+                    @endforeach
+                </optgroup>
+            @endforeach
+        </select>
+    </div>
+</div>
 
 <div class="form-group">
     <label for="project-time" class="col-sm-2 control-label">签约时间</label>

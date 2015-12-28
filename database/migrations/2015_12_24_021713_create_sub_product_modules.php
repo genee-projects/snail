@@ -19,8 +19,6 @@ class CreateSubProductModules extends Migration
 
             $table->integer('module_id')->unsigned()->index();
             $table->foreign('module_id')->references('id')->on('modules');
-
-            $table->string('type');         //附加类型参数
         });
     }
 

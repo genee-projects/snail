@@ -79,7 +79,6 @@ Route::get('/products/{id}/params.json', [
     'uses'=> 'ProductController@params_json',
 ]);
 
-
 #servers
 Route::get('/servers', [
     'as'=> 'servers',
@@ -138,13 +137,8 @@ Route::post('/projects/edit', [
 ]);
 
 Route::post('/projects/{id}/modules', [
-    'as'=> 'project.module.add',
-    'uses'=> 'ProjectController@module_add',
-]);
-
-Route::get('/projects/{id}/modules/{module_id}', [
-    'as'=> 'project.module.delete',
-    'uses'=> 'ProjectController@module_delete',
+    'as'=> 'project.module.edit',
+    'uses'=> 'ProjectController@module_edit',
 ]);
 
 Route::post('/projects/{id}/params/', [
@@ -237,9 +231,4 @@ Route::get('/subproduct/{id}/params/{param_id}', [
 Route::post('/subproduct/{id}/params/', [
     'as'=> 'subproduct.param.edit',
     'uses'=>'SubProductController@param_edit',
-]);
-
-Route::get('/subproduct/{id}/extra_modules.json', [
-    'as'=> 'subproduct.extra_modules.json',
-    'uses'=> 'SubProductController@extra_module_json',
 ]);

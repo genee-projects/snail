@@ -248,8 +248,9 @@
                             <div role="tabpanel" class="tab-pane  active" id="software">
                                 <div class="panel-body">
                                     <h4>模块列表</h4>
+
                                     <div class="row">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-12">
                                             <table class="table-striped table-hover table">
                                                 <tr>
                                                     <td>名称</td>
@@ -262,87 +263,137 @@
                                                                 <span>
                                                                     {{ $module->name }}
                                                                 </span>
-
-                                                                @if($module->pivot->type == 'extra')
-                                                                    <span class="pull-right">
-                                                                        <a href="{{ route('project.module.delete', ['id'=> $project->id, 'module_id'=> $module->id]) }}">
-                                                                            <i class="fa fa-times"></i>
-                                                                        </a>
-                                                                    </span>
-                                                                @endif
                                                             </p>
                                                         </td>
                                                     </tr>
                                                 @endforeach
+                                                <tr>
+                                                    <td>
+                                                         <span class="pull-right">
+                                                            <button data-toggle="modal" data-target="#edit-modules" type="submit" class="btn btn-primary"><i class="fa fa-wrench"></i> 设置模块</button>
+                                                        </span>
+
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="edit-modules" tabindex="-1" role="dialog" aria-labelledby="edit-modules-label">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                        <h4 class="modal-title" id="myModalLabel">设置模块</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form id="edit-module-form" method="post" action="{{ route('project.module.edit', ['id'=> $project->id]) }}">
+
+                                                                            @foreach($project->product->product->modules as $module)
+
+                                                                                {{--*/ $selected = false /*--}}
+                                                                                {{--*/ $btn_class = 'btn-default' /*--}}
+
+                                                                                @if($project->modules->contains($module->id))
+                                                                                    {{--*/ $selected = true /*--}}
+                                                                                    {{--*/ $btn_class = 'btn-primary' /*--}}
+                                                                                @endif
+
+                                                                                <span _id="{{ $module->id }}" dep_modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center" style="padding: 20px; margin:10px 5px; width:100px;">
+                                                                                    {{ $module->name }}
+                                                                                </span>
+
+                                                                                @if($selected)
+                                                                                    <input type="hidden" name="modules[]" value="{{ $module->id }}" />
+                                                                                @endif
+
+                                                                            @endforeach
+                                                                        </form>
+
+                                                                        <script type="text/javascript">
+
+                                                                            require(['jquery'], function($) {
+
+                                                                                function check_disabled(dep_modules_ids, form) {
+
+                                                                                    disabled = false;
+
+                                                                                    $('[_id=' + dep_modules_ids.join('],[_id=') + ']', form).each(function() {
+
+                                                                                        if (! $(this).hasClass('btn-primary')) {
+                                                                                            disabled = true;
+                                                                                        }
+                                                                                    });
+
+                                                                                    return disabled;
+                                                                                }
+
+                                                                                function refresh_btn_status() {
+
+                                                                                    $('.module-btn').each(function() {
+
+                                                                                        var $btn = $(this);
+
+                                                                                        var form = $(this).parents('form');
+
+                                                                                        //查看依赖
+
+                                                                                        if ($btn.attr('dep_modules')) {
+
+                                                                                            var dep_modules = $btn.attr('dep_modules');
+
+                                                                                            var dep_modules_ids = dep_modules.split(',');
+
+                                                                                            //查找依赖的模块, 查看是否被 check
+                                                                                            //如果没被check, 那么 disabled="disabled"
+                                                                                            if (check_disabled(dep_modules_ids, form)) {
+                                                                                                $btn.attr('disabled', 'disabled');
+                                                                                                $btn.removeClass('btn-primary');
+                                                                                                $btn.addClass('btn-default');
+                                                                                                $btn.next(":input").remove();
+                                                                                            }
+                                                                                            else {
+                                                                                                $btn.removeAttr('disabled');
+                                                                                            }
+                                                                                        }
+                                                                                    });
+                                                                                }
+
+                                                                                refresh_btn_status();
+
+
+                                                                                $('.module-btn').bind('click', function() {
+                                                                                    $input = $('<input type="hidden" name="modules[]" />');
+
+                                                                                    var $span = $(this);
+
+                                                                                    if (! $(this).attr('disabled')) {
+                                                                                        if ($span.hasClass('btn-default')) {
+                                                                                            $span.removeClass('btn-default');
+                                                                                            $span.addClass('btn-primary');
+                                                                                            $input.val($span.attr('_id'));
+
+                                                                                            $span.after($input);
+                                                                                        }
+                                                                                        else {
+                                                                                            $span.removeClass('btn-primary');
+                                                                                            $span.addClass('btn-default');
+                                                                                            $span.next(":input").remove();
+                                                                                        }
+                                                                                        refresh_btn_status();
+                                                                                    }
+                                                                                });
+                                                                            });
+                                                                        </script>
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                                        <button type="submit" form="edit-module-form" class="btn btn-primary">保存</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             </table>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <form id="add-client-form" method="post" action="{{ route('project.module.add', ['id'=> $project->id]) }}">
 
-                                                <div class="form-group">
-                                                    <input class="form-control" type="text" data-provide="typeahead" id="extra_module_selector">
-                                                </div>
-
-                                                <script type="text/javascript">
-
-                                                    require(['jquery', 'bootstrap3-typeahead'], function($) {
-
-                                                        $('.edit-param').bind('click', function() {
-
-                                                            var $param_modal = $('#edit-param');
-
-                                                            $param_modal.modal({});
-
-                                                            $param_modal.find(':input[name=name]').val($(this).attr('_name'));
-                                                            $param_modal.find(':input[name=param_id]').val($(this).attr('_param_id'));
-                                                            $param_modal.find(':input[name=value]').val($(this).attr('_value'));
-
-                                                        });
-
-
-                                                        $.get('{{ route('subproduct.extra_modules.json', ['id'=> $project->product->id]) }}', function(data){
-
-                                                            var $selector = $("#extra_module_selector");
-                                                            $selector.typeahead({
-                                                                source:data,
-                                                                displayText: function(item) {
-                                                                    return item.name;
-                                                                },
-                                                                afterSelect: function(item) {
-                                                                    //修改 $selector 的 value
-                                                                    $selector.val(item.name);
-                                                                    //同步设定 value 到 value 输入框
-                                                                    $selector.parents('form').find(':input[name=value]').val(item.value);
-
-                                                                    var $input = $('<input name="module_id" type="hidden">');
-
-                                                                    $input.val(item.id);
-                                                                    $selector.after($input);
-                                                                }
-                                                            });
-                                                        },'json');
-
-                                                        $.get('/servers.json', function(data){
-                                                            var $selector = $("#server_selector");
-                                                            $selector.typeahead({
-                                                                source:data,
-                                                                displayText: function(item) {
-                                                                    return item.name;
-                                                                },
-                                                                afterSelect: function(item) {
-                                                                    var $input = $('<input name="server_id" type="hidden">');
-                                                                    $input.val(item.id);
-                                                                    $selector.after($input);
-                                                                }
-                                                            });
-                                                        },'json');
-                                                    });
-
-                                                </script>
-
-                                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> 添加附加模块</button>
-                                            </form>
-                                        </div>
                                     </div>
                                     <hr />
 
