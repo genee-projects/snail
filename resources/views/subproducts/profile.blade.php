@@ -107,7 +107,7 @@
                                     <h4 class="modal-title" id="add-module-modal-label">设置基础模块</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="add-module-form" method="post" action="{{ route('subproduct.module.edit', ['id'=> $subproduct->id]) }}">
+                                    <form id="add-module-form" method="post" action="{{ route('subproduct.modules', ['id'=> $subproduct->id]) }}">
 
                                         @foreach($subproduct->product->modules as $module)
 
@@ -166,9 +166,6 @@
                                     {{ $param->description }}
                                     <span class="pull-right">
                                         <i _value="{{ $param->pivot->value }}" _id="{{ $param->id }}" _name="{{ $param->name }}" class="edit-param fa fa-edit fa-fw" style="color: #337ab7; text-decoration:none;"></i>
-                                        <a href="{{ route('subproduct.param.delete', ['id'=> $subproduct->id, 'param_id'=> $param->id]) }}">
-                                            <i class="fa fa-times"></i>
-                                        </a>
                                     </span>
                                 </td>
                             </tr>
@@ -176,7 +173,7 @@
                     </table>
 
                     <span class="pull-right btn btn-primary" data-toggle="modal" data-target="#add-param">
-                        <i class="fa fa-plus"></i> 追加参数
+                        <i class="fa fa-plus"></i> 设置参数
                     </span>
 
                     <div class="modal fade" id="edit-param" tabindex="-1" role="dialog" aria-labelledby="edit-param-modal-label">
@@ -184,7 +181,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="edit-server-modal-label">修改参数</h4>
+                                    <h4 class="modal-title" id="edit-server-modal-label">设置参数</h4>
                                 </div>
                                 <div class="modal-body">
                                     <form id="edit-param-form" method="post" action="{{ route('subproduct.param.edit', ['id'=> $subproduct->id]) }}">
@@ -212,72 +209,73 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="add-module-modal-label">追加参数</h4>
+                                    <h4 class="modal-title" id="add-module-modal-label">设置参数</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="add-param-form" class="form-horizontal" method="post" action="{{ route('subproduct.param.add') }}">
-                                        <div class="form-group">
-                                            <label for="param_selector" class="col-sm-2 control-label">选择参数</label>
-                                            <div class="col-sm-10">
-                                                <input class="form-control" type="text" data-provide="typeahead" id="param_selector">
-                                            </div>
-                                        </div>
+                                    <form id="add-param-form" class="form-horizontal" method="post" action="{{ route('subproduct.params', ['id'=> $subproduct->id]) }}">
+                                        @foreach($subproduct->product->params as $param)
 
-                                        <div class="form-group">
-                                            <label for="param_usage" class="col-sm-2 control-label">参数值</label>
-                                            <div class="col-sm-10">
-                                                <input class="form-control" type="text" name="value" >
-                                            </div>
-                                        </div>
+                                            {{--*/ $selected = false /*--}}
+                                            {{--*/ $btn_class = 'btn-default' /*--}}
 
-                                        <input type="hidden" name="sub_product_id" value="{{ $subproduct->id }}">
+                                            @if($subproduct->params->contains($param->id))
+                                                {{--*/ $selected = true /*--}}
+                                                {{--*/ $btn_class = 'btn-primary' /*--}}
+                                            @endif
+
+                                            <div _id="{{ $param->id }}" style="display: block; padding-bottom: 10px; margin: 10px;" class="param-btn btn {{ $btn_class }}">
+                                                {{ $param->name }}
+                                            </div>
+
+                                            @if($selected)
+                                                <input type="hidden" name="params[]" value="{{ $param->id }}" />
+                                            @endif
+
+                                        @endforeach
 
                                         <script type="text/javascript">
 
-                                            require(['jquery', 'bootstrap3-typeahead'], function($) {
+                                            require(['jquery'], function($) {
 
                                                 $('.edit-param').bind('click', function() {
                                                     var $modal = $('#edit-param');
                                                     $modal.find(':input[name=name]').val($(this).attr('_name'));
-                                                    $modal.find(':input[name=description]').val($(this).attr('_description'));
                                                     $modal.find(':input[name=value]').val($(this).attr('_value'));
                                                     $modal.find(':input[name=param_id]').val($(this).attr('_id'));
-                                                    $modal.find(':input[name=code]').val($(this).attr('_code'));
 
                                                     $modal.modal();
                                                 });
 
+                                                $('.param-btn').bind('click', function() {
 
-                                                $.get('{{ route('product.params.json', ['id'=>$subproduct->product->id]) }}', function(data){
-                                                    var $selector = $("#param_selector");
-                                                    $selector.typeahead({
-                                                        source:data,
-                                                        displayText: function(item) {
-                                                            return item.name + ' ('+  item.value + ')';
-                                                        },
-                                                        afterSelect: function(item) {
-                                                            //修改 $selector 的 value
-                                                            $selector.val(item.name);
-                                                            //同步设定 value 到 value 输入框
-                                                            $selector.parents('form').find(':input[name=value]').val(item.value);
+                                                    $input = $('<input type="hidden" name="params[]" />');
 
-                                                            var $input = $('<input name="param_id" type="hidden">');
+                                                    var $div = $(this);
 
-                                                            $input.val(item.id);
-                                                            $selector.after($input);
-                                                        }
-                                                    });
-                                                },'json');
+                                                    if ($div.hasClass('btn-default')) {
+                                                        $div.removeClass('btn-default');
+                                                        $div.addClass('btn-primary');
+                                                        $input.val($div.attr('_id'));
+
+                                                        $div.after($input);
+                                                    }
+                                                    else {
+                                                        $div.removeClass('btn-primary');
+                                                        $div.addClass('btn-default');
+                                                        $div.next(":input").remove();
+                                                    }
+                                                });
                                             });
                                         </script>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    <button type="submit" class="btn btn-primary" form="add-param-form">追加</button>
+                                    <button type="submit" class="btn btn-primary" form="add-param-form">设置</button>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>

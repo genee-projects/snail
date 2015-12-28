@@ -271,7 +271,7 @@
                                                     <td>
                                                          <span class="pull-right">
                                                             <button data-toggle="modal" data-target="#edit-modules" type="submit" class="btn btn-primary"><i class="fa fa-wrench"></i> 设置模块</button>
-                                                        </span>
+                                                         </span>
 
                                                         <!-- Modal -->
                                                         <div class="modal fade" id="edit-modules" tabindex="-1" role="dialog" aria-labelledby="edit-modules-label">
@@ -282,7 +282,7 @@
                                                                         <h4 class="modal-title" id="myModalLabel">设置模块</h4>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <form id="edit-module-form" method="post" action="{{ route('project.module.edit', ['id'=> $project->id]) }}">
+                                                                        <form id="edit-module-form" method="post" action="{{ route('project.modules', ['id'=> $project->id]) }}">
 
                                                                             @foreach($project->product->product->modules as $module)
 
@@ -384,7 +384,7 @@
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                                                        <button type="submit" form="edit-module-form" class="btn btn-primary">保存</button>
+                                                                        <button type="subit" form="edit-module-form" class="btn btn-primary">保存</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -415,11 +415,110 @@
                                                         <td>
                                                             <code>{{ $param->pivot->value }}</code>
                                                             <span class="pull-right">
-                                                                <i class="fa fa-fw fa-edit edit-param" _param_id="{{ $param->id }}" _name="{{ $param->name }}" _value="{{ $param->pivot->value }}"></i>
+                                                                <i class="fa fa-fw fa-edit edit-param" _id="{{ $param->id }}" _name="{{ $param->name }}" _value="{{ $param->pivot->value }}"></i>
                                                             </span>
                                                         </td>
                                                     </tr>
                                                 @endforeach
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <span class="pull-right">
+                                                            <button data-toggle="modal" data-target="#params" type="button" class="btn btn-primary"><i class="fa fa-wrench"></i> 设置参数</button>
+                                                        </span>
+
+                                                        <div class="modal fade" id="params" tabindex="-1" role="dialog" aria-labelledby="add-param-modal-label">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                        <h4 class="modal-title" id="add-module-modal-label">设置参数</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form id="params-form" class="form-horizontal" method="post" action="{{ route('project.params', ['id'=> $project->id]) }}">
+                                                                            @foreach($project->product->product->params as $param)
+
+                                                                                {{--*/ $selected = false /*--}}
+                                                                                {{--*/ $btn_class = 'btn-default' /*--}}
+
+                                                                                @if($project->params->contains($param->id))
+                                                                                    {{--*/ $selected = true /*--}}
+                                                                                    {{--*/ $btn_class = 'btn-primary' /*--}}
+                                                                                @endif
+
+                                                                                <div _id="{{ $param->id }}" style="display: block; padding-bottom: 10px; margin: 10px;" class="param-btn btn {{ $btn_class }}">
+                                                                                    {{ $param->name }}
+                                                                                </div>
+
+                                                                                @if($selected)
+                                                                                    <input type="hidden" name="params[]" value="{{ $param->id }}" />
+                                                                                @endif
+
+                                                                            @endforeach
+
+                                                                            <script type="text/javascript">
+
+                                                                                require(['jquery', 'bootstrap3-typeahead'], function($) {
+                                                                                    $.get('/servers.json', function(data){
+                                                                                        var $selector = $("#server_selector");
+                                                                                        $selector.typeahead({
+                                                                                            source:data,
+                                                                                            displayText: function(item) {
+                                                                                                return item.name;
+                                                                                            },
+                                                                                            afterSelect: function(item) {
+                                                                                                var $input = $('<input name="server_id" type="hidden">');
+                                                                                                $input.val(item.id);
+                                                                                                $selector.after($input);
+                                                                                            }
+                                                                                        });
+                                                                                    },'json');
+
+                                                                                });
+
+                                                                                require(['jquery'], function($) {
+
+                                                                                    $('.edit-param').bind('click', function() {
+                                                                                        var $modal = $('#edit-param');
+                                                                                        $modal.find(':input[name=name]').val($(this).attr('_name'));
+                                                                                        $modal.find(':input[name=value]').val($(this).attr('_value'));
+                                                                                        $modal.find(':input[name=param_id]').val($(this).attr('_id'));
+
+
+                                                                                        $modal.modal();
+                                                                                    });
+
+                                                                                    $('.param-btn').bind('click', function() {
+
+                                                                                        $input = $('<input type="hidden" name="params[]" />');
+
+                                                                                        var $div = $(this);
+
+                                                                                        if ($div.hasClass('btn-default')) {
+                                                                                            $div.removeClass('btn-default');
+                                                                                            $div.addClass('btn-primary');
+                                                                                            $input.val($div.attr('_id'));
+
+                                                                                            $div.after($input);
+                                                                                        }
+                                                                                        else {
+                                                                                            $div.removeClass('btn-primary');
+                                                                                            $div.addClass('btn-default');
+                                                                                            $div.next(":input").remove();
+                                                                                        }
+                                                                                    });
+                                                                                });
+                                                                            </script>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                                        <button type="submit" class="btn btn-primary" form="params-form">设置</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             </table>
                                         </div>
                                         <div class="modal fade" id="edit-param" tabindex="-1" role="dialog" aria-labelledby="edit-project-modal-label">
@@ -504,7 +603,7 @@
 
                                     <h3>关联服务器</h3>
 
-                                    <form class="form-horizontal" method="post" action="{{ route('project.server', ['id'=> $project->id]) }}">
+                                    <form class="form-horizontal" method="post" action="{{ route('project.servers', ['id'=> $project->id]) }}">
 
                                         <div class="form-group">
                                             <label for="server_selector" class="col-sm-2 control-label">选择服务器</label>
@@ -541,6 +640,7 @@
                                             </div>
                                         </div>
                                     </form>
+
                                 </div>
                             </div>
                             <!-- server end -->

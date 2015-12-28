@@ -90,7 +90,22 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function server($id, Request $request) {
+
+    public function delete($id) {
+        $project = Project::find($id);
+
+        if ($project->delete()) {
+            return redirect(route('projects'))
+                ->with('message_content', '已解约该项目!')
+                ->with('message_type', 'danger');
+        }
+
+        return redirect(route('projects.profile', ['id'=> $id]))
+            ->with('message_content', '内部错误, 无法解约!')
+            ->with('message_type', 'danger');
+    }
+
+    public function servers($id, Request $request) {
         $project = Project::find($id);
 
         $server = Server::find($request->input('server_id'));
@@ -112,21 +127,8 @@ class ProjectController extends Controller
             ->with('message_type', 'danger');
     }
 
-    public function delete($id) {
-        $project = Project::find($id);
 
-        if ($project->delete()) {
-            return redirect(route('projects'))
-                ->with('message_content', '已解约该项目!')
-                ->with('message_type', 'danger');
-        }
-
-        return redirect(route('projects.profile', ['id'=> $id]))
-            ->with('message_content', '内部错误, 无法解约!')
-            ->with('message_type', 'danger');
-    }
-
-    public function module_edit($id, Request $request) {
+    public function modules($id, Request $request) {
 
         $project = Project::find($id);
 
@@ -151,15 +153,67 @@ class ProjectController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function param_edit($project_id, Request $request) {
+    public function params($id, Request $request) {
+
+
+        $project = Project::find($id);
+
+        $data = [];
+
+        foreach($project->params as $param) {
+            $data[] = $param->id;
+        }
+
+        //$data 为已关联的
+
+        $params = $request->input('params');
+
+        //拆分算法如下
+
+        //1. 获取 $data 和 $params 的交集
+        //2. 获取 $data 和 1.中交集的差集
+        //3. 对差集进行 detach 即可
+        //4. 获取 $param 和 1.中交集的差集, 进行 save
+
+
+        //1. 获取 $data 和 $params 的交集
+        $intersect = array_intersect($data, (array) $params);
+
+
+        //2. 获取 $data 和 1.中交集的差集
+
+        $detach = array_diff($data, $intersect);
+
+
+        //3. detach
+        if (count($detach)) {
+            $project->params()->detach($detach);
+        }
+
+        //4. 获取 $param 和 1.中交集的差集, 进行 save
+        $save = array_diff((array) $params, $intersect);
+
+
+        foreach($save as $param_id) {
+
+            $param = Param::find($param_id);
+
+            $project->params()->save($param, [
+                'value'=> $param->value,
+            ]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function param_edit($id, Request $request) {
 
         $param_id = $request->input('param_id');
 
-        $project = Project::find($project_id);
-
-        $project->params()->detach($param_id);
-
         $param = Param::find($param_id);
+
+        $project = Project::find($id);
+        $project->params()->detach($param_id);
 
         $project->params()->save($param, [
             'value' => $request->input('value'),
@@ -167,5 +221,4 @@ class ProjectController extends Controller
 
         return redirect()->back();
     }
-
 }

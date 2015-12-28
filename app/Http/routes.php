@@ -1,15 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
 
 #dashboard
 Route::get('/', 'DashboardController@index');
@@ -74,11 +64,6 @@ Route::post('/products/{id}/modules', [
     'uses'=> 'ProductController@modules',
 ]);
 
-Route::get('/products/{id}/params.json', [
-    'as'=> 'product.params.json',
-    'uses'=> 'ProductController@params_json',
-]);
-
 #servers
 Route::get('/servers', [
     'as'=> 'servers',
@@ -122,8 +107,8 @@ Route::get('/projects/profile/{id}', [
 ]);
 
 Route::post('/projects/{id}/servers', [
-    'as'=> 'project.server',
-    'uses'=> 'ProjectController@server',
+    'as'=> 'project.servers',
+    'uses'=> 'ProjectController@servers',
 ]);
 
 Route::get('/projects/delete/{id}', [
@@ -137,11 +122,16 @@ Route::post('/projects/edit', [
 ]);
 
 Route::post('/projects/{id}/modules', [
-    'as'=> 'project.module.edit',
-    'uses'=> 'ProjectController@module_edit',
+    'as'=> 'project.modules',
+    'uses'=> 'ProjectController@modules',
 ]);
 
-Route::post('/projects/{id}/params/', [
+Route::post('/projects/{id}/params', [
+    'as'=> 'project.params',
+    'uses'=> 'ProjectController@params',
+]);
+
+Route::post('/projects/{id}/param', [
     'as'=> 'project.param.edit',
     'uses'=> 'ProjectController@param_edit',
 ]);
@@ -215,20 +205,17 @@ Route::get('/subproduct/profile/{id}', [
 ]);
 
 Route::post('/subporduct/{id}/modules', [
-    'as'=> 'subproduct.module.edit',
+    'as'=> 'subproduct.modules',
     'uses'=> 'SubProductController@modules'
 ]);
 
-Route::post('/subproduct/params', [
-    'as'=> 'subproduct.param.add',
-    'uses'=> 'SubProductController@param_add',
-]);
-Route::get('/subproduct/{id}/params/{param_id}', [
-    'as'=> 'subproduct.param.delete',
-    'uses'=> 'SubProductController@param_delete',
+Route::post('/subproduct/{id}/params', [
+    'as'=> 'subproduct.params',
+    'uses'=> 'SubProductController@params',
 ]);
 
-Route::post('/subproduct/{id}/params/', [
+
+Route::post('/subproduct/{id}/param', [
     'as'=> 'subproduct.param.edit',
     'uses'=>'SubProductController@param_edit',
 ]);

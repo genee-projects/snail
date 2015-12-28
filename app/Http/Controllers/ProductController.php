@@ -46,21 +46,10 @@ class ProductController extends Controller
 
     public function delete($id) {
 
-        $product = Product::find($request->input('id'));
-
         $product = Product::find($id);
 
         if ($product->delete()) {
             return redirect()->route('products');
         }
-    }
-
-
-    public function params_json($id) {
-
-        $product = Product::find($id);
-
-        return response()->json($product->params);
-
     }
 }

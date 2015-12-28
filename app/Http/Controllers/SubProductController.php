@@ -61,12 +61,9 @@ class SubProductController extends Controller
 
         $sub = SubProduct::find($id);
 
-        $type = $request->input('type');
-
         //先把所有的 type 的 module 进行 unlink
 
         $data = [];
-
 
         foreach($sub->modules as $module) {
             $data[] = $module->id;
@@ -87,25 +84,55 @@ class SubProductController extends Controller
         return redirect()->back();
     }
 
-    public function param_add(Request $request) {
+    public function params($id, Request $request) {
 
-        $param = Param::find($request->input('param_id'));
-
-        $sub = SubProduct::find($request->input('sub_product_id'));
-
-        $sub->params()->save($param, [
-            'value'=> $request->input('value'),
-        ]);
-
-        return redirect()->back();
-    }
-
-    public function param_delete($id, $param_id, Request $request) {
         $sub = SubProduct::find($id);
 
-        $param = Param::find($param_id);
+        $data = [];
 
-        $sub->params()->detach($param_id);
+        foreach($sub->params as $param) {
+            $data[] = $param->id;
+        }
+
+        //$data 为已关联的
+
+        $params = $request->input('params');
+
+
+        //拆分算法如下
+
+        //1. 获取 $data 和 $params 的交集
+        //2. 获取 $data 和 1.中交集的差集
+        //3. 对差集进行 detach 即可
+        //4. 获取 $param 和 1.中交集的差集, 进行 save
+
+
+        //1. 获取 $data 和 $params 的交集
+        $intersect = array_intersect($data, (array) $params);
+
+
+        //2. 获取 $data 和 1.中交集的差集
+
+        $detach = array_diff($data, $intersect);
+
+
+        //3. detach
+        if (count($detach)) {
+            $sub->params()->detach($detach);
+        }
+
+        //4. 获取 $param 和 1.中交集的差集, 进行 save
+        $save = array_diff((array) $params, $intersect);
+
+
+        foreach($save as $param_id) {
+
+            $param = Param::find($param_id);
+
+            $sub->params()->save($param, [
+                'value'=> $param->value,
+            ]);
+        }
 
         return redirect()->back();
     }
