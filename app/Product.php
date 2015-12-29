@@ -26,4 +26,8 @@ class Product extends Model
     public function sub_products() {
         return $this->hasMany('App\SubProduct', 'product_id');
     }
+
+    public function hardwares() {
+        return $this->hasMany('App\Hardware', 'product_id');
+    }
 }

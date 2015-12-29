@@ -219,3 +219,19 @@ Route::post('/subproduct/{id}/param', [
     'as'=> 'subproduct.param.edit',
     'uses'=>'SubProductController@param_edit',
 ]);
+
+
+Route::post('/hardware/add', [
+    'as'=> 'hardware.add',
+    'uses'=> 'HardWareController@add',
+]);
+
+Route::get('/hardware/delete/{id}', [
+    'as'=> 'hardware.delete',
+    'uses'=> 'HardWareController@delete',
+]);
+
+Route::post('/hardware/edit', [
+    'as'=> 'hardware.edit',
+    'uses'=> 'HardWareController@edit',
+]);
