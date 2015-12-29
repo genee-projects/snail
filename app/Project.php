@@ -41,4 +41,11 @@ class Project extends Model
     public function params() {
         return $this->belongsToMany('App\Param', 'project_params')->withPivot('value');
     }
+
+    public function hardwares() {
+        return $this->belongsToMany('App\Hardware', 'project_hardwares')
+            ->withPivot('deployed_count')
+            ->withPivot('plan_count')
+            ->withPivot('description');
+    }
 }

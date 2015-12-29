@@ -20,9 +20,9 @@ class CreateProjectHardwares extends Migration
             $table->integer('hardware_id')->unsigned()->index();
             $table->foreign('hardware_id')->references('id')->on('hardwares');
 
-            $table->string('deployed_count');   //安装数量
-            $table->string('plan_count');       // 计划安装数量
-            $table->string('description');      // 备注
+            $table->integer('deployed_count')->nullable();   //安装数量
+            $table->integer('plan_count')->nullable();       // 计划安装数量
+            $table->string('description')->nullable();      // 备注
         });
     }
 

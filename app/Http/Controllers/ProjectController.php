@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Hardware;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -48,6 +49,13 @@ class ProjectController extends Controller
 
                 $project->params()->save($param, [
                     'value'=> $param->pivot->value,
+                ]);
+            }
+
+            foreach($sub->hardwares as $hardware) {
+
+                $project->hardwares()->save($hardware, [
+                    'plan_count'=> $hardware->pivot->count,
                 ]);
             }
 
@@ -155,7 +163,6 @@ class ProjectController extends Controller
 
     public function params($id, Request $request) {
 
-
         $project = Project::find($id);
 
         $data = [];
@@ -206,6 +213,56 @@ class ProjectController extends Controller
         return redirect()->back();
     }
 
+    public function hardwares($id, Request $request) {
+
+        $project = Project::find($id);
+
+        $data = [];
+
+        foreach($project->hardwares as $hardware) {
+            $data[] = $hardware->id;
+        }
+
+        //$data 为已关联的
+
+        $hardwares = $request->input('hardwares');
+
+        //拆分算法如下
+
+        //1. 获取 $data 和 $params 的交集
+        //2. 获取 $data 和 1.中交集的差集
+        //3. 对差集进行 detach 即可
+        //4. 获取 $param 和 1.中交集的差集, 进行 save
+
+
+        //1. 获取 $data 和 $params 的交集
+        $intersect = array_intersect($data, (array) $hardwares);
+
+
+        //2. 获取 $data 和 1.中交集的差集
+
+        $detach = array_diff($data, $intersect);
+
+
+        //3. detach
+        if (count($detach)) {
+            $project->hardwares()->detach($detach);
+        }
+
+        //4. 获取 $param 和 1.中交集的差集, 进行 save
+        $save = array_diff((array) $hardwares, $intersect);
+
+
+        foreach($save as $hardware_id) {
+
+            $hardware = Hardware::find($hardware_id);
+
+            $project->hardwares()->save($hardware);
+        }
+
+        return redirect()->back();
+    }
+
     public function param_edit($id, Request $request) {
 
         $param_id = $request->input('param_id');
@@ -217,6 +274,25 @@ class ProjectController extends Controller
 
         $project->params()->save($param, [
             'value' => $request->input('value'),
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function hardware_edit($id, Request $request) {
+
+        $hardware_id = $request->input('hardware_id');
+
+        $hardware = Hardware::find($hardware_id);
+
+        $project = Project::find($id);
+
+        $project->hardwares()->detach($hardware_id);
+
+        $project->hardwares()->save($hardware, [
+            'description'=> $request->input('description'),
+            'deployed_count'=> $request->input('deployed_count'),
+            'plan_count'=> $request->input('plan_count'),
         ]);
 
         return redirect()->back();

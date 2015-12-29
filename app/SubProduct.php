@@ -29,4 +29,8 @@ class SubProduct extends Model
     public function params() {
         return $this->belongsToMany('App\Param', 'sub_product_params')->withPivot('value');
     }
+
+    public function hardwares() {
+        return $this->belongsToMany('App\Hardware', 'sub_product_hardwares')->withPivot('count');
+    }
 }

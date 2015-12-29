@@ -131,9 +131,19 @@ Route::post('/projects/{id}/params', [
     'uses'=> 'ProjectController@params',
 ]);
 
+Route::post('/projects/{id}/hardwares', [
+    'as'=> 'project.hardwares',
+    'uses'=> 'ProjectController@hardwares',
+]);
+
 Route::post('/projects/{id}/param', [
     'as'=> 'project.param.edit',
     'uses'=> 'ProjectController@param_edit',
+]);
+
+Route::post('/projects/{id}/hardware', [
+    'as'=> 'project.hardware.edit',
+    'uses'=> 'ProjectController@hardware_edit',
 ]);
 
 # item start
@@ -212,6 +222,11 @@ Route::post('/subporduct/{id}/modules', [
 Route::post('/subproduct/{id}/params', [
     'as'=> 'subproduct.params',
     'uses'=> 'SubProductController@params',
+]);
+
+Route::post('/subproduct/{id}/hardwares', [
+    'as'=> 'subproduct.hardwares',
+    'uses'=> 'SubProductController@hardwares',
 ]);
 
 

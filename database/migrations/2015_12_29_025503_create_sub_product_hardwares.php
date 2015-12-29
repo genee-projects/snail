@@ -19,6 +19,8 @@ class CreateSubProductHardwares extends Migration
 
             $table->integer('hardware_id')->unsigned()->index();
             $table->foreign('hardware_id')->references('id')->on('hardwares');
+
+            $table->integer('count')->nullable();       //默认部署数量
         });
     }
 
