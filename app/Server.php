@@ -14,14 +14,6 @@ class Server extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function comments() {
-        return $this->morphMany('App\Comment', 'object');
-    }
-
-    public function projects() {
-        return $this->belongsToMany('App\Project', 'project_servers')
-            ->withPivot('usage', 'deploy_time');
-    }
 
     const PROVIDER_CUSTOMER = 1;    //客户提供
     const PROVIDER_COMPANY = 2;     //公司提供
@@ -32,4 +24,20 @@ class Server extends Model
         self::PROVIDER_COMPANY=> '公司提供',
         self::PROVIDER_AGENT=> '代理商提供',
     ];
+
+    public function comments() {
+        return $this->morphMany('App\Comment', 'object');
+    }
+
+    public function projects() {
+        return $this->belongsToMany('App\Project', 'project_servers')
+            ->withPivot('usage', 'deploy_time');
+    }
+
+    public function items() {
+        return $this->morphMany('App\Item', 'object');
+    }
+
 }
+
+

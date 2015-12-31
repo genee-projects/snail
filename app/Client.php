@@ -40,4 +40,9 @@ class Client extends Model
     public function projects() {
         return $this->hasMany('App\Project', 'client_id');
     }
+
+
+    public function items() {
+        return $this->morphMany('App\Item', 'object');
+    }
 }

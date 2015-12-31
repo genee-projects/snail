@@ -77,7 +77,62 @@
                             <td>备注信息</td>
                             <td>{{ $client->description }}</td>
                         </tr>
+
+                        @foreach($client->items as $item)
+                            <tr>
+                                <td>{{ $item->name }}</td>
+                                <td>
+                                    {{ $item->value }}
+                                    <span class="pull-right">
+                                        <a href="{{ route('item.delete', ['id'=> $item->id]) }}"><i class="fa fa-times"></i></a>
+                                    </span>
+                                </td>
+                            </tr>
+                        @endforeach
+
+                        <tr>
+                            <td colspan="2">
+                                <span class="pull-right">
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#add-item"><i class="fa fa-plus"></i> 追加字段</button>
+                                </span>
+
+                                <div class="modal fade" id="add-item" tabindex="-1" role="dialog" aria-labelledby="add-item-modal-label">
+                                    <div class="modal-dialog modal-sm" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="edit-server-modal-label">追加字段</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="add-item-form" method="post" action="{{ route('item.add') }}">
+                                                    <input type="hidden" name="object_type" value="{{ get_class($client) }}"/>
+                                                    <input type="hidden" name="object_id" value="{{ $client->id }}" />
+
+                                                    <div class="form-group">
+                                                        <input name="name" type="text" class="form-control" placeholder="名称(学校类型)">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <input name="value" type="text" class="form-control" placeholder="显示值(211/985)">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <input name="key" type="text" class="form-control" placeholder="代码(school) 可不填">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                <button type="submit" class="btn btn-primary" form="add-item-form">添加</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                     </table>
+
+
                 </div>
             </div>
         </div>
