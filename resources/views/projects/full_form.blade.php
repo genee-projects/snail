@@ -10,6 +10,10 @@
 
         $('select').selectpicker();
     });
+
+    require(['jquery', 'bootstrap-toggle'], function($) {
+        require(['css!../css/bootstrap-toggle.min'], function() {});
+    })
 </script>
 
 <div class="form-group">
@@ -37,6 +41,24 @@
                 </optgroup>
             @endforeach
         </select>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <label for="project-vip" class="col-sm-2 control-label">项目状态</label>
+    <div class="col-sm-4">
+        <input @if ($project->vip)
+                checked="checked"
+               @endif
+                type="checkbox" data-width="140" data-onstyle="danger" name="vip" data-toggle="toggle" data-on="重点项目" data-off="普通项目">
+    </div>
+    <label for="project-official" class="col-sm-2 control-label">签约状态</label>
+    <div class="col-sm-4">
+        <input @if ($project->official)
+                checked="checked"
+               @endif
+                type="checkbox" data-width="140" name="official" data-on="正式项目" data-off="试用项目" data-toggle="toggle">
     </div>
 </div>
 

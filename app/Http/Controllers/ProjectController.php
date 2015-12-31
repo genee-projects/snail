@@ -31,6 +31,9 @@ class ProjectController extends Controller
         $project->product()->associate($sub);
         $project->client()->associate($client);
 
+        $project->vip = (bool) ($request->input('vip') == 'on');
+        $project->official = (bool) ($request->input('official') == 'on');
+
         $project->ref_no = $request->input('ref_no');
         $project->name = $request->input('name');
         $project->seller = $request->input('seller');
@@ -70,6 +73,10 @@ class ProjectController extends Controller
 
         $project->ref_no = $request->input('ref_no');               // 项目编号
         $project->name = $request->input('name');                   // 项目名称
+
+        $project->vip = (bool) ($request->input('vip') == 'on');
+        $project->official = (bool) ($request->input('official') == 'on');
+
         $project->product()->associate($product);                   // 产品类型
         $project->contact_user = $request->input('contact_user');   // 联系人
         $project->contact_phone = $request->input('contact_phone'); // 联系电话

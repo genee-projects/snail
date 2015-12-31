@@ -62,43 +62,57 @@
                     <table class="table table-striped table-bordered table-hover">
                         <tr>
                             <td style="width: 20%;">客户名称</td>
-                            <td colspan="2"><a href="{{ route('client.profile', ['id'=> $project->client->id]) }}">{{ $project->client->name }}</a></td>
+                            <td><a href="{{ route('client.profile', ['id'=> $project->client->id]) }}">{{ $project->client->name }}</a></td>
                         </tr>
                         <tr>
-                            <td>项目名称 (编号)</td>
-                            <td colspan="2">{{ $project->name }} ({{ $project->ref_no }})</td>
+                            <td>项目名称</td>
+                            <td>
+                                {{ $project->name }}
+
+                                @if ($project->vip)
+                                    <span class="label label-danger">重点项目</span>
+                                @endif
+
+                                @if ($project->official)
+                                    <span class="label label-info">正式</span>
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>项目编号</td>
+                            <td>{{ $project->ref_no }}</td>
                         </tr>
                         <tr>
                             <td>产品/产品类型</td>
-                            <td colspan="2"><a href="{{ route('subproduct.profile', ['id'=> $project->product->id]) }}">{{ $project->product->name }} ({{ $project->product->product->name }})</a></td>
+                            <td><a href="{{ route('subproduct.profile', ['id'=> $project->product->id]) }}">{{ $project->product->name }} ({{ $project->product->product->name }})</a></td>
                         </tr>
                         <tr>
                             <td>联系人</td>
-                            <td colspan="2">{{ $project->contact_user }}</td>
+                            <td>{{ $project->contact_user }}</td>
                         </tr>
                         <tr>
                             <td>联系电话</td>
-                            <td colspan="2">{{ $project->contact_phone }}</td>
+                            <td>{{ $project->contact_phone }}</td>
                         </tr>
                         <tr>
                             <td>联系邮箱</td>
-                            <td colspan="2">{{ $project->contact_email }}</td>
+                            <td>{{ $project->contact_email }}</td>
                         </tr>
                         <tr>
                             <td>销售负责人</td>
-                            <td colspan="2">{{ $project->seller }}</td>
+                            <td>{{ $project->seller }}</td>
                         </tr>
                         <tr>
                             <td>工程师负责人</td>
-                            <td colspan="2">{{  $project->engineer }}</td>
+                            <td>{{  $project->engineer }}</td>
                         </tr>
                         <tr>
                             <td>部署地址</td>
-                            <td colspan="2">{{ $project->deploy_address }}</td>
+                            <td>{{ $project->deploy_address }}</td>
                         </tr>
                         <tr>
                             <td>乘车路线</td>
-                            <td colspan="2">{{ $project->way }}</td>
+                            <td>{{ $project->way }}</td>
                         </tr>
 
                         @foreach($project->items as $item)
@@ -108,7 +122,8 @@
                                     {{ $item->value }}
                                     <span class="pull-right">
                                         <a href="{{ route('item.delete', ['id'=> $item->id]) }}"><i class="fa fa-times"></i></a>
-                                    </span></td>
+                                    </span>
+                                </td>
                             </tr>
                         @endforeach
                         <tr>

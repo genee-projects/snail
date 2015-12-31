@@ -24,6 +24,7 @@
     "eonasdan-bootstrap-datetimepicker": "~4.17.37",
     "bootstrap3-typeahead": "https://github.com/bassjobsen/Bootstrap-3-Typeahead.git#master",
     "requirejs": "~2.1.22",
-    "metisMenu": "~2.2.0"
+    "metisMenu": "~2.2.0",
+    "bootstrap-toggle": "~2.2.1"
   }
 }
