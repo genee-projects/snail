@@ -6,7 +6,6 @@ crm:
   volumes:
     - .:/var/www
     - /etc/localtime:/etc/localtime:ro
-    - ./files/root/var/lib/mysql:/var/lib/mysql
   container_name: crm
   environment:
     - VIRTUAL_HOST=crm.reserva.genee.cn,crm.reserva.genee.in
