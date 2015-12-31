@@ -1,15 +1,19 @@
 <div class="form-group">
     <label for="server-name" class="col-sm-1 control-label">名称</label>
-    <div class="col-sm-8">
+    <div class="col-sm-5">
         <input value="{{ $server->name or '' }}" name="name" type="text" class="form-control" id="server-name" placeholder="南开大学校级 LIMS-CF 服务器">
     </div>
     <label for="server-customer-provide" class="col-sm-1 control-label">提供方</label>
-    <div class="col-sm-2">
-        <input
-            @if (isset($server->customer_provide) && $server->customer_provide)
-                checked
-            @endif
-        id="server-customer-provide" name="customer-provide" type="checkbox" data-toggle="toggle" data-on="客户自备" data-width="100" data-off="公司提供" data-onstyle="danger" data-offstyle="info">
+    <div class="col-sm-5">
+
+        <select class="selectpicker" name="provider">
+            @foreach(\App\Server::$providers as $value => $name)
+                <option @if (isset($server) && ($value == $server->provider))
+                        selected="selected"
+                        @endif
+                        value="{{ $value }}">{{ $name }}</option>
+            @endforeach
+        </select>
     </div>
 </div>
 
@@ -90,3 +94,11 @@
         默认填充字段, <mark>不会</mark> 提交!
     </div>
 </div>
+
+<script type="text/javascript">
+    require(['jquery', 'bootstrap-select'], function($) {
+        require(['css!../css/bootstrap-select.min'], function() {});
+
+        $('select').selectpicker();
+    });
+</script>

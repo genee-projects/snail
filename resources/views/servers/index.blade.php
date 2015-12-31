@@ -75,11 +75,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    @if ($server->customer_provide)
-                                        客户自备
-                                    @else
-                                        公司提供
-                                    @endif
+                                    {{ App\Server::$providers[$server->provider]}}
                                 </td>
                             </tr>
                             @endforeach

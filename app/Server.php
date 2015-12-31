@@ -22,4 +22,14 @@ class Server extends Model
         return $this->belongsToMany('App\Project', 'project_servers')
             ->withPivot('usage', 'deploy_time');
     }
+
+    const PROVIDER_CUSTOMER = 1;    //客户提供
+    const PROVIDER_COMPANY = 2;     //公司提供
+    const PROVIDER_AGENT = 3;       //代理商提供
+
+    static $providers = [
+        self::PROVIDER_CUSTOMER=> '客户提供',
+        self::PROVIDER_COMPANY=> '公司提供',
+        self::PROVIDER_AGENT=> '代理商提供',
+    ];
 }

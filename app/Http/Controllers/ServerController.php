@@ -13,7 +13,6 @@ class ServerController extends Controller
 
         return view('servers/index', [
             'servers'=> Server::all(),
-            //'root'=> Server::root(),
         ]);
     }
 
@@ -29,8 +28,9 @@ class ServerController extends Controller
 
         $server = new Server();
 
+
         $server->name = $request->input('name');
-        $server->customer_provide = (bool) $request->input('customer-provide');
+        $server->provider = $request->input('provider');
         $server->barcode = $request->input('barcode');
         $server->sn = $request->input('sn');
         $server->model = $request->input('model');
@@ -54,7 +54,7 @@ class ServerController extends Controller
         $server = Server::find($request->input('id'));
 
         $server->name = $request->input('name');
-        $server->customer_provide = (bool) $request->input('customer-provide');
+        $server->provider = $request->input('provider');
         $server->barcode = $request->input('barcode');
         $server->sn = $request->input('sn');
         $server->model = $request->input('model');
