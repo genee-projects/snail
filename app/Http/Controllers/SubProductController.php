@@ -26,7 +26,9 @@ class SubProductController extends Controller
 
         $sub->save();
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '添加成功!')
+            ->with('message_type', 'info');
     }
 
     public function delete($id) {
@@ -35,7 +37,9 @@ class SubProductController extends Controller
 
         $sub->delete();
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '删除成功!')
+            ->with('message_type', 'info');;
     }
 
     public function edit(Request $request) {
@@ -47,7 +51,9 @@ class SubProductController extends Controller
 
         $sub->save();
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '修改成功!')
+            ->with('message_type', 'info');
     }
 
     public function profile($id) {
@@ -82,7 +88,9 @@ class SubProductController extends Controller
             $sub->modules()->save($module);
         }
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '模块设置成功!')
+            ->with('message_type', 'info');
     }
 
     public function params($id, Request $request) {
@@ -135,7 +143,9 @@ class SubProductController extends Controller
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '参数设置成功!')
+            ->with('message_type', 'info');
     }
 
     public function hardwares($id, Request $request) {
@@ -187,7 +197,9 @@ class SubProductController extends Controller
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '硬件设置成功!')
+            ->with('message_type', 'info');
 
     }
 
@@ -201,7 +213,9 @@ class SubProductController extends Controller
             'value'=> $request->input('value'),
         ]);
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '参数修改成功!')
+            ->with('message_type', 'info');
     }
 }
 

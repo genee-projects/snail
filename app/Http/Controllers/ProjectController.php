@@ -62,7 +62,9 @@ class ProjectController extends Controller
                 ]);
             }
 
-            return redirect(route('project.profile', ['id'=> $project->id]));
+            return redirect(route('project.profile', ['id'=> $project->id]))
+                ->with('message_content', '签约成功!')
+                ->with('message_type', 'info');
         }
     }
 
@@ -217,7 +219,9 @@ class ProjectController extends Controller
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '参数设置成功!')
+            ->with('message_type', 'info');
     }
 
     public function hardwares($id, Request $request) {
@@ -267,7 +271,9 @@ class ProjectController extends Controller
             $project->hardwares()->save($hardware);
         }
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '硬件设置成功!')
+            ->with('message_type', 'info');
     }
 
     public function param_edit($id, Request $request) {
@@ -283,7 +289,9 @@ class ProjectController extends Controller
             'value' => $request->input('value'),
         ]);
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '参数修改成功!')
+            ->with('message_type', 'info');
     }
 
     public function hardware_edit($id, Request $request) {
@@ -302,6 +310,8 @@ class ProjectController extends Controller
             'plan_count'=> $request->input('plan_count'),
         ]);
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '硬件修改成功!')
+            ->with('message_type', 'info');
     }
 }

@@ -30,7 +30,9 @@ class ItemController extends Controller
 
         $item->save();
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '添加成功!')
+            ->with('message_type', 'info');
     }
 
     public function delete($id) {
@@ -38,6 +40,8 @@ class ItemController extends Controller
 
         $item->delete();
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '删除成功!')
+            ->with('message_type', 'info');
     }
 }

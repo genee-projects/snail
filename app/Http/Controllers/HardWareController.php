@@ -25,7 +25,9 @@ class HardWareController extends Controller
 
         $hardware->save();
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '添加成功!')
+            ->with('message_type', 'info');
     }
 
     public function delete($id)
@@ -35,7 +37,9 @@ class HardWareController extends Controller
 
         $hardware->delete();
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '删除成功!')
+            ->with('message_type', 'info');
     }
 
     public function edit(Request $request) {
@@ -49,6 +53,8 @@ class HardWareController extends Controller
 
         $hardware->save();
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '修改成功!')
+            ->with('message_type', 'info');
     }
 }

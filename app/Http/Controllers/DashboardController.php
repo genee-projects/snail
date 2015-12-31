@@ -12,6 +12,7 @@ use App\Project;
 class DashboardController extends Controller
 {
     public function index() {
+
         return view('index', [
             'products_count'=> Product::count(),
             'servers_count'=> Server::count(),

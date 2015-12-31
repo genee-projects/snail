@@ -75,7 +75,10 @@ Route::get('/servers.json', [
     'uses'=> 'ServerController@servers_json',
 ]);
 
-Route::post('/servers/add', 'ServerController@add');
+Route::post('/servers/add', [
+    'as'=> 'server.add',
+    'uses'=> 'ServerController@add',
+]);
 
 Route::get('/servers/profile/{id}', [
     'as'=> 'server.profile',

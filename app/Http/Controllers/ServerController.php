@@ -28,7 +28,6 @@ class ServerController extends Controller
 
         $server = new Server();
 
-
         $server->name = $request->input('name');
         $server->provider = $request->input('provider');
         $server->barcode = $request->input('barcode');
@@ -44,7 +43,7 @@ class ServerController extends Controller
 
         $server->save();
 
-        return redirect('/servers')
+        return redirect(route('servers'))
             ->with('message_content', '添加成功!')
             ->with('message_type', 'info');
     }
@@ -67,7 +66,7 @@ class ServerController extends Controller
         $server->description = $request->input('description');
 
         if ($server->save()) {
-            return redirect(sprintf('/servers/profile/%d', $server->id))
+            return redirect(route('server.profile', ['id'=> $server->id]))
                 ->with('message_content', '修改成功!')
                 ->with('message_type', 'info');
         }
@@ -77,7 +76,7 @@ class ServerController extends Controller
         $server = Server::find($id);
 
         if ($server->delete()) {
-            return redirect('/servers')
+            return redirect(route('servers'))
                 ->with('message_content', '删除成功!')
                 ->with('message_type', 'info');
         }

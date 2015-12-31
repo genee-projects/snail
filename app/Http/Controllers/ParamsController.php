@@ -26,7 +26,9 @@ class ParamsController extends Controller
 
         $param->save();
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '添加成功!')
+            ->with('message_type', 'info');
     }
 
     public function delete($id)
@@ -36,7 +38,9 @@ class ParamsController extends Controller
 
         $param->delete();
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '删除成功!')
+            ->with('message_type', 'info');
     }
 
 
@@ -51,6 +55,8 @@ class ParamsController extends Controller
 
         $param->save();
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '修改成功!')
+            ->with('message_type', 'info');
     }
 }

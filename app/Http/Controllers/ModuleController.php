@@ -30,7 +30,9 @@ class ModuleController extends Controller
             $module->dep_modules()->save($dep_module);
         }
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '添加成功!')
+            ->with('message_type', 'info');
     }
 
     public function delete($id)
@@ -40,7 +42,9 @@ class ModuleController extends Controller
 
         $module->delete();
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '删除成功!')
+            ->with('message_type', 'info');
     }
 
     public function edit(Request $request) {
@@ -70,6 +74,8 @@ class ModuleController extends Controller
             $module->dep_modules()->save($dep_module);
         }
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '修改成功!')
+            ->with('message_type', 'info');
     }
 }

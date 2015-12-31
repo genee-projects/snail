@@ -31,6 +31,8 @@ class CommentController extends Controller
 
         $comment->save();
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('message_content', '备注成功!')
+            ->with('message_type', 'info');
     }
 }
