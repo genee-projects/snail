@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Genee CRM</title>
-    <base href="http://parrot:8000/">
+    <base href="http://crm.reserva.genee.cn/">
 
     <!-- 基础服务 -->
     <script data-main="asserts/js/main" src="asserts/js/require.js"></script>
@@ -22,7 +22,7 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; position: fixed;">
             <div class="navbar-header ">
-                <a class="navbar-brand" href="/" style="margin: 0px auto;">Genee CRM V0.1.0</a>
+                <a class="navbar-brand" href="/" style="margin: 0px auto;">Genee CRM V0.2.0</a>
             </div>
             <!-- /.navbar-header -->
 
