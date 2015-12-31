@@ -161,3 +161,7 @@ body{
 .panel-yellow a:hover {
     color: #df8a13;
 }
+
+.huge {
+    font-size: 40px;
+}
