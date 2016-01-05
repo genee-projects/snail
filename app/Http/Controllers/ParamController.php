@@ -9,7 +9,7 @@ use App\Param;
 use App\Product;
 
 
-class ParamsController extends Controller
+class ParamController extends Controller
 {
 
     public function add(Request $request) {

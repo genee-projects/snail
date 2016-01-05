@@ -86,7 +86,11 @@ Route::get('/servers/profile/{id}', [
 ]);
 
 
-Route::post('/servers/edit', 'ServerController@edit');
+Route::post('/servers/edit', [
+    'as'=> 'server.edit',
+    'uses'=> 'ServerController@edit',
+]);
+
 Route::get('/servers/delete/{id}', [
     'as'=> 'server.delete',
     'uses'=> 'ServerController@delete',
@@ -94,8 +98,15 @@ Route::get('/servers/delete/{id}', [
 
 
 #comments
-Route::post('/comments/add', 'CommentController@add');
-Route::get('/comments/delete/{id}', 'CommentController@delete');
+Route::post('/comments/add', [
+    'as'=> 'commend.add',
+    'uses'=>'CommentController@add'
+]);
+
+Route::get('/comments/delete/{id}', [
+    'as'=> 'commend.delete',
+    'uses'=> 'CommentController@delete'
+]);
 
 #projects
 Route::get('/projects', [
@@ -103,7 +114,11 @@ Route::get('/projects', [
     'uses'=> 'ProjectController@index',
 ]);
 
-Route::post('/projects/add', 'ProjectController@add');
+Route::post('/projects/add', [
+    'as'=> 'project.add',
+    'uses'=> 'ProjectController@add',
+]);
+
 Route::get('/projects/profile/{id}', [
     'as'=> 'project.profile',
     'uses'=> 'ProjectController@profile',
@@ -182,17 +197,17 @@ Route::post('/modules/edit/', [
 #params start
 Route::post('/params/add', [
     'as'=> 'param.add',
-    'uses'=> 'ParamsController@add',
+    'uses'=> 'ParamController@add',
 ]);
 
 Route::get('/params/delete/{id}', [
     'as'=> 'param.delete',
-    'uses'=> 'ParamsController@delete',
+    'uses'=> 'ParamController@delete',
 ]);
 
 Route::post('/params/edit', [
     'as'=> 'param.edit',
-    'uses'=> 'ParamsController@edit',
+    'uses'=> 'ParamController@edit',
 ]);
 #params end
 
@@ -252,4 +267,57 @@ Route::get('/hardware/delete/{id}', [
 Route::post('/hardware/edit', [
     'as'=> 'hardware.edit',
     'uses'=> 'HardWareController@edit',
+]);
+
+
+
+Route::get('/users', [
+    'as'=> 'users',
+    'uses'=> 'UserController@users',
+]);
+
+Route::post('/users/add', [
+    'as'=>'user.add',
+    'uses'=> 'UserController@add',
+]);
+
+Route::post('/users/edit', [
+    'as'=> 'user.edit',
+    'uses'=> 'UserController@edit',
+]);
+
+Route::get('/users/profile/{id}', [
+    'as'=> 'user.profile',
+    'uses'=> 'UserController@profile',
+]);
+
+Route::get('/users/delete/{id}', [
+    'as'=> 'user.delete',
+    'uses'=> 'UserController@delete',
+]);
+
+
+Route::get('/roles', [
+    'as'=> 'roles',
+    'uses'=> 'RoleController@roles',
+]);
+
+Route::post('/roles/add', [
+    'as'=> 'role.add',
+    'uses'=> 'RoleController@add',
+]);
+
+Route::get('/roles/profile/{id}', [
+    'as'=> 'role.profile',
+    'uses'=> 'RoleController@profile',
+]);
+
+Route::get('/roles/delete/{id}', [
+    'as'=> 'role.delete',
+    'uses'=> 'RoleController@delete',
+]);
+
+Route::post('/roles/edit', [
+    'as'=> 'role.edit',
+    'uses'=> 'RoleController@edit',
 ]);

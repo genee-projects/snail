@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Genee CRM</title>
-    <base href="http://crm.reserva.genee.cn/">
+    <base href="{{ config('app.url') }}">
 
     <!-- 基础服务 -->
     <script data-main="asserts/js/main" src="asserts/js/require.js"></script>
@@ -49,6 +49,14 @@
 
                         <li>
                             <a href="{{ route('products') }}"><i class="fa fa-wrench fa-fw"></i> 产品管理</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('users') }}"><i class="fa fa-user fa-fw"></i> 用户管理</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('roles') }}"><i class="fa fa-heart-o fa-fw"></i> 角色/权限管理</a>
                         </li>
 
                         <li>

@@ -165,3 +165,7 @@ body{
 .huge {
     font-size: 40px;
 }
+
+.table > tbody > tr > td.middle {
+     vertical-align: middle;
+}

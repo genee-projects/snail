@@ -23,7 +23,7 @@
                         </a>
                     </span>
                     <div class="modal fade" id="edit-product" tabindex="-1" role="dialog" aria-labelledby="edit-product-modal-label">
-                        <div class="modal-dialog role="document">
+                        <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -293,7 +293,7 @@
                     </table>
 
                     <div class="modal fade" id="edit-module" tabindex="-1" role="dialog" aria-labelledby="edit-module-modal-label">
-                        <div class="modal-dialog role="document">
+                        <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
