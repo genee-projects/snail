@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 use App\Role;
+use App\User;
 
 class RoleController extends Controller
 {
@@ -19,6 +20,7 @@ class RoleController extends Controller
         return view('roles/profile', ['role'=> $role]);
     }
 
+    /* 目前 Role 不提供自定义添加\修改\删除功能
     public function add(Request $request) {
         $role = new Role;
 
@@ -53,6 +55,46 @@ class RoleController extends Controller
 
         return redirect()->back()
             ->with('message_content', '修改成功!')
+            ->with('message_type', 'info');
+    }
+    */
+
+    public function user_connect($role_id, $user_id) {
+
+        $role = Role::find($role_id);
+        $user = User::find($user_id);
+
+        if (!$user->roles->contains($role->id)) {
+            $user->roles()->save($role);
+
+            return response()->json(true);
+        }
+
+        return response()->json(false);
+    }
+
+    public function user_disconnect($role_id, $user_id) {
+        $role = Role::find($role_id);
+        $user = User::find($user_id);
+
+        if ($user->roles->contains($role->id)) {
+            $user->roles()->detach([$role->id]);
+            return response()->json(true);
+        }
+
+        return response()->json(false);
+    }
+
+    public function user_connect_all($role_id) {
+
+        $role = Role::find($role_id);
+
+        $users = User::all();
+
+        $role->users()->saveMany($users->all());
+
+        return redirect()->back()
+            ->with('message_content', '设置成功!')
             ->with('message_type', 'info');
     }
 }

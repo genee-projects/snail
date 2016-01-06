@@ -56,7 +56,7 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('roles') }}"><i class="fa fa-heart-o fa-fw"></i> 角色/权限管理</a>
+                            <a href="{{ route('roles') }}"><i class="fa fa-heart-o fa-fw"></i> 角色设置</a>
                         </li>
 
                         <li>

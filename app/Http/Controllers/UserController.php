@@ -45,6 +45,7 @@ class UserController extends Controller
 
         $user = User::find($user_id);
 
+        /* 角色设定功能暂时隐藏, 考虑产品评审时再决定是否开放
         //角色设定
         $data = [];
         foreach($user->roles as $role) {
@@ -61,6 +62,7 @@ class UserController extends Controller
 
             $user->roles()->save($role);
         }
+        */
 
         $user->name = $request->input('name');
 

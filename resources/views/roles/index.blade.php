@@ -1,71 +1,115 @@
 @extends('layout')
 
 @section('content')
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">角色列表</h1>
-    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">角色设置</h1>
+        </div>
 
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <p>
-                    <i class="fa fa-fw fa-facebook"></i> 角色列表
-                    <span class="pull-right">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#add-role">添加角色</button>
-                    </span>
-                </p>
+        <div class="col-lg-12" id="role-board">
 
-                <div class="modal fade" id="add-role" tabindex="-1" role="dialog" aria-labelledby="add-role-modal-label">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="add-role-modal-label">添加角色</h4>
+            <div class=" col-lg-8" style="border-right: 1px solid #f7f7f7;">
+                @foreach(App\Role::all() as $role)
+                    <div class="col-lg-12">
+                        <div data-role-id="{{ $role->id }}" class="panel panel-default role-card">
+                            <div class="panel-heading role-card-header">
+                                {{ $role->name }}
+                                <a class="btn btn-primary btn-xs pull-right" href="{{ route('role.user.connect_all', ['role_id'=> $role->id]) }}">
+                                    添加全部
+                                </a>
                             </div>
-                            <div class="modal-body">
-                                <form id="add-role-form" class="form-horizontal" method="post" action="{{ route('role.add') }}">
+                            <div class="panel-body role-card-body">
 
-                                    <div class="form-group">
-                                        <label for="role-name" class="col-sm-2 control-label">名称</label>
-                                        <div class="col-sm-10">
-                                            <input name="name" type="text" class="form-control" id="role-name">
-                                        </div>
-                                    </div>
-
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="submit" class="btn btn-primary" form="add-role-form">添加</button>
+                                @foreach($role->users as $user)
+                                    <span class="role-user" data-user-id="{{ $user->id }}">{{ $user->name }} <i class="fa fa-times delete-member"></i></span>
+                                @endforeach
                             </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
             </div>
-            <div class="panel-body">
 
-                <table class="table table-hover">
-
-                    <tr>
-                        <td>名称</td>
-                    </tr>
-                    @foreach($roles as $role)
-                        <tr>
-                            <td>
-                                <a href="{{ route('role.profile', ['id'=> $role->id]) }}">
-                                    {{ $role->name }}
-                                </a>
-                                @if ($role->system)
-                                    <span class="badge">默认角色</span>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
+            <div class="col-lg-4 users">
+                @foreach(App\User::all() as $user)
+                    <p style="min-width: 60px; border: 1px solid #d3d3d3; padding: 5px; margin: 5px; border-radius: 5px;" class="text-left user-icon" data-user-id="{{ $user->id }}" data-user-name="{{ $user->name }}" >
+                        <img data-src="holder.js/40x40">
+                        {{ $user->name }}
+                    </p>
+                @endforeach
             </div>
         </div>
     </div>
-</div>
+
+    <script type="text/javascript">
+        require(['jquery', 'dragdrop', 'holder'], function($) {
+
+            var listUserDraggableOpts = {
+                helper: 'clone',
+                revert: false,
+                containment: '#role-board',
+                scroll: true,
+                refreshPositions: true
+            };
+
+            var $board = $('#role-board');
+
+            $board.find('.user-icon').draggable(listUserDraggableOpts);
+
+            $board.find('.role-card-body').droppable({
+                accept: '.user-icon',
+                activeClass: 'drag-active',
+                hoverClass: 'drag-hover',
+                drop: function(evt, ui) {
+                    var $ele = $(ui.helper);
+                    var user_id = $ele.data('user-id');
+                    var user_name = $ele.data('user-name');
+
+                    $ele = $('<span class="role-user"/>');
+                    var $del = $('<i class="fa fa-times delete-member"/>');
+
+                    $ele.text(user_name + " ");
+                    $ele.append($del);
+
+                    $ele.data('user-id', user_id);
+                    $ele.data('user-name', user_name);
+
+                    var $body = $(this);
+                    var $card = $body.parents('.role-card');
+
+                    var role_id = $card.data('role-id');
+
+                    // ajax 操作
+                    $.post('/roles/'+ role_id + '/user/' + user_id, {
+                    }).done(function(data) {
+                        if (data === true) {
+                            $body.append($ele);
+                        }
+                        else {
+                            $ele.remove();
+                        }
+                    }).fail(function() {
+                        $ele.remove();
+                    });
+                }
+            });
+
+            $board.on('click', '.role-card-body .delete-member', function(){
+                var $button = $(this);
+                var $user = $button.parents('.role-user');
+                var $card = $button.parents('.role-card');
+
+                var role_id = $card.data('role-id');
+                var user_id = $user.data('user-id');
+
+                // ajax 操作
+                $.post('roles/' + role_id + '/user/' + user_id + '/delete', {
+                }).done(function(data) {
+                    if (data === true) {
+                        $user.remove();
+                    }
+                });
+            });
+        });
+    </script>
 
 @endsection

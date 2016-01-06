@@ -321,3 +321,18 @@ Route::post('/roles/edit', [
     'as'=> 'role.edit',
     'uses'=> 'RoleController@edit',
 ]);
+
+Route::post('/roles/{role_id}/user/{user_id}', [
+    'as'=> 'role.user.connect',
+    'uses'=> 'RoleController@user_connect',
+]);
+
+Route::post('/roles/{role_id}/user/{user_id}/delete', [
+    'as'=> 'role.user.disconnect',
+    'uses'=> 'RoleController@user_disconnect',
+]);
+
+Route::get('/roles/{role_id}/users', [
+    'as'=> 'role.user.connect_all',
+    'uses'=> 'RoleController@user_connect_all',
+]);

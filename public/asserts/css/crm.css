@@ -169,3 +169,20 @@ body{
 .table > tbody > tr > td.middle {
      vertical-align: middle;
 }
+
+.role-user  {
+    display: inline-block;
+    padding: 0 5px;
+    margin: 0 2px;
+    border-radius: 2px;
+
+    background-color: #23527c;
+    color: #fff;
+
+    margin-bottom:3px;
+    cursor: default;
+}
+
+.delete-member {
+    cursor: pointer;
+}

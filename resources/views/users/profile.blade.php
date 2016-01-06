@@ -36,52 +36,6 @@
                                             <label for="user-name" class="control-label">名称</label>
                                             <input name="name" type="text" value="{{ $user->name }}" class="form-control" id="user-name">
                                         </div>
-
-                                        <div class="form-group">
-                                            <label for="user-role" class="control-label">角色</label>
-                                            <div>
-                                                @foreach(App\Role::all() as $role)
-
-                                                    {{--*/ $selected = false /*--}}
-                                                    {{--*/ $btn_class = 'btn-default' /*--}}
-
-                                                    @if($user->roles->contains($role->id))
-                                                        {{--*/ $selected = true /*--}}
-                                                        {{--*/ $btn_class = 'btn-primary' /*--}}
-                                                    @endif
-
-                                                    <div _id="{{ $role->id }}" class="role-btn btn {{ $btn_class }} text-center" style="padding: 20px; margin: 10px 5px; min-width: 100px;">{{ $role->name }}</div>
-
-                                                    @if ($selected)
-                                                        <input type="hidden" name="roles[]" value="{{ $role->id }}">
-                                                    @endif
-                                                @endforeach
-                                            </div>
-                                        </div>
-
-                                        <input type="hidden" name="user_id" value="{{ $user->id }}">
-
-                                        <script type="text/javascript">
-                                            require(['jquery'], function($) {
-                                                $('.role-btn').bind('click', function() {
-
-                                                    $input = $('<input type="hidden" name="roles[]" />');
-
-                                                    var $this = $(this);
-                                                    if ($this.hasClass('btn-default')) {
-                                                        $this.removeClass('btn-default');
-                                                        $this.addClass('btn-primary');
-                                                        $input.val($this.attr('_id'));
-                                                        $this.after($input);
-                                                    }
-                                                    else {
-                                                        $this.removeClass('btn-primary');
-                                                        $this.addClass('btn-default');
-                                                        $this.next(':input').remove();
-                                                    }
-                                                });
-                                            });
-                                        </script>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
