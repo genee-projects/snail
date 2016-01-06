@@ -302,6 +302,7 @@ Route::get('/roles', [
     'uses'=> 'RoleController@roles',
 ]);
 
+/*
 Route::post('/roles/add', [
     'as'=> 'role.add',
     'uses'=> 'RoleController@add',
@@ -321,6 +322,7 @@ Route::post('/roles/edit', [
     'as'=> 'role.edit',
     'uses'=> 'RoleController@edit',
 ]);
+*/
 
 Route::post('/roles/{role_id}/user/{user_id}', [
     'as'=> 'role.user.connect',
