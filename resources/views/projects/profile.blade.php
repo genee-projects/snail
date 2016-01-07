@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('content')
+    <link rel="stylesheet" href="asserts/css/projects/profile.css">
     <script type="text/javascript">
         require(['jquery', 'bootstrap-datetimepicker'], function($) {
 
@@ -61,7 +62,7 @@
                 <div class="panel-body">
                     <table class="table table-striped table-bordered table-hover">
                         <tr>
-                            <td style="width: 20%;">客户名称</td>
+                            <td class="col-lg-2">客户名称</td>
                             <td><a href="{{ route('client.profile', ['id'=> $project->client->id]) }}">{{ $project->client->name }}</a></td>
                         </tr>
                         <tr>
@@ -309,7 +310,7 @@
                                                                                     {{--*/ $btn_class = 'btn-primary' /*--}}
                                                                                 @endif
 
-                                                                                <span _id="{{ $module->id }}" dep_modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center" style="padding: 20px; margin:10px 5px; width:100px;">
+                                                                                <span _id="{{ $module->id }}" dep_modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center">
                                                                                     {{ $module->name }}
                                                                                 </span>
 
@@ -460,7 +461,7 @@
                                                                                     {{--*/ $btn_class = 'btn-primary' /*--}}
                                                                                 @endif
 
-                                                                                <div _id="{{ $param->id }}" style="display: block; padding-bottom: 10px; margin: 10px;" class="param-btn btn {{ $btn_class }}">
+                                                                                <div _id="{{ $param->id }}" class="param-btn btn {{ $btn_class }}">
                                                                                     {{ $param->name }}
                                                                                 </div>
 
@@ -643,7 +644,7 @@
 
                                                             <div class="row">
                                                                 <div class="col-lg-12">
-                                                                    <div _id="{{ $hardware->id }}" style="display: block; margin: 0px 10px 20px;" class="hardware-btn btn {{ $btn_class }}">
+                                                                    <div _id="{{ $hardware->id }}" class="hardware-btn btn {{ $btn_class }}">
                                                                         {{ $hardware->name }}
                                                                     </div>
                                                                     @if($selected)
@@ -807,7 +808,7 @@
                                         <div class="form-group">
                                             <label for="server_selector" class="col-sm-2 control-label">选择服务器</label>
                                             <div class="col-sm-10">
-                                                <input class="form-control" style="witdh: 100%;" type="text" data-provide="typeahead" id="server_selector">
+                                                <input class="form-control" type="text" data-provide="typeahead" id="server_selector">
 
                                             </div>
                                         </div>

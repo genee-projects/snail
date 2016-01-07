@@ -47,10 +47,8 @@ class UserController extends Controller
 
         /* 角色设定功能暂时隐藏, 考虑产品评审时再决定是否开放
         //角色设定
-        $data = [];
-        foreach($user->roles as $role) {
-            $data[] = $role->id;
-        }
+
+        $data = $user->roles()->lists('id')->all();
 
         if (count($data)) {
             $user->roles()->detach($data);

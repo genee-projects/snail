@@ -70,14 +70,10 @@ class SubProductController extends Controller
 
         //先把所有的 type 的 module 进行 unlink
 
-        $data = [];
+        $connected_modules = $sub->modules()->lists('id')->all();
 
-        foreach($sub->modules as $module) {
-            $data[] = $module->id;
-        }
-
-        if (count($data)) {
-            $sub->modules()->detach($data);
+        if (count($connected_modules)) {
+            $sub->modules()->detach($connected_modules);
         }
 
         //重新对选定的 module 进行 link, 类型为 type
@@ -97,11 +93,7 @@ class SubProductController extends Controller
 
         $sub = SubProduct::find($id);
 
-        $data = [];
-
-        foreach($sub->params as $param) {
-            $data[] = $param->id;
-        }
+        $data = $sub->params()->lists('id')->all();
 
         //$data 为已关联的
 
@@ -154,11 +146,7 @@ class SubProductController extends Controller
 
         $counts = $request->input('counts');
 
-        $data = [];
-
-        foreach($sub->hardwares as $hardware) {
-            $data[] = $hardware->id;
-        }
+        $data = $sub->hardwares()->lists('id')->all();
 
         $hardwares = $request->input('hardwares');
 

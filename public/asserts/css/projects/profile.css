@@ -1,0 +1,15 @@
+body #content .module-btn {
+  padding: 20px;
+  margin: 10px 5px;
+  min-width: 100px; }
+
+body #content .param-btn {
+  display: block;
+  padding-bottom: 10px;
+  margin: 10px; }
+
+body #content .hardware-btn {
+  display: block;
+  margin: 0 10px 20px; }
+
+/*# sourceMappingURL=profile.css.map */

@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-
+    <link rel="stylesheet" href="asserts/css/products/profile.css">
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">{{ $product->name }}</h1>
@@ -55,7 +55,7 @@
 
                     <table class="table table-hover table-striped">
                         <tr>
-                            <td style="width: 10%">简述</td>
+                            <td class="col-lg-1">简述</td>
                             <td>{{ $product->description }}</td>
                         </tr>
                     </table>
@@ -115,7 +115,7 @@
                                     {{ $p->description }}
                                     <span class="pull-right">
 
-                                        <i _description="{{ $p->description }}" _id="{{ $p->id }}" _name="{{ $p->name }}" class="edit-subproduct fa fa-edit" style="color: #337ab7; text-decoration:none;"></i>
+                                        <i _description="{{ $p->description }}" _id="{{ $p->id }}" _name="{{ $p->name }}" class="edit-subproduct fa fa-edit"></i>
 
                                         <a href="{{ route('subproduct.delete', ['id'=> $p->id]) }}">
                                             <i class="fa fa-delete"></i>
@@ -195,7 +195,27 @@
                                     </div>
                                     <div class="modal-body">
                                         <form id="add-module-form" method="post" action="{{ route('module.add') }}">
-                                            @include('modules/form')
+                                            <div class="form-group">
+                                                <label for="name">名称</label>
+                                                <input id="name" name="name" type="text" class="form-control" placeholder="成员目录">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="description">简述</label>
+                                                <input id="description" name="description" type="text" class="form-control" placeholder="简述">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="deps">模块依赖</label>
+
+                                                <div>
+                                                    @foreach(\App\Module::all() as $module)
+                                                        <span _id="{{ $module->id }}" class="module-btn btn btn-default text-center">
+                                                            {{ $module->name }}
+                                                        </span>
+                                                    @endforeach
+                                                </div>
+                                            </div>
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         </form>
                                     </div>
@@ -212,7 +232,7 @@
                 <div class="panel-body">
                     <table class="table table-hover table-striped">
                         <tr>
-                            <td style="width: 10%;">名称</td>
+                            <td class="col-lg-1">名称</td>
                             <td>依赖模块</td>
                             <td>简述</td>
                         </tr>
@@ -229,7 +249,7 @@
                                     {{ $module->description }}
                                     <span class="pull-right">
 
-                                        <i _dep_modules="{{ join(',', $module->dep_modules_ids()) }}" _description="{{ $module->description }}" _id="{{ $module->id }}" _name="{{ $module->name }}" class="edit-module fa fa-edit fa-fw" style="color: #337ab7; text-decoration:none;"></i>
+                                        <i _dep_modules="{{ join(',', $module->dep_modules_ids()) }}" _description="{{ $module->description }}" _id="{{ $module->id }}" _name="{{ $module->name }}" class="edit-module fa fa-edit fa-fw"></i>
                                         <a href="{{ route('module.delete', ['id'=> $module->id]) }}">
                                             <i class="fa fa-times"></i>
                                         </a>
@@ -312,14 +332,18 @@
 
 
                                         <div class="form-group">
-                                            <div style="border-bottom: 1px solid #eee; margin-bottom: 20px; margin-top: 20px;">
-                                                选择依赖模块
+                                            <div>
+                                                <label>
+                                                    选择依赖模块
+                                                </label>
                                             </div>
-                                            @foreach(\App\Module::all() as $m)
-                                                <span _id="{{ $m->id }}" class="module-btn btn btn-default text-center" style="padding: 20px; margin:10px 5px; width:100px;">
+                                            <div>
+                                                @foreach(\App\Module::all() as $m)
+                                                    <span _id="{{ $m->id }}" class="module-btn btn btn-default text-center">
                                                     {{ $m->name }}
                                                 </span>
-                                            @endforeach
+                                                @endforeach
+                                            </div>
                                         </div>
                                         <input type="hidden" name="module_id">
                                     </form>
@@ -414,7 +438,7 @@
                                 <td>
                                     {{ $param->description }}
                                     <span class="pull-right">
-                                        <i _value="{{ $param->value }}" _code="{{ $param->code }}" _description="{{ $param->description }}" _id="{{ $param->id }}" _name="{{ $param->name }}" class="edit-param fa fa-edit fa-fw" style="color: #337ab7; text-decoration:none;"></i>
+                                        <i _value="{{ $param->value }}" _code="{{ $param->code }}" _description="{{ $param->description }}" _id="{{ $param->id }}" _name="{{ $param->name }}" class="edit-param fa fa-edit fa-fw"></i>
                                         <a href="{{ route('param.delete', ['id'=> $param->id]) }}">
                                             <i class="fa fa-times"></i>
                                         </a>
@@ -542,7 +566,7 @@
                                 <td>
                                     {{ $hardware->description }}
                                     <span class="pull-right">
-                                        <i _self_produce="{{ $hardware->self_produce }}" _model="{{ $hardware->model }}" _description="{{ $hardware->description }}" _id="{{ $hardware->id }}" _name="{{ $hardware->name }}" class="edit-hardware fa fa-edit fa-fw" style="color: #337ab7; text-decoration:none;"></i>
+                                        <i _self_produce="{{ $hardware->self_produce }}" _model="{{ $hardware->model }}" _description="{{ $hardware->description }}" _id="{{ $hardware->id }}" _name="{{ $hardware->name }}" class="edit-hardware fa fa-edit fa-fw"></i>
                                         <a href="{{ route('hardware.delete', ['id'=> $hardware->id]) }}">
                                             <i class="fa fa-times"></i>
                                         </a>

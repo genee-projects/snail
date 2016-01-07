@@ -1,0 +1,30 @@
+body {
+  #content {
+    .role-board-container {
+      border-right: 1px solid #f7f7f7;
+
+      .role-user  {
+        display: inline-block;
+        padding: 0 5px;
+        margin: 0 2px 0 3px;
+        border-radius: 2px;
+
+        background-color: #23527c;
+        color: #fff;
+        cursor: default;
+      }
+
+      .delete-member {
+        cursor: pointer;
+      }
+    }
+
+    .user {
+      min-width: 60px;
+      border: 1px solid #d3d3d3;
+      padding: 5px;
+      margin: 5px;
+      border-radius: 5px;
+    }
+  }
+}

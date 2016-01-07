@@ -50,7 +50,7 @@
                 <table class="table table-hover table-striped table-bordered">
 
                     <tr>
-                        <td style="width: 20%;">名称</td>
+                        <td class="col-lg-2">名称</td>
                         <td>{{ $server->name }}</td>
                     </tr>
 

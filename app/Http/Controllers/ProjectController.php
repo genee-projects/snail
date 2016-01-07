@@ -149,13 +149,9 @@ class ProjectController extends Controller
 
         $project = Project::find($id);
 
-        foreach($project->product->product->modules as $module) {
-            $data[] = $module->id;
-        }
+        $connected_modules = $project->product->product->modules()->lists('id')->all();
 
-        if (count($data)) {
-            $project->modules()->detach($data);
-        }
+        if (count($connected_modules)) $project->modules()->detach($connected_modules);
 
         //重新对选定的 module 进行 link, 类型为 type
         foreach($request->input('modules', []) as $module_id) {
@@ -174,11 +170,7 @@ class ProjectController extends Controller
 
         $project = Project::find($id);
 
-        $data = [];
-
-        foreach($project->params as $param) {
-            $data[] = $param->id;
-        }
+        $data = $project->params()->lists('id')->all();
 
         //$data 为已关联的
 
@@ -228,11 +220,7 @@ class ProjectController extends Controller
 
         $project = Project::find($id);
 
-        $data = [];
-
-        foreach($project->hardwares as $hardware) {
-            $data[] = $hardware->id;
-        }
+        $data = $project->hardwares()->lists('id')->all();
 
         //$data 为已关联的
 

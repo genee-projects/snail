@@ -57,17 +57,12 @@ class ModuleController extends Controller
 
         $module->save();
 
-        $data = [];
+        $deped_modules = $module->dep_modules->lists('id')->all();
 
-        foreach($module->dep_modules as $m) {
-            $data[] = $m->id;
-        }
-
-        $module->dep_modules()->detach($data);
+        if (count($deped_modules)) $module->dep_modules()->detach($deped_modules);
 
         //重新对选定的 module 进行 link, 类型为 type
         foreach($request->input('modules', []) as $module_id) {
-
 
             $dep_module = Module::find($module_id);
 

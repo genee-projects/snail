@@ -1,13 +1,12 @@
 @extends('layout')
 
 @section('content')
-
+    <link rel="stylesheet" href="asserts/css/roles/profile.css">
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">{{ $role->name }}</h1>
         </div>
     </div>
-
 
     <div class="row">
         <div class="col-lg-12">
@@ -62,7 +61,7 @@
                                                                         {{--*/ $class = 'btn-primary' /*--}}
                                                                     @endif
 
-                                                                    <div class="perm-btn btn {{ $class }} text-center" style="padding: 5px; margin: 2px 0px; width: 100%;">{{ $p }}</div>
+                                                                    <div class="perm-btn btn {{ $class }} text-center col-lg-12">{{ $p }}</div>
 
                                                                     @if ($selected)
                                                                         <input type="hidden" name="perms[]" value="{{ $p }}"/>
@@ -112,7 +111,7 @@
                 <div class="panel-body">
                     <table class="table table-hover">
                         <tr>
-                            <td style="width: 20%;">角色名称</td>
+                            <td class="col-lg-3">角色名称</td>
                             <td>{{ $role->name }}</td>
                         </tr>
                         <tr>

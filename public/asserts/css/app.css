@@ -1,0 +1,49 @@
+body {
+  background-color: #f8f8f8; }
+  body .nowrap {
+    white-space: nowrap; }
+  body .vertical-middle {
+    vertical-align: middle; }
+  body #wrapper {
+    width: 100%; }
+  body #content {
+    padding: 0 15px;
+    background-color: #fff;
+    min-height: 660px; }
+  body #show-menu {
+    display: none; }
+  body #close-menu {
+    display: none; }
+  body .sidebar .sidebar-nav.navbar-collapse {
+    padding-right: 0;
+    padding-left: 0; }
+  body .sidebar ul li {
+    border-bottom: 1px solid #e7e7e7; }
+    body .sidebar ul li a.active {
+      background-color: #eee; }
+  body .sidebar .navbar-default {
+    border: 0px; }
+
+@media (min-width: 768px) {
+  body .sidebar {
+    z-index: 1;
+    width: 200px;
+    position: absolute;
+    margin-top: 51px; }
+  body #content {
+    position: inherit;
+    margin: 0 0 0 200px;
+    padding: 0 30px;
+    border-left: 1px solid #e7e7e7; }
+  body #show-menu {
+    position: fixed;
+    left: 8px;
+    bottom: 8px;
+    z-index: 10;
+    display: inline; }
+  body #close-menu {
+    display: block; }
+  body .navbar {
+    margin-bottom: 0; } }
+
+/*# sourceMappingURL=app.css.map */

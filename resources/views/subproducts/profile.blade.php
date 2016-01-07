@@ -2,6 +2,8 @@
 
 @section('content')
 
+    <link rel="stylesheet" href="asserts/css/subproducts/profile.css">
+
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">{{ $subproduct->name }}</h1>
@@ -79,7 +81,7 @@
                     <table class="table table-hover table-striped">
 
                         <tr>
-                            <td style="width: 10%;">名称</td>
+                            <td class="col-lg-2">名称</td>
                             <td>简述</td>
                         </tr>
 
@@ -119,7 +121,7 @@
                                                 {{--*/ $btn_class = 'btn-primary' /*--}}
                                             @endif
 
-                                            <span _id="{{ $module->id }}" dep_modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center" style="padding: 20px; margin:10px 5px; width:100px;">
+                                            <span _id="{{ $module->id }}" dep_modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center">
                                                     {{ $module->name }}
                                                 </span>
 
@@ -165,7 +167,7 @@
                                 <td>
                                     {{ $param->description }}
                                     <span class="pull-right">
-                                        <i _value="{{ $param->pivot->value }}" _id="{{ $param->id }}" _name="{{ $param->name }}" class="edit-param fa fa-edit fa-fw" style="color: #337ab7; text-decoration:none;"></i>
+                                        <i _value="{{ $param->pivot->value }}" _id="{{ $param->id }}" _name="{{ $param->name }}" class="edit-param fa fa-edit fa-fw"></i>
                                     </span>
                                 </td>
                             </tr>
@@ -223,7 +225,7 @@
                                                 {{--*/ $btn_class = 'btn-primary' /*--}}
                                             @endif
 
-                                            <div _id="{{ $param->id }}" style="display: block; padding-bottom: 10px; margin: 10px;" class="param-btn btn {{ $btn_class }}">
+                                            <div _id="{{ $param->id }}" class="param-btn btn {{ $btn_class }}">
                                                 {{ $param->name }}
                                             </div>
 
@@ -333,7 +335,7 @@
                                                 <div class="col-lg-12">
 
                                                     <div class="col-lg-8">
-                                                        <div _id="{{ $hardware->id }}" style="display: block; margin: 0px 10px 20px;" class="hardware-btn btn {{ $btn_class }}">
+                                                        <div _id="{{ $hardware->id }}" class="hardware-btn btn {{ $btn_class }}">
                                                             {{ $hardware->name }}
                                                         </div>
                                                         @if($selected)

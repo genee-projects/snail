@@ -1,0 +1,37 @@
+body #content .panel-green {
+  border-color: #5cb85c; }
+  body #content .panel-green .panel-heading {
+    border-color: #5cb85c;
+    color: #fff;
+    background-color: #5cb85c; }
+  body #content .panel-green a {
+    color: #5cb85c; }
+    body #content .panel-green a:hover {
+      color: #3d8b3d; }
+
+body #content .panel-red {
+  border-color: #d9534f; }
+  body #content .panel-red .panel-heading {
+    border-color: #d9534f;
+    color: #fff;
+    background-color: #d9534f; }
+  body #content .panel-red a {
+    color: #d9534f; }
+    body #content .panel-red a:hover {
+      color: #b52b27; }
+
+body #content .panel-yellow {
+  border-color: #f0ad4e; }
+  body #content .panel-yellow .panel-heading {
+    border-color: #f0ad4e;
+    color: #fff;
+    background-color: #f0ad4e; }
+  body #content .panel-yellow a {
+    color: #f0ad4e; }
+    body #content .panel-yellow a:hover {
+      color: #df8a13; }
+
+body #content .huge {
+  font-size: 40px; }
+
+/*# sourceMappingURL=dashboard.css.map */

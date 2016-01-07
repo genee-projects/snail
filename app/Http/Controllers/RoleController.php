@@ -89,6 +89,12 @@ class RoleController extends Controller
 
         $role = Role::find($role_id);
 
+        $connected_users = $role->users()->lists('id')->all();
+
+        if (count($connected_users)) {
+            $role->users()->detach($connected_users);
+        }
+
         $users = User::all();
 
         $role->users()->saveMany($users->all());

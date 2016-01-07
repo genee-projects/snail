@@ -5,3 +5,5 @@ storage/
 .idea/*
 public/docs/
 bower_components/
+node_modules/
+npm-debug.log

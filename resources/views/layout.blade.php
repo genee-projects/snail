@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Genee CRM</title>
     <base href="{{ config('app.url') }}">
 
@@ -11,7 +13,7 @@
     <link rel="stylesheet" href="asserts/css/bootstrap.min.css">
     <link rel="stylesheet" href="asserts/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="asserts/css/crm.css">
+    <link rel="stylesheet" href="asserts/css/app.css">
     <!-- 基础服务 end -->
 
 </head>
@@ -20,17 +22,17 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; position: fixed;">
+        <nav class="navbar navbar-default navbar-static-top" >
             <div class="navbar-header ">
-                <a class="navbar-brand" href="/" style="margin: 0px auto;">Genee CRM V0.2.0</a>
+                <a class="navbar-brand" href="/">Genee CRM V0.2.0</a>
             </div>
             <!-- /.navbar-header -->
 
-            <div class="navbar-default sidebar" role="navigation">
+            <div class="navbar-default sidebar">
 
                 <div class="sidebar-nav navbar-collapse">
 
-                    <ul class="nav metismenu">
+                    <ul class="nav">
                         <li>
                             <a href="/"><i class="fa fa-dashboard fa-fw"></i> 总览</a>
                         </li>
@@ -77,7 +79,7 @@
             @include('message')
         @endif
 
-        <div id="page-wrapper" style="min-height: 660px;">
+        <div id="content">
              @yield('content')
         </div>
     </div>
@@ -90,9 +92,9 @@
 
                 $('#close-menu').show();
 
-                $('#close-menu').parents('[role=navigation]').removeClass('hide');
+                $('#close-menu').parents('.sidebar').removeClass('hide');
 
-                $('#page-wrapper').css('margin-left', '200px');
+                $('#content').css('margin-left', '200px');
                 e.stopPropagation();
 
                 return false;
@@ -100,16 +102,15 @@
 
             //关闭按钮
             $('#close-menu').bind('click', function(e) {
-                $(this).parents('[role=navigation]').addClass('hide');
+                $(this).parents('.sidebar').addClass('hide');
 
-                $('#page-wrapper').css('margin-left', '0px');
+                $('#content').css('margin-left', '0px');
 
                 e.stopPropagation();
 
                 $('#show-menu').removeClass('hide');
 
                 return false;
-
             });
         });
     </script>

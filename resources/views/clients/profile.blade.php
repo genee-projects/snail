@@ -47,7 +47,7 @@
                 <div class="panel-body">
                     <table class="table table-striped table-bordered table-hover">
                         <tr>
-                            <td style="width: 20%;">客户名称</td>
+                            <td class="col-lg-2">客户名称</td>
                             <td>{{ $client->name }}</td>
                         </tr>
 

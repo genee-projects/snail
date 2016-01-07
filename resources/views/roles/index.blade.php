@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('content')
+    <link rel="stylesheet" href="asserts/css/roles/index.css">
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">角色设置</h1>
@@ -8,7 +9,7 @@
 
         <div class="col-lg-12" id="role-board">
 
-            <div class=" col-lg-8" style="border-right: 1px solid #f7f7f7;">
+            <div class="role-board-container col-lg-8">
                 @foreach(App\Role::all() as $role)
                     <div class="col-lg-12">
                         <div data-role-id="{{ $role->id }}" class="panel panel-default role-card">
@@ -31,7 +32,7 @@
 
             <div class="col-lg-4 users">
                 @foreach(App\User::all() as $user)
-                    <p style="min-width: 60px; border: 1px solid #d3d3d3; padding: 5px; margin: 5px; border-radius: 5px;" class="text-left user-icon" data-user-id="{{ $user->id }}" data-user-name="{{ $user->name }}" >
+                    <p class="text-left user" data-user-id="{{ $user->id }}" data-user-name="{{ $user->name }}" >
                         <img data-src="holder.js/40x40">
                         {{ $user->name }}
                     </p>
@@ -53,10 +54,10 @@
 
             var $board = $('#role-board');
 
-            $board.find('.user-icon').draggable(listUserDraggableOpts);
+            $board.find('.user').draggable(listUserDraggableOpts);
 
             $board.find('.role-card-body').droppable({
-                accept: '.user-icon',
+                accept: '.user',
                 activeClass: 'drag-active',
                 hoverClass: 'drag-hover',
                 drop: function(evt, ui) {

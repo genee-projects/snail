@@ -49,7 +49,7 @@
                 <div class="panel-body">
                     <table class="table table-bordered">
                         <tr>
-                            <td style="width: 20%">名称</td>
+                            <td class="col-lg-1">名称</td>
                             <td>{{ $user->name }}</td>
                         </tr>
                         <tr>

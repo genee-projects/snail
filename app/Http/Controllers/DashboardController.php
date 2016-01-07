@@ -13,7 +13,7 @@ class DashboardController extends Controller
 {
     public function index() {
 
-        return view('index', [
+        return view('dashboard', [
             'products_count'=> Product::count(),
             'servers_count'=> Server::count(),
             'clients_count'=> Client::where('parent_id', 0)->count(),
