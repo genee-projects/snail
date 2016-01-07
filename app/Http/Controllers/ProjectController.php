@@ -302,4 +302,44 @@ class ProjectController extends Controller
             ->with('message_content', '硬件修改成功!')
             ->with('message_type', 'info');
     }
+
+
+    //profile 信息 startq
+    public function profile_item($id, Request $request) {
+
+        $project = Project::find($id);
+        $type = $request->input('type');
+
+        $method = strtr('_profile_{type}', ['{type}'=> $type]);
+
+        if (method_exists($this, $method)) {
+            return call_user_func([$this, $method], $project);
+        }
+    }
+
+    private function _profile_comments($project) {
+        return view('projects/profile/comments', ['project'=> $project]);
+    }
+
+    private function _profile_servers($project) {
+        return view('projects/profile/servers', ['project'=> $project]);
+    }
+
+    private function _profile_hardwares($project) {
+        return view('projects/profile/hardwares', ['project'=> $project]);
+    }
+
+    private function _profile_softwares($project) {
+        return view('projects/profile/softwares', ['project'=> $project]);
+    }
+
+    private function _profile_informations($project) {
+        return view('projects/profile/informations', ['project'=> $project]);
+    }
+
+    private function _profile_trello($project) {
+        return view('projects/profile/trello', ['project'=> $project]);
+    }
+    //profile 信息 end
+
 }

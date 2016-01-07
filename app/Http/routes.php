@@ -99,12 +99,12 @@ Route::get('/servers/delete/{id}', [
 
 #comments
 Route::post('/comments/add', [
-    'as'=> 'commend.add',
+    'as'=> 'comment.add',
     'uses'=>'CommentController@add'
 ]);
 
 Route::get('/comments/delete/{id}', [
-    'as'=> 'commend.delete',
+    'as'=> 'comment.delete',
     'uses'=> 'CommentController@delete'
 ]);
 
@@ -162,6 +162,11 @@ Route::post('/projects/{id}/param', [
 Route::post('/projects/{id}/hardware', [
     'as'=> 'project.hardware.edit',
     'uses'=> 'ProjectController@hardware_edit',
+]);
+
+Route::post('/projects/{id}/profile_item', [
+    'as'=> 'project.profile.item',
+    'uses'=> 'ProjectController@profile_item',
 ]);
 
 # item start

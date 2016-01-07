@@ -80,7 +80,7 @@
         @endif
 
         <div id="content">
-             @yield('content')
+            @yield('content')
         </div>
     </div>
 
