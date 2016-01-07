@@ -310,7 +310,7 @@
                                                                                     {{--*/ $btn_class = 'btn-primary' /*--}}
                                                                                 @endif
 
-                                                                                <span _id="{{ $module->id }}" dep_modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center">
+                                                                                <span data-id="{{ $module->id }}" data-dep-modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center">
                                                                                     {{ $module->name }}
                                                                                 </span>
 
@@ -329,7 +329,7 @@
 
                                                                                     disabled = false;
 
-                                                                                    $('[_id=' + dep_modules_ids.join('],[_id=') + ']', form).each(function() {
+                                                                                    $('[data-id=' + dep_modules_ids.join('],[data-id=') + ']', form).each(function() {
 
                                                                                         if (! $(this).hasClass('btn-primary')) {
                                                                                             disabled = true;
@@ -349,11 +349,16 @@
 
                                                                                         //查看依赖
 
-                                                                                        if ($btn.attr('dep_modules')) {
+                                                                                        if ($btn.data('dep-modules')) {
 
-                                                                                            var dep_modules = $btn.attr('dep_modules');
+                                                                                            var raw_dep_modules = $btn.data('dep-modules');
 
-                                                                                            var dep_modules_ids = dep_modules.split(',');
+                                                                                            if (raw_dep_modules.toString().indexOf(',') != -1) {
+                                                                                                var dep_modules_ids = raw_dep_modules.toString().split(',');
+                                                                                            }
+                                                                                            else {
+                                                                                                var dep_modules_ids = [raw_dep_modules.toString()];
+                                                                                            }
 
                                                                                             //查找依赖的模块, 查看是否被 check
                                                                                             //如果没被check, 那么 disabled="disabled"
@@ -382,7 +387,7 @@
                                                                                         if ($span.hasClass('btn-default')) {
                                                                                             $span.removeClass('btn-default');
                                                                                             $span.addClass('btn-primary');
-                                                                                            $input.val($span.attr('_id'));
+                                                                                            $input.val($span.data('id'));
 
                                                                                             $span.after($input);
                                                                                         }
@@ -431,7 +436,7 @@
                                                         <td>
                                                             <code>{{ $param->pivot->value }}</code>
                                                             <span class="pull-right">
-                                                                <i class="fa fa-fw fa-edit edit-param" _id="{{ $param->id }}" _name="{{ $param->name }}" _value="{{ $param->pivot->value }}"></i>
+                                                                <i class="fa fa-fw fa-edit edit-param" data-id="{{ $param->id }}" data-name="{{ $param->name }}" data-value="{{ $param->pivot->value }}"></i>
                                                             </span>
                                                         </td>
                                                     </tr>
@@ -461,7 +466,7 @@
                                                                                     {{--*/ $btn_class = 'btn-primary' /*--}}
                                                                                 @endif
 
-                                                                                <div _id="{{ $param->id }}" class="param-btn btn {{ $btn_class }}">
+                                                                                <div data-id="{{ $param->id }}" class="param-btn btn {{ $btn_class }}">
                                                                                     {{ $param->name }}
                                                                                 </div>
 
@@ -495,9 +500,9 @@
 
                                                                                     $('.edit-param').bind('click', function() {
                                                                                         var $modal = $('#edit-param');
-                                                                                        $modal.find(':input[name=name]').val($(this).attr('_name'));
-                                                                                        $modal.find(':input[name=value]').val($(this).attr('_value'));
-                                                                                        $modal.find(':input[name=param_id]').val($(this).attr('_id'));
+                                                                                        $modal.find(':input[name=name]').val($(this).data('name'));
+                                                                                        $modal.find(':input[name=value]').val($(this).data('value'));
+                                                                                        $modal.find(':input[name=param_id]').val($(this).data('id'));
 
 
                                                                                         $modal.modal();
@@ -512,7 +517,7 @@
                                                                                         if ($div.hasClass('btn-default')) {
                                                                                             $div.removeClass('btn-default');
                                                                                             $div.addClass('btn-primary');
-                                                                                            $input.val($div.attr('_id'));
+                                                                                            $input.val($div.data('id'));
 
                                                                                             $div.after($input);
                                                                                         }
@@ -607,7 +612,7 @@
                                                 <td>
                                                     {{ $hardware->pivot->description }}
                                                     <span class="pull-right">
-                                                          <i class="fa fa-fw fa-edit edit-hardware" _model="{{ $hardware->model }}" _description="{{ $hardware->description }}" _id="{{ $hardware->id }}" _name="{{ $hardware->name }}" _plan_count="{{ $hardware->pivot->plan_count }}" _deployed_count="{{ $hardware->pivot->deployed_count }}"></i>
+                                                          <i class="fa fa-fw fa-edit edit-hardware" data-model="{{ $hardware->model }}" data-description="{{ $hardware->description }}" data-id="{{ $hardware->id }}" data-name="{{ $hardware->name }}" data-plan-count="{{ $hardware->pivot->plan_count }}" data-deployed-count="{{ $hardware->pivot->deployed_count }}"></i>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -644,7 +649,7 @@
 
                                                             <div class="row">
                                                                 <div class="col-lg-12">
-                                                                    <div _id="{{ $hardware->id }}" class="hardware-btn btn {{ $btn_class }}">
+                                                                    <div data-id="{{ $hardware->id }}" class="hardware-btn btn {{ $btn_class }}">
                                                                         {{ $hardware->name }}
                                                                     </div>
                                                                     @if($selected)
@@ -667,7 +672,7 @@
                                                                     if ($div.hasClass('btn-default')) {
                                                                         $div.removeClass('btn-default');
                                                                         $div.addClass('btn-primary');
-                                                                        $input.val($div.attr('_id'));
+                                                                        $input.val($div.data('id'));
 
                                                                         $div.after($input);
                                                                     }
@@ -746,13 +751,13 @@
 
                                             $('.edit-hardware').bind('click', function() {
                                                 var $modal = $('#edit-hardware');
-                                                $modal.find(':input[name=name]').val($(this).attr('_name'));
-                                                $modal.find(':input[name=model]').val($(this).attr('_model'));
-                                                $modal.find(':input[name=plan_count]').val($(this).attr('_plan_count'));
-                                                $modal.find(':input[name=deployed_count]').val($(this).attr('_deployed_count'));
-                                                $modal.find(':input[name=desription]').val($(this).attr('_description'));
+                                                $modal.find(':input[name=name]').val($(this).data('name'));
+                                                $modal.find(':input[name=model]').val($(this).data('model'));
+                                                $modal.find(':input[name=plan_count]').val($(this).data('plan-count'));
+                                                $modal.find(':input[name=deployed_count]').val($(this).data('deployed-count'));
+                                                $modal.find(':input[name=desription]').val($(this).data('description'));
 
-                                                $modal.find(':input[name=hardware_id]').val($(this).attr('_id'));
+                                                $modal.find(':input[name=hardware_id]').val($(this).data('id'));
 
                                                 $modal.modal();
                                             });
@@ -889,18 +894,5 @@
             </div>
         </div>
     </div>
-
-    {{--<script type="text/javascript">--}}
-        {{--$(document).ready(function() {--}}
-            {{--$('.add-item').bind('click', function() {--}}
-                {{--var service_id = $(this).attr('_id');--}}
-
-                {{--var $tr = $(this).parents('tr');--}}
-
-                {{--$tr.after($('<input type="hidden" name="object_id" value="' +  service_id +  '"/>'));--}}
-                {{--$tr.after($('<tr><td colspan="2"><span class="pull-right"><input type="text" name="key" placeholder="key"> <input type="text" name="value" placeholder="value"> <button type="submit" class="btn btn-primary btn-xs">添加</button></span></td></tr>'));--}}
-            {{--});--}}
-        {{--});--}}
-    {{--</script>--}}
 
 @endsection

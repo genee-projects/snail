@@ -115,7 +115,7 @@
                                     {{ $p->description }}
                                     <span class="pull-right">
 
-                                        <i _description="{{ $p->description }}" _id="{{ $p->id }}" _name="{{ $p->name }}" class="edit-subproduct fa fa-edit"></i>
+                                        <i data-description="{{ $p->description }}" data-id="{{ $p->id }}" data-name="{{ $p->name }}" class="edit-subproduct fa fa-edit"></i>
 
                                         <a href="{{ route('subproduct.delete', ['id'=> $p->id]) }}">
                                             <i class="fa fa-delete"></i>
@@ -161,10 +161,10 @@
                             $('.edit-subproduct').bind('click', function() {
                                 $modal = $('#edit-subproduct-modal');
 
-                                $modal.find(':input[name=name]').val($(this).attr('_name'));
-                                $modal.find(':input[name=description]').val($(this).attr('_description'));
+                                $modal.find(':input[name=name]').val($(this).data('name'));
+                                $modal.find(':input[name=description]').val($(this).data('description'));
 
-                                $modal.find(':input[name=id]').val($(this).attr('_id'));
+                                $modal.find(':input[name=id]').val($(this).data('id'));
                                 $modal.modal();
                             });
                         });
@@ -210,7 +210,7 @@
 
                                                 <div>
                                                     @foreach(\App\Module::all() as $module)
-                                                        <span _id="{{ $module->id }}" class="module-btn btn btn-default text-center">
+                                                        <span data-id="{{ $module->id }}" class="module-btn btn btn-default text-center">
                                                             {{ $module->name }}
                                                         </span>
                                                     @endforeach
@@ -249,7 +249,7 @@
                                     {{ $module->description }}
                                     <span class="pull-right">
 
-                                        <i _dep_modules="{{ join(',', $module->dep_modules_ids()) }}" _description="{{ $module->description }}" _id="{{ $module->id }}" _name="{{ $module->name }}" class="edit-module fa fa-edit fa-fw"></i>
+                                        <i data-dep-modules="{{ join(',', $module->dep_modules_ids()) }}" data-description="{{ $module->description }}" data-id="{{ $module->id }}" data-name="{{ $module->name }}" class="edit-module fa fa-edit fa-fw"></i>
                                         <a href="{{ route('module.delete', ['id'=> $module->id]) }}">
                                             <i class="fa fa-times"></i>
                                         </a>
@@ -263,11 +263,11 @@
 
                                 $('.edit-param').bind('click', function() {
                                     var $modal = $('#edit-param');
-                                    $modal.find(':input[name=name]').val($(this).attr('_name'));
-                                    $modal.find(':input[name=description]').val($(this).attr('_description'));
-                                    $modal.find(':input[name=value]').val($(this).attr('_value'));
-                                    $modal.find(':input[name=id]').val($(this).attr('_id'));
-                                    $modal.find(':input[name=code]').val($(this).attr('_code'));
+                                    $modal.find(':input[name=name]').val($(this).data('name'));
+                                    $modal.find(':input[name=description]').val($(this).data('description'));
+                                    $modal.find(':input[name=value]').val($(this).data('value'));
+                                    $modal.find(':input[name=id]').val($(this).data('id'));
+                                    $modal.find(':input[name=code]').val($(this).data('code'));
 
                                     $modal.modal();
                                 });
@@ -275,31 +275,40 @@
 
                                 $('.edit-module').bind('click', function() {
                                     var $modal = $('#edit-module');
-                                    $modal.find(':input[name=name]').val($(this).attr('_name'));
-                                    $modal.find(':input[name=description]').val($(this).attr('_description'));
-                                    $modal.find(':input[name=module_id]').val($(this).attr('_id'));
+                                    $modal.find(':input[name=name]').val($(this).data('name'));
+                                    $modal.find(':input[name=description]').val($(this).data('description'));
+                                    $modal.find(':input[name=module_id]').val($(this).data('id'));
 
-                                    id = $(this).attr('_id');
+                                    id = $(this).data('id');
 
                                     // 隐藏自己
                                     $modal.find('span').show();
-                                    $modal.find('span[_id='+ id +']').hide();
+                                    $modal.find('span[data-id='+ id +']').hide();
 
                                     //遍历自己依赖的所有的模块
 
-                                    if ($(this).attr('_dep_modules')) {
+                                    if ($(this).data('dep-modules')) {
 
-                                        $modules = $('[_id=' + $(this).attr('_dep_modules').split(',').join('],[_id=') + ']');
+                                        var raw_dep_modules = $(this).data('dep-modules');
+
+                                        if (raw_dep_modules.toString().indexOf(',') != -1) {
+                                            dep_modules = raw_dep_modules.toSting().split(',');
+                                        }
+                                        else {
+                                            dep_modules = [raw_dep_modules.toString()];
+                                        }
+
+                                        $modules = $('[data-id=' + dep_modules.join('],[data-id=') + ']');
 
                                         $modules.each(function() {
 
-                                            if ($(this).attr('_id') == id) $(this).hide();
+                                            if ($(this).data('id') == id) $(this).hide();
 
                                             //对依赖的模块进行勾选
                                             $(this).removeClass('btn-default').addClass('btn-primary');
 
                                             $input = $('<input type="hidden" name="modules[]" value="" />');
-                                            $input.val($(this).attr('_id'));
+                                            $input.val($(this).data('id'));
 
                                             //对依赖的模块后面加 input
                                             $(this).after($input);
@@ -339,7 +348,7 @@
                                             </div>
                                             <div>
                                                 @foreach(\App\Module::all() as $m)
-                                                    <span _id="{{ $m->id }}" class="module-btn btn btn-default text-center">
+                                                    <span data-id="{{ $m->id }}" class="module-btn btn btn-default text-center">
                                                     {{ $m->name }}
                                                 </span>
                                                 @endforeach
@@ -438,7 +447,7 @@
                                 <td>
                                     {{ $param->description }}
                                     <span class="pull-right">
-                                        <i _value="{{ $param->value }}" _code="{{ $param->code }}" _description="{{ $param->description }}" _id="{{ $param->id }}" _name="{{ $param->name }}" class="edit-param fa fa-edit fa-fw"></i>
+                                        <i data-value="{{ $param->value }}" data-code="{{ $param->code }}" data-description="{{ $param->description }}" data-id="{{ $param->id }}" data-name="{{ $param->name }}" class="edit-param fa fa-edit fa-fw"></i>
                                         <a href="{{ route('param.delete', ['id'=> $param->id]) }}">
                                             <i class="fa fa-times"></i>
                                         </a>
@@ -566,7 +575,7 @@
                                 <td>
                                     {{ $hardware->description }}
                                     <span class="pull-right">
-                                        <i _self_produce="{{ $hardware->self_produce }}" _model="{{ $hardware->model }}" _description="{{ $hardware->description }}" _id="{{ $hardware->id }}" _name="{{ $hardware->name }}" class="edit-hardware fa fa-edit fa-fw"></i>
+                                        <i data-self-produce="{{ $hardware->self_produce }}" data-model="{{ $hardware->model }}" data-description="{{ $hardware->description }}" data-id="{{ $hardware->id }}" data-name="{{ $hardware->name }}" class="edit-hardware fa fa-edit fa-fw"></i>
                                         <a href="{{ route('hardware.delete', ['id'=> $hardware->id]) }}">
                                             <i class="fa fa-times"></i>
                                         </a>
@@ -581,12 +590,12 @@
                             $('.edit-hardware').bind('click', function() {
 
                                 var $modal = $('#edit-hardware');
-                                $modal.find(':input[name=name]').val($(this).attr('_name'));
-                                $modal.find(':input[name=model]').val($(this).attr('_model'));
-                                $modal.find(':input[name=description]').val($(this).attr('_description'));
-                                $modal.find(':input[name=id]').val($(this).attr('_id'));
+                                $modal.find(':input[name=name]').val($(this).data('name'));
+                                $modal.find(':input[name=model]').val($(this).data('model'));
+                                $modal.find(':input[name=description]').val($(this).data('description'));
+                                $modal.find(':input[name=id]').val($(this).data('id'));
 
-                                if($(this).attr('_self_produce') > 0) {
+                                if($(this).data('self-produce') > 0) {
                                     $modal.find(':input[name=self_produce]').attr('checked', 'checked');
                                 }
 
@@ -666,9 +675,9 @@
 
                     //查看依赖
 
-                    if ($btn.attr('dep_modules')) {
+                    if ($btn.data('dep-modules')) {
 
-                        var dep_modules = $btn.attr('dep_modules');
+                        var dep_modules = $btn.data('dep-modules');
 
                         var dep_modules_ids = dep_modules.split(',');
 
@@ -699,7 +708,7 @@
                     if ($span.hasClass('btn-default')) {
                         $span.removeClass('btn-default');
                         $span.addClass('btn-primary');
-                        $input.val($span.attr('_id'));
+                        $input.val($span.data('id'));
 
                         $span.after($input);
                     }

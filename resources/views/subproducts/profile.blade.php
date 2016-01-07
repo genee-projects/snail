@@ -121,7 +121,7 @@
                                                 {{--*/ $btn_class = 'btn-primary' /*--}}
                                             @endif
 
-                                            <span _id="{{ $module->id }}" dep_modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center">
+                                            <span data-id="{{ $module->id }}" data-dep-modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center">
                                                     {{ $module->name }}
                                                 </span>
 
@@ -167,7 +167,7 @@
                                 <td>
                                     {{ $param->description }}
                                     <span class="pull-right">
-                                        <i _value="{{ $param->pivot->value }}" _id="{{ $param->id }}" _name="{{ $param->name }}" class="edit-param fa fa-edit fa-fw"></i>
+                                        <i data-value="{{ $param->pivot->value }}" data-id="{{ $param->id }}" data-name="{{ $param->name }}" class="edit-param fa fa-edit fa-fw"></i>
                                     </span>
                                 </td>
                             </tr>
@@ -225,7 +225,7 @@
                                                 {{--*/ $btn_class = 'btn-primary' /*--}}
                                             @endif
 
-                                            <div _id="{{ $param->id }}" class="param-btn btn {{ $btn_class }}">
+                                            <div data-id="{{ $param->id }}" class="param-btn btn {{ $btn_class }}">
                                                 {{ $param->name }}
                                             </div>
 
@@ -241,9 +241,9 @@
 
                                                 $('.edit-param').bind('click', function() {
                                                     var $modal = $('#edit-param');
-                                                    $modal.find(':input[name=name]').val($(this).attr('_name'));
-                                                    $modal.find(':input[name=value]').val($(this).attr('_value'));
-                                                    $modal.find(':input[name=param_id]').val($(this).attr('_id'));
+                                                    $modal.find(':input[name=name]').val($(this).data('name'));
+                                                    $modal.find(':input[name=value]').val($(this).data('value'));
+                                                    $modal.find(':input[name=param_id]').val($(this).data('id'));
 
                                                     $modal.modal();
                                                 });
@@ -257,7 +257,7 @@
                                                     if ($div.hasClass('btn-default')) {
                                                         $div.removeClass('btn-default');
                                                         $div.addClass('btn-primary');
-                                                        $input.val($div.attr('_id'));
+                                                        $input.val($div.data('id'));
 
                                                         $div.after($input);
                                                     }
@@ -335,7 +335,7 @@
                                                 <div class="col-lg-12">
 
                                                     <div class="col-lg-8">
-                                                        <div _id="{{ $hardware->id }}" class="hardware-btn btn {{ $btn_class }}">
+                                                        <div data-id="{{ $hardware->id }}" class="hardware-btn btn {{ $btn_class }}">
                                                             {{ $hardware->name }}
                                                         </div>
                                                         @if($selected)
@@ -362,7 +362,7 @@
                                                     if ($div.hasClass('btn-default')) {
                                                         $div.removeClass('btn-default');
                                                         $div.addClass('btn-primary');
-                                                        $input.val($div.attr('_id'));
+                                                        $input.val($div.data('id'));
 
                                                         $div.after($input);
                                                     }
@@ -396,7 +396,7 @@
 
                 disabled = false;
 
-                $('[_id=' + dep_modules_ids.join('],[_id=') + ']', form).each(function() {
+                $('[data-id=' + dep_modules_ids.join('],[data-id=') + ']', form).each(function() {
 
                     if (! $(this).hasClass('btn-primary')) {
                         disabled = true;
@@ -417,11 +417,16 @@
 
                     //查看依赖
 
-                    if ($btn.attr('dep_modules')) {
+                    if ($btn.data('dep-modules')) {
 
-                        var dep_modules = $btn.attr('dep_modules');
+                        var raw_dep_modules = $btn.data('dep-modules');
 
-                        var dep_modules_ids = dep_modules.split(',');
+                        if (raw_dep_modules.toString().indexOf(',') != -1) {
+                            var dep_modules_ids = raw_dep_modules.toString().split(',');
+                        }
+                        else {
+                            var dep_modules_ids = [raw_dep_modules.toString()];
+                        }
 
                         //查找依赖的模块, 查看是否被 check
                         //如果没被check, 那么 disabled="disabled"
@@ -450,7 +455,7 @@
                     if ($span.hasClass('btn-default')) {
                         $span.removeClass('btn-default');
                         $span.addClass('btn-primary');
-                        $input.val($span.attr('_id'));
+                        $input.val($span.data('id'));
 
                         $span.after($input);
                     }
