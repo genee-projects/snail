@@ -1,11 +1,28 @@
 <script type="text/javascript">
-    require(['jquery', 'bootstrap-datetimepicker'], function($) {
+    require(['jquery', 'bootstrap-datetimepicker', 'bootstrap3-typeahead'], function($) {
 
         $('.datetimepicker').datetimepicker({
             format: 'YYYY/MM/DD'
         });
 
         require(['css!../css/bootstrap-datetimepicker.min'], function() {});
+
+        $.get('/servers.json', function(data){
+
+            var $selector = $("#server_selector");
+            $selector.typeahead({
+                source:data,
+                displayText: function(item) {
+                    return item.name;
+                },
+                afterSelect: function(item) {
+                    var $input = $('<input name="server_id" type="hidden">');
+                    $input.val(item.id);
+                    $selector.after($input);
+                }
+            });
+        },'json');
+
     });
 </script>
 
@@ -48,7 +65,6 @@
             <label for="server_selector" class="col-sm-2 control-label">选择服务器</label>
             <div class="col-sm-10">
                 <input class="form-control" type="text" data-provide="typeahead" id="server_selector">
-
             </div>
         </div>
 

@@ -191,17 +191,6 @@
                         <!-- Nav tabs -->
                         <ul class="profile nav nav-tabs" role="tablist">
 
-                            <li role="presentation" >
-                                <a data-type="comments" href="#comments" role="tab">
-                                    <i class="fa fa-comment-o"></i> 备注信息
-                                </a>
-                            </li>
-
-                            <li role="presentation">
-                                <a data-type="servers" href="#servers" role="tab">
-                                    <i class="fa fa-linux"></i> 服务器信息
-                                </a>
-                            </li>
 
                             <li role="presentation" class="active">
                                 <a data-type="softwares" href="#softwares" role="tab">
@@ -216,27 +205,33 @@
                             </li>
 
                             <li role="presentation">
-                                <a data-type="informations" href="#informations" role="tab">
-                                    <i class="fa fa-info"></i> 信息变动
+                                <a data-type="servers" href="#servers" role="tab">
+                                    <i class="fa fa-linux"></i> 服务器信息
                                 </a>
                             </li>
+
 
                             <li role="presentation">
                                 <a data-type="trello" href="#trello" role="tab">
                                     <i class="fa fa-wrench"></i> 部署情况
                                 </a>
                             </li>
+
+                            <li role="presentation">
+                                <a data-type="informations" href="#informations" role="tab">
+                                    <i class="fa fa-info"></i> 信息变动
+                                </a>
+                            </li>
+
+                            <li role="presentation" >
+                                <a data-type="comments" href="#comments" role="tab">
+                                    <i class="fa fa-comment-o"></i> 备注信息
+                                </a>
+                            </li>
                         </ul>
 
                         <!-- Tab panes -->
                         <div class="tab-content">
-
-                            <div role="tabpanel" class="tab-pane" id="comments">
-                                <div class="text-center loading">
-                                    <i class="fa fa-spinner fa-spin fa-2x"></i>
-                                </div>
-                            </div>
-
                             <div role="tabpanel" class="tab-pane" id="softwares">
                                 <div class="text-center loading">
                                     <i class="fa fa-spinner fa-spin fa-2x"></i>
@@ -257,6 +252,14 @@
                             </div>
                             <!-- server end -->
 
+                            <!-- trello -->
+                            <div role="tabpanel" class="tab-pane" id="trello">
+                                <div class="text-center loading">
+                                    <i class="fa fa-spinner fa-spin fa-2x"></i>
+                                </div>
+                            </div>
+                            <!-- trello end-->
+
                             <!-- info -->
                             <div role="tabpanel" class="tab-pane" id="informations">
                                 <div class="text-center loading">
@@ -265,13 +268,11 @@
                             </div>
                             <!-- info end-->
 
-                            <!-- trello -->
-                            <div role="tabpanel" class="tab-pane" id="trello">
+                            <div role="tabpanel" class="tab-pane" id="comments">
                                 <div class="text-center loading">
                                     <i class="fa fa-spinner fa-spin fa-2x"></i>
                                 </div>
                             </div>
-                            <!-- trello end-->
                         </div>
                     </div>
                 </div>

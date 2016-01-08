@@ -185,7 +185,7 @@
                         <td>{{ $project->ref_no }}</td>
                         <td><a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a></td>
                         <td>{{ $project->pivot->usage }}</td>
-                        <td>{{ date('Y/m/d', strtotime($project->pivot->usage)) }}</td>
+                        <td>{{ $project->pivot->usage or '未设置' }}</td>
                     </tr>
                 @endforeach
 
