@@ -27,8 +27,8 @@ class CreateProjects extends Migration
             $table->string('seller')->nullable();           // 销售人员
             $table->string('description')->nullable();      // 备注
             $table->string('way')->nullable();              // 乘车线路
-            $table->dateTime('signed_time');                // 签约时间
-            $table->dateTime('cancelled_time');              // 服务停止时间
+            $table->dateTime('signed_time')->nullable();    // 签约时间
+            $table->dateTime('cancelled_time')->nullable(); // 服务停止时间
 
             $table->boolean('vip')->default(false); //重点客户
             $table->boolean('official')->default(true); //正式客户

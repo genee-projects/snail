@@ -59,7 +59,7 @@
     <label for="project-time" class="col-sm-2 control-label">签约时间</label>
     <div class="col-sm-10">
         <div class="input-group date datetimepicker">
-            <input type="text" class="form-control" name="signed_time">
+            <input type="text" class="datetimepicker form-control" name="signed_time">
             <span class="input-group-addon">
                 <i class="fa fa-calendar"></i>
             </span>
@@ -71,7 +71,7 @@
     <label for="project-time" class="col-sm-2 control-label">合同到期时间</label>
     <div class="col-sm-10">
         <div class="input-group date datetimepicker">
-            <input type="text" class="form-control" name="cancelled_time">
+            <input type="text" class="datetimepicker form-control" name="cancelled_time">
             <span class="input-group-addon">
                 <i class="fa fa-calendar"></i>
             </span>

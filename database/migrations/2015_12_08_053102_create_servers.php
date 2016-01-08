@@ -17,7 +17,7 @@ class CreateServers extends Migration
         Schema::create('servers', function(Blueprint $table) {
             $table->increments('id');               // 自增 ID
             $table->string('name');                 // 服务器名称
-            $table->integer('privoder')->nullable()->default(Server::PROVIDER_COMPANY);   //服务器提供方, 默认为公司提供
+            $table->integer('provider')->nullable()->default(Server::PROVIDER_COMPANY);   //服务器提供方, 默认为公司提供
             $table->string('barcode')->nullable();              // 条形码
             $table->string('sn')->nullable();                   // 序列号
             $table->string('model')->nullable();                // 型号

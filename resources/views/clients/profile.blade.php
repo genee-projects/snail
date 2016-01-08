@@ -31,7 +31,7 @@
                                     <h4 class="modal-title" id="edit-server-modal-label">修改客户信息</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="edit-client-form" class="form-horizontal" method="post" action="/clients/edit">
+                                    <form id="edit-client-form" class="form-horizontal" method="post" action="{{ route('client.edit') }}">
                                         <input type="hidden" name="id" value="{{ $client->id }}">
                                         @include('clients/form', ['client'=> $client])
                                     </form>
@@ -131,8 +131,6 @@
                             </td>
                         </tr>
                     </table>
-
-
                 </div>
             </div>
         </div>
@@ -151,7 +149,7 @@
                         <p class="col-sm-offset-1">├ <a href="/clients/profile/{{ $c->id }}">{{ $c->name }}</a></p>
                             @foreach($c->children as $_c)
                                 <p class="col-sm-offset-2">├ <a href="/clients/profile/{{$_c->id}}">{{ $_c->name }}</a></p>
-                        @endforeach
+                            @endforeach
                     @endforeach
                 </div>
             </div>
@@ -164,7 +162,7 @@
                 </div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="post" action="/clients/add">
+                    <form class="form-horizontal" method="post" action="{{ route('client.add') }}">
                         @include('clients/form_lite', ['client'=> new \App\Client, 'parent'=> $client])
                         <div class="form-group">
                             <label for="client-name" class="col-sm-2 control-label"></label>
@@ -276,7 +274,7 @@
 
                                     <hr />
 
-                                    <form method="post" action="/comments/add">
+                                    <form method="post" action="{{ route('comment.add') }}">
 
                                         <input type="hidden" name="object_type" value="{{ get_class($client) }}" />
                                         <input type="hidden" name="object_id" value="{{ $client->id }}" />

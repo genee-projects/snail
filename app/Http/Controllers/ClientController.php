@@ -5,7 +5,6 @@ namespace app\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Client;
-use App\Product;
 
 class ClientController extends Controller
 {
@@ -33,11 +32,19 @@ class ClientController extends Controller
         $client->type = $request->input('type');
         $client->region = $request->input('region');
 
-        if ($client->save()) {
-            return redirect('/clients')
+        $client->save();
+
+        //添加子项目, 跳转到子项目页面
+        if ($request->input('parent_id')) {
+            return redirect()->to(route('client.profile', ['id'=> $client->id]))
                 ->with('message_content', '添加成功!')
                 ->with('message_type', 'info');
         }
+
+        //如果 clients 列表页面
+        return redirect()->to(route('clients'))
+            ->with('message_content', '添加成功!')
+            ->with('message_type', 'info');
     }
 
     public function edit(Request $request) {
@@ -52,12 +59,11 @@ class ClientController extends Controller
         $client->type = $request->input('type');
         $client->region = $request->input('region');
 
-        if ($client->save()) {
-            return redirect(sprintf('/clients/profile/%d', $client->id))
-                ->with('message_content', '修改成功!')
-                ->with('message_type', 'info');
-        }
+        $client->save();
 
+        return redirect()->to(route('client.profile', ['id'=> $client->id]))
+            ->with('message_content', '修改成功!')
+            ->with('message_type', 'info');
     }
 
     public function profile($id) {
@@ -73,10 +79,9 @@ class ClientController extends Controller
 
         $client = Client::find($id);
 
-        if ($client->delete()) {
-            return redirect('/clients')
-                ->with('message_content', '删除成功!')
-                ->with('message_type', 'info');
-        }
+        $client->delete();
+        return redirect()->to(route('clients'))
+            ->with('message_content', '删除成功!')
+            ->with('message_type', 'info');
     }
 }

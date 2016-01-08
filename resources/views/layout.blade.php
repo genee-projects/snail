@@ -53,13 +53,15 @@
                             <a href="{{ route('products') }}"><i class="fa fa-wrench fa-fw"></i> 产品管理</a>
                         </li>
 
-                        <li>
-                            <a href="{{ route('users') }}"><i class="fa fa-user fa-fw"></i> 用户管理</a>
-                        </li>
+                        {{--隐藏用户管理\角色管理模块--}}
+                        {{----}}
+                        {{--<li>--}}
+                            {{--<a href="{{ route('users') }}"><i class="fa fa-user fa-fw"></i> 用户管理</a>--}}
+                        {{--</li>--}}
 
-                        <li>
-                            <a href="{{ route('roles') }}"><i class="fa fa-heart-o fa-fw"></i> 角色设置</a>
-                        </li>
+                        {{--<li>--}}
+                            {{--<a href="{{ route('roles') }}"><i class="fa fa-heart-o fa-fw"></i> 角色设置</a>--}}
+                        {{--</li>--}}
 
                         <li>
                             <a href="#" id="close-menu"><i class="fa fa-chevron-circle-left fa-fw"></i> 收起菜单</a>

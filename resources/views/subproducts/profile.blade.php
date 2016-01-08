@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    <button type="submit" class="btn btn-primary" form="edit-product-form">修改</button>
+                                    <button type="submit" class="btn btn-primary" form="edit-sub-product-form">修改</button>
                                 </div>
                             </div>
                         </div>
@@ -56,6 +56,10 @@
 
                 <div class="panel-body">
                     <table class="table table-hover table-striped">
+                        <tr>
+                            <td class="col-lg-2">名称</td>
+                            <td>{{ $subproduct->name }}</td>
+                        </tr>
                         <tr>
                             <td>简述</td>
                             <td>{{ $subproduct->description }}</td>
@@ -419,13 +423,13 @@
 
                     if ($btn.data('dep-modules')) {
 
-                        var raw_dep_modules = $btn.data('dep-modules');
+                        var raw_dep_modules = new String($btn.data('dep-modules'));
 
-                        if (raw_dep_modules.toString().indexOf(',') != -1) {
-                            var dep_modules_ids = raw_dep_modules.toString().split(',');
+                        if (raw_dep_modules.indexOf(',') != -1) {
+                            var dep_modules_ids = raw_dep_modules.split(',');
                         }
                         else {
-                            var dep_modules_ids = [raw_dep_modules.toString()];
+                            var dep_modules_ids = [raw_dep_modules];
                         }
 
                         //查找依赖的模块, 查看是否被 check

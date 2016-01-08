@@ -71,6 +71,8 @@
 
                                 @if ($project->official)
                                     <span class="label label-info">正式</span>
+                                @else
+                                    <span class="label label-default">试用</span>
                                 @endif
                             </td>
                         </tr>
@@ -81,6 +83,14 @@
                         <tr>
                             <td>产品/产品类型</td>
                             <td><a href="{{ route('subproduct.profile', ['id'=> $project->product->id]) }}">{{ $project->product->name }} ({{ $project->product->product->name }})</a></td>
+                        </tr>
+                        <tr>
+                            <td>签约时间</td>
+                            <td>{{ $project->signed_time or '未设定' }}</td>
+                        </tr>
+                        <tr>
+                            <td>合同到期时间</td>
+                            <td>{{ $project->cancelled_time or '未设定' }}</td>
                         </tr>
                         <tr>
                             <td>联系人</td>
@@ -109,6 +119,10 @@
                         <tr>
                             <td>乘车路线</td>
                             <td>{{ $project->way }}</td>
+                        </tr>
+                        <tr>
+                            <td>备注</td>
+                            <td>{{ $project->description }}</td>
                         </tr>
 
                         @foreach($project->items as $item)

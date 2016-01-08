@@ -83,8 +83,18 @@ class ProjectController extends Controller
         $project->contact_user = $request->input('contact_user');   // 联系人
         $project->contact_phone = $request->input('contact_phone'); // 联系电话
         $project->contact_email = $request->input('contact_email'); // 联系邮箱
-        $project->signed_time = $request->input('signed_time');     // 签约时间
-        $project->cancelled_time = $request->input('cancelled_time');   // 服务到期时间
+
+        $signed_time = $request->input('signed_time');
+
+        if (!$signed_time) $signed_time = NULL;
+        $project->signed_time = $signed_time;     // 签约时间
+
+        $cancelled_time =  $request->input('cancelled_time');
+
+        if (!$cancelled_time) $cancelled_time = NULL;
+
+        $project->cancelled_time = $cancelled_time;   // 服务到期时间
+
         $project->seller = $request->input('seller');               // 销售人员
         $project->engineer = $request->input('engineer');           // 工程师
         $project->description = $request->input('description'); //
@@ -127,16 +137,18 @@ class ProjectController extends Controller
 
         $server = Server::find($request->input('server_id'));
 
+        $deploy_time = $request->input('deploy_time');
+        if (!$deploy_time) $deploy_time = NULL;
+
         if (! $project->servers()->find($request->input('server_id'))) {
             $project->servers()->save($server, [
                 'usage'=> $request->input('usage'),
-                'deploy_time'=> $request->input('deploy_time'),
+                'deploy_time'=> $deploy_time,
             ]);
 
             return redirect(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '关联成功!')
                 ->with('message_type', 'info');
-
         }
 
         return redirect(route('project.profile', ['id'=> $project->id]))

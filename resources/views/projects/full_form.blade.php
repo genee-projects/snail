@@ -92,7 +92,7 @@
     <label for="project-signed-time" class="col-sm-2 control-label">签约时间</label>
     <div class="col-sm-4">
         <div class="input-group date datetimepicker">
-            <input type="text" class="form-control" name="signed_time" value="{{ $project->signed_time }}" placeholder="2015/12/01">
+            <input type="text" class="datetimepicker form-control" name="signed_time" value="{{ $project->signed_time }}" placeholder="2015/12/01">
             <span class="input-group-addon">
                 <i class="fa fa-calendar"></i>
             </span>
@@ -102,7 +102,7 @@
     <label for="project-divorced-time" class="col-sm-2 control-label">合同到期时间</label>
     <div class="col-sm-4">
         <div class="input-group date datetimepicker">
-            <input type="text" class="form-control" name="cancelled_time" value="{{ $project->cancelled_time }}" placeholder="2017/12/01">
+            <input type="text" class="datetimepicker form-control" name="cancelled_time" value="{{ $project->cancelled_time }}" placeholder="2017/12/01">
             <span class="input-group-addon">
                 <i class="fa fa-calendar"></i>
             </span>

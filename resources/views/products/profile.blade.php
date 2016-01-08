@@ -55,7 +55,11 @@
 
                     <table class="table table-hover table-striped">
                         <tr>
-                            <td class="col-lg-1">简述</td>
+                            <td class="col-lg-1">名称</td>
+                            <td>{{ $product->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>简述</td>
                             <td>{{ $product->description }}</td>
                         </tr>
                     </table>
@@ -209,7 +213,7 @@
                                                 <label for="deps">模块依赖</label>
 
                                                 <div>
-                                                    @foreach(\App\Module::all() as $module)
+                                                    @foreach($product->modules as $module)
                                                         <span data-id="{{ $module->id }}" class="module-btn btn btn-default text-center">
                                                             {{ $module->name }}
                                                         </span>
@@ -289,13 +293,13 @@
 
                                     if ($(this).data('dep-modules')) {
 
-                                        var raw_dep_modules = $(this).data('dep-modules');
+                                        var raw_dep_modules = new String($(this).data('dep-modules'));
 
-                                        if (raw_dep_modules.toString().indexOf(',') != -1) {
-                                            dep_modules = raw_dep_modules.toSting().split(',');
+                                        if (raw_dep_modules.indexOf(',') != -1) {
+                                            dep_modules = raw_dep_modules.split(',');
                                         }
                                         else {
-                                            dep_modules = [raw_dep_modules.toString()];
+                                            dep_modules = [raw_dep_modules];
                                         }
 
                                         $modules = $('[data-id=' + dep_modules.join('],[data-id=') + ']');
@@ -347,7 +351,7 @@
                                                 </label>
                                             </div>
                                             <div>
-                                                @foreach(\App\Module::all() as $m)
+                                                @foreach($product->modules as $m)
                                                     <span data-id="{{ $m->id }}" class="module-btn btn btn-default text-center">
                                                     {{ $m->name }}
                                                 </span>

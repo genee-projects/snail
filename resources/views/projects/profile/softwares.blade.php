@@ -86,13 +86,13 @@
 
                                                         if ($btn.data('dep-modules')) {
 
-                                                            var raw_dep_modules = $btn.data('dep-modules');
+                                                            var raw_dep_modules = new String($btn.data('dep-modules'));
 
-                                                            if (raw_dep_modules.toString().indexOf(',') != -1) {
-                                                                var dep_modules_ids = raw_dep_modules.toString().split(',');
+                                                            if (raw_dep_modules.indexOf(',') != -1) {
+                                                                var dep_modules_ids = raw_dep_modules.split(',');
                                                             }
                                                             else {
-                                                                var dep_modules_ids = [raw_dep_modules.toString()];
+                                                                var dep_modules_ids = [raw_dep_modules];
                                                             }
 
                                                             //查找依赖的模块, 查看是否被 check

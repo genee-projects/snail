@@ -1,3 +1,14 @@
+<script type="text/javascript">
+    require(['jquery', 'bootstrap-datetimepicker'], function($) {
+
+        $('.datetimepicker').datetimepicker({
+            format: 'YYYY/MM/DD'
+        });
+
+        require(['css!../css/bootstrap-datetimepicker.min'], function() {});
+    });
+</script>
+
 <div class="panel-body">
 
     <table class="table table-hover table-bordered table-striped">
@@ -18,13 +29,9 @@
                 <td>{{ $server->fqdn }}</td>
                 <td>{{ $server->vpn }}</td>
                 <td>{{ $server->pivot->usage }}</td>
-                <td>{{ date('Y/m/d', strtotime($server->pivot->deploy_time)) }}</td>
+                <td>{{ $server->pivot->deploy_time or '未设置' }}</td>
                 <td>
-                    @if ($server->customer_provide)
-                        客户自备
-                    @else
-                        公司提供
-                    @endif
+                    {{ App\Server::$providers[$server->provider] }}
                 </td>
             </tr>
         @endforeach
@@ -50,7 +57,7 @@
             <div class="col-sm-10">
 
                 <div class="input-group date datetimepicker">
-                    <input type="text" class="form-control" name="deploy_time" id="server_deploy_time">
+                    <input type="text" class="datetimepicker form-control" name="deploy_time" id="server_deploy_time">
                     <span class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </span>
