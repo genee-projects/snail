@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Genee CRM</title>
-    <base href="{{ config('app.url') }}">
+    <base href="{{ url() }}">
 
     <!-- 基础服务 -->
     <script data-main="asserts/js/main" src="asserts/js/require.js"></script>
@@ -24,7 +24,7 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" >
             <div class="navbar-header ">
-                <a class="navbar-brand" href="/">Genee CRM V0.2.0</a>
+                <a class="navbar-brand" href="/">Genee CRM V0.3.0</a>
             </div>
             <!-- /.navbar-header -->
 
