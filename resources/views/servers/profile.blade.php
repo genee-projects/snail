@@ -102,6 +102,11 @@
                     </tr>
 
                     <tr>
+                        <td>VPN</td>
+                        <td><code>{{ $server->vpn }}</code></td>
+                    </tr>
+
+                    <tr>
                         <td>备注信息</td>
                         <td>{{ $server->description }}</td>
                     </tr>
