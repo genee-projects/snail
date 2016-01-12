@@ -27,6 +27,36 @@ body{
     display: none;
   }
 
+  .navbar-top-links {
+    li.dropdown {
+      margin: 0;
+      display: inline-block;
+      a {
+        padding: 15px;
+        min-height: 50px;
+      }
+    }
+
+    li:last-child {
+      margin-right: 15px;
+    }
+
+    .dropdown-menu {
+      li {
+        display: block;
+        a {
+          padding: 5px 20px;
+          min-height: 0;
+          &:hover {
+            color: #262626;
+            text-decoration: none;
+            background-color: #f5f5f5;
+          }
+        }
+      }
+    }
+  }
+
   .sidebar {
 
     .sidebar-nav.navbar-collapse {

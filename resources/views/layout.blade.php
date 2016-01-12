@@ -26,6 +26,14 @@
             <div class="navbar-header ">
                 <a class="navbar-brand" href="/">Genee CRM V0.3.1</a>
             </div>
+
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" href="{{ route('logout') }}">
+                        <i class="fa fa-user fa-sign-out"></i> 登出
+                    </a>
+                </li>
+            </ul>
             <!-- /.navbar-header -->
 
             <div class="navbar-default sidebar">

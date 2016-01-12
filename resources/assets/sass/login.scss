@@ -1,0 +1,90 @@
+body {
+  height: 100%;
+  background-color: #123;
+
+  #content {
+    padding: 0;
+    margin: 0;
+
+    div.top {
+      height:100px;
+      background:#3c9;
+    }
+
+    form.gapper-auth-login-form {
+
+      div.gapper-auth-login-form-placeholder {
+        display:none;
+        display/*\**/:block\9;
+      }
+
+      .app-icon {
+        width: 128px;
+        height: 128px;
+        padding: 20px;
+        position: relative;
+        display: inline-block;
+        text-decoration: none;
+        color: #fff;
+
+        .app-icon-image {
+          display:block;
+          width: 70px;
+          height: 70px;
+          margin:0 auto;
+          border-radius:50%;
+          text-align:center;
+          background-color:#fff;
+          position: relative;
+
+          .app-icon-text {
+            position: absolute;
+            border: 3px solid #ddd;
+            color: #fff;
+            background-color: #666;
+            width: 70px;
+            height: 70px;
+            line-height: 64px;
+            font-weight: bold;
+            border-radius:50%;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+
+          img {
+            display:block;
+            width: 70px;
+            height: 70px;
+            border-radius:50%;
+            border: 2px solid #666;
+          }
+
+        }
+
+        .app-icon-title {
+          display:block;
+          margin:5px 0 10px;
+          text-align: center;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          color: #123;
+        }
+
+
+      }
+
+      .app-icon-hoverable {
+        cursor: pointer;
+        &:hover {
+          background-color: #eee;
+          color: #333;
+
+          .app-icon-text {
+            border-color: #ccc;
+          }
+        }
+      }
+    }
+  }
+}

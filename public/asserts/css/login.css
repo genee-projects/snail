@@ -1,0 +1,64 @@
+body {
+  height: 100%;
+  background-color: #123; }
+  body #content {
+    padding: 0;
+    margin: 0; }
+    body #content div.top {
+      height: 100px;
+      background: #3c9; }
+    body #content form.gapper-auth-login-form div.gapper-auth-login-form-placeholder {
+      display: none;
+      display/*\**/: block\9; }
+    body #content form.gapper-auth-login-form .app-icon {
+      width: 128px;
+      height: 128px;
+      padding: 20px;
+      position: relative;
+      display: inline-block;
+      text-decoration: none;
+      color: #fff; }
+      body #content form.gapper-auth-login-form .app-icon .app-icon-image {
+        display: block;
+        width: 70px;
+        height: 70px;
+        margin: 0 auto;
+        border-radius: 50%;
+        text-align: center;
+        background-color: #fff;
+        position: relative; }
+        body #content form.gapper-auth-login-form .app-icon .app-icon-image .app-icon-text {
+          position: absolute;
+          border: 3px solid #ddd;
+          color: #fff;
+          background-color: #666;
+          width: 70px;
+          height: 70px;
+          line-height: 64px;
+          font-weight: bold;
+          border-radius: 50%;
+          white-space: nowrap;
+          overflow: hidden; }
+        body #content form.gapper-auth-login-form .app-icon .app-icon-image img {
+          display: block;
+          width: 70px;
+          height: 70px;
+          border-radius: 50%;
+          border: 2px solid #666; }
+      body #content form.gapper-auth-login-form .app-icon .app-icon-title {
+        display: block;
+        margin: 5px 0 10px;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #123; }
+    body #content form.gapper-auth-login-form .app-icon-hoverable {
+      cursor: pointer; }
+      body #content form.gapper-auth-login-form .app-icon-hoverable:hover {
+        background-color: #eee;
+        color: #333; }
+        body #content form.gapper-auth-login-form .app-icon-hoverable:hover .app-icon-text {
+          border-color: #ccc; }
+
+/*# sourceMappingURL=login.css.map */

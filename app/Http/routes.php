@@ -1,9 +1,10 @@
 <?php
 
 
-#dashboard
-Route::get('/', 'DashboardController@index');
-
+Route::get('/', [
+    'as'=> 'root',
+    'uses'=> 'DashboardController@index'
+]);
 
 #clients
 Route::get('/clients', [
@@ -342,4 +343,19 @@ Route::post('/roles/{role_id}/user/{user_id}/delete', [
 Route::get('/roles/{role_id}/users', [
     'as'=> 'role.user.connect_all',
     'uses'=> 'RoleController@user_connect_all',
+]);
+
+Route::get('/gapper/go/{type}', [
+    'as'=> 'gapper.go',
+    'uses'=> 'GapperController@go',
+]);
+
+Route::post('/gapper/login', [
+    'as'=> 'login',
+    'uses'=> 'GapperController@login',
+]);
+
+Route::get('/gapper/logout', [
+    'as'=> 'logout',
+    'uses'=> 'GapperController@logout',
 ]);
