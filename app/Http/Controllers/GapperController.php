@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\User;
 
 class GapperController extends Controller
 {
@@ -60,20 +61,21 @@ class GapperController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
 
-
         try {
 
             $verify = self::getRPC()->gapper->user->verify($username, $password);
+
+
 
             if ($verify) {
 
                 \App\Gini\Gapper\Client::loginByUserName($username);
 
+
                 // 错误的client信息，用户无法登陆
                 $config = config('gapper.rpc');
                 $client_id = $config['client_id'];
                 $app = self::getRPC()->gapper->app->getInfo($client_id);
-
 
                 if (!isset($app['id'])) {
                    throw new \Exception('异常访问 !');
@@ -82,9 +84,25 @@ class GapperController extends Controller
                 //crm 是一个 group 的 app, 判断用户是否有该 App 即可
                 $groups = \App\Gini\Gapper\Client::getGroups();
 
+
                 if (!$groups) {
                     throw new \Exception('用户无管理组!');
                 } else {
+
+                    //修改机制, 如果发现在安装了 CRM 的 Group 中, 则登录
+                    //通过验证
+
+                    if (array_key_exists(config('gapper.group_id'), $groups)) {
+                        //验证通过后, 我们进行用户添加! 本地用户添加!
+
+                        //初始化本地用户
+                        \App\Gini\Gapper\Client::initUser();
+
+                        return redirect()->to(route('root'));
+                    }
+
+                    //老的 group 一个个遍历验证,
+                    /*
                     foreach($groups as $group) {
 
                         $apps = \App\Gini\Gapper\Client::getApps($group['id']);
@@ -95,12 +113,14 @@ class GapperController extends Controller
                             return redirect()->to(route('root'));
                         }
                     }
+                    */
                 }
             }
 
             throw new \Exception('登录失败! 请重试!');
         } catch(\Exception $e) {
             $message = $e->getMessage();
+            \App\Gini\Gapper\Client::logout($username);
             return redirect()->back()
                 ->with('message', $message);
         }

@@ -24,7 +24,6 @@ class DashboardController extends Controller
             ]);
         }
 
-
         return view('login');
     }
 }

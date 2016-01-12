@@ -32,10 +32,20 @@
 
             <div class="col-lg-4 users">
                 @foreach(App\User::all() as $user)
-                    <p class="text-left user" data-user-id="{{ $user->id }}" data-user-name="{{ $user->name }}" >
-                        <img data-src="holder.js/40x40">
-                        {{ $user->name }}
-                    </p>
+                    <div class="text-left user" data-user-id="{{ $user->id }}" data-user-name="{{ $user->name }}">
+
+                        <div class="user-icon-text">
+
+                            @if (parse_url($user->icon)['scheme'] == 'initials')
+                                    {{ parse_url($user->icon)['host'] }}
+                            @else
+                                <img class="img-rounded" src="{{ $user->icon }}" />
+                            @endif
+                        </div>
+                        <div class="user-desc">
+                            {{ $user->name }}
+                        </div>
+                    </div>
                 @endforeach
             </div>
         </div>

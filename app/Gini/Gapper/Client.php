@@ -1,25 +1,6 @@
 <?php
 
-/**
- * @file Client.php
- * @brief APP <--> Gapper Client <--> Gapper Server
- *
- * @author Hongjie Zhu
- *
- * @version 0.1.0
- * @date 2014-06-18
- */
-
-/**
- * $client = \Gini\IoC::construct('\Gini\Gapper\Client', true); (default)
- * $client = \Gini\IoC::construct('\Gini\Gapper\Client', false);
- * $username = $client->getCurrentUserName();
- * $userdata = $client->getUserInfo();
- * $groupdata = $client->getGroupInfo();.
- */
 namespace App\Gini\Gapper;
-
-use Symfony\Component\HttpFoundation\Request;
 
 class Client
 {
@@ -40,12 +21,6 @@ class Client
 
         return self::$_RPC;
     }
-
-    const STEP_LOGIN = 0;
-    const STEP_GROUP = 1;
-    const STEP_DONE = 2;
-    const STEP_USER_401 = 3;
-    const STEP_GROUP_401 = 4;
 
     private static $sessionKey = 'gapper.client';
     private static function prepareSession()
@@ -91,71 +66,27 @@ class Client
 
     public static function init()
     {
-        $gapperToken = \Request::get('gapper-token');
-        if ($gapperToken) {
-            \App\Gini\Gapper\Client::logout();
-            \App\Gini\Gapper\Client::loginByToken($gapperToken);
-        } else {
-            // 提供第三方登录验证入口
-            $third = (array) config('gapper.3rd');
-            foreach ($third as $key => $value) {
-                if (isset($value['condition']) && !$_GET[$value['condition']]) {
-                    continue;
-                }
-                $className = $value['class'];
-                if (!class_exists($className)) {
-                    continue;
-                }
-                $handler = new $className($value['params']);
-                $handler->run();
-            }
-        }
 
         $gapperGroup = \Request::get('gapper-group');
-        if ($gapperGroup && \App\Gini\Gapper\Client::getLoginStep() === \App\Gini\Gapper\Client::STEP_GROUP) {
-            \App\Gini\Gapper\Client::chooseGroup($gapperGroup);
-        }
-    }
 
-    public static function getLoginStep()
-    {
-        // 错误的client信息，用户无法登陆
-        $config = config('gapper.rpc');
-        $client_id = $config['client_id'];
-        if (!$client_id) {
-            return self::STEP_LOGIN;
-        }
-
-        $app = self::getRPC()->gapper->app->getInfo($client_id);
-        if (!isset($app['id'])) {
-            return self::STEP_LOGIN;
-        }
-
-        $username = self::getUserName();
-        if (!$username) {
-            return self::STEP_LOGIN;
-        }
-
-        if ($app['type'] === 'group' && empty(self::getGroupInfo())) {
-            $groups = self::getGroups();
-            if (!empty($groups) && is_array($groups)) {
-                return self::STEP_GROUP;
-            } else {
-                return self::STEP_GROUP_401;
-            }
-        } elseif ($app['type'] === 'user') {
-            $apps = (array) self::getRPC()->gapper->user->getApps(self::getUserName());
-            if (!in_array($client_id, $apps)) {
-                return self::STEP_USER_401;
+        //其他 Group 登录到当前 CRM
+        if ($gapperGroup == config('gapper.group_id')) {
+            $gapperToken = \Request::get('gapper-token');
+            if ($gapperToken) {
+                \App\Gini\Gapper\Client::logout();
+                \App\Gini\Gapper\Client::loginByToken($gapperToken);
+                \App\Gini\Gapper\Client::initUser();
             }
         }
-
-        return self::STEP_DONE;
     }
 
     public static function loginByUserName($username)
     {
-        return self::setUserName($username);
+
+        @list($name, $backend) = explode('|', $username, 2);
+        $backend = $backend ? : 'gapper';
+
+        return self::setUserName($name. '|'. $backend);
     }
 
     public static function loginByToken($token)
@@ -265,45 +196,6 @@ class Client
         return self::setSession(self::$keyGroupID, 0);
     }
 
-    public static function chooseGroup($groupID)
-    {
-        $config = (array) config('gapper.rpc');
-        $client_id = $config['client_id'];
-        if (!$client_id) {
-            return false;
-        }
-
-        $app = self::getRPC()->gapper->app->getInfo($client_id);
-        if (!$app['id']) {
-            return false;
-        }
-
-        $username = self::getUserName();
-        if (!$username) {
-            return false;
-        }
-
-        $groups = self::getRPC()->gapper->user->getGroups($username);
-        if (!is_array($groups) || !in_array($groupID, array_keys($groups))) {
-            return false;
-        }
-
-        $apps = [];
-
-        try {
-            $apps = self::getRPC()->gapper->group->getApps((int) $groupID);
-        } catch (\Exception $e) {
-        }
-
-        if (is_array($apps) && in_array($client_id, array_keys($apps))) {
-            self::setSession(self::$keyGroupID, $groupID);
-
-            return true;
-        }
-
-        return false;
-    }
-
     public static function getGroupInfo()
     {
         if (self::hasSession(self::$keyGroupID)) {
@@ -342,5 +234,22 @@ class Client
         }
 
         return $apps;
+    }
+
+    public static function initUser() {
+        $userInfo = \App\Gini\Gapper\Client::getUserInfo();
+
+        $user = \App\User::where('gapper_id', $userInfo['id'])->first();
+
+        if (! $user) {
+            $user = new \App\User;
+
+            $user->gapper_id = $userInfo['id'];
+            $user->name = $userInfo['name'];
+            $user->icon = $userInfo['icon'];
+
+            $user->save();
+        }
+
     }
 }

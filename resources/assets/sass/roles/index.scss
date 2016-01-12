@@ -20,6 +20,34 @@ body {
     }
 
     .user {
+
+      height: 44px;
+      vertical-align: bottom;
+
+      img {
+        height: 32px;
+      }
+
+      .user-icon-text {
+        display: table-cell;
+        //margin: 0 5px;
+        padding: 0px;
+        width: 34px;
+        height: 34px;
+        border-radius: 6px;
+        border: 1px solid #eee;
+        vertical-align: middle;
+        text-align: center;
+        box-shadow: 0 0 8px rgba(0,0,0,.08),
+                    0 0 1px rgba(0,0,0,.1);
+        cursor: move;
+      }
+      .user-desc {
+        padding-left: 6px;
+        display: table-cell;
+        vertical-align: middle;
+      }
+
       min-width: 60px;
       border: 1px solid #d3d3d3;
       padding: 5px;

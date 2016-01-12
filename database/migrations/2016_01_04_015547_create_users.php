@@ -15,7 +15,9 @@ class CreateUsers extends Migration
         //
         Schema::create('users', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->integer('gapper_id');   //gapper 的 id
+            $table->string('name'); //名称
+            $table->string('icon');
 
             $table->softDeletes();
         });
