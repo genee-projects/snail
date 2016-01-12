@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <link rel="stylesheet" href="asserts/css/products/index.css">
+    <link rel="stylesheet" href="assets/css/products/index.css">
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">产品列表</h1>

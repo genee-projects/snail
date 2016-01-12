@@ -8,14 +8,14 @@
     <base href="{{ url() }}">
 
     <!-- 基础服务 -->
-    <script data-main="asserts/js/main" src="asserts/js/require.js"></script>
+    <script data-main="assets/js/main" src="assets/js/require.js"></script>
 
-    <link rel="stylesheet" href="asserts/css/bootstrap.min.css">
-    <link rel="stylesheet" href="asserts/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
 
     <!-- 基础服务 end -->
 
-    <link rel="stylesheet" href="asserts/css/login.css">
+    <link rel="stylesheet" href="assets/css/login.css">
 </head>
 <body>
 
@@ -33,7 +33,7 @@
                         <dl class="dl-horizontal">
                             <dt class="text-center">
                             <div class="app-icon">
-                                <div class="text-center app-icon-image"><img src="asserts/icon/gapper.png" /></div>
+                                <div class="text-center app-icon-image"><img src="assets/icon/gapper.png" /></div>
                                 <div class="text-center app-icon-title">Gapper</div>
                             </div>
                             </dt>

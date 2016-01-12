@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="asserts/css/message.css">
+<link rel="stylesheet" href="assets/css/message.css">
 
 <div class="message-container">
     <div class="alert alert-{{ session('message_type') }} alert-dismissible" role="alert">

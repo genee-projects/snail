@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <link rel="stylesheet" href="asserts/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">DashBoard</h1>

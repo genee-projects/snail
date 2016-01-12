@@ -13,19 +13,19 @@ elixir.extend('sourcemaps', false);
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss', 'public/asserts/css/app.css');
-    mix.sass('dashboard.scss', 'public/asserts/css/dashboard.css');
-    mix.sass('message.scss', 'public/asserts/css/message.css');
+    mix.sass('app.scss', 'public/assets/css/app.css');
+    mix.sass('dashboard.scss', 'public/assets/css/dashboard.css');
+    mix.sass('message.scss', 'public/assets/css/message.css');
 
-    mix.sass('projects/profile.scss', 'public/asserts/css/projects/profile.css');
+    mix.sass('projects/profile.scss', 'public/assets/css/projects/profile.css');
 
-    mix.sass('products/index.scss', 'public/asserts/css/products/index.css');
-    mix.sass('products/profile.scss', 'public/asserts/css/products/profile.css');
+    mix.sass('products/index.scss', 'public/assets/css/products/index.css');
+    mix.sass('products/profile.scss', 'public/assets/css/products/profile.css');
 
-    mix.sass('subproducts/profile.scss', 'public/asserts/css/subproducts/profile.css');
+    mix.sass('subproducts/profile.scss', 'public/assets/css/subproducts/profile.css');
 
-    mix.sass('roles/profile.scss', 'public/asserts/css/roles/profile.css');
-    mix.sass('roles/index.scss', 'public/asserts/css/roles/index.css');
+    mix.sass('roles/profile.scss', 'public/assets/css/roles/profile.css');
+    mix.sass('roles/index.scss', 'public/assets/css/roles/index.css');
 
-    mix.sass('login.scss', 'public/asserts/css/login.css');
+    mix.sass('login.scss', 'public/assets/css/login.css');
 });

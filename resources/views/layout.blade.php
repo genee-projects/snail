@@ -8,12 +8,12 @@
     <base href="{{ url() }}">
 
     <!-- 基础服务 -->
-    <script data-main="asserts/js/main" src="asserts/js/require.js"></script>
+    <script data-main="assets/js/main" src="assets/js/require.js"></script>
 
-    <link rel="stylesheet" href="asserts/css/bootstrap.min.css">
-    <link rel="stylesheet" href="asserts/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="asserts/css/app.css">
+    <link rel="stylesheet" href="assets/css/app.css">
     <!-- 基础服务 end -->
 
 </head>

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <link rel="stylesheet" href="asserts/css/subproducts/profile.css">
+    <link rel="stylesheet" href="assets/css/subproducts/profile.css">
 
     <div class="row">
         <div class="col-lg-12">

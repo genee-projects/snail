@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <link rel="stylesheet" href="asserts/css/projects/profile.css">
+    <link rel="stylesheet" href="assets/css/projects/profile.css">
     <script type="text/javascript">
         require(['jquery', 'bootstrap-datetimepicker'], function($) {
 
