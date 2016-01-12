@@ -1,33 +1,25 @@
 server {
     listen 80;
-
     index index.php;
-
     root /var/www/public;
     charset utf8;
 
-    auth_basic "CRM";
-    auth_basic_user_file /etc/nginx/htpasswd;
-
     location / {
-
         gzip on;
         try_files $uri/index.php $uri /index.php;
 
         if (!-f $request_filename) {
             rewrite (.*) /index.php;
         }
-
     }
 
-    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$ {
-        expires      30d;
+    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|ico)$ {
+        expires 30d;
         gzip on;
     }
 
     location ~ .*\.(js|css)?$ {
-        expires      1h;
-
+        expires 1h;
     }
 
     location ~ \.php$ {
