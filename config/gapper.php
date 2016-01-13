@@ -7,5 +7,5 @@ return [
         'url'=> 'http://gapper.in/api,
     ],
     'url'=> 'http://gaper.in',
-    'group_id'=> env('GAPPER_GROUOP_ID'),
+    'group_id'=> (int) env('GAPPER_GROUOP_ID'),
 ];

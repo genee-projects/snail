@@ -106,10 +106,9 @@ class Client
         try {
             $members = self::getRPC()->gapper->group->getMembers($groupId);
         } catch(\App\Gini\RPC\Exception $e) {
-            $members = [];
         }
 
-        return $members;
+        return $members ? : [];
     }
 
     private static $keyUserName = 'username';
