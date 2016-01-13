@@ -101,6 +101,17 @@ class Client
         return false;
     }
 
+    public static function getMembers($groupId) {
+
+        try {
+            $members = self::getRPC()->gapper->group->getMembers($groupId);
+        } catch(\App\Gini\RPC\Exception $e) {
+            $members = [];
+        }
+
+        return $members;
+    }
+
     private static $keyUserName = 'username';
 
     private static function setUserName($username)
@@ -250,6 +261,7 @@ class Client
 
             $user->save();
         }
-
+        //设定当前用户
+        \Session::set('user', $user);
     }
 }

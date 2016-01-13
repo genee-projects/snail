@@ -276,20 +276,9 @@ Route::post('/hardware/edit', [
 ]);
 
 
-
 Route::get('/users', [
     'as'=> 'users',
     'uses'=> 'UserController@users',
-]);
-
-Route::post('/users/add', [
-    'as'=>'user.add',
-    'uses'=> 'UserController@add',
-]);
-
-Route::post('/users/edit', [
-    'as'=> 'user.edit',
-    'uses'=> 'UserController@edit',
 ]);
 
 Route::get('/users/profile/{id}', [
@@ -297,38 +286,25 @@ Route::get('/users/profile/{id}', [
     'uses'=> 'UserController@profile',
 ]);
 
-Route::get('/users/delete/{id}', [
-    'as'=> 'user.delete',
-    'uses'=> 'UserController@delete',
+Route::get('/users/refresh', [
+    'as'=> 'user.refresh',
+    'uses'=> 'UserController@refresh',
 ]);
 
+Route::get('/users.json', [
+    'as'=> 'users.json',
+    'uses'=> 'UserController@users_json',
+]);
+
+Route::get('/users/view', [
+    'as'=> 'user.view',
+    'uses'=> 'UserController@view',
+]);
 
 Route::get('/roles', [
     'as'=> 'roles',
     'uses'=> 'RoleController@roles',
 ]);
-
-/*
-Route::post('/roles/add', [
-    'as'=> 'role.add',
-    'uses'=> 'RoleController@add',
-]);
-
-Route::get('/roles/profile/{id}', [
-    'as'=> 'role.profile',
-    'uses'=> 'RoleController@profile',
-]);
-
-Route::get('/roles/delete/{id}', [
-    'as'=> 'role.delete',
-    'uses'=> 'RoleController@delete',
-]);
-
-Route::post('/roles/edit', [
-    'as'=> 'role.edit',
-    'uses'=> 'RoleController@edit',
-]);
-*/
 
 Route::post('/roles/{role_id}/user/{user_id}', [
     'as'=> 'role.user.connect',
@@ -340,9 +316,9 @@ Route::post('/roles/{role_id}/user/{user_id}/delete', [
     'uses'=> 'RoleController@user_disconnect',
 ]);
 
-Route::get('/roles/{role_id}/users', [
-    'as'=> 'role.user.connect_all',
-    'uses'=> 'RoleController@user_connect_all',
+Route::post('/roles/users', [
+    'as'=> 'role.user.connect_many',
+    'uses'=> 'RoleController@user_connect_many',
 ]);
 
 Route::get('/gapper/go/{type}', [

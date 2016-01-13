@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 use App\User;
-use App\Role;
+use App\Gini\Gapper\Client;
 
 class UserController extends Controller
 {
@@ -20,54 +20,66 @@ class UserController extends Controller
         return view('users/profile', ['user'=> $user]);
     }
 
-    public function add(Request $request) {
-        $user = new User;
-        $user->name = $request->input('name');
-        $user->save();
+    public function refresh() {
 
-        return redirect()->to(route('user.profile', ['id'=> $user->id]))
-            ->with('message_content', '添加成功!')
+        $group_id = config('gapper.group_id');
+
+        $members = Client::getMembers($group_id);
+
+        if (count($members)) {
+            $deleted_users = User::all()->lists('gapper_id', 'id')->toArray();
+
+            foreach($members as $member) {
+
+                $id = $member['id'];
+                $user = User::where('gapper_id', $id)->first();;
+
+                if (!$user) {
+                    $user = new \App\User;
+
+                    $user->gapper_id = $member['id'];
+                    $user->name = $member['name'];
+                    $user->icon = $member['icon'];
+
+                } else {
+                    $user->name = $member['name'];
+                    $user->icon = $member['icon'];
+
+                    //从 deleted_users 中删除当前 gapper_id 对应的用户
+                    //最后剩下的, 就是 User 中不包含 gapper_id 的用户
+
+                    if (array_key_exists($member['id'], $deleted_users)) {
+                        unset($deleted_users[$id]);
+                    }
+                }
+
+                $user->save();
+            }
+
+            //发现有需要删除的 User
+            if (count($deleted_users)) {
+                $to_deleted_users = User::whereIn('id', array_values($deleted_users))->delete();
+            }
+        }
+
+        return redirect()->to('users')
+            ->with('message_content', '同步成功!')
             ->with('message_type', 'info');
     }
 
-    public function delete($id) {
+    public function users_json() {
+        return response()->json(User::all());
+    }
+
+    public function view(Request $request) {
+
+        $id = $request->input('id');
         $user = User::find($id);
 
-        $user->delete();
 
-        return redirect()->to(route('users'))
-            ->with('message_content', '删除成功!')
-            ->with('message_type', 'info');
-    }
-
-    public function edit(Request $request) {
-        $user_id = $request->input('user_id');
-
-        $user = User::find($user_id);
-
-        /* 角色设定功能暂时隐藏, 考虑产品评审时再决定是否开放
-        //角色设定
-
-        $data = $user->roles()->lists('id')->all();
-
-        if (count($data)) {
-            $user->roles()->detach($data);
-        }
-
-        //重新对选定的 role 进行 link
-        foreach($request->input('roles', []) as $role_id) {
-            $role = Role::find($role_id);
-
-            $user->roles()->save($role);
-        }
-        */
-
-        $user->name = $request->input('name');
-
-        $user->save();
-
-        return redirect()->back()
-            ->with('message_content', '修改成功!')
-            ->with('message_type', 'info');
+        return response()->json([
+            'id'=> $user->id,
+            'view'=> (string) view('users/view', ['user'=> $user]),
+        ]);
     }
 }

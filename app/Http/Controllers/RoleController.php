@@ -20,45 +20,6 @@ class RoleController extends Controller
         return view('roles/profile', ['role'=> $role]);
     }
 
-    /* 目前 Role 不提供自定义添加\修改\删除功能
-    public function add(Request $request) {
-        $role = new Role;
-
-        $role->name = $request->input('name');
-
-        $role->save();
-
-        return redirect()->back()
-            ->with('message_content', '添加成功!')
-            ->with('message_type', 'info');
-    }
-
-    public function delete($id) {
-        $role = Role::find($id);
-
-        $role->delete();
-
-        return redirect()->back()
-            ->with('message_content', '删除成功!')
-            ->with('message_type', 'info');
-    }
-
-    public function edit(Request $request) {
-
-        $role = Role::find($request->input('role_id'));
-
-        $role->name = $request->input('name');
-
-        $role->perms = $request->input('perms');
-
-        $role->save();
-
-        return redirect()->back()
-            ->with('message_content', '修改成功!')
-            ->with('message_type', 'info');
-    }
-    */
-
     public function user_connect($role_id, $user_id) {
 
         $role = Role::find($role_id);
@@ -85,22 +46,28 @@ class RoleController extends Controller
         return response()->json(false);
     }
 
-    public function user_connect_all($role_id) {
+    public function user_connect_many(Request $request) {
 
-        $role = Role::find($role_id);
+        $users = (array) $request->input('users');
+        $role = Role::find($request->input('id'));
 
-        $connected_users = $role->users()->lists('id')->all();
+        $connected_users = (array) $role->users()->lists('id')->all();
 
-        if (count($connected_users)) {
-            $role->users()->detach($connected_users);
+        $inter_users = (array) array_intersect($connected_users, $users);
+
+        $new_users = array_diff($users, $inter_users);
+
+        foreach($new_users as $uid) {
+            $user = User::find($uid);
+
+            if ($user) {
+                $role->users()->save($user);
+            }
         }
 
-        $users = User::all();
-
-        $role->users()->saveMany($users->all());
-
-        return redirect()->back()
-            ->with('message_content', '设置成功!')
-            ->with('message_type', 'info');
+        return response()->json([
+            'id'=> $role->id,
+            'view'=> (string) view('roles/view', ['role'=> $role]),
+        ]);
     }
 }

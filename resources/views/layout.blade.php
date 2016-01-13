@@ -29,10 +29,23 @@
 
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
+
+                    <div class="user">
+                        {{--*/ $user = \Session::get('user')/*--}}
+                        @if (parse_url($user->icon)['scheme'] == 'initials')
+                            {{ parse_url($user->icon)['host'] }}
+                        @else
+                            <img class="img-rounded" src="{{ $user->icon }}" />
+                        @endif
+                    </div>
+
+                </li>
+                <li class="dropdown">
                     <a class="dropdown-toggle" href="{{ route('logout') }}">
                         <i class="fa fa-user fa-sign-out"></i> 登出
                     </a>
                 </li>
+
             </ul>
             <!-- /.navbar-header -->
 

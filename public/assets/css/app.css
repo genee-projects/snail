@@ -20,6 +20,13 @@ body {
     body .navbar-top-links li.dropdown a {
       padding: 15px;
       min-height: 50px; }
+    body .navbar-top-links li.dropdown .user {
+      width: 32px;
+      height: 32px;
+      vertical-align: middle; }
+      body .navbar-top-links li.dropdown .user img {
+        width: 32px;
+        height: 32px; }
   body .navbar-top-links li:last-child {
     margin-right: 15px; }
   body .navbar-top-links .dropdown-menu li {

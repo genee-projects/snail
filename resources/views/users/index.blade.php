@@ -9,39 +9,14 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <p>
-                    <i class="fa fa-fw fa-facebook"></i> 人员列表
-                    <span class="pull-right">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#add-user">添加人员</button>
-                    </span>
-                </p>
-
-                <div class="modal fade" id="add-user" tabindex="-1" role="dialog" aria-labelledby="add-user-modal-label">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="add-user-modal-label">添加人员</h4>
-                            </div>
-                            <div class="modal-body">
-                                <form id="add-user-form" class="form-horizontal" method="post" action="{{ route('user.add') }}">
-
-                                    <div class="form-group">
-                                        <label for="user-name" class="col-sm-2 control-label">名称</label>
-                                        <div class="col-sm-10">
-                                            <input name="name" type="text" class="form-control" id="user-name">
-                                        </div>
-                                    </div>
-
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="submit" class="btn btn-primary" form="add-user-form">添加</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <i class="fa fa-fw fa-facebook"></i> 人员列表
+                <span class="pull-right">
+                    <a href="{{ route('user.refresh') }}" class="btn btn-primary">
+                        <i class="fa fa-refresh"></i>
+                        同步人员
+                    </a>
+                </span>
+                <div class="clearfix"></div>
             </div>
             <div class="panel-body">
 
