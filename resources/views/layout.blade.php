@@ -59,35 +59,35 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('clients') }}"><i class="fa fa-users fa-fw"></i> 客户管理</a>
+                            <a href="{{ route('clients') }}"><i class="fa fa-users fa-fw"></i> 客户</a>
                         </li>
 
                         <li>
-                            <a href="{{ route('projects') }}"><i class="fa fa-fw fa-list-alt"></i> 项目管理</a>
+                            <a href="{{ route('projects') }}"><i class="fa fa-fw fa-list-alt"></i> 项目</a>
                         </li>
 
                         <li>
-                            <a href="{{ route('servers') }}"><i class="fa fa-linux fa-fw"></i> 服务器管理</a>
+                            <a href="{{ route('servers') }}"><i class="fa fa-linux fa-fw"></i> 服务器</a>
                         </li>
 
                         <li>
-                            <a href="{{ route('products') }}"><i class="fa fa-wrench fa-fw"></i> 产品管理</a>
+                            <a href="{{ route('products') }}"><i class="fa fa-wrench fa-fw"></i> 产品</a>
                         </li>
 
                         <li>
-                            <a href="{{ route('hardwares') }}"><i class="fa fa-cog fa-fw"></i> 硬件管理</a>
+                            <a href="{{ route('hardwares') }}"><i class="fa fa-cog fa-fw"></i> 硬件</a>
                         </li>
 
                         <li>
-                            <a href="{{ route('users') }}"><i class="fa fa-user fa-fw"></i> 用户管理</a>
+                            <a href="{{ route('users') }}"><i class="fa fa-user fa-fw"></i> 用户</a>
                         </li>
 
                         <li>
-                            <a href="{{ route('roles') }}"><i class="fa fa-heart-o fa-fw"></i> 角色设置</a>
+                            <a href="{{ route('roles') }}"><i class="fa fa-heart-o fa-fw"></i> 角色</a>
                         </li>
 
                         <li>
-                            <a href="#" id="close-menu"><i class="fa fa-chevron-circle-left fa-fw"></i> 收起菜单</a>
+                            <a href="#" id="close-menu"><i class="fa fa-chevron-circle-left fa-fw"></i> 收起</a>
                         </li>
                     </ul>
                 </div>
@@ -117,9 +117,9 @@
 
                 $('#close-menu').show();
 
-                $('#close-menu').parents('.sidebar').removeClass('hide');
+                $('#close-menu').parents('nav').removeClass('hide');
 
-                $('#content').css('margin-left', '200px');
+                $('#content').css('margin-left', '100px');
                 e.stopPropagation();
 
                 return false;
@@ -127,7 +127,7 @@
 
             //关闭按钮
             $('#close-menu').bind('click', function(e) {
-                $(this).parents('.sidebar').addClass('hide');
+                $(this).parents('nav').addClass('hide');
 
                 $('#content').css('margin-left', '0px');
 
