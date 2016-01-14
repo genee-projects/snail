@@ -191,40 +191,39 @@
                         <!-- Nav tabs -->
                         <ul class="profile nav nav-tabs" role="tablist">
 
-
                             <li role="presentation" class="active">
-                                <a data-type="softwares" href="#softwares" role="tab">
+                                <a data-type="softwares" href="#softwares-tab" role="tab">
                                     <i class="fa fa-bolt"></i> 软件信息
                                 </a>
                             </li>
 
                             <li role="presentation">
-                                <a data-type="hardwares" href="#hardwares" role="tab">
+                                <a data-type="hardwares" href="#hardwares-tab" role="tab">
                                     <i class="fa fa-archive"></i> 硬件信息
                                 </a>
                             </li>
 
                             <li role="presentation">
-                                <a data-type="servers" href="#servers" role="tab">
+                                <a data-type="servers" href="#servers-tab" role="tab">
                                     <i class="fa fa-linux"></i> 服务器信息
                                 </a>
                             </li>
 
 
                             <li role="presentation">
-                                <a data-type="trello" href="#trello" role="tab">
+                                <a data-type="trello" href="#trello-tab" role="tab">
                                     <i class="fa fa-wrench"></i> 部署情况
                                 </a>
                             </li>
 
                             <li role="presentation">
-                                <a data-type="informations" href="#informations" role="tab">
+                                <a data-type="informations" href="#informations-tab" role="tab">
                                     <i class="fa fa-info"></i> 信息变动
                                 </a>
                             </li>
 
                             <li role="presentation" >
-                                <a data-type="comments" href="#comments" role="tab">
+                                <a data-type="comments" href="#comments-tab" role="tab">
                                     <i class="fa fa-comment-o"></i> 备注信息
                                 </a>
                             </li>
@@ -232,20 +231,20 @@
 
                         <!-- Tab panes -->
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane" id="softwares">
+                            <div role="tabpanel" class="tab-pane" id="softwares-tab">
                                 <div class="text-center loading">
                                     <i class="fa fa-spinner fa-spin fa-2x"></i>
                                 </div>
                             </div>
 
-                            <div role="tabpanel" class="tab-pane" id="hardwares">
+                            <div role="tabpanel" class="tab-pane" id="hardwares-tab">
                                 <div class="text-center loading">
                                     <i class="fa fa-spinner fa-spin fa-2x"></i>
                                 </div>
                             </div>
 
                             <!-- server -->
-                            <div role="tabpanel" class="tab-pane" id="servers">
+                            <div role="tabpanel" class="tab-pane" id="servers-tab">
                                 <div class="text-center loading">
                                     <i class="fa fa-spinner fa-spin fa-2x"></i>
                                 </div>
@@ -253,7 +252,7 @@
                             <!-- server end -->
 
                             <!-- trello -->
-                            <div role="tabpanel" class="tab-pane" id="trello">
+                            <div role="tabpanel" class="tab-pane" id="trello-tab">
                                 <div class="text-center loading">
                                     <i class="fa fa-spinner fa-spin fa-2x"></i>
                                 </div>
@@ -261,14 +260,14 @@
                             <!-- trello end-->
 
                             <!-- info -->
-                            <div role="tabpanel" class="tab-pane" id="informations">
+                            <div role="tabpanel" class="tab-pane" id="informations-tab">
                                 <div class="text-center loading">
                                     <i class="fa fa-spinner fa-spin fa-2x"></i>
                                 </div>
                             </div>
                             <!-- info end-->
 
-                            <div role="tabpanel" class="tab-pane" id="comments">
+                            <div role="tabpanel" class="tab-pane" id="comments-tab">
                                 <div class="text-center loading">
                                     <i class="fa fa-spinner fa-spin fa-2x"></i>
                                 </div>
@@ -288,8 +287,7 @@
 
                 var type = $(this).data('type');
 
-                var display_content = $('#'+ type);
-
+                var display_content = $('#'+ type + '-tab');
 
                 display_content.load("{{ route('project.profile.item', ['id'=> $project->id]) }}", {
                     'type': type

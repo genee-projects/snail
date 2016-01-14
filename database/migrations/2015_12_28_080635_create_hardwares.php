@@ -19,7 +19,6 @@ class CreateHardwares extends Migration
             $table->string('name');         // 名称
             $table->string('description');  // 描述
             $table->string('model');        // 规格/型号
-            $table->integer('product_id');  // 硬件属于 product
             $table->boolean('self_produce')->default(true);      //是否自产
             $table->softDeletes();
         });

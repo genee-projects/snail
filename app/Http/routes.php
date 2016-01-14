@@ -248,17 +248,15 @@ Route::post('/subproduct/{id}/params', [
     'uses'=> 'SubProductController@params',
 ]);
 
-Route::post('/subproduct/{id}/hardwares', [
-    'as'=> 'subproduct.hardwares',
-    'uses'=> 'SubProductController@hardwares',
-]);
-
-
 Route::post('/subproduct/{id}/param', [
     'as'=> 'subproduct.param.edit',
     'uses'=>'SubProductController@param_edit',
 ]);
 
+Route::get('/hardwares', [
+    'as'=> 'hardwares',
+    'uses'=> 'HardWareController@index',
+]);
 
 Route::post('/hardware/add', [
     'as'=> 'hardware.add',
@@ -320,6 +318,7 @@ Route::post('/roles/users', [
     'as'=> 'role.user.connect_many',
     'uses'=> 'RoleController@user_connect_many',
 ]);
+
 
 Route::get('/gapper/go/{type}', [
     'as'=> 'gapper.go',

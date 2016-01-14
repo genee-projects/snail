@@ -14,12 +14,6 @@ class RoleController extends Controller
         return view('roles/index', ['roles'=> Role::all()]);
     }
 
-    public function profile($id) {
-        $role = Role::find($id);
-
-        return view('roles/profile', ['role'=> $role]);
-    }
-
     public function user_connect($role_id, $user_id) {
 
         $role = Role::find($role_id);

@@ -54,7 +54,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="add-hardware-form" class="form-horizontal" method="post" action="{{ route('project.hardwares', ['id'=> $project->id]) }}">
-                        @foreach($project->product->product->hardwares as $hardware)
+                        @foreach(\App\Hardware::all() as $hardware)
 
                             {{--*/ $selected = false /*--}}
                             {{--*/ $btn_class = 'btn-default' /*--}}

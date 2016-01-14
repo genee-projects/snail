@@ -74,7 +74,9 @@
                             <a href="{{ route('products') }}"><i class="fa fa-wrench fa-fw"></i> 产品管理</a>
                         </li>
 
-                        {{--隐藏用户管理\角色管理模块--}}
+                        <li>
+                            <a href="{{ route('hardwares') }}"><i class="fa fa-cog fa-fw"></i> 硬件管理</a>
+                        </li>
 
                         <li>
                             <a href="{{ route('users') }}"><i class="fa fa-user fa-fw"></i> 用户管理</a>

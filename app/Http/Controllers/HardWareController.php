@@ -6,22 +6,22 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 
-use App\Product;
 use App\Hardware;
 
 class HardWareController extends Controller
 {
-    public function add(Request $request) {
 
-        $product = Product::find($request->input('product_id'));
+    public function index() {
+        return view('hardwares/index', ['hardwares'=> Hardware::all()]);
+
+    }
+    public function add(Request $request) {
 
         $hardware = new Hardware();
         $hardware->name = $request->input('name');
         $hardware->description = $request->input('description');
         $hardware->model = $request->input('model');
         $hardware->self_produce = (bool) ($request->input('self_produce') == 'on');
-
-        $hardware->product()->associate($product);
 
         $hardware->save();
 

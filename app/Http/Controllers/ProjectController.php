@@ -55,13 +55,6 @@ class ProjectController extends Controller
                 ]);
             }
 
-            foreach($sub->hardwares as $hardware) {
-
-                $project->hardwares()->save($hardware, [
-                    'plan_count'=> $hardware->pivot->count,
-                ]);
-            }
-
             return redirect(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '签约成功!')
                 ->with('message_type', 'info');
@@ -253,7 +246,6 @@ class ProjectController extends Controller
         //2. 获取 $data 和 1.中交集的差集
 
         $detach = array_diff($data, $intersect);
-
 
         //3. detach
         if (count($detach)) {
