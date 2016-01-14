@@ -134,6 +134,12 @@
                                             @endif
 
                                         @endforeach
+
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="sync_new_modules"> 同步新加模块到已有项目
+                                            </label>
+                                        </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer">

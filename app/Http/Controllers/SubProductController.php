@@ -9,6 +9,7 @@ use App\SubProduct;
 use App\Module;
 use App\Param;
 use App\Hardware;
+use App\Project;
 
 class SubProductController extends Controller
 {
@@ -61,7 +62,6 @@ class SubProductController extends Controller
         $sub = SubProduct::find($id);
 
         return view('subproducts/profile', ['subproduct'=> $sub]);
-
     }
 
     public function modules($id, Request $request) {
@@ -70,18 +70,38 @@ class SubProductController extends Controller
 
         //先把所有的 type 的 module 进行 unlink
 
-        $connected_modules = $sub->modules()->lists('id')->all();
+        $connected_modules = (array) $sub->modules()->lists('id')->all();
+
+        $requested_modules = $request->input('modules', []);
+
+        $inter = array_intersect($connected_modules, $requested_modules);
+
+        $new_modules = array_diff($requested_modules, $inter);
 
         if (count($connected_modules)) {
             $sub->modules()->detach($connected_modules);
         }
 
-        //重新对选定的 module 进行 link, 类型为 type
-        foreach($request->input('modules', []) as $module_id) {
-
+        //重新对选定的 module 进行 link
+        foreach($requested_modules as $module_id) {
             $module = Module::find($module_id);
 
             $sub->modules()->save($module);
+        }
+
+        //如果勾选了同步新模块到所有的 project 的 checkbox, 那么需要进行同步操作
+
+        if ($request->input('sync_new_modules') == 'on') {
+
+            //查到所有的 proejct, 进行 new_modules 的 connect
+            foreach(Project::where('product_id', $id)->get() as $project) {
+
+                foreach($new_modules as $m) {
+                    if (!$project->modules->contains($m)) {
+                        $project->modules()->save(Module::find($m));
+                    }
+                }
+            }
         }
 
         return redirect()->back()
