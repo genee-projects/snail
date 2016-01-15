@@ -22,13 +22,13 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" >
+        <nav id="nav" class="navbar navbar-default navbar-static-top" >
             <div class="navbar-header ">
                 <a class="navbar-brand" href="/">Genee CRM V0.3.3</a>
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
+                <li>
 
                     <div class="user">
                         {{--*/ $user = \Session::get('user')/*--}}
@@ -40,7 +40,7 @@
                     </div>
 
                 </li>
-                <li class="dropdown">
+                <li>
                     <a class="dropdown-toggle" href="{{ route('logout') }}">
                         <i class="fa fa-user fa-sign-out"></i> 登出
                     </a>
@@ -97,7 +97,7 @@
         </nav>
 
         <button class="btn btn-primary hide btn-sm" id="show-menu">
-            <i class="fa fa-fw fa-chevron-circle-right">&#160;</i>
+            <i class="fa fa-fw fa-times"></i>
         </button>
 
         @if (session('message_content'))
