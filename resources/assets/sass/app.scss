@@ -23,18 +23,23 @@ body{
     #content {
       padding: 0 15px;
       background-color: #fff;
-      min-height: 660px;
+      min-height: auto;
     }
-
 
     #nav {
       margin-bottom: 0;
+      width: 100%;
+      float: right;
 
+      .navbar-header {
+        float: left;
+      }
       .navbar-default {
         border: 0;
       }
       .navbar-right {
         margin-right: 0;
+        float: right;
       }
 
       .navbar-top-links {
@@ -59,8 +64,13 @@ body{
         }
       }
 
-      .sidebar {
+      .sidebar:before {
+        display: table;
+        clear: both;
+        content: '';
+      }
 
+      .sidebar {
         .sidebar-nav.navbar-collapse {
           padding-right: 0;
           padding-left: 0;
@@ -92,8 +102,12 @@ body{
     .sidebar {
       z-index: 1;
       width: 100px;
-      position: absolute;
-      margin-top: 51px;
+      margin-top: 0;
+      position: fixed;
+      top: 51px;
+      left: 0;
+      height: 100%;
+      border-right: 1px solid #e7e7e7 !important;
 
       .navbar {
         margin-bottom: 0;
@@ -108,7 +122,6 @@ body{
       position: inherit;
       margin: 0 0 0 100px;
       padding: 0 30px;
-      border-left: 1px solid #e7e7e7;
     }
 
     #show-menu {

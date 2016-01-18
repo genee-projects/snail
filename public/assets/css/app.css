@@ -16,13 +16,18 @@ body {
     body #wrapper #content {
       padding: 0 15px;
       background-color: #fff;
-      min-height: 660px; }
+      min-height: auto; }
     body #wrapper #nav {
-      margin-bottom: 0; }
+      margin-bottom: 0;
+      width: 100%;
+      float: right; }
+      body #wrapper #nav .navbar-header {
+        float: left; }
       body #wrapper #nav .navbar-default {
         border: 0; }
       body #wrapper #nav .navbar-right {
-        margin-right: 0; }
+        margin-right: 0;
+        float: right; }
       body #wrapper #nav .navbar-top-links li {
         margin: 0;
         display: inline-block; }
@@ -36,6 +41,10 @@ body {
           body #wrapper #nav .navbar-top-links li .user img {
             width: 32px;
             height: 32px; }
+      body #wrapper #nav .sidebar:before {
+        display: table;
+        clear: both;
+        content: ''; }
       body #wrapper #nav .sidebar .sidebar-nav.navbar-collapse {
         padding-right: 0;
         padding-left: 0; }
@@ -50,8 +59,12 @@ body {
   body .sidebar {
     z-index: 1;
     width: 100px;
-    position: absolute;
-    margin-top: 51px; }
+    margin-top: 0;
+    position: fixed;
+    top: 51px;
+    left: 0;
+    height: 100%;
+    border-right: 1px solid #e7e7e7 !important; }
     body .sidebar .navbar {
       margin-bottom: 0; }
     body .sidebar #close-menu {
@@ -59,8 +72,7 @@ body {
   body #content {
     position: inherit;
     margin: 0 0 0 100px;
-    padding: 0 30px;
-    border-left: 1px solid #e7e7e7; }
+    padding: 0 30px; }
   body #show-menu {
     position: fixed;
     right: 8px;
