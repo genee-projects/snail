@@ -28,7 +28,7 @@
                             <td>项目名称</td>
                             <td>签约客户</td>
                             <td>项目联系人</td>
-                            <td>签约时间</td>
+                            <td>到期时间</td>
                         </tr>
                         @foreach($projects as $project)
                             <tr>
@@ -36,7 +36,7 @@
                                 <td><a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a></td>
                                 <td><a href="{{ route('client.profile', ['id'=> $project->client->id]) }}">{{ $project->client->name }}</a></td>
                                 <td>{{ $project->contact_user }}</td>
-                                <td>{{ $project->time }}</td>
+                                <td>{{ $project->cancelled_time }}</td>
                             </tr>
                         @endforeach
                     </table>
