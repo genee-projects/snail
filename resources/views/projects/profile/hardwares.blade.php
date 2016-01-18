@@ -31,7 +31,7 @@
                 <td>
                     {{ $hardware->pivot->description }}
                     <span class="pull-right">
-                          <i class="fa fa-fw fa-edit edit-hardware" data-model="{{ $hardware->model }}" data-description="{{ $hardware->description }}" data-id="{{ $hardware->id }}" data-name="{{ $hardware->name }}" data-plan-count="{{ $hardware->pivot->plan_count }}" data-deployed-count="{{ $hardware->pivot->deployed_count }}"></i>
+                          <i class="fa fa-fw fa-edit edit-hardware edit" data-model="{{ $hardware->model }}" data-description="{{ $hardware->description }}" data-id="{{ $hardware->id }}" data-name="{{ $hardware->name }}" data-plan-count="{{ $hardware->pivot->plan_count }}" data-deployed-count="{{ $hardware->pivot->deployed_count }}"></i>
                     </span>
                 </td>
             </tr>

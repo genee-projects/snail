@@ -119,7 +119,7 @@
                                     {{ $p->description }}
                                     <span class="pull-right">
 
-                                        <i data-description="{{ $p->description }}" data-id="{{ $p->id }}" data-name="{{ $p->name }}" class="edit-subproduct fa fa-edit"></i>
+                                        <i data-description="{{ $p->description }}" data-id="{{ $p->id }}" data-name="{{ $p->name }}" class="edit edit-subproduct fa fa-edit"></i>
 
                                         <a href="{{ route('subproduct.delete', ['id'=> $p->id]) }}">
                                             <i class="fa fa-delete"></i>
@@ -253,7 +253,7 @@
                                     {{ $module->description }}
                                     <span class="pull-right">
 
-                                        <i data-dep-modules="{{ join(',', $module->dep_modules_ids()) }}" data-description="{{ $module->description }}" data-id="{{ $module->id }}" data-name="{{ $module->name }}" class="edit-module fa fa-edit fa-fw"></i>
+                                        <i data-dep-modules="{{ join(',', $module->dep_modules_ids()) }}" data-description="{{ $module->description }}" data-id="{{ $module->id }}" data-name="{{ $module->name }}" class="edit edit-module fa fa-edit fa-fw"></i>
                                         <a href="{{ route('module.delete', ['id'=> $module->id]) }}">
                                             <i class="fa fa-times"></i>
                                         </a>
@@ -429,7 +429,7 @@
                 </div>
 
                 <div class="panel-body">
-                    <table class="table table-hover table-striped">
+                    <table class="table table-condensed table-hover table-striped">
                         <tr>
                             <td>参数名称</td>
                             <td>参数代码</td>
@@ -451,7 +451,7 @@
                                 <td>
                                     {{ $param->description }}
                                     <span class="pull-right">
-                                        <i data-value="{{ $param->value }}" data-code="{{ $param->code }}" data-description="{{ $param->description }}" data-id="{{ $param->id }}" data-name="{{ $param->name }}" class="edit-param fa fa-edit fa-fw"></i>
+                                        <i data-value="{{ $param->value }}" data-code="{{ $param->code }}" data-description="{{ $param->description }}" data-id="{{ $param->id }}" data-name="{{ $param->name }}" class="edit edit-param fa fa-edit fa-fw"></i>
                                         <a href="{{ route('param.delete', ['id'=> $param->id]) }}">
                                             <i class="fa fa-times"></i>
                                         </a>

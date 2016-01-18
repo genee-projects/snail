@@ -28,6 +28,4 @@ elixir(function(mix) {
     mix.sass('roles/index.scss', 'public/assets/css/roles/index.css');
 
     mix.sass('login.scss', 'public/assets/css/login.css');
-
-    mix.sass('hardwares/index.scss', 'public/assets/css/hardwares/index.css');
 });

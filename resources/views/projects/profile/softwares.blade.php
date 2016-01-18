@@ -171,7 +171,7 @@
                         <td>
                             <code>{{ $param->pivot->value }}</code>
                             <span class="pull-right">
-                                <i class="fa fa-fw fa-edit edit-param" data-id="{{ $param->id }}" data-name="{{ $param->name }}" data-value="{{ $param->pivot->value }}"></i>
+                                <i class="fa fa-fw fa-edit edit-param edit" data-id="{{ $param->id }}" data-name="{{ $param->name }}" data-value="{{ $param->pivot->value }}"></i>
                             </span>
                         </td>
                     </tr>
