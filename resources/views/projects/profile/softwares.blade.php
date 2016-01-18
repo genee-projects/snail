@@ -11,11 +11,14 @@
                 @foreach($project->modules as $module)
                     <tr>
                         <td>
-                            <p>
-                                <span>
-                                    {{ $module->name }}
+                            {{--*/ $product_modules = $project->product->modules; $p/*--}}
+                            {{ $module->name }}
+
+                            @if ($product_modules->contains($module->id))
+                                <span class="label label-success">
+                                    默认模块
                                 </span>
-                            </p>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
