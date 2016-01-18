@@ -22,6 +22,10 @@
                         </td>
                     </tr>
                 @endforeach
+
+                {{--*/ $can_manage_module = \Session::get('user')->can('项目模块管理')/*--}}
+
+                @if ($can_manage_module)
                 <tr>
                     <td>
                         <span class="pull-right">
@@ -150,6 +154,7 @@
                         </div>
                     </td>
                 </tr>
+                @endif
             </table>
         </div>
 
@@ -157,6 +162,7 @@
     <hr />
 
 
+    {{--*/ $can_manage_param = \Session::get('user')->can('项目参数管理')/*--}}
     <h4>参数列表</h4>
     <div class="row">
         <div class="col-sm-12">
@@ -173,12 +179,49 @@
                         </td>
                         <td>
                             <code>{{ $param->pivot->value }}</code>
-                            <span class="pull-right">
-                                <i class="fa fa-fw fa-edit edit-param edit" data-id="{{ $param->id }}" data-name="{{ $param->name }}" data-value="{{ $param->pivot->value }}"></i>
-                            </span>
+                            @if ($can_manage_param)
+                                <span class="pull-right">
+                                    <i class="fa fa-fw fa-edit edit-param edit" data-id="{{ $param->id }}" data-name="{{ $param->name }}" data-value="{{ $param->pivot->value }}"></i>
+                                </span>
+
+                                <div class="modal fade" id="edit-param" tabindex="-1" role="dialog" aria-labelledby="edit-project-modal-label">
+                                    <div class="modal-dialog modal-sm" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="edit-server-modal-label">修改参数信息</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="edit-project-param-form" class="form-horizontal" method="post" action="{{ route('project.param.edit', ['id'=> $project->id]) }}">
+
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" name="name" disabled="disabled">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <input type="text" class="form-control" name="value">
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" name="param_id" value="" >
+
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                <button type="submit" class="btn btn-primary" form="edit-project-param-form">修改</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
+
+                @if ($can_manage_param)
                 <tr>
                     <td colspan="2">
                         <span class="pull-right">
@@ -278,39 +321,9 @@
                         </div>
                     </td>
                 </tr>
+                @endif
             </table>
         </div>
-        <div class="modal fade" id="edit-param" tabindex="-1" role="dialog" aria-labelledby="edit-project-modal-label">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="edit-server-modal-label">修改参数信息</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="edit-project-param-form" class="form-horizontal" method="post" action="{{ route('project.param.edit', ['id'=> $project->id]) }}">
 
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" name="name" disabled="disabled">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" name="value">
-                                </div>
-                            </div>
-                            <input type="hidden" name="param_id" value="" >
-
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="submit" class="btn btn-primary" form="edit-project-param-form">修改</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>

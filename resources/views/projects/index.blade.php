@@ -17,7 +17,7 @@
                         </span>
 
                         <span class="pull-right">
-                            项目添加, 请到 <a href="/clients"> 客户信息</a> 页面进行 <mark>『项目签约』</mark>
+                            项目添加, 请到 <a href="{{ route('clients') }}"> 客户信息</a> 页面进行 <mark>『项目签约』</mark>
                         </span>
                 </div>
                 <div class="panel-body">

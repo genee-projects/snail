@@ -13,36 +13,41 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-user"> 基本信息</i>
-                    <span class="pull-right">
-                         <a href="#" data-toggle="modal" data-target="#edit-client">
-                             <i class="fa fa-fw fa-edit"></i>
-                         </a>
 
-                        <a href="{{ route('client.delete', ['id'=> $client->id]) }}">
-                            <i class="fa fa-fw fa-times"></i>
-                        </a>
-                    </span>
+                    {{--*/ $can_manage_client = \Session::get('user')->can('客户信息管理')/*--}}
 
-                    <div class="modal fade" id="edit-client" tabindex="-1" role="dialog" aria-labelledby="edit-server-modal-label">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="edit-server-modal-label">修改客户信息</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="edit-client-form" class="form-horizontal" method="post" action="{{ route('client.edit') }}">
-                                        <input type="hidden" name="id" value="{{ $client->id }}">
-                                        @include('clients/form', ['client'=> $client])
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    <button type="submit" class="btn btn-primary" form="edit-client-form">修改</button>
+                    @if ($can_manage_client)
+                        <span class="pull-right">
+                             <a href="#" data-toggle="modal" data-target="#edit-client">
+                                 <i class="fa fa-fw fa-edit"></i>
+                             </a>
+
+                            <a href="{{ route('client.delete', ['id'=> $client->id]) }}">
+                                <i class="fa fa-fw fa-times"></i>
+                            </a>
+                        </span>
+
+                        <div class="modal fade" id="edit-client" tabindex="-1" role="dialog" aria-labelledby="edit-server-modal-label">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="edit-server-modal-label">修改客户信息</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="edit-client-form" class="form-horizontal" method="post" action="{{ route('client.edit') }}">
+                                            <input type="hidden" name="id" value="{{ $client->id }}">
+                                            @include('clients/form', ['client'=> $client])
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                        <button type="submit" class="btn btn-primary" form="edit-client-form">修改</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
                 <div class="panel-body">
                     <table class="table table-striped table-bordered table-hover">
@@ -78,6 +83,7 @@
                             <td>{{ $client->description }}</td>
                         </tr>
 
+
                         @foreach($client->items as $item)
                             <tr>
                                 <td>{{ $item->name }}</td>
@@ -90,53 +96,61 @@
                             </tr>
                         @endforeach
 
-                        <tr>
-                            <td colspan="2">
-                                <span class="pull-right">
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#add-item"><i class="fa fa-plus"></i> 追加字段</button>
-                                </span>
+                        @if ($can_manage_client)
+                            <tr>
+                                <td colspan="2">
+                                    <span class="pull-right">
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#add-item"><i class="fa fa-plus"></i> 追加字段</button>
+                                    </span>
 
-                                <div class="modal fade" id="add-item" tabindex="-1" role="dialog" aria-labelledby="add-item-modal-label">
-                                    <div class="modal-dialog modal-sm" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="edit-server-modal-label">追加字段</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form id="add-item-form" method="post" action="{{ route('item.add') }}">
-                                                    <input type="hidden" name="object_type" value="{{ get_class($client) }}"/>
-                                                    <input type="hidden" name="object_id" value="{{ $client->id }}" />
+                                    <div class="modal fade" id="add-item" tabindex="-1" role="dialog" aria-labelledby="add-item-modal-label">
+                                        <div class="modal-dialog modal-sm" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="edit-server-modal-label">追加字段</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="add-item-form" method="post" action="{{ route('item.add') }}">
+                                                        <input type="hidden" name="object_type" value="{{ get_class($client) }}"/>
+                                                        <input type="hidden" name="object_id" value="{{ $client->id }}" />
 
-                                                    <div class="form-group">
-                                                        <input name="name" type="text" class="form-control" placeholder="名称(学校类型)">
-                                                    </div>
+                                                        <div class="form-group">
+                                                            <input name="name" type="text" class="form-control" placeholder="名称(学校类型)">
+                                                        </div>
 
-                                                    <div class="form-group">
-                                                        <input name="value" type="text" class="form-control" placeholder="显示值(211/985)">
-                                                    </div>
+                                                        <div class="form-group">
+                                                            <input name="value" type="text" class="form-control" placeholder="显示值(211/985)">
+                                                        </div>
 
-                                                    <div class="form-group">
-                                                        <input name="key" type="text" class="form-control" placeholder="代码(school) 可不填">
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                                <button type="submit" class="btn btn-primary" form="add-item-form">添加</button>
+                                                        <div class="form-group">
+                                                            <input name="key" type="text" class="form-control" placeholder="代码(school) 可不填">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                    <button type="submit" class="btn btn-primary" form="add-item-form">添加</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        @endif
                     </table>
                 </div>
             </div>
         </div>
 
 
-        <div class="col-lg-4">
+        <div class="
+        @if ($can_manage_client)
+            col-lg-4
+        @else
+                col-lg-12
+        @endif
+        ">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-twitter"> 层级结构</i>
@@ -155,6 +169,7 @@
             </div>
         </div>
 
+        @if ($can_manage_client)
         <div class="col-lg-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -174,6 +189,7 @@
                 </div>
             </div>
         </div>
+        @endif
 
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -182,6 +198,7 @@
                 </div>
 
                 <div class="panel-body">
+                    @if (\Session::get('user')->can('项目签约'))
                     <p>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#add-project">
                             <i class="fa fa-plus"></i> 签约项目
@@ -207,6 +224,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
 
                     <table class="table table-hover table-striped">
 

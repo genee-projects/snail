@@ -87,12 +87,6 @@ Genee 的 CRM
 		<td>√</td>
 	</tr>
 	<tr>
-		<td>产品硬件管理</td>
-		<td></td>
-		<td></td>
-		<td>√</td>
-	</tr>
-	<tr>
 		<td colspan="4"><strong>项目管理</strong></td>
 	</tr>
 	<tr>
@@ -141,3 +135,5 @@ Genee 的 CRM
 		<td>√</td>
 	</tr>
 </table>
+
+针对于 **硬件**、**用户**、**角色**, 均由超级管理员维护

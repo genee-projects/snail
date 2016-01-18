@@ -31,7 +31,7 @@
                 <li>
 
                     <div class="user">
-                        {{--*/ $user = \Session::get('user')/*--}}
+                        {{--*/ $user = \Session::get('user');/*--}}
                         @if (parse_url($user->icon)['scheme'] == 'initials')
                             {{ parse_url($user->icon)['host'] }}
                         @else
@@ -58,26 +58,37 @@
                             <a href="/"><i class="fa fa-dashboard fa-fw"></i> 总览</a>
                         </li>
 
+                        @if ($user->can(['客户查看', '客户信息管理']))
                         <li>
                             <a href="{{ route('clients') }}"><i class="fa fa-users fa-fw"></i> 客户</a>
                         </li>
+                        @endif
 
+                        @if ($user->can('项目查看', '项目签约', '项目信息管理', '项目模块管理', '项目参数管理', '项目硬件管理', '项目服务器管理'))
                         <li>
                             <a href="{{ route('projects') }}"><i class="fa fa-fw fa-list-alt"></i> 项目</a>
                         </li>
+                        @endif
 
+                        @if ($user->can(['服务器查看', '服务器信息管理']))
                         <li>
                             <a href="{{ route('servers') }}"><i class="fa fa-linux fa-fw"></i> 服务器</a>
                         </li>
+                        @endif
 
+                        @if ($user->can(['产品查看', '产品信息管理', '产品类别管理', '产品模块管理', '产品参数管理']))
                         <li>
                             <a href="{{ route('products') }}"><i class="fa fa-wrench fa-fw"></i> 产品</a>
                         </li>
+                        @endif
 
+                        @if ($user->can(['硬件查看', '硬件管理']))
                         <li>
                             <a href="{{ route('hardwares') }}"><i class="fa fa-cog fa-fw"></i> 硬件</a>
                         </li>
+                        @endif
 
+                        @if ($user->is_admin())
                         <li>
                             <a href="{{ route('users') }}"><i class="fa fa-user fa-fw"></i> 用户</a>
                         </li>
@@ -85,6 +96,7 @@
                         <li>
                             <a href="{{ route('roles') }}"><i class="fa fa-heart-o fa-fw"></i> 角色</a>
                         </li>
+                        @endif
 
                         <li>
                             <a href="#" id="close-menu"><i class="fa fa-chevron-circle-left fa-fw"></i> 收起</a>

@@ -11,9 +11,9 @@ use App\Product;
 
 class ModuleController extends Controller
 {
-
-
     public function add(Request $request) {
+
+        if (! \Session::get('user')->can('产品模块管理')) abort(401);
 
         $product = Product::find($request->input('product_id'));
 
@@ -35,9 +35,10 @@ class ModuleController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function delete($id)
-    {
-        //
+    public function delete($id) {
+
+        if (! \Session::get('user')->can('产品模块管理')) abort(401);
+
         $module = Module::find($id);
 
         $module->delete();
@@ -48,6 +49,8 @@ class ModuleController extends Controller
     }
 
     public function edit(Request $request) {
+
+        if (! \Session::get('user')->can('产品模块管理')) abort(401);
 
         $module = Module::find($request->input('module_id'));
 

@@ -24,6 +24,8 @@ class ProjectController extends Controller
 
     public function add(Request $request) {
 
+        if (! \Session::get('user')->can('项目签约')) abort(401);
+
         $sub = SubProduct::find($request->input('product_id'));
         $client = Client::find($request->input('client_id'));
 
@@ -62,6 +64,8 @@ class ProjectController extends Controller
     }
 
     public function edit(Request $request) {
+
+        if (! \Session::get('user')->can('项目信息管理')) abort(401);
 
         $project = Project::find($request->input('id'));
         $product = SubProduct::find($request->input('product_id'));
@@ -103,6 +107,8 @@ class ProjectController extends Controller
 
     public function profile($id) {
 
+        if (! \Session::get('user')->can('项目查看')) abort(401);
+
         $project = Project::find($id);
 
         return view('/projects/profile', [
@@ -110,8 +116,10 @@ class ProjectController extends Controller
         ]);
     }
 
-
     public function delete($id) {
+
+        if (! \Session::get('user')->can('项目信息管理')) abort(401);
+
         $project = Project::find($id);
 
         if ($project->delete()) {
@@ -126,6 +134,9 @@ class ProjectController extends Controller
     }
 
     public function servers($id, Request $request) {
+
+        if (!\Session::get('user')->can('项目服务器管理')) abort(401);
+
         $project = Project::find($id);
 
         $server = Server::find($request->input('server_id'));
@@ -152,6 +163,8 @@ class ProjectController extends Controller
 
     public function modules($id, Request $request) {
 
+        if (!\Session::get('user')->can('项目模块管理')) abort(401);
+
         $project = Project::find($id);
 
         $connected_modules = $project->product->product->modules()->lists('id')->all();
@@ -172,6 +185,8 @@ class ProjectController extends Controller
     }
 
     public function params($id, Request $request) {
+
+        if (!\Session::get('user')->can('项目参数管理')) abort(401);
 
         $project = Project::find($id);
 
@@ -221,7 +236,30 @@ class ProjectController extends Controller
             ->with('message_type', 'info');
     }
 
+    public function param_edit($id, Request $request) {
+
+
+        if (!\Session::get('user')->can('项目参数管理')) abort(401);
+
+        $param_id = $request->input('param_id');
+
+        $param = Param::find($param_id);
+
+        $project = Project::find($id);
+        $project->params()->detach($param_id);
+
+        $project->params()->save($param, [
+            'value' => $request->input('value'),
+        ]);
+
+        return redirect()->back()
+            ->with('message_content', '参数修改成功!')
+            ->with('message_type', 'info');
+    }
+
     public function hardwares($id, Request $request) {
+
+        if (!\Session::get('user')->can('项目硬件管理')) abort(401);
 
         $project = Project::find($id);
 
@@ -268,25 +306,10 @@ class ProjectController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function param_edit($id, Request $request) {
-
-        $param_id = $request->input('param_id');
-
-        $param = Param::find($param_id);
-
-        $project = Project::find($id);
-        $project->params()->detach($param_id);
-
-        $project->params()->save($param, [
-            'value' => $request->input('value'),
-        ]);
-
-        return redirect()->back()
-            ->with('message_content', '参数修改成功!')
-            ->with('message_type', 'info');
-    }
 
     public function hardware_edit($id, Request $request) {
+
+        if (!\Session::get('user')->can('项目硬件管理')) abort(401);
 
         $hardware_id = $request->input('hardware_id');
 
@@ -310,6 +333,8 @@ class ProjectController extends Controller
 
     //profile 信息 startq
     public function profile_item($id, Request $request) {
+
+        if (! \Session::get('user')->can('项目查看')) abort(401);
 
         $project = Project::find($id);
         $type = $request->input('type');

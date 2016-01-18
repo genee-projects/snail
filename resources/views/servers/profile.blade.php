@@ -13,12 +13,16 @@
                 <span>
                     <i class="fa fa-linux"></i> 基本信息
                 </span>
+
+                {{--*/ $can_manage_server = \Session::get('user')->can('服务器信息管理')/*--}}
+
+                @if ($can_manage_server)
                 <span class="pull-right">
                     <a href="#" data-toggle="modal" data-target="#edit-server">
                         <i class="fa fa-fw fa-edit"></i>
                     </a>
 
-                    <a href="/servers/delete/{{ $server->id }}">
+                    <a href="{{ route('server.delete', ['id'=> $server->id]) }}">
                         <i class="fa fa-fw fa-times"></i>
                     </a>
                 </span>
@@ -31,7 +35,7 @@
                                 <h4 class="modal-title" id="edit-server-modal-label">修改服务器</h4>
                             </div>
                             <div class="modal-body">
-                                <form id="edit-server-form" class="form-horizontal" method="post" action="/servers/edit">
+                                <form id="edit-server-form" class="form-horizontal" method="post" action="{{ route('server.edit') }}">
                                     <input type="hidden" name="id" value="{{ $server->id }}">
                                     @include('servers/form', ['server'=> $server])
                                 </form>
@@ -43,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-
+                @endif
             </div>
             <div class="panel-body">
 
@@ -123,46 +127,49 @@
                         </tr>
                     @endforeach
 
-                    <tr>
-                        <td colspan="2">
+
+                    @if ($can_manage_server)
+                        <tr>
+                            <td colspan="2">
                                 <span class="pull-right">
                                     <button class="btn btn-primary" data-toggle="modal" data-target="#add-item"><i class="fa fa-plus"></i> 追加字段</button>
                                 </span>
 
-                            <div class="modal fade" id="add-item" tabindex="-1" role="dialog" aria-labelledby="add-item-modal-label">
-                                <div class="modal-dialog modal-sm" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="edit-server-modal-label">追加字段</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form id="add-item-form" method="post" action="{{ route('item.add') }}">
-                                                <input type="hidden" name="object_type" value="{{ get_class($server) }}"/>
-                                                <input type="hidden" name="object_id" value="{{ $server->id }}" />
+                                <div class="modal fade" id="add-item" tabindex="-1" role="dialog" aria-labelledby="add-item-modal-label">
+                                    <div class="modal-dialog modal-sm" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="edit-server-modal-label">追加字段</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="add-item-form" method="post" action="{{ route('item.add') }}">
+                                                    <input type="hidden" name="object_type" value="{{ get_class($server) }}"/>
+                                                    <input type="hidden" name="object_id" value="{{ $server->id }}" />
 
-                                                <div class="form-group">
-                                                    <input name="name" type="text" class="form-control" placeholder="名称(机器尺寸)">
-                                                </div>
+                                                    <div class="form-group">
+                                                        <input name="name" type="text" class="form-control" placeholder="名称(机器尺寸)">
+                                                    </div>
 
-                                                <div class="form-group">
-                                                    <input name="value" type="text" class="form-control" placeholder="显示值(3U)">
-                                                </div>
+                                                    <div class="form-group">
+                                                        <input name="value" type="text" class="form-control" placeholder="显示值(3U)">
+                                                    </div>
 
-                                                <div class="form-group">
-                                                    <input name="key" type="text" class="form-control" placeholder="代码(size) 可不填">
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                            <button type="submit" class="btn btn-primary" form="add-item-form">添加</button>
+                                                    <div class="form-group">
+                                                        <input name="key" type="text" class="form-control" placeholder="代码(size) 可不填">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                <button type="submit" class="btn btn-primary" form="add-item-form">添加</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    @endif
                 </table>
             </div>
         </div>

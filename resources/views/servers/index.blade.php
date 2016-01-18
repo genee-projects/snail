@@ -16,6 +16,9 @@
                         <i class="fa fa-linux"> </i>
                     </span>
 
+                    {{--*/ $can_manage_server = \Session::get('user')->can('服务器信息管理')/*--}}
+
+                    @if ($can_manage_server)
                     <span class="pull-right">
                         <button class="btn btn-primary" data-toggle="modal" data-target="#add-server">
                             <i class="fa fa-plus"></i>
@@ -31,7 +34,7 @@
                                     <h4 class="modal-title" id="add-server-modal-label">添加服务器</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="add-server-form" class="form-horizontal" method="post" action="/servers/add">
+                                    <form id="add-server-form" class="form-horizontal" method="post" action="{{ route('server.add') }}">
                                         @include('servers/form')
                                     </form>
                                 </div>
@@ -42,6 +45,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </p>
             </div>
             <div class="panel-body">

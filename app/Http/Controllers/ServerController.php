@@ -9,7 +9,10 @@ use App\Server;
 
 class ServerController extends Controller
 {
+
     public function servers() {
+
+        if (!\Session::get('user')->can('服务器查看')) abort(401);
 
         return view('servers/index', [
             'servers'=> Server::all(),
@@ -21,10 +24,15 @@ class ServerController extends Controller
     }
 
     public function profile($id) {
+
+        if (!\Session::get('user')->can('服务器查看')) abort(401);
+
         return view('servers/profile', ['server'=> Server::find($id)]);
     }
 
     public function add(Request $request) {
+
+        if (!\Session::get('user')->can('服务器信息管理')) abort(401);
 
         $server = new Server();
 
@@ -43,12 +51,14 @@ class ServerController extends Controller
 
         $server->save();
 
-        return redirect(route('servers'))
+        return redirect()->to(route('servers'))
             ->with('message_content', '添加成功!')
             ->with('message_type', 'info');
     }
 
     public function edit(Request $request) {
+
+        if (!\Session::get('user')->can('服务器信息管理')) abort(401);
 
         $server = Server::find($request->input('id'));
 
@@ -66,19 +76,23 @@ class ServerController extends Controller
         $server->description = $request->input('description');
 
         if ($server->save()) {
-            return redirect(route('server.profile', ['id'=> $server->id]))
+            return redirect()->to(route('server.profile', ['id'=> $server->id]))
                 ->with('message_content', '修改成功!')
                 ->with('message_type', 'info');
         }
     }
 
     public function delete($id) {
+
+        if (!\Session::get('user')->can('服务器信息管理')) abort(401);
+
+
         $server = Server::find($id);
 
-        if ($server->delete()) {
-            return redirect(route('servers'))
-                ->with('message_content', '删除成功!')
-                ->with('message_type', 'info');
-        }
+        $server->delete();
+
+        return redirect()->to(route('servers'))
+            ->with('message_content', '删除成功!')
+            ->with('message_type', 'info');
     }
 }

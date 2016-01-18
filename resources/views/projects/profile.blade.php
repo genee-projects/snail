@@ -21,38 +21,40 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-user"> 基本信息</i>
-                    <span class="pull-right">
 
-                         <a href="#" data-toggle="modal" data-target="#edit-project">
-                             <i class="fa fa-fw fa-edit"></i>
-                         </a>
+                    @if (\Session::get('user')->can('项目信息管理'))
+                        <span class="pull-right">
+                            <a href="#" data-toggle="modal" data-target="#edit-project">
+                                <i class="fa fa-fw fa-edit"></i>
+                            </a>
 
-                        <a href="{{ route('project.delete', ['id'=> $project->id]) }}">
-                            <i class="fa fa-fw fa-times"></i>
-                        </a>
-                        <div class="clearfix"></div>
+                            <a href="{{ route('project.delete', ['id'=> $project->id]) }}">
+                                <i class="fa fa-fw fa-times"></i>
+                            </a>
+                            <div class="clearfix"></div>
 
-                        <div class="modal fade" id="edit-project" tabindex="-1" role="dialog" aria-labelledby="edit-project-modal-label">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="edit-server-modal-label">修改客户信息</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="edit-client-form" class="form-horizontal" method="post" action="{{ route('project.edit') }}">
-                                            <input type="hidden" name="id" value="{{ $project->id }}">
-                                            @include('projects/full_form', ['project'=> $project])
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                        <button type="submit" class="btn btn-primary" form="edit-client-form">修改</button>
+                            <div class="modal fade" id="edit-project" tabindex="-1" role="dialog" aria-labelledby="edit-project-modal-label">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="edit-server-modal-label">修改客户信息</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="edit-client-form" class="form-horizontal" method="post" action="{{ route('project.edit') }}">
+                                                <input type="hidden" name="id" value="{{ $project->id }}">
+                                                @include('projects/full_form', ['project'=> $project])
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                            <button type="submit" class="btn btn-primary" form="edit-client-form">修改</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </span>
+                        </span>
+                    @endif
                 </div>
                 <div class="panel-body">
                     <table class="table table-striped table-bordered table-hover">
@@ -136,6 +138,8 @@
                                 </td>
                             </tr>
                         @endforeach
+
+                        @if (\Session::get('user')->can('项目信息管理'))
                         <tr>
                             <td colspan="2">
                                 <span class="pull-right">
@@ -176,6 +180,7 @@
                                 </div>
                             </td>
                         </tr>
+                        @endif
                     </table>
                 </div>
             </div>

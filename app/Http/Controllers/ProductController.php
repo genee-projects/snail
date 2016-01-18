@@ -13,10 +13,15 @@ class ProductController extends Controller
 
 
     public function products() {
+
+        if (! \Session::get('user')->can('产品查看')) abort(401);
+
         return view('products/index', ['products' => Product::all()]);
     }
 
     public function profile($id) {
+
+        if (! \Session::get('user')->can('产品查看')) abort(401);
 
         $product = Product::find($id);
         
@@ -24,6 +29,9 @@ class ProductController extends Controller
     }
 
     public function add(Request $request) {
+
+        if (! \Session::get('user')->can('产品信息管理')) abort(401);
+
         $product = new Product();
 
         $product->name = $request->input('name');
@@ -37,6 +45,9 @@ class ProductController extends Controller
     }
 
     public function edit(Request $request) {
+
+        if (! \Session::get('user')->can('产品信息管理')) abort(401);
+
         $product = Product::find($request->input('product_id'));
         $product->name = $request->input('name');
         $product->description = $request->input('description');
@@ -49,6 +60,8 @@ class ProductController extends Controller
      }
 
     public function delete($id) {
+
+        if (!\Session::get('user')->can('产品信息管理')) abort(401);
 
         $product = Product::find($id);
 

@@ -11,10 +11,16 @@ use App\User;
 class RoleController extends Controller
 {
     public function roles() {
+
+        if (!\Session::get('user')->is_admin()) abort(401);
+
         return view('roles/index', ['roles'=> Role::all()]);
+
     }
 
     public function user_connect($role_id, $user_id) {
+
+        if (!\Session::get('user')->is_admin()) abort(401);
 
         $role = Role::find($role_id);
         $user = User::find($user_id);
@@ -29,6 +35,9 @@ class RoleController extends Controller
     }
 
     public function user_disconnect($role_id, $user_id) {
+
+        if (!\Session::get('user')->is_admin()) abort(401);
+
         $role = Role::find($role_id);
         $user = User::find($user_id);
 
@@ -41,6 +50,8 @@ class RoleController extends Controller
     }
 
     public function user_connect_many(Request $request) {
+
+        if (!\Session::get('user')->is_admin()) abort(401);
 
         $users = (array) $request->input('users');
         $role = Role::find($request->input('id'));

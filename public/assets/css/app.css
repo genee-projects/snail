@@ -2,7 +2,6 @@
 body {
   width: 100%;
   height: 100%;
-  background-color: #f8f8f8;
   /* 通用样式 */
   /* 通用样式 */ }
   body .nowrap {
@@ -37,8 +36,6 @@ body {
           body #wrapper #nav .navbar-top-links li .user img {
             width: 32px;
             height: 32px; }
-      body #wrapper #nav .navbar-top-links li:last-child {
-        margin-right: 15px; }
       body #wrapper #nav .sidebar .sidebar-nav.navbar-collapse {
         padding-right: 0;
         padding-left: 0; }

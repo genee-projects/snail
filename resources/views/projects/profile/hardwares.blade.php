@@ -1,3 +1,4 @@
+{{--*/ $can_manage_hardware = \Session::get('user')->can('项目硬件管理') /*--}}
 <div class="panel-body">
     <table class="table table-hover">
         <tr>
@@ -30,12 +31,16 @@
 
                 <td>
                     {{ $hardware->pivot->description }}
-                    <span class="pull-right">
-                          <i class="fa fa-fw fa-edit edit-hardware edit" data-model="{{ $hardware->model }}" data-description="{{ $hardware->description }}" data-id="{{ $hardware->id }}" data-name="{{ $hardware->name }}" data-plan-count="{{ $hardware->pivot->plan_count }}" data-deployed-count="{{ $hardware->pivot->deployed_count }}"></i>
-                    </span>
+                    @if ($can_manage_hardware)
+                        <span class="pull-right">
+                              <i class="fa fa-fw fa-edit edit-hardware edit" data-model="{{ $hardware->model }}" data-description="{{ $hardware->description }}" data-id="{{ $hardware->id }}" data-name="{{ $hardware->name }}" data-plan-count="{{ $hardware->pivot->plan_count }}" data-deployed-count="{{ $hardware->pivot->deployed_count }}"></i>
+                        </span>
+                    @endif
                 </td>
             </tr>
         @endforeach
+
+        @if ($can_manage_hardware)
         <tr>
             <td colspan="6">
                 <span class="pull-right">
@@ -43,8 +48,10 @@
                 </span>
             </td>
         </tr>
+        @endif
     </table>
 
+    @if ($can_manage_hardware)
     <div class="modal fade" id="hardwares" tabindex="-1" role="dialog" aria-labelledby="hardwares-modal-label">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -183,5 +190,5 @@
         });
     </script>
 
-
+    @endif
 </div>

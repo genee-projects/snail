@@ -14,7 +14,18 @@ use App\Project;
 class SubProductController extends Controller
 {
 
+    public function profile($id) {
+
+        if (!\Session::get('user')->can('产品查看')) abort(401);
+
+        $sub = SubProduct::find($id);
+
+        return view('subproducts/profile', ['subproduct'=> $sub]);
+    }
+
     public function add(Request $request) {
+
+        if (!\Session::get('user')->can('产品类别管理')) abort(401);
 
         $product = Product::find($request->input('product_id'));
 
@@ -34,6 +45,8 @@ class SubProductController extends Controller
 
     public function delete($id) {
 
+        if (!\Session::get('user')->can('产品类别管理')) abort(401);
+
         $sub = SubProduct::find($id);
 
         $sub->delete();
@@ -44,6 +57,8 @@ class SubProductController extends Controller
     }
 
     public function edit(Request $request) {
+
+        if (!\Session::get('user')->can('产品类别管理')) abort(401);
 
         $sub = SubProduct::find($request->input('id'));
 
@@ -57,14 +72,10 @@ class SubProductController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function profile($id) {
-
-        $sub = SubProduct::find($id);
-
-        return view('subproducts/profile', ['subproduct'=> $sub]);
-    }
 
     public function modules($id, Request $request) {
+
+        if (!\Session::get('user')->can('产品模块管理')) abort(401);
 
         $sub = SubProduct::find($id);
 
@@ -110,6 +121,9 @@ class SubProductController extends Controller
     }
 
     public function params($id, Request $request) {
+
+
+        if (!\Session::get('user')->can('产品参数管理')) abort(401);
 
         $sub = SubProduct::find($id);
 
@@ -161,6 +175,8 @@ class SubProductController extends Controller
     }
 
     public function param_edit($id, Request $request) {
+
+        if (!\Session::get('user')->can('产品参数管理')) abort(401);
 
         $sub = SubProduct::find($id);
 

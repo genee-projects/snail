@@ -1,31 +1,4 @@
-<script type="text/javascript">
-    require(['jquery', 'bootstrap-datetimepicker', 'bootstrap3-typeahead'], function($) {
-
-        $('.datetimepicker').datetimepicker({
-            format: 'YYYY/MM/DD'
-        });
-
-        require(['css!../css/bootstrap-datetimepicker.min'], function() {});
-
-        $.get('/servers.json', function(data){
-
-            var $selector = $("#server_selector");
-            $selector.typeahead({
-                source:data,
-                displayText: function(item) {
-                    return item.name;
-                },
-                afterSelect: function(item) {
-                    var $input = $('<input name="server_id" type="hidden">');
-                    $input.val(item.id);
-                    $selector.after($input);
-                }
-            });
-        },'json');
-
-    });
-</script>
-
+{{--*/ $can_manage_server = \Session::get('user')->can('项目服务器管理')/*--}}
 <div class="panel-body">
 
     <table class="table table-hover table-bordered table-striped">
@@ -56,6 +29,8 @@
     </table>
 
     <hr />
+
+    @if ($can_manage_server)
 
     <h3>关联服务器</h3>
 
@@ -95,4 +70,34 @@
             </div>
         </div>
     </form>
+
+    <script type="text/javascript">
+        require(['jquery', 'bootstrap-datetimepicker', 'bootstrap3-typeahead'], function($) {
+
+            $('.datetimepicker').datetimepicker({
+                format: 'YYYY/MM/DD'
+            });
+
+            require(['css!../css/bootstrap-datetimepicker.min'], function() {});
+
+            $.get('/servers.json', function(data){
+
+                var $selector = $("#server_selector");
+                $selector.typeahead({
+                    source:data,
+                    displayText: function(item) {
+                        return item.name;
+                    },
+                    afterSelect: function(item) {
+                        var $input = $('<input name="server_id" type="hidden">');
+                        $input.val(item.id);
+                        $selector.after($input);
+                    }
+                });
+            },'json');
+
+        });
+    </script>
+
+    @endif
 </div>

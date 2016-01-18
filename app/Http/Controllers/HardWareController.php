@@ -3,19 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Controllers\Controller;
-
 use App\Hardware;
 
 class HardWareController extends Controller
 {
 
     public function index() {
+
+        if (!\Session::get('user')->can('硬件查看')) abort(401);
+
         return view('hardwares/index', ['hardwares'=> Hardware::all()]);
 
     }
     public function add(Request $request) {
+
+        if (!\Session::get('user')->can('硬件管理')) abort(401);
 
         $hardware = new Hardware();
         $hardware->name = $request->input('name');
@@ -32,7 +35,8 @@ class HardWareController extends Controller
 
     public function delete($id)
     {
-        //
+        if (!\Session::get('user')->can('硬件管理')) abort(401);
+
         $hardware = Hardware::find($id);
 
         $hardware->delete();
@@ -43,6 +47,8 @@ class HardWareController extends Controller
     }
 
     public function edit(Request $request) {
+
+        if (!\Session::get('user')->can('硬件管理')) abort(401);
 
         $hardware = Hardware::find($request->input('id'));
 

@@ -14,6 +14,8 @@ class ParamController extends Controller
 
     public function add(Request $request) {
 
+        if (! \Session::get('user')->can('产品参数管理')) abort(401);
+
         $param = new Param();
         $param->name = $request->input('name');
         $param->description = $request->input('description');
@@ -31,9 +33,10 @@ class ParamController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function delete($id)
-    {
-        //
+    public function delete($id) {
+
+        if (! \Session::get('user')->can('产品参数管理')) abort(401);
+
         $param = Param::find($id);
 
         $param->delete();
@@ -45,6 +48,8 @@ class ParamController extends Controller
 
 
     public function edit(Request $request) {
+
+        if (! \Session::get('user')->can('产品参数管理')) abort(401);
 
         $param = Param::find($request->input('id'));
 

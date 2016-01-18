@@ -15,17 +15,19 @@
             <div class="panel panel-default">
                 <div class="panel-heading ">
                     <i class="fa fa-linux"></i> 基本信息
-                    <span class="pull-right">
-                        <a href="#" data-toggle="modal" data-target="#edit-server">
-                            <i class="fa fa-fw fa-edit"></i>
-                        </a>
 
-                        <a href="{{ route('subproduct.delete', ['id' => $subproduct->id]) }}">
-                            <i class="fa fa-fw fa-times"></i>
-                        </a>
-                    </span>
+                    @if (\Session::get('user')->can('产品类别管理'))
+                        <span class="pull-right">
+                            <a href="#" data-toggle="modal" data-target="#edit-server">
+                                <i class="fa fa-fw fa-edit"></i>
+                            </a>
 
-                    <div class="modal fade" id="edit-server" tabindex="-1" role="dialog" aria-labelledby="edit-server-modal-label">
+                            <a href="{{ route('subproduct.delete', ['id' => $subproduct->id]) }}">
+                                <i class="fa fa-fw fa-times"></i>
+                            </a>
+                        </span>
+
+                        <div class="modal fade" id="edit-server" tabindex="-1" role="dialog" aria-labelledby="edit-server-modal-label">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -52,6 +54,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
 
                 <div class="panel-body">
@@ -99,56 +102,141 @@
                         @endforeach
                     </table>
 
-                    <span class="pull-right">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#add-module">
-                            <i class="fa fa-wrench"></i> 设置模块
-                        </button>
-                    </span>
+                    @if (\Session::get('user')->can('产品模块管理'))
+                        <span class="pull-right">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#add-module">
+                                <i class="fa fa-wrench"></i> 设置模块
+                            </button>
+                        </span>
 
-                    <div class="modal fade" id="add-module" tabindex="-1" role="dialog" aria-labelledby="add-module-modal-label">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="add-module-modal-label">设置基础模块</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="add-module-form" method="post" action="{{ route('subproduct.modules', ['id'=> $subproduct->id]) }}">
+                        <div class="modal fade" id="add-module" tabindex="-1" role="dialog" aria-labelledby="add-module-modal-label">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="add-module-modal-label">设置基础模块</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="add-module-form" method="post" action="{{ route('subproduct.modules', ['id'=> $subproduct->id]) }}">
 
-                                        @foreach($subproduct->product->modules as $module)
+                                            @foreach($subproduct->product->modules as $module)
 
-                                            {{--*/ $selected = false /*--}}
-                                            {{--*/ $btn_class = 'btn-default' /*--}}
+                                                {{--*/ $selected = false /*--}}
+                                                {{--*/ $btn_class = 'btn-default' /*--}}
 
-                                            @if($subproduct->modules->contains($module->id))
-                                                {{--*/ $selected = true /*--}}
-                                                {{--*/ $btn_class = 'btn-primary' /*--}}
-                                            @endif
+                                                @if($subproduct->modules->contains($module->id))
+                                                    {{--*/ $selected = true /*--}}
+                                                    {{--*/ $btn_class = 'btn-primary' /*--}}
+                                                @endif
 
-                                            <span data-id="{{ $module->id }}" data-dep-modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center">
+                                                <span data-id="{{ $module->id }}" data-dep-modules="{{ join(',', $module->dep_modules_ids()) }}" class="module-btn btn {{ $btn_class }} text-center">
                                                     {{ $module->name }}
                                                 </span>
 
-                                            @if($selected)
-                                                <input type="hidden" name="modules[]" value="{{ $module->id }}" />
-                                            @endif
+                                                @if($selected)
+                                                    <input type="hidden" name="modules[]" value="{{ $module->id }}" />
+                                                @endif
 
-                                        @endforeach
+                                            @endforeach
 
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="sync_new_modules"> 同步新加模块到已有项目
-                                            </label>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    <button type="submit" class="btn btn-primary" form="add-module-form">设置</button>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="sync_new_modules"> 同步新加模块到已有项目
+                                                </label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                        <button type="submit" class="btn btn-primary" form="add-module-form">设置</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                        <script type="text/javascript">
+
+                            require(['jquery'], function($) {
+
+                                function check_disabled(dep_modules_ids, form) {
+
+                                    disabled = false;
+
+                                    $('[data-id=' + dep_modules_ids.join('],[data-id=') + ']', form).each(function() {
+
+                                        if (! $(this).hasClass('btn-primary')) {
+                                            disabled = true;
+                                        }
+                                    });
+
+                                    return disabled;
+                                }
+
+                                function refresh_btn_status() {
+
+                                    $('.module-btn').each(function() {
+
+
+                                        var $btn = $(this);
+
+                                        var form = $(this).parents('form');
+
+                                        //查看依赖
+
+                                        if ($btn.data('dep-modules')) {
+
+                                            var raw_dep_modules = new String($btn.data('dep-modules'));
+
+                                            if (raw_dep_modules.indexOf(',') != -1) {
+                                                var dep_modules_ids = raw_dep_modules.split(',');
+                                            }
+                                            else {
+                                                var dep_modules_ids = [raw_dep_modules];
+                                            }
+
+                                            //查找依赖的模块, 查看是否被 check
+                                            //如果没被check, 那么 disabled="disabled"
+                                            if (check_disabled(dep_modules_ids, form)) {
+                                                $btn.attr('disabled', 'disabled');
+                                                $btn.removeClass('btn-primary');
+                                                $btn.addClass('btn-default');
+                                                $btn.next(":input").remove();
+                                            }
+                                            else {
+                                                $btn.removeAttr('disabled');
+                                            }
+                                        }
+                                    });
+                                }
+
+                                refresh_btn_status();
+
+
+                                $('.module-btn').bind('click', function() {
+                                    $input = $('<input type="hidden" name="modules[]" />');
+
+                                    var $span = $(this);
+
+                                    if (! $(this).attr('disabled')) {
+                                        if ($span.hasClass('btn-default')) {
+                                            $span.removeClass('btn-default');
+                                            $span.addClass('btn-primary');
+                                            $input.val($span.data('id'));
+
+                                            $span.after($input);
+                                        }
+                                        else {
+                                            $span.removeClass('btn-primary');
+                                            $span.addClass('btn-default');
+                                            $span.next(":input").remove();
+                                        }
+                                        refresh_btn_status();
+                                    }
+
+                                });
+                            });
+                        </script>
+                    @endif
                 </div>
             </div>
         </div>
@@ -169,6 +257,8 @@
                             <td>简述</td>
                         </tr>
 
+                        {{--*/ $can_manage_param = \Session::get('user')->can('产品参数管理')/*--}}
+
                         @foreach($subproduct->params as $param)
                             <tr>
                                 <td>{{ $param->name }}</td>
@@ -176,18 +266,19 @@
                                 <td>{{ $param->pivot->value }}</td>
                                 <td>
                                     {{ $param->description }}
-                                    <span class="pull-right">
-                                        <i data-value="{{ $param->pivot->value }}" data-id="{{ $param->id }}" data-name="{{ $param->name }}" class="edit edit-param fa fa-edit fa-fw"></i>
-                                    </span>
+
+                                    @if ($can_manage_param)
+                                        <span class="pull-right">
+                                            <i data-value="{{ $param->pivot->value }}" data-id="{{ $param->id }}" data-name="{{ $param->name }}" class="edit edit-param fa fa-edit fa-fw"></i>
+                                        </span>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
                     </table>
 
-                    <span class="pull-right btn btn-primary" data-toggle="modal" data-target="#add-param">
-                        <i class="fa fa-plus"></i> 设置参数
-                    </span>
 
+                    @if ($can_manage_param)
                     <div class="modal fade" id="edit-param" tabindex="-1" role="dialog" aria-labelledby="edit-param-modal-label">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -215,6 +306,30 @@
                             </div>
                         </div>
                     </div>
+
+                    <script type="text/javascript">
+
+                        require(['jquery'], function($) {
+                            $('.edit-param').bind('click', function() {
+                                var $modal = $('#edit-param');
+                                $modal.find(':input[name=name]').val($(this).data('name'));
+                                $modal.find(':input[name=value]').val($(this).data('value'));
+                                $modal.find(':input[name=param_id]').val($(this).data('id'));
+
+                                $modal.modal();
+                            });
+                        });
+                    </script>
+                    @endif
+
+                    {{--*/ //可能会被删除的功能 star /*--}}
+
+
+                    @if ($can_manage_param)
+
+                    <span class="pull-right btn btn-primary" data-toggle="modal" data-target="#add-param">
+                        <i class="fa fa-plus"></i> 设置参数
+                    </span>
 
                     <div class="modal fade" id="add-param" tabindex="-1" role="dialog" aria-labelledby="add-param-modal-label">
                         <div class="modal-dialog" role="document">
@@ -249,15 +364,6 @@
 
                                             require(['jquery'], function($) {
 
-                                                $('.edit-param').bind('click', function() {
-                                                    var $modal = $('#edit-param');
-                                                    $modal.find(':input[name=name]').val($(this).data('name'));
-                                                    $modal.find(':input[name=value]').val($(this).data('value'));
-                                                    $modal.find(':input[name=param_id]').val($(this).data('id'));
-
-                                                    $modal.modal();
-                                                });
-
                                                 $('.param-btn').bind('click', function() {
 
                                                     $input = $('<input type="hidden" name="params[]" />');
@@ -288,91 +394,12 @@
                             </div>
                         </div>
                     </div>
+
+                    @endif
+                    {{--*/ //可能会被删除的功能 end /*--}}
                 </div>
             </div>
         </div>
     </div>
 
-    <script type="text/javascript">
-
-        require(['jquery'], function($) {
-
-            function check_disabled(dep_modules_ids, form) {
-
-                disabled = false;
-
-                $('[data-id=' + dep_modules_ids.join('],[data-id=') + ']', form).each(function() {
-
-                    if (! $(this).hasClass('btn-primary')) {
-                        disabled = true;
-                    }
-                });
-
-                return disabled;
-            }
-
-            function refresh_btn_status() {
-
-                $('.module-btn').each(function() {
-
-
-                    var $btn = $(this);
-
-                    var form = $(this).parents('form');
-
-                    //查看依赖
-
-                    if ($btn.data('dep-modules')) {
-
-                        var raw_dep_modules = new String($btn.data('dep-modules'));
-
-                        if (raw_dep_modules.indexOf(',') != -1) {
-                            var dep_modules_ids = raw_dep_modules.split(',');
-                        }
-                        else {
-                            var dep_modules_ids = [raw_dep_modules];
-                        }
-
-                        //查找依赖的模块, 查看是否被 check
-                        //如果没被check, 那么 disabled="disabled"
-                        if (check_disabled(dep_modules_ids, form)) {
-                            $btn.attr('disabled', 'disabled');
-                            $btn.removeClass('btn-primary');
-                            $btn.addClass('btn-default');
-                            $btn.next(":input").remove();
-                        }
-                        else {
-                            $btn.removeAttr('disabled');
-                        }
-                    }
-                });
-            }
-
-            refresh_btn_status();
-
-
-            $('.module-btn').bind('click', function() {
-                $input = $('<input type="hidden" name="modules[]" />');
-
-                var $span = $(this);
-
-                if (! $(this).attr('disabled')) {
-                    if ($span.hasClass('btn-default')) {
-                        $span.removeClass('btn-default');
-                        $span.addClass('btn-primary');
-                        $input.val($span.data('id'));
-
-                        $span.after($input);
-                    }
-                    else {
-                        $span.removeClass('btn-primary');
-                        $span.addClass('btn-default');
-                        $span.next(":input").remove();
-                    }
-                    refresh_btn_status();
-                }
-
-            });
-        });
-    </script>
 @endsection

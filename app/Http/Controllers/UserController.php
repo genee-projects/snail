@@ -11,16 +11,24 @@ use App\Gini\Gapper\Client;
 class UserController extends Controller
 {
     public function users() {
+
+        if (!\Session::get('user')->is_admin()) abort(401);
+
         return view('users/index', ['users' => User::all()]);
     }
 
     public function profile($id) {
+
+        if (!\Session::get('user')->is_admin()) abort(401);
+
         $user = User::find($id);
 
         return view('users/profile', ['user'=> $user]);
     }
 
     public function refresh() {
+
+        if (!\Session::get('user')->is_admin()) abort(401);
 
         $group_id = config('gapper.group_id');
 
@@ -68,10 +76,15 @@ class UserController extends Controller
     }
 
     public function users_json() {
+
+        if (!\Session::get('user')->is_admin()) abort(401);
+
         return response()->json(User::all());
     }
 
     public function view(Request $request) {
+
+        if (!\Session::get('user')->is_admin()) abort(401);
 
         $id = $request->input('id');
         $user = User::find($id);

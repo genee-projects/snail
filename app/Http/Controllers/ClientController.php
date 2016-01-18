@@ -8,14 +8,29 @@ use App\Client;
 
 class ClientController extends Controller
 {
+
     public function clients() {
+
+        if (! \Session::get('user')->can('客户查看')) abort(401);
 
         return view('clients/index', [
             'clients'=> Client::where('parent_id', 0)->get(),
         ]);
     }
 
+    public function profile($id) {
+
+
+        $client = Client::find($id);
+
+        return view('clients/profile', [
+            'client'=> $client,
+        ]);
+    }
+
     public function add(Request $request) {
+
+        if (! \Session::get('user')->can('客户信息管理')) abort(401);
 
         $client = new Client();
 
@@ -49,6 +64,8 @@ class ClientController extends Controller
 
     public function edit(Request $request) {
 
+        if (! \Session::get('user')->can('客户信息管理')) abort(401);
+
         $client = Client::find($request->input('id'));
 
         $client->name = $request->input('name');
@@ -66,16 +83,9 @@ class ClientController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function profile($id) {
-
-        $client = Client::find($id);
-
-        return view('clients/profile', [
-            'client'=> $client,
-        ]);
-    }
-
     public function delete($id) {
+
+        if (! \Session::get('user')->can('客户信息管理')) abort(401);
 
         $client = Client::find($id);
 
