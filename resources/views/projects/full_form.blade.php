@@ -36,7 +36,10 @@
             @foreach(\App\Product::all() as $product)
                 <optgroup label="{{ $product->name }}">
                     @foreach($product->sub_products as $sub)
-                        <option value="{{ $sub->id }}">{{ $sub->name }}</option>
+                        <option @if ($project->product->id == $sub->id)
+                                   c selected="selected"
+                                @endif
+                                value="{{ $sub->id }}">{{ $sub->name }}</option>
                     @endforeach
                 </optgroup>
             @endforeach
