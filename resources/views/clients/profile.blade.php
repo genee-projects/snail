@@ -157,12 +157,12 @@
                 </div>
 
                 <div class="panel-body">
-                    <p><a href="/clients/profile/{{ $client->id }}">{{ $client->name }}</a></p>
+                    <p><a href="{{ route('client.profile', ['id'=> $client->root()->id]) }}">{{ $client->root()->name }}</a></p>
 
                     @foreach($client->root()->children as $c)
-                        <p class="col-sm-offset-1">├ <a href="/clients/profile/{{ $c->id }}">{{ $c->name }}</a></p>
+                        <p class="col-sm-offset-1">├ <a href="{{ route('client.profile', ['id'=> $c->id]) }}">{{ $c->name }}</a></p>
                             @foreach($c->children as $_c)
-                                <p class="col-sm-offset-2">├ <a href="/clients/profile/{{$_c->id}}">{{ $_c->name }}</a></p>
+                                <p class="col-sm-offset-2">├ <a href="{{ route('client.profile', ['id'=> $_c->id]) }}">{{ $_c->name }}</a></p>
                             @endforeach
                     @endforeach
                 </div>

@@ -34,7 +34,7 @@
                             <tr>
                                 <td>{{ $project->ref_no }}</td>
                                 <td><a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a></td>
-                                <td><a href="{{ route('client.profile', ['id'=> $project->client->id]) }}">{{ $project->client->name }}</a></td>
+                                <td>{!! $project->client->path() !!}</td>
                                 <td>{{ $project->contact_user }}</td>
                                 <td>{{ $project->cancelled_time }}</td>
                             </tr>
