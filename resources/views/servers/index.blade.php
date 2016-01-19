@@ -10,15 +10,15 @@
     </div>
     <div>
         <div class="panel panel-default">
-            <div class="panel-heading ">
-                <p class="vertical-middle">
-                    <span>
-                        <i class="fa fa-linux"> </i>
-                    </span>
+            <div class="panel-heading">
 
-                    {{--*/ $can_manage_server = \Session::get('user')->can('服务器信息管理')/*--}}
+                <span>
+                    <i class="fa fa-linux"> </i>
+                </span>
 
-                    @if ($can_manage_server)
+                {{--*/ $can_manage_server = \Session::get('user')->can('服务器信息管理')/*--}}
+
+                @if ($can_manage_server)
                     <span class="pull-right">
                         <button class="btn btn-primary" data-toggle="modal" data-target="#add-server">
                             <i class="fa fa-plus"></i>
@@ -45,8 +45,9 @@
                             </div>
                         </div>
                     </div>
-                    @endif
-                </p>
+                @endif
+
+                <div class="clearfix"></div>
             </div>
             <div class="panel-body">
 
