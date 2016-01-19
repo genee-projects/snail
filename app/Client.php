@@ -34,6 +34,7 @@ class Client extends Model
             $root = $root->parent;
         }
 
+
         return $root;
     }
 
@@ -44,5 +45,25 @@ class Client extends Model
 
     public function items() {
         return $this->morphMany('App\Item', 'object');
+    }
+
+    public function path()
+    {
+
+        //用于返回的所有的 clients
+        $clients = [];
+
+        //当前 client
+        $client = $this;
+
+        while (true) {
+
+            $clients[] = (string)view('clients/path', ['client'=> $client]);
+
+            if (!$client->parent) break;
+            $client = $client->parent;
+        }
+
+        return (string)join(' &#187; ', array_reverse($clients));
     }
 }
