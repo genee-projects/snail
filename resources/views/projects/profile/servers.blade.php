@@ -1,7 +1,7 @@
 {{--*/ $can_manage_server = \Session::get('user')->can('项目服务器管理')/*--}}
 <div class="panel-body">
 
-    <table class="table table-hover table-bordered table-striped">
+    <table class="table table-hover table-striped">
 
         <tr>
             <td>服务器名称</td>
@@ -22,6 +22,9 @@
                 <td>{{ $server->pivot->deploy_time or '未设置' }}</td>
                 <td>
                     {{ App\Server::$providers[$server->provider] }}
+                    <span class="pull-right">
+                        <a class="btn btn-xs btn-primary" href="{{ route('project.server.disconnect', ['id'=> $project->id, 'server_id'=> $server->id]) }}">解除关联</a>
+                    </span>
                 </td>
             </tr>
         @endforeach

@@ -160,6 +160,22 @@ class ProjectController extends Controller
             ->with('message_type', 'danger');
     }
 
+    public function server_disconnect($id, $server_id, Request $request) {
+
+        if (!\Session::get('user')->can('项目服务器管理')) abort(401);
+
+        $project = Project::find($id);
+        $server = Server::find($server_id);
+
+        if ($project->servers()->find($server->id)) {
+            $project->servers()->detach($server);
+
+            return redirect()->to(route('project.profile', ['id'=> $project->id]))
+                ->with('message_content', '解除关联成功')
+                ->with('message_type', 'info');
+        }
+    }
+
 
     public function modules($id, Request $request) {
 
@@ -237,7 +253,6 @@ class ProjectController extends Controller
     }
 
     public function param_edit($id, Request $request) {
-
 
         if (!\Session::get('user')->can('项目参数管理')) abort(401);
 

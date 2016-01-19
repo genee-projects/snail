@@ -129,6 +129,10 @@ Route::post('/projects/{id}/servers', [
     'as'=> 'project.servers',
     'uses'=> 'ProjectController@servers',
 ]);
+Route::get('/projects/{id}/server/{server_id}', [
+    'as'=> 'project.server.disconnect',
+    'uses'=> 'ProjectController@server_disconnect'
+]);
 
 Route::get('/projects/delete/{id}', [
     'as'=> 'project.delete',
