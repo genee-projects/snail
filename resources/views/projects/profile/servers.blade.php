@@ -19,7 +19,11 @@
                 <td>{{ $server->fqdn }}</td>
                 <td>{{ $server->vpn }}</td>
                 <td>{{ $server->pivot->usage }}</td>
-                <td>{{ $server->pivot->deploy_time or '未设置' }}</td>
+                <td>
+                    @if ($server->pivot->deploy_time)
+                        {{ (new DateTime($server->pivot->deploy_time))->format('Y/m/d') }}
+                    @endif
+                </td>
                 <td>
                     {{ App\Server::$providers[$server->provider] }}
                     <span class="pull-right">

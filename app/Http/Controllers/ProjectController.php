@@ -40,8 +40,19 @@ class ProjectController extends Controller
         $project->name = $request->input('name');
         $project->seller = $request->input('seller');
         $project->contact_user = $request->input('contact_user');
-        $project->signed_time = $request->input('signed_time');
-        $project->cancelled_time = $request->input('cancelled_time');
+
+        $signed_time = $request->input('signed_time');
+
+        if (!$signed_time) $signed_time = NULL;
+        $project->signed_time = $signed_time;     // 签约时间
+
+
+        $cancelled_time =  $request->input('cancelled_time');
+
+        if (!$cancelled_time) $cancelled_time = NULL;
+        $project->cancelled_time = $cancelled_time;   // 服务到期时间
+
+
         $project->description = $request->input('description');
 
         if ($project->save()) {

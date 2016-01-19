@@ -36,7 +36,10 @@
                                 <td><a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a></td>
                                 <td>{!! $project->client->path() !!}</td>
                                 <td>{{ $project->contact_user }}</td>
-                                <td>{{ $project->cancelled_time }}</td>
+                                <td>@if ($project->cancelled_time)
+                                        {{ (new DateTime($project->cancelled_time))->format('Y/m/d') }}
+                                     @endif
+                                </td>
                             </tr>
                         @endforeach
                     </table>

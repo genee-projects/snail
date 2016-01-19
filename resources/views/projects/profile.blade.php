@@ -88,11 +88,19 @@
                         </tr>
                         <tr>
                             <td>签约时间</td>
-                            <td>{{ $project->signed_time or '未设定' }}</td>
+                            <td>
+                                @if ($project->signed_time)
+                                    {{ (new DateTime($project->signed_time))->format('Y/m/d') }}
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td>合同到期时间</td>
-                            <td>{{ $project->cancelled_time or '未设定' }}</td>
+                            <td>
+                                @if ($project->cancelled_time)
+                                    {{ (new DateTime($project->cancelled_time))->format('Y/m/d') }}
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td>联系人</td>
