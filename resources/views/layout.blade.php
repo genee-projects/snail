@@ -149,6 +149,22 @@
 
                 return false;
             });
+
+            var trigger = 51, $sidebar = $('.sidebar');
+            function sideBar() {
+                var docScrollTop = $(document).scrollTop();
+
+                if (docScrollTop >= trigger) {
+                    $sidebar.stop().animate({top: 0}, 30);
+                } else {
+                    $sidebar.stop().animate({top: trigger - docScrollTop}, 30);
+                }
+            }
+            $(window).scroll(function(){
+                sideBar();
+            });
+
+            sideBar();
         });
     </script>
 </body>
