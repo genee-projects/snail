@@ -87,6 +87,9 @@ class ProjectController extends Controller
         $project->vip = (bool) ($request->input('vip') == 'on');
         $project->official = (bool) ($request->input('official') == 'on');
 
+        $old_product_id = $project->product->id;
+        $new_product_id = $product->id;
+
         $project->product()->associate($product);                   // 产品类型
         $project->contact_user = $request->input('contact_user');   // 联系人
         $project->contact_phone = $request->input('contact_phone'); // 联系电话
@@ -110,6 +113,30 @@ class ProjectController extends Controller
         $project->way = $request->input('way');
 
         if ($project->save()) {
+
+            //修改了签约类型
+            if ($old_product_id != $new_product_id) {
+
+                //清空所有的 module, 重新关联 module
+                $connected_modules = $project->modules()->lists('id')->all();
+
+                if (count($connected_modules)) $project->modules()->detach($connected_modules);
+
+                foreach($product->modules as $module) {
+                    $project->modules()->save($module);
+                }
+
+                //清空所有的 params, 重新关联 params
+                $connected_params = $project->params()->lists('id')->all();
+
+                if (count($connected_params)) $project->params()->detach($connected_params);
+
+                foreach($product->params as $param) {
+                    $project->params()->save($param, [
+                        'value'=> $param->pivot->value,
+                    ]);
+                }
+            }
             return redirect(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '修改成功!')
                 ->with('message_type', 'info');
