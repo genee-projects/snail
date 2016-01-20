@@ -288,12 +288,21 @@
                                 </div>
                                 <div class="modal-body">
                                     <form id="edit-param-form" method="post" action="{{ route('subproduct.param.edit', ['id'=> $subproduct->id]) }}">
+
                                         <div class="form-group">
                                             <input disabled="disabled" name="name" type="text" class="form-control" placeholder="名称 (人员数量上限)">
                                         </div>
 
                                         <div class="form-group">
                                             <input name="value" type="text" class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="reset"> 恢复默认参数 (勾选该参数后, 上述修改无效)
+                                                </label>
+                                            </div>
                                         </div>
 
                                         <input type="hidden" name="param_id">
@@ -322,81 +331,6 @@
                     </script>
                     @endif
 
-                    {{--*/ //可能会被删除的功能 star /*--}}
-
-
-                    @if ($can_manage_param)
-
-                    <span class="pull-right btn btn-primary" data-toggle="modal" data-target="#add-param">
-                        <i class="fa fa-plus"></i> 设置参数
-                    </span>
-
-                    <div class="modal fade" id="add-param" tabindex="-1" role="dialog" aria-labelledby="add-param-modal-label">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="add-module-modal-label">设置参数</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="add-param-form" class="form-horizontal" method="post" action="{{ route('subproduct.params', ['id'=> $subproduct->id]) }}">
-                                        @foreach($subproduct->product->params as $param)
-
-                                            {{--*/ $selected = false /*--}}
-                                            {{--*/ $btn_class = 'btn-default' /*--}}
-
-                                            @if($subproduct->params->contains($param->id))
-                                                {{--*/ $selected = true /*--}}
-                                                {{--*/ $btn_class = 'btn-primary' /*--}}
-                                            @endif
-
-                                            <div data-id="{{ $param->id }}" class="param-btn btn {{ $btn_class }}">
-                                                {{ $param->name }}
-                                            </div>
-
-                                            @if($selected)
-                                                <input type="hidden" name="params[]" value="{{ $param->id }}" />
-                                            @endif
-
-                                        @endforeach
-
-                                        <script type="text/javascript">
-
-                                            require(['jquery'], function($) {
-
-                                                $('.param-btn').bind('click', function() {
-
-                                                    $input = $('<input type="hidden" name="params[]" />');
-
-                                                    var $div = $(this);
-
-                                                    if ($div.hasClass('btn-default')) {
-                                                        $div.removeClass('btn-default');
-                                                        $div.addClass('btn-primary');
-                                                        $input.val($div.data('id'));
-
-                                                        $div.after($input);
-                                                    }
-                                                    else {
-                                                        $div.removeClass('btn-primary');
-                                                        $div.addClass('btn-default');
-                                                        $div.next(":input").remove();
-                                                    }
-                                                });
-                                            });
-                                        </script>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    <button type="submit" class="btn btn-primary" form="add-param-form">设置</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    @endif
-                    {{--*/ //可能会被删除的功能 end /*--}}
                 </div>
             </div>
         </div>

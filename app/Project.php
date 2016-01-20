@@ -39,7 +39,9 @@ class Project extends Model
     }
 
     public function params() {
-        return $this->belongsToMany('App\Param', 'project_params')->withPivot('value');
+        return $this->belongsToMany('App\Param', 'project_params')
+            ->withPivot('value')
+            ->withPivot('manual'); //是否手动修改了该参数
     }
 
     public function hardwares() {

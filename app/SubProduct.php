@@ -27,10 +27,12 @@ class SubProduct extends Model
 
     //可设置 params
     public function params() {
-        return $this->belongsToMany('App\Param', 'sub_product_params')->withPivot('value');
+        return $this->belongsToMany('App\Param', 'sub_product_params')
+            ->withPivot('value')
+            ->withPivot('manual'); //是否手动进行了修改
     }
 
-    public function hardwares() {
-        return $this->belongsToMany('App\Hardware', 'sub_product_hardwares')->withPivot('count');
+    public function projects() {
+        return $this->hasMany('App\Project', 'product_id');
     }
 }

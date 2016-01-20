@@ -185,7 +185,7 @@
                                 </span>
 
                                 <div class="modal fade" id="edit-param" tabindex="-1" role="dialog" aria-labelledby="edit-project-modal-label">
-                                    <div class="modal-dialog modal-sm" role="document">
+                                    <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -205,6 +205,17 @@
                                                             <input type="text" class="form-control" name="value">
                                                         </div>
                                                     </div>
+
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" name="reset"> 恢复默认参数 (勾选该参数后, 上述修改无效)
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                     <input type="hidden" name="param_id" value="" >
 
                                                 </form>
@@ -216,112 +227,28 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <script type="text/javascript">
+
+                                    require(['jquery'], function($) {
+
+                                        $('.edit-param').bind('click', function() {
+                                            var $modal = $('#edit-param');
+                                            $modal.find(':input[name=name]').val($(this).data('name'));
+                                            $modal.find(':input[name=value]').val($(this).data('value'));
+                                            $modal.find(':input[name=param_id]').val($(this).data('id'));
+
+
+                                            $modal.modal();
+                                        });
+
+                                    });
+                                </script>
                             @endif
                         </td>
                     </tr>
                 @endforeach
 
-                @if ($can_manage_param)
-                <tr>
-                    <td colspan="2">
-                        <span class="pull-right">
-                            <button data-toggle="modal" data-target="#params" type="button" class="btn btn-primary"><i class="fa fa-wrench"></i> 设置参数</button>
-                        </span>
-
-                        <div class="modal fade" id="params" tabindex="-1" role="dialog" aria-labelledby="add-param-modal-label">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="add-module-modal-label">设置参数</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="params-form" class="form-horizontal" method="post" action="{{ route('project.params', ['id'=> $project->id]) }}">
-                                            @foreach($project->product->product->params as $param)
-
-                                                {{--*/ $selected = false /*--}}
-                                                {{--*/ $btn_class = 'btn-default' /*--}}
-
-                                                @if($project->params->contains($param->id))
-                                                    {{--*/ $selected = true /*--}}
-                                                    {{--*/ $btn_class = 'btn-primary' /*--}}
-                                                @endif
-
-                                                <div data-id="{{ $param->id }}" class="param-btn btn {{ $btn_class }}">
-                                                    {{ $param->name }}
-                                                </div>
-
-                                                @if($selected)
-                                                    <input type="hidden" name="params[]" value="{{ $param->id }}" />
-                                                @endif
-
-                                            @endforeach
-
-                                            <script type="text/javascript">
-
-                                                require(['jquery', 'bootstrap3-typeahead'], function($) {
-                                                    $.get('/servers.json', function(data){
-                                                        var $selector = $("#server_selector");
-                                                        $selector.typeahead({
-                                                            source:data,
-                                                            displayText: function(item) {
-                                                                return item.name;
-                                                            },
-                                                            afterSelect: function(item) {
-                                                                var $input = $('<input name="server_id" type="hidden">');
-                                                                $input.val(item.id);
-                                                                $selector.after($input);
-                                                            }
-                                                        });
-                                                    },'json');
-
-                                                });
-
-                                                require(['jquery'], function($) {
-
-                                                    $('.edit-param').bind('click', function() {
-                                                        var $modal = $('#edit-param');
-                                                        $modal.find(':input[name=name]').val($(this).data('name'));
-                                                        $modal.find(':input[name=value]').val($(this).data('value'));
-                                                        $modal.find(':input[name=param_id]').val($(this).data('id'));
-
-
-                                                        $modal.modal();
-                                                    });
-
-                                                    $('.param-btn').bind('click', function() {
-
-                                                        $input = $('<input type="hidden" name="params[]" />');
-
-                                                        var $div = $(this);
-
-                                                        if ($div.hasClass('btn-default')) {
-                                                            $div.removeClass('btn-default');
-                                                            $div.addClass('btn-primary');
-                                                            $input.val($div.data('id'));
-
-                                                            $div.after($input);
-                                                        }
-                                                        else {
-                                                            $div.removeClass('btn-primary');
-                                                            $div.addClass('btn-default');
-                                                            $div.next(":input").remove();
-                                                        }
-                                                    });
-                                                });
-                                            </script>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                        <button type="submit" class="btn btn-primary" form="params-form">设置</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                @endif
             </table>
         </div>
 

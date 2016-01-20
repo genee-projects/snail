@@ -238,58 +238,6 @@ class ProjectController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function params($id, Request $request) {
-
-        if (!\Session::get('user')->can('项目参数管理')) abort(401);
-
-        $project = Project::find($id);
-
-        $data = $project->params()->lists('id')->all();
-
-        //$data 为已关联的
-
-        $params = $request->input('params');
-
-        //拆分算法如下
-
-        //1. 获取 $data 和 $params 的交集
-        //2. 获取 $data 和 1.中交集的差集
-        //3. 对差集进行 detach 即可
-        //4. 获取 $param 和 1.中交集的差集, 进行 save
-
-
-        //1. 获取 $data 和 $params 的交集
-        $intersect = array_intersect($data, (array) $params);
-
-
-        //2. 获取 $data 和 1.中交集的差集
-
-        $detach = array_diff($data, $intersect);
-
-
-        //3. detach
-        if (count($detach)) {
-            $project->params()->detach($detach);
-        }
-
-        //4. 获取 $param 和 1.中交集的差集, 进行 save
-        $save = array_diff((array) $params, $intersect);
-
-
-        foreach($save as $param_id) {
-
-            $param = Param::find($param_id);
-
-            $project->params()->save($param, [
-                'value'=> $param->value,
-            ]);
-        }
-
-        return redirect()->back()
-            ->with('message_content', '参数设置成功!')
-            ->with('message_type', 'info');
-    }
-
     public function param_edit($id, Request $request) {
 
         if (!\Session::get('user')->can('项目参数管理')) abort(401);
@@ -299,11 +247,27 @@ class ProjectController extends Controller
         $param = Param::find($param_id);
 
         $project = Project::find($id);
-        $project->params()->detach($param_id);
 
-        $project->params()->save($param, [
-            'value' => $request->input('value'),
-        ]);
+        //如果设定了需要重置,
+        if ($request->input('reset') == 'on') {
+
+            $value = $project->product->params()->where('param_id', $param->id)->first()->pivot->value;
+
+            $project->params()->detach($param_id);
+
+            $project->params()->save($param, [
+                'value'=> $value,
+            ]);
+
+        } else {
+
+            $project->params()->detach($param_id);
+
+            $project->params()->save($param, [
+                'value' => $request->input('value'),
+                'manual'=> true,
+            ]);
+        }
 
         return redirect()->back()
             ->with('message_content', '参数修改成功!')

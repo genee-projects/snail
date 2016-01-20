@@ -149,11 +149,6 @@ Route::post('/projects/{id}/modules', [
     'uses'=> 'ProjectController@modules',
 ]);
 
-Route::post('/projects/{id}/params', [
-    'as'=> 'project.params',
-    'uses'=> 'ProjectController@params',
-]);
-
 Route::post('/projects/{id}/hardwares', [
     'as'=> 'project.hardwares',
     'uses'=> 'ProjectController@hardwares',
@@ -245,11 +240,6 @@ Route::get('/subproduct/profile/{id}', [
 Route::post('/subporduct/{id}/modules', [
     'as'=> 'subproduct.modules',
     'uses'=> 'SubProductController@modules'
-]);
-
-Route::post('/subproduct/{id}/params', [
-    'as'=> 'subproduct.params',
-    'uses'=> 'SubProductController@params',
 ]);
 
 Route::post('/subproduct/{id}/param', [

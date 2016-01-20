@@ -120,60 +120,6 @@ class SubProductController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function params($id, Request $request) {
-
-
-        if (!\Session::get('user')->can('产品参数管理')) abort(401);
-
-        $sub = SubProduct::find($id);
-
-        $data = $sub->params()->lists('id')->all();
-
-        //$data 为已关联的
-
-        $params = $request->input('params');
-
-
-        //拆分算法如下
-
-        //1. 获取 $data 和 $params 的交集
-        //2. 获取 $data 和 1.中交集的差集
-        //3. 对差集进行 detach 即可
-        //4. 获取 $param 和 1.中交集的差集, 进行 save
-
-
-        //1. 获取 $data 和 $params 的交集
-        $intersect = array_intersect($data, (array) $params);
-
-
-        //2. 获取 $data 和 1.中交集的差集
-
-        $detach = array_diff($data, $intersect);
-
-
-        //3. detach
-        if (count($detach)) {
-            $sub->params()->detach($detach);
-        }
-
-        //4. 获取 $param 和 1.中交集的差集, 进行 save
-        $save = array_diff((array) $params, $intersect);
-
-
-        foreach($save as $param_id) {
-
-            $param = Param::find($param_id);
-
-            $sub->params()->save($param, [
-                'value'=> $param->value,
-            ]);
-        }
-
-        return redirect()->back()
-            ->with('message_content', '参数设置成功!')
-            ->with('message_type', 'info');
-    }
-
     public function param_edit($id, Request $request) {
 
         if (!\Session::get('user')->can('产品参数管理')) abort(401);
@@ -181,10 +127,42 @@ class SubProductController extends Controller
         $sub = SubProduct::find($id);
 
         $param_id = $request->input('param_id');
+        $param = \App\Param::find($param_id);
 
-        $sub->params()->updateExistingPivot($param_id, [
-            'value'=> $request->input('value'),
-        ]);
+        if ($request->input('reset') == 'on') {
+
+            //获取到 product 中该参数的 value
+            $value = $sub->product->params()->where('id', $param->id)->first()->value;
+
+            $param->value = $value;
+
+            $sub->params()->detach($param_id);
+
+            $sub->params()->save($param, [
+                'value'=> $value,
+            ]);
+
+        } else {
+
+            $value = $request->input('value');
+
+            $sub->params()->updateExistingPivot($param_id, [
+                'value'=> $value,
+                'manual'=> true,
+            ]);
+        }
+
+        foreach($sub->projects as $project) {
+
+            $project_param = $project->params()->where('param_id', $param->id)->first();
+
+            //如果为默认 (不为手动), 则修改
+            if (! $project_param->pivot->manual) {
+                $project->params()->updateExistingPivot($param->id, [
+                    'value'=> $value,
+                ]);
+            }
+        }
 
         return redirect()->back()
             ->with('message_content', '参数修改成功!')
