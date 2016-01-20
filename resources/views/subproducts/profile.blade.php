@@ -250,31 +250,85 @@
                 </div>
                 <div class="panel-body">
                     <table class="table table-hover">
-                        <tr>
-                            <td>参数名称</td>
-                            <td>参数代码</td>
-                            <td>参数值</td>
-                            <td>简述</td>
-                        </tr>
 
                         {{--*/ $can_manage_param = \Session::get('user')->can('产品参数管理')/*--}}
 
-                        @foreach($subproduct->params as $param)
-                            <tr>
-                                <td>{{ $param->name }}</td>
-                                <td><code>{{ $param->code }}</code></td>
-                                <td>{{ $param->pivot->value }}</td>
-                                <td>
-                                    {{ $param->description }}
+                        {{--*/
+                        $normal_params = [];
+                        $spec_params = [];
 
-                                    @if ($can_manage_param)
-                                        <span class="pull-right">
-                                            <i data-value="{{ $param->pivot->value }}" data-id="{{ $param->id }}" data-name="{{ $param->name }}" class="edit edit-param fa fa-edit fa-fw"></i>
-                                        </span>
-                                    @endif
+                        foreach($subproduct->params as $param) {
+                            if ($param->pivot->manual) {
+                                $spec_params[] = $param;
+                            } else {
+                                $normal_params[] = $param;
+                            }
+                        }
+
+                        /*--}}
+
+                        @if (count($spec_params))
+                            <tr class="warning">
+                                <td colspan="4">
+                                    <h5>特殊参数</h5>
                                 </td>
                             </tr>
-                        @endforeach
+                            <tr>
+                                <td>参数名称</td>
+                                <td>参数代码</td>
+                                <td>参数值</td>
+                                <td>简述</td>
+                            </tr>
+
+                            @foreach($spec_params as $param)
+                                <tr>
+                                    <td>{{ $param->name }}</td>
+                                    <td><code>{{ $param->code }}</code></td>
+                                    <td>{{ $param->pivot->value }}</td>
+                                    <td>
+                                        {{ $param->description }}
+
+                                        @if ($can_manage_param)
+                                            <span class="pull-right">
+                                                <i data-value="{{ $param->pivot->value }}" data-id="{{ $param->id }}" data-name="{{ $param->name }}" class="edit edit-param fa fa-edit fa-fw"></i>
+                                            </span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+
+                        @if (count($normal_params))
+                            <tr class="info show-params">
+                                <td colspan="4">
+                                    <h5>统一参数(点击显示)</h5>
+                                </td>
+                            </tr>
+                            <tr class="hidden normal-param">
+                                <td>参数名称</td>
+                                <td>参数代码</td>
+                                <td>参数值</td>
+                                <td>简述</td>
+                            </tr>
+
+                            @foreach($normal_params as $param)
+                                <tr class="active hidden normal-param">
+                                    <td>{{ $param->name }}</td>
+                                    <td><code>{{ $param->code }}</code></td>
+                                    <td>{{ $param->pivot->value }}</td>
+                                    <td>
+                                        {{ $param->description }}
+
+                                        @if ($can_manage_param)
+                                            <span class="pull-right">
+                                                <i data-value="{{ $param->pivot->value }}" data-id="{{ $param->id }}" data-name="{{ $param->name }}" class="edit edit-param fa fa-edit fa-fw"></i>
+                                            </span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+
                     </table>
 
 
@@ -326,6 +380,10 @@
                                 $modal.find(':input[name=param_id]').val($(this).data('id'));
 
                                 $modal.modal();
+                            });
+
+                            $('.show-params').bind('click', function() {
+                                $(this).parents('table').find('.normal-param').removeClass('hidden');
                             });
                         });
                     </script>

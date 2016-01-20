@@ -24,33 +24,31 @@
 
 
                 @if (count($extra_modules))
-                    <tr class="danger">
+                    <tr class="warning">
                         <td><h5>附加模块</h5></td>
                     </tr>
+
+                    @foreach($extra_modules as $module)
+                        <tr class="active">
+                            <td>
+                                {{ $module->name }}
+                            </td>
+                        </tr>
+                    @endforeach
                 @endif
-
-                @foreach($extra_modules as $module)
-                    <tr class="active">
-                        <td>
-                            {{ $module->name }}
-                        </td>
-                    </tr>
-                @endforeach
-
+                
                 @if (count($default_modules))
-                    <tr class="success show-modules">
+                    <tr class="info show-modules">
                         <td><h5>默认模块(点击查看)</h5></td>
                     </tr>
+                    @foreach($default_modules as $module)
+                        <tr class="hidden default-module">
+                            <td>
+                                {{ $module->name }}
+                            </td>
+                        </tr>
+                    @endforeach
                 @endif
-                @foreach($default_modules as $module)
-                    <tr class="hidden default-module">
-                        <td>
-                            {{ $module->name }}
-                        </td>
-                    </tr>
-                @endforeach
-
-
 
                 {{--*/ $can_manage_module = \Session::get('user')->can('项目模块管理')/*--}}
 
@@ -212,7 +210,7 @@
                 /*--}}
 
                 @if (count($spec_params))
-                    <tr class="danger">
+                    <tr class="warning">
                         <td colspan="2"><h5>特殊参数</h5></td>
                     </tr>
                     <tr>
@@ -236,11 +234,11 @@
                 @endif
 
                 @if (count($normal_params))
-                    <tr class="show-params success">
+                    <tr class="show-params info">
                         <td colspan="2"><h5>统一参数(点击查看)</h5></td>
                     </tr>
 
-                    <tr class="normal-param">
+                    <tr class="hidden normal-param">
                         <td>名称</td>
                         <td>参数值</td>
                     </tr>
