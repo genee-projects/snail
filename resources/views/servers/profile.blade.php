@@ -111,6 +111,16 @@
                     </tr>
 
                     <tr>
+                        <td>内网 IP</td>
+                        <td><code>{{ $server->inner_ip }}</code></td>
+                    </tr>
+
+                    <tr>
+                        <td>外网 IP</td>
+                        <td><code>{{ $server->outer_ip }}</code></td>
+                    </tr>
+
+                    <tr>
                         <td>备注信息</td>
                         <td>{{ $server->description }}</td>
                     </tr>

@@ -95,6 +95,8 @@ class ProjectController extends Controller
         $project->contact_phone = $request->input('contact_phone'); // 联系电话
         $project->contact_email = $request->input('contact_email'); // 联系邮箱
 
+        $project->login_url = $request->input('login_url');     //登录地址
+
         $signed_time = $request->input('signed_time');
 
         if (!$signed_time) $signed_time = NULL;

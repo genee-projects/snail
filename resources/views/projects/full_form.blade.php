@@ -131,10 +131,18 @@
 
 
 <div class="form-group">
-    <label for="project-deploy-address" class="col-sm-2 control-label">部署地址</label>
+    <label for="project-deploy-address" class="col-sm-2 control-label">客户地址</label>
 
     <div class="col-sm-10">
         <textarea id="project-deploy-address" class="col-sm-2 form-control" rows="2" name="deploy_address">{{ $project->deploy_address or ''}}</textarea>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <label form="project-login-url" class="col-sm-2 control-label">登录地址</label>
+    <div class="col-sm-10">
+        <input value="{{ $project->login_url or '' }}" name="region" type="text" class="form-control" id="project-login-url" placeholder="http://less.nankai.edu.cn">
     </div>
 </div>
 

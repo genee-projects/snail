@@ -72,6 +72,19 @@
     </div>
 </div>
 
+
+<div class="form-group">
+    <label for="inner-ip" class="col-sm-1 control-label">内网IP</label>
+    <div class="col-sm-5">
+        <input value="{{ $server->inner_ip or '' }}" name="inner_ip" type="text" class="form-control" id="inner-ip" placeholder="10.0.0.1">
+    </div>
+
+    <label for="outer-ip" class="col-sm-1 control-label">外网IP</label>
+    <div class="col-sm-5">
+        <input value="{{ $server->outer_ip or '' }}" name="outer_ip" type="text" class="form-control" id="outer-ip" placeholder="133.130.55.133">
+    </div>
+</div>
+
 <div class="form-group">
 
     <label for="server-vpn" class="col-sm-1 control-label">VPN</label>
@@ -79,6 +92,8 @@
         <input value="{{ $server->vpn or '' }}" name="vpn" type="text" class="form-control" id="server-vpn" placeholder="10.0.10.1">
     </div>
 </div>
+
+
 
 <div class="form-group">
     <label for="server-description" class="col-sm-1 control-label">备注</label>

@@ -123,7 +123,7 @@
                             <td>{{  $project->engineer }}</td>
                         </tr>
                         <tr>
-                            <td>部署地址</td>
+                            <td>客户地址(服务器部署地址)</td>
                             <td>{{ $project->deploy_address }}</td>
                         </tr>
                         <tr>
