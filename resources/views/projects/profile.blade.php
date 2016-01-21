@@ -204,7 +204,7 @@
                         <!-- Nav tabs -->
                         <ul class="profile nav nav-tabs" role="tablist">
 
-                            <li role="presentation" class="active">
+                            <li role="presentation">
                                 <a data-type="softwares" href="#softwares-tab" role="tab">
                                     <i class="fa fa-bolt"></i> 软件信息
                                 </a>
@@ -295,6 +295,7 @@
     <script type="text/javascript">
         requirejs(['jquery', 'bootstrap'], function($) {
 
+
             $('ul.profile a').bind('click', function(e) {
                 e.preventDefault();
 
@@ -310,8 +311,7 @@
 
                 $(this).tab('show');
             });
-
-            var $active = $('ul.profile li.active a:eq(0)').trigger('click');
+            $('ul.profile li a[data-type={{ session('tab', 'softwares') }}]').trigger('click');
         });
     </script>
 

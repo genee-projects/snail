@@ -192,12 +192,14 @@ class ProjectController extends Controller
 
             return redirect(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '关联成功!')
-                ->with('message_type', 'info');
+                ->with('message_type', 'info')
+                ->with('tab', 'servers');
         }
 
         return redirect(route('project.profile', ['id'=> $project->id]))
             ->with('message_content', '已关联服务器, 无法再次关联')
-            ->with('message_type', 'danger');
+            ->with('message_type', 'danger')
+            ->with('tab', 'servers');
     }
 
     public function server_disconnect($id, $server_id, Request $request) {
@@ -212,7 +214,8 @@ class ProjectController extends Controller
 
             return redirect()->to(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '解除关联成功')
-                ->with('message_type', 'info');
+                ->with('message_type', 'info')
+                ->with('tab', 'servers');
         }
     }
 
@@ -237,7 +240,8 @@ class ProjectController extends Controller
 
         return redirect()->back()
             ->with('message_content', '模块设置成功!')
-            ->with('message_type', 'info');
+            ->with('message_type', 'info')
+            ->with('tab', 'softwares');
     }
 
     public function param_edit($id, Request $request) {
@@ -273,7 +277,8 @@ class ProjectController extends Controller
 
         return redirect()->back()
             ->with('message_content', '参数修改成功!')
-            ->with('message_type', 'info');
+            ->with('message_type', 'info')
+            ->with('tab', 'softwares');
     }
 
     public function hardwares($id, Request $request) {
@@ -322,7 +327,8 @@ class ProjectController extends Controller
 
         return redirect()->back()
             ->with('message_content', '硬件设置成功!')
-            ->with('message_type', 'info');
+            ->with('message_type', 'info')
+            ->with('tab', 'hardwares');
     }
 
 
@@ -346,7 +352,8 @@ class ProjectController extends Controller
 
         return redirect()->back()
             ->with('message_content', '硬件修改成功!')
-            ->with('message_type', 'info');
+            ->with('message_type', 'info')
+            ->with('tab', 'hardwares');
     }
 
 
