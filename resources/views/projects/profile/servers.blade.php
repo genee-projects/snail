@@ -7,7 +7,6 @@
             <td>服务器名称</td>
             <td>服务器 FQDN</td>
             <td>服务器 VPN </td>
-            <td>服务器用途</td>
             <td>部署时间</td>
             <td>提供方</td>
         </tr>
@@ -18,7 +17,6 @@
                 <td><a href="{{ route('server.profile', ['id'=> $server->id]) }}">{{ $server->name }}</a></td>
                 <td>{{ $server->fqdn }}</td>
                 <td>{{ $server->vpn }}</td>
-                <td>{{ $server->pivot->usage }}</td>
                 <td>
                     @if ($server->pivot->deploy_time)
                         {{ (new DateTime($server->pivot->deploy_time))->format('Y/m/d') }}
@@ -57,12 +55,6 @@
                 <div class="date">
                     <input type="text" class="datetimepicker form-control" name="deploy_time" id="server_deploy_time">
                 </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="server_usage" class="col-sm-2 control-label">服务器用途</label>
-            <div class="col-sm-10">
-                <textarea name="usage" class="form-control" rows="3" id="server_usage"></textarea>
             </div>
         </div>
 

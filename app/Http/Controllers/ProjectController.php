@@ -186,7 +186,6 @@ class ProjectController extends Controller
 
         if (! $project->servers()->find($request->input('server_id'))) {
             $project->servers()->save($server, [
-                'usage'=> $request->input('usage'),
                 'deploy_time'=> $deploy_time,
             ]);
 
