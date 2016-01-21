@@ -520,7 +520,7 @@
                 </div>
 
                 <div class="panel-body">
-                    <table class="table table-condensed table-hover table-striped">
+                    <table class="table table-hover table-striped">
                         <tr>
                             <td>参数名称</td>
                             <td>参数代码</td>
@@ -533,11 +533,7 @@
                                 <td>{{ $param->name }}</td>
                                 <td><code>{{ $param->code }}</code></td>
                                 <td>
-                                    <p>
-                                        <span>
-                                            {{ $param->value }}
-                                        </span>
-                                    </p>
+                                    {{ $param->value }}
                                 </td>
                                 <td>
                                     {{ $param->description }}
