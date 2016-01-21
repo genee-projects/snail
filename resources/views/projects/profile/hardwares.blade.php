@@ -33,7 +33,7 @@
                     {{ $hardware->pivot->description }}
                     @if ($can_manage_hardware)
                         <span class="pull-right">
-                              <i class="fa fa-fw fa-edit edit-hardware edit" data-model="{{ $hardware->model }}" data-description="{{ $hardware->description }}" data-id="{{ $hardware->id }}" data-name="{{ $hardware->name }}" data-plan-count="{{ $hardware->pivot->plan_count }}" data-deployed-count="{{ $hardware->pivot->deployed_count }}"></i>
+                              <i class="fa fa-fw fa-edit edit-hardware edit" data-model="{{ $hardware->model }}" data-description="{{ $hardware->pivot->description }}" data-id="{{ $hardware->id }}" data-name="{{ $hardware->name }}" data-plan-count="{{ $hardware->pivot->plan_count }}" data-deployed-count="{{ $hardware->pivot->deployed_count }}"></i>
                         </span>
                     @endif
                 </td>
@@ -184,7 +184,7 @@
                 $modal.find(':input[name=model]').val($(this).data('model'));
                 $modal.find(':input[name=plan_count]').val($(this).data('plan-count'));
                 $modal.find(':input[name=deployed_count]').val($(this).data('deployed-count'));
-                $modal.find(':input[name=desription]').val($(this).data('description'));
+                $modal.find(':input[name=description]').val($(this).data('description'));
 
                 $modal.find(':input[name=hardware_id]').val($(this).data('id'));
 
