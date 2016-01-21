@@ -252,7 +252,7 @@
                 <div class="panel-body">
                     <table class="table table-hover table-striped">
                         <tr>
-                            <td class="col-lg-1">名称</td>
+                            <td class="col-lg-3">名称</td>
                             <td>依赖模块</td>
                             <td>简述</td>
                         </tr>
