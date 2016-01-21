@@ -4,7 +4,7 @@ body #content .role-board-container {
     display: inline-block;
     padding: 0 5px;
     border-radius: 2px;
-    margin: 5px;
+    margin: 5px 2px;
     background-color: #23527c;
     color: #fff;
     cursor: default; }
