@@ -137,7 +137,7 @@
 <div class="form-group">
     <label form="project-login-url" class="col-sm-2 control-label">登录地址</label>
     <div class="col-sm-10">
-        <input value="{{ $project->login_url or '' }}" name="region" type="text" class="form-control" id="project-login-url" placeholder="http://less.nankai.edu.cn">
+        <input value="{{ $project->login_url or '' }}" name="login_url" type="text" class="form-control" id="project-login-url" placeholder="http://less.nankai.edu.cn">
     </div>
 </div>
 
