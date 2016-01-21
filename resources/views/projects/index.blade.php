@@ -45,8 +45,21 @@
                                 </td>
                                 <td>{!! $project->client->path() !!}</td>
                                 <td>{{ $project->contact_user }}</td>
-                                <td>@if ($project->cancelled_time)
+                                <td class="text-right">@if ($project->cancelled_time)
+                                        {{--*/
+                                        $now = (new DateTime())->format('Y/m/d');
+                                        $cancelled_time = (new DateTime($project->cancelled_time))->format('Y/m/d');
+                                        /*--}}
+
+                                        @if ($now > $cancelled_time)
+                                            <strong class="text-danger">
+                                        @endif
+
                                         {{ (new DateTime($project->cancelled_time))->format('Y/m/d') }}
+
+                                        @if ($now > $cancelled_time)
+                                            <label>已到期!</label></strong>
+                                        @endif
                                      @endif
                                 </td>
                             </tr>
