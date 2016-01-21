@@ -17,15 +17,6 @@ class UserController extends Controller
         return view('users/index', ['users' => User::all()]);
     }
 
-    public function profile($id) {
-
-        if (!\Session::get('user')->is_admin()) abort(401);
-
-        $user = User::find($id);
-
-        return view('users/profile', ['user'=> $user]);
-    }
-
     public function refresh() {
 
         if (!\Session::get('user')->is_admin()) abort(401);

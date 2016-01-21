@@ -25,14 +25,22 @@
                     <table class="table table-hover">
 
                         <tr>
-                            <td>名称</td>
+                            <td class="col-lg-2">名称</td>
+                            <td>角色</td>
                         </tr>
                         @foreach($users as $user)
                             <tr>
                                 <td>
-                                    <a href="{{ route('user.profile', ['id'=> $user->id]) }}">
-                                        {{ $user->name }}
-                                    </a>
+                                   {{ $user->name }}
+                                </td>
+                                <td>
+                                    @foreach($user->roles as $role)
+                                        <p>
+                                            <code>
+                                                {{ $role->name }}
+                                            </code>
+                                        </p>
+                                    @endforeach
                                 </td>
                             </tr>
                         @endforeach

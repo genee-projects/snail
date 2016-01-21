@@ -278,11 +278,6 @@ Route::get('/users', [
     'uses'=> 'UserController@users',
 ]);
 
-Route::get('/users/profile/{id}', [
-    'as'=> 'user.profile',
-    'uses'=> 'UserController@profile',
-]);
-
 Route::get('/users/refresh', [
     'as'=> 'user.refresh',
     'uses'=> 'UserController@refresh',
