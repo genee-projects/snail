@@ -15,7 +15,7 @@ class ServerController extends Controller
         if (!\Session::get('user')->can('服务器查看')) abort(401);
 
         return view('servers/index', [
-            'servers'=> Server::all(),
+            'servers'=> Server::orderByRaw('INET_ATON(`vpn`)')->get(),
         ]);
     }
 
