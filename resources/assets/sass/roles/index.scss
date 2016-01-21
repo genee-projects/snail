@@ -6,9 +6,8 @@ body {
       .role-user  {
         display: inline-block;
         padding: 0 5px;
-        margin: 0 2px 0 3px;
         border-radius: 2px;
-
+        margin: 5px;
         background-color: #23527c;
         color: #fff;
         cursor: default;
@@ -23,6 +22,11 @@ body {
 
       height: 44px;
       vertical-align: bottom;
+      min-width: 60px;
+      border: 1px solid #d3d3d3;
+      padding: 5px;
+      margin: 5px 0;
+      border-radius: 5px;
 
       img {
         height: 32px;
@@ -46,12 +50,6 @@ body {
         display: table-cell;
         vertical-align: middle;
       }
-
-      min-width: 60px;
-      border: 1px solid #d3d3d3;
-      padding: 5px;
-      margin: 5px 0;
-      border-radius: 5px;
     }
   }
 }

@@ -24,7 +24,6 @@ elixir(function(mix) {
 
     mix.sass('subproducts/profile.scss', 'public/assets/css/subproducts/profile.css');
 
-    mix.sass('roles/profile.scss', 'public/assets/css/roles/profile.css');
     mix.sass('roles/index.scss', 'public/assets/css/roles/index.css');
 
     mix.sass('login.scss', 'public/assets/css/login.css');
