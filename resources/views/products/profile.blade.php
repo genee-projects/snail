@@ -57,7 +57,7 @@
 
                     <table class="table table-hover table-striped">
                         <tr>
-                            <td class="col-lg-1">名称</td>
+                            <td class="col-lg-3">名称</td>
                             <td>{{ $product->name }}</td>
                         </tr>
                         <tr>
