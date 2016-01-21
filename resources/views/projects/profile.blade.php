@@ -115,6 +115,10 @@
                             <td>{{ $project->contact_email }}</td>
                         </tr>
                         <tr>
+                            <td>登录地址</td>
+                            <td><a href="{{ $project->login_url }}">{{ $project->login_url }}</a></td>
+                        </tr>
+                        <tr>
                             <td>销售负责人</td>
                             <td>{{ $project->seller }}</td>
                         </tr>
