@@ -54,11 +54,8 @@
             <label for="server_deploy_time" class="col-sm-2 control-label">部署时间</label>
             <div class="col-sm-10">
 
-                <div class="input-group date datetimepicker">
+                <div class="date">
                     <input type="text" class="datetimepicker form-control" name="deploy_time" id="server_deploy_time">
-                    <span class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
-                    </span>
                 </div>
             </div>
         </div>
@@ -79,10 +76,11 @@
     </form>
 
     <script type="text/javascript">
-        require(['jquery', 'bootstrap-datetimepicker', 'bootstrap3-typeahead'], function($) {
+        require(['jquery', 'bootstrap-datetimepicker', 'bootstrap3-typeahead', 'locale/zh-cn'], function($) {
 
             $('.datetimepicker').datetimepicker({
-                format: 'YYYY/MM/DD'
+                format: 'YYYY/MM/DD',
+                locale: 'zh-cn'
             });
 
             require(['css!../css/bootstrap-datetimepicker.min'], function() {});

@@ -1,10 +1,11 @@
 <script type="text/javascript">
-    require(['jquery', 'bootstrap-datetimepicker', 'bootstrap-select'], function($) {
+    require(['jquery', 'bootstrap-datetimepicker', 'bootstrap-select', 'locale/zh-cn'], function($) {
         require(['css!../css/bootstrap-datetimepicker.min'], function() {});
         require(['css!../css/bootstrap-select.min'], function() {});
 
         $('.datetimepicker').datetimepicker({
-            format: 'YYYY/MM/DD'
+            format: 'YYYY/MM/DD',
+            locale: 'zh-cn'
         });
 
         $('select').selectpicker();

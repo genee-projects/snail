@@ -1,11 +1,12 @@
 <script type="text/javascript">
-    require(['jquery', 'bootstrap-datetimepicker', 'bootstrap-select'], function($) {
+    require(['jquery', 'bootstrap-datetimepicker', 'bootstrap-select', 'locale/zh-cn'], function($) {
 
         require(['css!../css/bootstrap-datetimepicker.min'], function() {});
         require(['css!../css/bootstrap-select.min'], function() {});
 
         $('.datetimepicker').datetimepicker({
-            format: 'YYYY/MM/DD'
+            format: 'YYYY/MM/DD',
+            locale: 'zh-cn'
         });
 
         $('select').selectpicker();
@@ -94,21 +95,15 @@
 <div class="form-group">
     <label for="project-signed-time" class="col-sm-2 control-label">签约时间</label>
     <div class="col-sm-4">
-        <div class="input-group date datetimepicker">
+        <div class="date">
             <input type="text" class="datetimepicker form-control" name="signed_time" value="{{ $project->signed_time }}" placeholder="2015/12/01">
-            <span class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-            </span>
         </div>
     </div>
 
     <label for="project-divorced-time" class="col-sm-2 control-label">合同到期时间</label>
     <div class="col-sm-4">
-        <div class="input-group date datetimepicker">
+        <div class="date">
             <input type="text" class="datetimepicker form-control" name="cancelled_time" value="{{ $project->cancelled_time }}" placeholder="2017/12/01">
-            <span class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-            </span>
         </div>
     </div>
 </div>
