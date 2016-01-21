@@ -33,7 +33,16 @@
                         @foreach($projects as $project)
                             <tr>
                                 <td>{{ $project->ref_no }}</td>
-                                <td><a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a></td>
+                                <td>
+                                    <a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a>
+                                    @if ($project->vip)
+                                        <span class="label label-danger">重点项目</span>
+                                    @endif
+
+                                    @if (! $project->official)
+                                        <span class="label label-default">试用</span>
+                                    @endif
+                                </td>
                                 <td>{!! $project->client->path() !!}</td>
                                 <td>{{ $project->contact_user }}</td>
                                 <td>@if ($project->cancelled_time)
