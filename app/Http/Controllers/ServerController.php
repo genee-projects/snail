@@ -49,6 +49,9 @@ class ServerController extends Controller
         $server->vpn = $request->input('vpn');
         $server->description = $request->input('description');
 
+        $server->inner_ip = $request->input('inner_ip');
+        $server->outer_ip = $request->input('outer_ip');
+
         $server->save();
 
         return redirect()->to(route('servers'))
@@ -74,6 +77,9 @@ class ServerController extends Controller
         $server->fqdn = $request->input('fqdn');
         $server->vpn = $request->input('vpn');
         $server->description = $request->input('description');
+        
+        $server->inner_ip = $request->input('inner_ip');
+        $server->outer_ip = $request->input('outer_ip');
 
         if ($server->save()) {
             return redirect()->to(route('server.profile', ['id'=> $server->id]))
