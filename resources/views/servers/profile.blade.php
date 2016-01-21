@@ -198,7 +198,6 @@
                 <tr>
                     <td>项目编号</td>
                     <td>项目名称</td>
-                    <td>部署原因</td>
                     <td>部署时间</td>
                 </tr>
 
@@ -206,8 +205,7 @@
                     <tr>
                         <td>{{ $project->ref_no }}</td>
                         <td><a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a></td>
-                        <td>{{ $project->pivot->usage }}</td>
-                        <td>{{ $project->pivot->usage or '未设置' }}</td>
+                        <td>{{ (new DateTime($project->pivot->deploy_time))->format('Y/m/d') }}</td>
                     </tr>
                 @endforeach
 
