@@ -20,5 +20,9 @@ body {
     .loading {
       padding: 20px;
     }
+
+    .show-modules,.show-params {
+      cursor: pointer;
+    }
   }
 }

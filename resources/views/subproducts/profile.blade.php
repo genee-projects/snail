@@ -383,7 +383,13 @@
                             });
 
                             $('.show-params').bind('click', function() {
-                                $(this).parents('table').find('.normal-param').removeClass('hidden');
+                                var $params = $(this).parents('table').find('.normal-param');
+
+                                if ($params.hasClass('hidden')) {
+                                    $params.removeClass('hidden');
+                                } else {
+                                    $params.addClass('hidden');
+                                }
                             });
                         });
                     </script>

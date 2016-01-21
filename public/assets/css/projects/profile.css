@@ -15,4 +15,7 @@ body #content .hardware-btn {
 body #content .loading {
   padding: 20px; }
 
+body #content .show-modules, body #content .show-params {
+  cursor: pointer; }
+
 /*# sourceMappingURL=profile.css.map */

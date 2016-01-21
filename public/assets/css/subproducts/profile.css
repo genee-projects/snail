@@ -12,4 +12,7 @@ body #content .hardware-btn {
   display: block;
   margin: 0 10px 20px; }
 
+body #content .show-params {
+  cursor: pointer; }
+
 /*# sourceMappingURL=profile.css.map */

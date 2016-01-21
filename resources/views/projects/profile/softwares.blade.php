@@ -36,7 +36,7 @@
                         </tr>
                     @endforeach
                 @endif
-                
+
                 @if (count($default_modules))
                     <tr class="info show-modules">
                         <td><h5>默认模块(点击查看)</h5></td>
@@ -321,11 +321,24 @@
                     });
 
                     $('.show-params').bind('click', function() {
-                        $(this).parents('table').find('tr.normal-param').removeClass('hidden');
+                        var $params = $(this).parents('table').find('tr.normal-param');
+
+                        if ($params.hasClass('hidden')) {
+                            $params.removeClass('hidden');
+                        } else {
+                            $params.addClass('hidden');
+                        }
                     });
 
                     $('.show-modules').bind('click', function() {
-                        $(this).parents('table').find('tr.default-module').removeClass('hidden');
+
+                        var $modules = $(this).parents('table').find('tr.default-module');
+
+                        if ($modules.hasClass('hidden')) {
+                            $modules.removeClass('hidden');
+                        } else {
+                            $modules.addClass('hidden');
+                        }
                     });
                 });
             </script>
