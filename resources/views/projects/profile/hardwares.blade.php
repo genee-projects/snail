@@ -77,6 +77,9 @@
                                 <div class="col-lg-12">
                                     <div data-id="{{ $hardware->id }}" class="hardware-btn btn {{ $btn_class }}">
                                         {{ $hardware->name }}
+                                        @if ($hardware->model)
+                                            ({{$hardware->model}})
+                                        @endif
                                     </div>
                                     @if($selected)
                                         <input type="hidden" name="hardwares[]" value="{{ $hardware->id }}" />
