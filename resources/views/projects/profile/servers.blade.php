@@ -24,18 +24,64 @@
                 </td>
                 <td>
                     {{ App\Server::$providers[$server->provider] }}
+
+                    @if ($can_manage_server)
                     <span class="pull-right">
-                        <a class="btn btn-xs btn-primary" href="{{ route('project.server.disconnect', ['id'=> $project->id, 'server_id'=> $server->id]) }}">解除关联</a>
+                        <i class="fa fa-fw fa-edit edit-server edit"
+                           data-name="{{ $server->name }}"
+                           data-fqdn="{{ $server->fqdn }}"
+                           data-id="{{ $server->id }}"
+                           data-deploy-time="{{ (new DateTime($server->pivot->deploy_time))->format('Y/m/d') }}"></i>
+
+                        <a href="{{ route('project.server.disconnect', ['id'=> $project->id, 'server_id'=> $server->id]) }}">
+                            <i class="fa fa-fw fa-times"></i>
+                        </a>
                     </span>
+                    @endif
                 </td>
             </tr>
         @endforeach
 
     </table>
 
-    <hr />
 
     @if ($can_manage_server)
+
+    <hr />
+
+    <div class="modal fade" id="edit-server" tabindex="-1" role="dialog" aria-labelledby="edit-server-modal-label">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="edit-server-modal-label">修改服务器信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-project-server-form" class="form-horizontal" method="post" action="{{ route('project.server.edit', ['id'=> $project->id]) }}">
+
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" name="name" disabled="disabled">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="text" class="datetimepicker form-control" name="deploy_time">
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="server_id" value="" >
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary" form="edit-project-server-form">修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <h3>关联服务器</h3>
 
@@ -93,6 +139,15 @@
                 });
             },'json');
 
+            $('.edit-server').bind('click', function() {
+                var $modal = $('#edit-server');
+                $modal.find(':input[name=name]').val($(this).data('name'));
+                $modal.find(':input[name=deploy_time]').val($(this).data('deploy-time'));
+
+                $modal.find(':input[name=server_id]').val($(this).data('id'));
+
+                $modal.modal();
+            });
         });
     </script>
 

@@ -218,6 +218,29 @@ class ProjectController extends Controller
         }
     }
 
+    public function server_edit($id, Request $request) {
+
+        if (!\Session::get('user')->can('项目服务器管理')) abort(401);
+
+        $project = Project::find($id);
+        $server = Server::find($request->input('server_id'));
+
+        if ($project->servers()->find($server->id)) {
+
+            $deploy_time = $request->input('deploy_time');
+            if (!$deploy_time) $deploy_time = NULL;
+
+            $project->servers()->updateExistingPivot($server->id, [
+                'deploy_time'=> $deploy_time,
+            ]);
+
+            return redirect()->to(route('project.profile', ['id'=> $project->id]))
+                ->with('message_content', '修改成功')
+                ->with('message_type', 'info')
+                ->with('tab', 'servers');
+        }
+    }
+
 
     public function modules($id, Request $request) {
 

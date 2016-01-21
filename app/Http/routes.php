@@ -164,6 +164,11 @@ Route::post('/projects/{id}/hardware', [
     'uses'=> 'ProjectController@hardware_edit',
 ]);
 
+Route::post('/projects/{id}/server', [
+    'as'=> 'project.server.edit',
+    'uses'=> 'ProjectController@server_edit',
+]);
+
 Route::post('/projects/{id}/profile_item', [
     'as'=> 'project.profile.item',
     'uses'=> 'ProjectController@profile_item',
