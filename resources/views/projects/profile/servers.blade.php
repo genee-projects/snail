@@ -114,7 +114,7 @@
     </form>
 
     <script type="text/javascript">
-        require(['jquery', 'bootstrap-datetimepicker', 'bootstrap3-typeahead', 'locale/zh-cn'], function($) {
+        require(['jquery', 'bootstrap-datetimepicker', 'bootstrap3-typeahead', 'moment/locale/zh-cn'], function($) {
 
             $('.datetimepicker').datetimepicker({
                 format: 'YYYY/MM/DD',

@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    require(['jquery', 'bootstrap-datetimepicker', 'bootstrap-select', 'locale/zh-cn'], function($) {
+    require(['jquery', 'bootstrap-datetimepicker', 'bootstrap-select', 'moment/locale/zh-cn'], function($) {
         require(['css!../css/bootstrap-datetimepicker.min'], function() {});
         require(['css!../css/bootstrap-select.min'], function() {});
 
@@ -59,11 +59,8 @@
 <div class="form-group">
     <label for="project-time" class="col-sm-2 control-label">签约时间</label>
     <div class="col-sm-10">
-        <div class="input-group date datetimepicker">
+        <div class="date datetimepicker">
             <input type="text" class="datetimepicker form-control" name="signed_time">
-            <span class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-            </span>
         </div>
     </div>
 </div>
@@ -71,11 +68,8 @@
 <div class="form-group">
     <label for="project-time" class="col-sm-2 control-label">合同到期时间</label>
     <div class="col-sm-10">
-        <div class="input-group date datetimepicker">
+        <div class="date datetimepicker">
             <input type="text" class="datetimepicker form-control" name="cancelled_time">
-            <span class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-            </span>
         </div>
     </div>
 </div>

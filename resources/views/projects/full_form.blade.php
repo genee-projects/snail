@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    require(['jquery', 'bootstrap-datetimepicker', 'bootstrap-select', 'locale/zh-cn'], function($) {
+    require(['jquery', 'bootstrap-datetimepicker', 'bootstrap-select', 'moment/locale/zh-cn'], function($) {
 
         require(['css!../css/bootstrap-datetimepicker.min'], function() {});
         require(['css!../css/bootstrap-select.min'], function() {});
