@@ -50,4 +50,8 @@ class Project extends Model
             ->withPivot('plan_count')
             ->withPivot('description');
     }
+
+    public function logs() {
+        return $this->morphMany('App\Clog', 'object');
+    }
 }

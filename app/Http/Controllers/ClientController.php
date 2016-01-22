@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Client;
 
+use App\Clog;
+
 class ClientController extends Controller
 {
 
@@ -19,7 +21,6 @@ class ClientController extends Controller
     }
 
     public function profile($id) {
-
 
         $client = Client::find($id);
 
@@ -49,6 +50,25 @@ class ClientController extends Controller
 
         $client->save();
 
+        Clog::add($client, '添加客户');
+
+        //如果有父元素
+        if ($request->input('parent_id')) {
+            Clog::add($client->parent, '添加子层级客户', [
+                $client->name,
+            ]);
+
+            /*
+             * 不确定需要告知 Root 么, 暂时隐藏
+            if ($client->parent && $client->parent->id != $client->root()->id) {
+
+                Clog::add($client->root(), '添加子层级客户', [
+                    $client->name,
+                ]);
+            }
+            */
+        }
+
         //添加子项目, 跳转到子项目页面
         if ($request->input('parent_id')) {
             return redirect()->to(route('client.profile', ['id'=> $client->id]))
@@ -68,6 +88,8 @@ class ClientController extends Controller
 
         $client = Client::find($request->input('id'));
 
+        $old_attributes = $client->attributesToArray();
+
         $client->name = $request->input('name');
         $client->description = $request->input('description');
         $client->address = $request->input('address');
@@ -77,6 +99,30 @@ class ClientController extends Controller
         $client->region = $request->input('region');
 
         $client->save();
+
+        $new_attributes = $client->attributesToArray();
+
+        $change = [];
+
+        $helper = [
+            'name'=> '名称',
+            'address'=> '地址',
+            'description'=> '备注',
+            'url'=> '网站/链接',
+            'seller_url'=> '纷享销客链接',
+            'type'=> '客户类型',
+            'region'=> '客户区域',
+        ];
+
+        foreach(array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
+            $change[$key] = [
+                'old'=> $old_attributes[$key],
+                'new'=> $new_attributes[$key],
+                'title'=> $helper[$key],
+            ];
+        }
+
+        if (count($change)) Clog::add($client, '修改基本信息', $change);
 
         return redirect()->to(route('client.profile', ['id'=> $client->id]))
             ->with('message_content', '修改成功!')
@@ -88,6 +134,8 @@ class ClientController extends Controller
         if (! \Session::get('user')->can('客户信息管理')) abort(401);
 
         $client = Client::find($id);
+
+        Clog::add($client, '删除客户');
 
         $client->delete();
         return redirect()->to(route('clients'))

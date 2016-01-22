@@ -1,30 +1,32 @@
 <ul class="timeline">
-    <li>
-        <div class="timeline-badge info"><i class="fa fa-flag"></i>
-        </div>
-        <div class="timeline-panel">
-            <div class="timeline-heading">
-                <h4 class="timeline-title">信息修改</h4>
-                <p><small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Rui Ma</small></p>
+    {{--*/ $class = 'timeline-inverted'; /*--}}
+    @foreach($project->logs()->orderBy('time', 'desc')->get() as $log)
+        {{--*/
+        if ($class == 'timeline-inverted') $class = null;
+        else $class = 'timeline-inverted';
+        /*--}}
+        <li class="{{ $class }}">
+            <div class="timeline-badge {{ array_rand(array_flip(['info', 'success', 'warning', 'danger']), 1) }}"><i class="fa fa-flag"></i>
             </div>
-            <div class="timeline-body">
-                <p> 修改用户信息 <mark>「广东大学」</mark>-&gt;<mark>「广西大学」</mark></p>
+            <div class="timeline-panel">
+                <div class="timeline-heading">
+                    <h4 class="timeline-title">{{ $log->action }}</h4>
+                    <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{ (new DateTime($log->time))->format('Y/m/d') }} via {{ $log->user->name }}</small></p>
+                </div>
+                <div class="timeline-body">
+                    @if (count($log->change))
+                        @foreach($log->change as $c)
+                            @if (isset($c['title']))
+                                <p> {{ $c['title'] or ''}}: <mark>「{{ $c['old'] }}」</mark>-&gt;<mark>「{{ $c['new'] }}」</mark></p>
+                            @else
+                                <p>{{ $c }}</p>
+                            @endif
+                        @endforeach
+                    @endif
+                </div>
             </div>
-        </div>
-    </li>
-    <li class="timeline-inverted">
-        <div class="timeline-badge warning"><i class="fa fa-flag"></i>
-        </div>
-        <div class="timeline-panel">
-            <div class="timeline-heading">
-                <h4 class="timeline-title"> 信息修改</h4>
-                <p><small class="text-muted"><i class="fa fa-check-o"></i> 12 hours age via Rui Ma</small></p>
-            </div>
-            <div class="timeline-body">
-                <p>创建新客户</p>
-            </div>
-        </div>
-    </li>
+        </li>
+    @endforeach
 </ul>
 
 <script type="text/javascript">

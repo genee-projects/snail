@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class Client extends Model
 {
 
@@ -65,5 +66,9 @@ class Client extends Model
         }
 
         return (string)join(' &#187; ', array_reverse($clients));
+    }
+
+    public function logs() {
+        return $this->morphMany('App\Clog', 'object');
     }
 }

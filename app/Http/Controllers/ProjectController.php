@@ -13,6 +13,8 @@ use App\Server;
 use App\Module;
 use App\Param;
 
+use App\Clog;
+
 class ProjectController extends Controller
 {
     public function index()
@@ -68,6 +70,11 @@ class ProjectController extends Controller
                 ]);
             }
 
+            Clog::add($project, '签约项目');
+            Clog::add($project->client, '签约项目', [
+                $project->name,
+            ]);
+
             return redirect(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '签约成功!')
                 ->with('message_type', 'info');
@@ -78,8 +85,12 @@ class ProjectController extends Controller
 
         if (! \Session::get('user')->can('项目信息管理')) abort(401);
 
+
+
         $project = Project::find($request->input('id'));
         $product = SubProduct::find($request->input('product_id'));
+
+        $old_attributes = $project->attributesToArray();
 
         $project->ref_no = $request->input('ref_no');               // 项目编号
         $project->name = $request->input('name');                   // 项目名称
@@ -139,6 +150,39 @@ class ProjectController extends Controller
                     ]);
                 }
             }
+
+            $new_attributes = $project->attributesToArray();
+
+            $change = [];
+            $helper = [
+                'ref_no'=> '项目编号',
+                'name'=> '项目名称',
+                'product_id'=> '产品类型(编号显示)',
+                'contact_user'=> '联系人',
+                'contact_phone' => '联系人电话',
+                'contact_email'=> '联系人邮箱',
+                'engineer'=> '工程师负责人',
+                'deploy_address'=> '客户地址',
+                'seller'=> '销售负责人',
+                'description'=> '备注',
+                'way'=> '乘车路线',
+                'signed_time'=> '签约时间',
+                'cancelled_time'=> '合同到期时间',
+                'vip'=> '重点项目状态(1 为重点项目, 空为普通项目)',
+                'official'=> '签约状态(1 为正式, 空为试用)',
+                'login_url'=> '登录地址',
+            ];
+
+            foreach(array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
+                $change[$key] = [
+                    'old'=> $old_attributes[$key],
+                    'new'=> $new_attributes[$key],
+                    'title'=> $helper[$key],
+                ];
+            }
+
+            if (count($change)) Clog::add($project, '修改基本信息', $change);
+
             return redirect(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '修改成功!')
                 ->with('message_type', 'info');
@@ -162,14 +206,11 @@ class ProjectController extends Controller
 
         $project = Project::find($id);
 
-        if ($project->delete()) {
-            return redirect(route('projects'))
-                ->with('message_content', '已解约该项目!')
-                ->with('message_type', 'danger');
-        }
+        Clog::add($project, '解约项目');
 
-        return redirect(route('projects.profile', ['id'=> $id]))
-            ->with('message_content', '内部错误, 无法解约!')
+        $project->delete();
+        return redirect(route('projects'))
+            ->with('message_content', '已解约该项目!')
             ->with('message_type', 'danger');
     }
 
@@ -187,6 +228,10 @@ class ProjectController extends Controller
         if (! $project->servers()->find($request->input('server_id'))) {
             $project->servers()->save($server, [
                 'deploy_time'=> $deploy_time,
+            ]);
+
+            Clog::add($project, '关联服务器', [
+                $server->name,
             ]);
 
             return redirect(route('project.profile', ['id'=> $project->id]))
@@ -211,6 +256,10 @@ class ProjectController extends Controller
         if ($project->servers()->find($server->id)) {
             $project->servers()->detach($server);
 
+            Clog::add($project, '解除关联服务器', [
+                $server->name,
+            ]);
+
             return redirect()->to(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '解除关联成功')
                 ->with('message_type', 'info')
@@ -230,9 +279,25 @@ class ProjectController extends Controller
             $deploy_time = $request->input('deploy_time');
             if (!$deploy_time) $deploy_time = NULL;
 
+            $old_deploy_time = $project
+                ->servers()
+                ->where('server_id', $server->id)
+                ->first()
+                ->pivot
+                ->deploy_time;
+
             $project->servers()->updateExistingPivot($server->id, [
                 'deploy_time'=> $deploy_time,
             ]);
+
+            Clog::add($project, '修改服务器部署时间', [
+                [
+                    'old'=> (new \DateTime($old_deploy_time))->format('Y/m/d'),
+                    'new'=> (new \DateTime($deploy_time))->format('Y/m/d'),
+                    'title'=> '部署时间',
+                ],
+            ]);
+
 
             return redirect()->to(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '修改成功')
@@ -248,16 +313,40 @@ class ProjectController extends Controller
 
         $project = Project::find($id);
 
-        $connected_modules = $project->product->product->modules()->lists('id')->all();
+        $connected_modules = $project->modules()->where(
+                'project_id',
+                $project->id
+            )->lists('id')->all();
 
-        if (count($connected_modules)) $project->modules()->detach($connected_modules);
+        if (count($connected_modules)) {
+            $project->modules()->detach($connected_modules);
+        }
+
+        $new_modules = $request->input('modules', []);
 
         //重新对选定的 module 进行 link, 类型为 type
-        foreach($request->input('modules', []) as $module_id) {
+        foreach($new_modules as $module_id) {
 
             $module = Module::find($module_id);
 
             $project->modules()->save($module);
+        }
+
+        $d1 = array_diff($new_modules, $connected_modules);
+        $d2 = array_diff($connected_modules, $new_modules);
+
+        if (count($d1)) {
+            //新加的模块
+            Clog::add($project, '添加模块', [
+                join(',', \App\Module::whereIn('id', $d1)->lists('name')->all()),
+            ]);
+        }
+
+        if (count($d2)) {
+            //删除的模块
+            Clog::add($project, '删除模块', [
+                join(',', \App\Module::whereIn('id', $d2)->lists('name')->all()),
+            ]);
         }
 
         return redirect()->back()
@@ -276,6 +365,8 @@ class ProjectController extends Controller
 
         $project = Project::find($id);
 
+        $old_vaule = $project->params()->where('param_id', $param->id)->first()->pivot->value;
+
         //如果设定了需要重置,
         if ($request->input('reset') == 'on') {
 
@@ -287,6 +378,14 @@ class ProjectController extends Controller
                 'value'=> $value,
             ]);
 
+            Clog::add($project, '重置参数', [
+                [
+                    'old'=> $old_vaule,
+                    'new'=> $value,
+                    'title'=> $param->name,
+                ]
+            ]);
+
         } else {
 
             $project->params()->detach($param_id);
@@ -294,6 +393,14 @@ class ProjectController extends Controller
             $project->params()->save($param, [
                 'value' => $request->input('value'),
                 'manual'=> true,
+            ]);
+
+            Clog::add($project, '更新参数', [
+                [
+                    'old'=> $old_vaule,
+                    'new'=> $request->input('value'),
+                    'title'=> $param->name,
+                ]
             ]);
         }
 
@@ -334,17 +441,29 @@ class ProjectController extends Controller
         //3. detach
         if (count($detach)) {
             $project->hardwares()->detach($detach);
+
+            Clog::add($project, '取消关联硬件', [
+                join(',', \App\Hardware::whereIn('id', $detach)->lists('name')->all()),
+            ]);
         }
 
         //4. 获取 $param 和 1.中交集的差集, 进行 save
         $save = array_diff((array) $hardwares, $intersect);
 
+        if (count($save)) {
+            $hsn = [];
+            foreach($save as $hardware_id) {
 
-        foreach($save as $hardware_id) {
+                $hardware = Hardware::find($hardware_id);
 
-            $hardware = Hardware::find($hardware_id);
+                $project->hardwares()->save($hardware);
+                $hsn[] = $hardware->name;
 
-            $project->hardwares()->save($hardware);
+            }
+
+            Clog::add($project, '关联硬件', [
+                join(',', $hsn),
+            ]);
         }
 
         return redirect()->back()
@@ -364,13 +483,43 @@ class ProjectController extends Controller
 
         $project = Project::find($id);
 
-        $project->hardwares()->detach($hardware_id);
+        $h = $project->hardwares()->where('hardware_id', $hardware_id)->first();
 
-        $project->hardwares()->save($hardware, [
+        $old = [
+            'description'=> $h->pivot->description,
+            'deployed_count'=> $h->pivot->deployed_count,
+            'plan_count'=> $h->pivot->plan_count,
+        ];
+
+        $new = [
             'description'=> $request->input('description'),
             'deployed_count'=> $request->input('deployed_count'),
             'plan_count'=> $request->input('plan_count'),
-        ]);
+        ];
+
+        $project->hardwares()->detach($hardware_id);
+
+        $project->hardwares()->save($hardware, $new);
+
+        $change = [];
+
+        $diff_helper = [
+            'description' => '描述',
+            'deployed_count'=> '部署数量',
+            'plan_count'=> '签约数量',
+        ];
+
+        foreach(array_keys($diff_helper) as $item) {
+            if ($old[$item] != $new[$item]) {
+                $change[] = [
+                    'old'=> $old[$item],
+                    'new'=> $new[$item],
+                    'title'=> $diff_helper[$item],
+                ];
+            }
+        }
+
+        Clog::add($project, '关联硬件基本信息修改', $change);
 
         return redirect()->back()
             ->with('message_content', '硬件修改成功!')
@@ -378,8 +527,7 @@ class ProjectController extends Controller
             ->with('tab', 'hardwares');
     }
 
-
-    //profile 信息 startq
+    //profile 信息 start
     public function profile_item($id, Request $request) {
 
         if (! \Session::get('user')->can('项目查看')) abort(401);
