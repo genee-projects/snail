@@ -7,3 +7,5 @@ public/docs/
 bower_components/
 node_modules/
 npm-debug.log
+*.map
+composer.lock

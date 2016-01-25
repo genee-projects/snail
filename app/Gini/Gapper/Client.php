@@ -103,6 +103,8 @@ class Client
 
     public static function getMembers($groupId) {
 
+        $members = [];
+
         try {
             $members = self::getRPC()->gapper->group->getMembers($groupId, null, 0, 100);
         } catch(\App\Gini\RPC\Exception $e) {
