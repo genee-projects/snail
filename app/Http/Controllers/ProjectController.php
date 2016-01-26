@@ -270,7 +270,10 @@ class ProjectController extends Controller
         $server = Server::find($request->input('server_id'));
 
         $deploy_time = $request->input('deploy_time');
-        if (!$deploy_time) $deploy_time = NULL;
+        if (!$deploy_time) {
+            $deploy_time = NULL;
+        }
+
 
         if (! $project->servers()->find($request->input('server_id'))) {
             $project->servers()->save($server, [
@@ -324,13 +327,12 @@ class ProjectController extends Controller
         if ($project->servers()->find($server->id)) {
 
             $deploy_time = $request->input('deploy_time');
+
             if (!$deploy_time) {
                 $deploy_time = null;
-                $deploy_time_plain = null;
             }
             else {
-                $deploy_time = \Carbon\Carbon::parse('Y/m/d', $deploy_time);
-                $deploy_time_plain = $deploy_time->format('Y-m-d H:i:s');
+                $deploy_time = \Carbon\Carbon::createFromFormat('Y/m/d', $deploy_time);
             }
 
             $old_deploy_time = $project
@@ -341,7 +343,7 @@ class ProjectController extends Controller
                 ->deploy_time;
 
             $project->servers()->updateExistingPivot($server->id, [
-                'deploy_time'=> $deploy_time_plain,
+                'deploy_time'=> $deploy_time,
             ]);
 
             Clog::add($project, '修改服务器部署时间', [
