@@ -23,6 +23,8 @@ class CreateClogs extends Migration
             $table->integer('object_id');   //所属 Object
             $table->string('object_type');
 
+            $table->integer('level');       //消息等级
+
             $table->softDeletes();
         });
     }

@@ -19,7 +19,7 @@
                 <td>{{ $server->vpn }}</td>
                 <td>
                     @if ($server->pivot->deploy_time)
-                        {{ (new DateTime($server->pivot->deploy_time))->format('Y/m/d') }}
+                        {{ $server->pivot->deploy_time->format('Y/m/d') }}
                     @endif
                 </td>
                 <td>
@@ -31,7 +31,7 @@
                            data-name="{{ $server->name }}"
                            data-fqdn="{{ $server->fqdn }}"
                            data-id="{{ $server->id }}"
-                           data-deploy-time="{{ (new DateTime($server->pivot->deploy_time))->format('Y/m/d') }}"></i>
+                           data-deploy-time="{{ $server->pivot->deploy_time->format('Y/m/d') }}"></i>
 
                         <a href="{{ route('project.server.disconnect', ['id'=> $project->id, 'server_id'=> $server->id]) }}">
                             <i class="fa fa-fw fa-times"></i>

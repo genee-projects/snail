@@ -11,7 +11,12 @@ class Project extends Model
 
     public $timestamps = false;
 
-    protected $dates = ['deleted_at'];
+    protected $casts = [
+        'signed_time'=>'date',         //签约时间
+        'cancelled_time'=> 'date',      //解约时间
+        'vip'=> 'bool',
+        'official'=> 'bool',
+    ];
 
     //需要注意, 项目的 product 为 SubProduct, 不为的 Product
     public function product() {
@@ -53,5 +58,12 @@ class Project extends Model
 
     public function logs() {
         return $this->morphMany('App\Clog', 'object');
+    }
+
+    public function newPivot(Model $parent, array $attributes, $table, $exists) {
+
+        if ($parent instanceof \App\Server) return new \App\ProjectServerPivot($parent, $attributes, $table, $exists);
+
+        return parent::newPivot($this->parent, $attributes, $this->table, $exists);
     }
 }

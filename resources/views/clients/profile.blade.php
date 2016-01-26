@@ -331,14 +331,13 @@
                                         else $class = 'timeline-inverted';
                                         /*--}}
                                         <li class="{{ $class }}">
-                                            <div class="timeline-badge
-                                            {{ array_rand(array_flip(['info', 'success', 'warning', 'danger']), 1) }}
+                                            <div class="timeline-badge {{ \App\Clog::$level_class[$log->level] }}
                                             "><i class="fa fa-flag"></i>
                                             </div>
                                             <div class="timeline-panel">
                                                 <div class="timeline-heading">
                                                     <h4 class="timeline-title">{{ $log->action }}</h4>
-                                                    <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{ (new DateTime($log->time))->format('Y/m/d') }} via {{ $log->user->name }}</small></p>
+                                                    <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{ $log->time->format('Y/m/d') }} via <strong>{{ $log->user->name }}</strong></small></p>
                                                 </div>
                                                 <div class="timeline-body">
                                                     @if (count($log->change))

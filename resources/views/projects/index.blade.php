@@ -47,17 +47,17 @@
                                 <td>{{ $project->contact_user }}</td>
                                 <td class="text-right">@if ($project->cancelled_time)
                                         {{--*/
-                                        $now = (new DateTime())->format('Y/m/d');
-                                        $cancelled_time = (new DateTime($project->cancelled_time))->format('Y/m/d');
+                                        $now = \Carbon\Carbon::now();
+                                        $cancelled_time = $project->cancelled_time;
                                         /*--}}
 
-                                        @if ($now > $cancelled_time)
+                                        @if ($now->gt($cancelled_time))
                                             <strong class="text-danger">
                                         @endif
 
-                                        {{ (new DateTime($project->cancelled_time))->format('Y/m/d') }}
+                                        {{ $project->cancelled_time->format('Y/m/d') }}
 
-                                        @if ($now > $cancelled_time)
+                                        @if ($now->gt($cancelled_time))
                                             <label>已到期!</label></strong>
                                         @endif
                                      @endif

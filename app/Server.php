@@ -38,6 +38,11 @@ class Server extends Model
         return $this->morphMany('App\Item', 'object');
     }
 
-}
+    public function newPivot(Model $parent, array $attributes, $table, $exists) {
 
+        if ($parent instanceof \App\Project) return new \App\ProjectServerPivot($parent, $attributes, $table, $exists);
+
+        return parent::newPivot($this->parent, $attributes, $this->table, $exists);
+    }
+}
 

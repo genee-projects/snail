@@ -90,7 +90,7 @@
                             <td>签约时间</td>
                             <td>
                                 @if ($project->signed_time)
-                                    {{ (new DateTime($project->signed_time))->format('Y/m/d') }}
+                                    {{ $project->signed_time->format('Y/m/d') }}
                                 @endif
                             </td>
                         </tr>
@@ -98,7 +98,7 @@
                             <td>合同到期时间</td>
                             <td>
                                 @if ($project->cancelled_time)
-                                    {{ (new DateTime($project->cancelled_time))->format('Y/m/d') }}
+                                    {{ $project->cancelled_time->format('Y/m/d') }}
                                 @endif
                             </td>
                         </tr>

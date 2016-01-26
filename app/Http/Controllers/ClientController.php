@@ -115,14 +115,22 @@ class ClientController extends Controller
         ];
 
         foreach(array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
+
+            $old_value = $old_attributes[$key];
+            if ($old_value == null) $old_value = '空';
+
+            $new_value = $new_attributes[$key];
+
+            if ($new_value == null) $new_value = '空';
+
             $change[$key] = [
-                'old'=> $old_attributes[$key],
-                'new'=> $new_attributes[$key],
+                'old'=> $old_value,
+                'new'=> $new_value,
                 'title'=> $helper[$key],
             ];
         }
 
-        if (count($change)) Clog::add($client, '修改基本信息', $change);
+        if (count($change)) Clog::add($client, '修改基本信息', $change, Clog::LEVEL_NOTICE);
 
         return redirect()->to(route('client.profile', ['id'=> $client->id]))
             ->with('message_content', '修改成功!')

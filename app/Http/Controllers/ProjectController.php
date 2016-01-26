@@ -73,7 +73,7 @@ class ProjectController extends Controller
             Clog::add($project, '签约项目');
             Clog::add($project->client, '签约项目', [
                 $project->name,
-            ]);
+            ], Clog::LEVEL_WARNING);
 
             return redirect(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '签约成功!')
@@ -84,8 +84,6 @@ class ProjectController extends Controller
     public function edit(Request $request) {
 
         if (! \Session::get('user')->can('项目信息管理')) abort(401);
-
-
 
         $project = Project::find($request->input('id'));
         $product = SubProduct::find($request->input('product_id'));
@@ -111,14 +109,16 @@ class ProjectController extends Controller
         $signed_time = $request->input('signed_time');
 
         if (!$signed_time) $signed_time = NULL;
-        $project->signed_time = $signed_time;     // 签约时间
+        else $signed_time = \Carbon\Carbon::createFromFormat('Y/m/d', $signed_time)->format('Y-m-d H:i:s');     // 签约时间
+
+        $project->signed_time = $signed_time;
 
         $cancelled_time =  $request->input('cancelled_time');
 
         if (!$cancelled_time) $cancelled_time = NULL;
+        else $cancelled_time = \Carbon\Carbon::createFromFormat('Y/m/d', $cancelled_time)->format('Y-m-d H:i:s');   // 服务到期时间
 
-        $project->cancelled_time = $cancelled_time;   // 服务到期时间
-
+        $project->cancelled_time = $cancelled_time;
         $project->seller = $request->input('seller');               // 销售人员
         $project->engineer = $request->input('engineer');           // 工程师
         $project->description = $request->input('description'); //
@@ -168,15 +168,61 @@ class ProjectController extends Controller
                 'way'=> '乘车路线',
                 'signed_time'=> '签约时间',
                 'cancelled_time'=> '合同到期时间',
-                'vip'=> '重点项目状态(1 为重点项目, 空为普通项目)',
-                'official'=> '签约状态(1 为正式, 空为试用)',
+                'vip'=> '重点项目状态',
+                'official'=> '正式/试用状态',
                 'login_url'=> '登录地址',
             ];
 
             foreach(array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
+
+                $old_value = $old_attributes[$key];
+                $new_value = $new_attributes[$key];
+
+                switch($key) {
+                    case 'vip':
+
+                        $new_value = ($new_value === true) ? '重点项目' : '普通项目';
+                        $old_value = ($old_value === true) ? '重点项目' : '普通项目';
+
+                        break;
+                    case 'official':
+
+                        $new_value = ($new_value === true) ? '正式项目' : '试用项目';
+                        $old_value = ($old_value === true) ? '正式项目' : '试用项目';
+
+                        break;
+
+                    case 'signed_time':
+
+                        if ($new_value) $new_value = $new_value->format('Y/m/d');
+                        if ($old_value) $old_value = $old_value->format('Y/m/d');
+
+                        //时间需要特殊处理
+                        if ($old_value == $new_value) {
+                            continue 2;
+                        }
+
+                        break;
+                    case 'cancelled_time':
+
+                        if ($new_value) $new_value = $new_value->format('Y/m/d');
+                        if ($old_value) $old_value = $old_value->format('Y/m/d');
+
+                        //时间需要特殊处理
+                        if ($old_value == $new_value) {
+                            continue 2;
+                        }
+
+                        break;
+                    default:
+                        if ($old_value === null) $old_value = '空';
+                        if ($new_value === null) $new_value = '空';
+                }
+
+
                 $change[$key] = [
-                    'old'=> $old_attributes[$key],
-                    'new'=> $new_attributes[$key],
+                    'old'=> $old_value,
+                    'new'=> $new_value,
                     'title'=> $helper[$key],
                 ];
             }
@@ -206,9 +252,10 @@ class ProjectController extends Controller
 
         $project = Project::find($id);
 
-        Clog::add($project, '解约项目');
+        Clog::add($project, '解约项目', Clog::LEVEL_WARNING);
 
         $project->delete();
+
         return redirect(route('projects'))
             ->with('message_content', '已解约该项目!')
             ->with('message_type', 'danger');
@@ -232,7 +279,7 @@ class ProjectController extends Controller
 
             Clog::add($project, '关联服务器', [
                 $server->name,
-            ]);
+            ], Clog::LEVEL_WARNING);
 
             return redirect(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '关联成功!')
@@ -258,7 +305,7 @@ class ProjectController extends Controller
 
             Clog::add($project, '解除关联服务器', [
                 $server->name,
-            ]);
+            ], Clog::LEVEL_WARNING);
 
             return redirect()->to(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '解除关联成功')
@@ -277,7 +324,14 @@ class ProjectController extends Controller
         if ($project->servers()->find($server->id)) {
 
             $deploy_time = $request->input('deploy_time');
-            if (!$deploy_time) $deploy_time = NULL;
+            if (!$deploy_time) {
+                $deploy_time = null;
+                $deploy_time_plain = null;
+            }
+            else {
+                $deploy_time = \Carbon\Carbon::parse('Y/m/d', $deploy_time);
+                $deploy_time_plain = $deploy_time->format('Y-m-d H:i:s');
+            }
 
             $old_deploy_time = $project
                 ->servers()
@@ -287,13 +341,13 @@ class ProjectController extends Controller
                 ->deploy_time;
 
             $project->servers()->updateExistingPivot($server->id, [
-                'deploy_time'=> $deploy_time,
+                'deploy_time'=> $deploy_time_plain,
             ]);
 
             Clog::add($project, '修改服务器部署时间', [
                 [
-                    'old'=> (new \DateTime($old_deploy_time))->format('Y/m/d'),
-                    'new'=> (new \DateTime($deploy_time))->format('Y/m/d'),
+                    'old'=> $old_deploy_time->format('Y/m/d'),
+                    'new'=> $deploy_time->format('Y/m/d'),
                     'title'=> '部署时间',
                 ],
             ]);
@@ -339,14 +393,14 @@ class ProjectController extends Controller
             //新加的模块
             Clog::add($project, '添加模块', [
                 join(',', \App\Module::whereIn('id', $d1)->lists('name')->all()),
-            ]);
+            ], Clog::LEVEL_WARNING);
         }
 
         if (count($d2)) {
             //删除的模块
             Clog::add($project, '删除模块', [
                 join(',', \App\Module::whereIn('id', $d2)->lists('name')->all()),
-            ]);
+            ], Clog::LEVEL_WARNING);
         }
 
         return redirect()->back()
@@ -384,7 +438,7 @@ class ProjectController extends Controller
                     'new'=> $value,
                     'title'=> $param->name,
                 ]
-            ]);
+            ], Clog::LEVEL_WARNING);
 
         } else {
 
@@ -401,7 +455,7 @@ class ProjectController extends Controller
                     'new'=> $request->input('value'),
                     'title'=> $param->name,
                 ]
-            ]);
+            ], Clog::LEVEL_WARNING);
         }
 
         return redirect()->back()
@@ -463,7 +517,7 @@ class ProjectController extends Controller
 
             Clog::add($project, '关联硬件', [
                 join(',', $hsn),
-            ]);
+            ], Clog::LEVEL_WARNING);
         }
 
         return redirect()->back()
@@ -519,7 +573,7 @@ class ProjectController extends Controller
             }
         }
 
-        Clog::add($project, '关联硬件基本信息修改', $change);
+        Clog::add($project, '关联硬件基本信息修改', $change, Clog::LEVEL_WARNING);
 
         return redirect()->back()
             ->with('message_content', '硬件修改成功!')
