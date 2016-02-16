@@ -28,10 +28,13 @@
                     @if ($can_manage_server)
                     <span class="pull-right">
                         <i class="fa fa-fw fa-edit edit-server edit"
-                           data-name="{{ $server->name }}"
-                           data-fqdn="{{ $server->fqdn }}"
-                           data-id="{{ $server->id }}"
-                           data-deploy-time="{{ $server->pivot->deploy_time->format('Y/m/d') }}"></i>
+                            data-name="{{ $server->name }}"
+                            data-fqdn="{{ $server->fqdn }}"
+                            data-id="{{ $server->id }}"
+                            @if ($server->pivot->deploy_time)
+                                data-deploy-time="{{ $server->pivot->deploy_time->format('Y/m/d') }}"
+                            @endif
+                        ></i>
 
                         <a href="{{ route('project.server.disconnect', ['id'=> $project->id, 'server_id'=> $server->id]) }}">
                             <i class="fa fa-fw fa-times"></i>
