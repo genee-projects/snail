@@ -65,8 +65,8 @@ class ParamController extends Controller
                 \Log::notice(strtr('项目参数增加: 用户 (%name[%id]) 增加了项目 (%project_name[%project_id] 参数(%param_name[%param_id]) : %value', [
                     '%name' => $user->name,
                     '%id' => $user->id,
-                    '%%project_name' => $project->name,
-                    '%$project_id' => $project->id,
+                    '%project_name' => $project->name,
+                    '%project_id' => $project->id,
                     '%param_name' => $param->name,
                     '%param_id' => $param->id,
                     '%value' => $param->value,
