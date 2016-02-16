@@ -24,7 +24,7 @@
         <!-- Navigation -->
         <nav id="nav" class="navbar navbar-default navbar-static-top" >
             <div class="navbar-header ">
-                <a class="navbar-brand" href="/">Genee CRM V0.4.1</a>
+                <a class="navbar-brand" href="/">Genee CRM V{{ config('app.version') }}</a>
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
