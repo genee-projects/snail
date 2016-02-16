@@ -2,34 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
 use App\SubProduct;
 use App\Module;
-use App\Param;
-use App\Hardware;
 use App\Project;
 
 class SubProductController extends Controller
 {
-
-    public function profile($id) {
-
-        if (!\Session::get('user')->can('产品查看')) abort(401);
+    public function profile($id)
+    {
+        if (!\Session::get('user')->can('产品查看')) {
+            abort(401);
+        }
 
         $sub = SubProduct::find($id);
 
-        return view('subproducts/profile', ['subproduct'=> $sub]);
+        return view('subproducts/profile', ['subproduct' => $sub]);
     }
 
-    public function add(Request $request) {
-
-        if (!\Session::get('user')->can('产品类别管理')) abort(401);
+    public function add(Request $request)
+    {
+        if (!\Session::get('user')->can('产品类别管理')) {
+            abort(401);
+        }
 
         $product = Product::find($request->input('product_id'));
 
-        $sub = new SubProduct;
+        $sub = new SubProduct();
 
         $sub->name = $request->input('name');
         $sub->description = $request->input('description');
@@ -41,10 +41,10 @@ class SubProductController extends Controller
         $user = \Session::get('user');
 
         \Log::notice(strtr('子产品增加: 用户(%name[%id]) 增加了子产品 (%sub_product[%sub_product_id])', [
-            '%name'=> $user->name,
-            '%id'=> $user->id,
-            '%sub_product'=> $sub->name,
-            '%sub_product_id'=> $sub->id,
+            '%name' => $user->name,
+            '%id' => $user->id,
+            '%sub_product' => $sub->name,
+            '%sub_product_id' => $sub->id,
         ]));
 
         return redirect()->back()
@@ -52,9 +52,11 @@ class SubProductController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function delete($id) {
-
-        if (!\Session::get('user')->can('产品类别管理')) abort(401);
+    public function delete($id)
+    {
+        if (!\Session::get('user')->can('产品类别管理')) {
+            abort(401);
+        }
 
         $sub = SubProduct::find($id);
 
@@ -66,20 +68,22 @@ class SubProductController extends Controller
         $user = \Session::get('user');
 
         \Log::notice(strtr('子产品增加: 用户(%name[%id]) 删除了子产品 (%sub_product[%sub_product_id])', [
-            '%name'=> $user->name,
-            '%id'=> $user->id,
-            '%sub_product'=> $sub_name,
-            '%sub_product_id'=> $sub_id,
+            '%name' => $user->name,
+            '%id' => $user->id,
+            '%sub_product' => $sub_name,
+            '%sub_product_id' => $sub_id,
         ]));
 
         return redirect()->back()
             ->with('message_content', '删除成功!')
-            ->with('message_type', 'info');;
+            ->with('message_type', 'info');
     }
 
-    public function edit(Request $request) {
-
-        if (!\Session::get('user')->can('产品类别管理')) abort(401);
+    public function edit(Request $request)
+    {
+        if (!\Session::get('user')->can('产品类别管理')) {
+            abort(401);
+        }
 
         $sub = SubProduct::find($request->input('id'));
 
@@ -94,15 +98,15 @@ class SubProductController extends Controller
 
         $user = \Session::get('user');
 
-        foreach(array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
+        foreach (array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
             \Log::notice(strtr('产品修改: 用户(%name[%id]) 修改了子产品 (%sub_product[%sub_product_id]): [%key] %old --> %new', [
-                '%name'=> $user->name,
-                '%id'=> $user->id,
-                '%%sub_product'=> $sub->name,
-                '%sub_product_id'=> $sub->id,
-                '%key'=> $key,
-                '%old'=> $old_attributes[$key],
-                '%new'=> $new_attributes[$key],
+                '%name' => $user->name,
+                '%id' => $user->id,
+                '%%sub_product' => $sub->name,
+                '%sub_product_id' => $sub->id,
+                '%key' => $key,
+                '%old' => $old_attributes[$key],
+                '%new' => $new_attributes[$key],
             ]));
         }
 
@@ -111,11 +115,12 @@ class SubProductController extends Controller
             ->with('message_type', 'info');
     }
 
-
-    public function modules($id, Request $request) {
-
+    public function modules($id, Request $request)
+    {
         $user = \Session::get('user');
-        if (! $user->can('产品模块管理')) abort(401);
+        if (!$user->can('产品模块管理')) {
+            abort(401);
+        }
 
         $sub = SubProduct::find($id);
 
@@ -138,42 +143,39 @@ class SubProductController extends Controller
 
         //重新对选定的 module 进行 link
         //对需要关联的, 进行 save
-        foreach($requested_modules as $module_id) {
+        foreach ($requested_modules as $module_id) {
             $module = Module::find($module_id);
 
             $sub->modules()->save($module);
         }
 
-
         //对所有删除了的 modules, 进行 Log 记录
         if (count($deleted_modules)) {
-            foreach($deleted_modules as $did) {
-
+            foreach ($deleted_modules as $did) {
                 $module = Module::find($did);
 
                 \Log::notice(strtr('子产品模块删除: 用户(%name[%id]) 删除了子产品(%product_name[%product_id]) 的模块 (%module_name[%module_id])', [
-                    '%name'=> $user->nusame,
-                    '%id'=> $user->id,
-                    '%product_name'=> $sub->name,
-                    '%product_id'=> $sub->id,
-                    '%module_name'=> $module->name,
-                    '%module_id'=> $module->id,
+                    '%name' => $user->nusame,
+                    '%id' => $user->id,
+                    '%product_name' => $sub->name,
+                    '%product_id' => $sub->id,
+                    '%module_name' => $module->name,
+                    '%module_id' => $module->id,
                 ]));
             }
         }
 
         if (count($new_modules)) {
-            foreach($new_modules as $nid) {
-
+            foreach ($new_modules as $nid) {
                 $module = Module::find($nid);
 
                 \Log::notice(strtr('子产品模块添加: 用户(%name[%id]) 添加了子产品(%product_name[%product_id]) 的模块 (%module_name[%module_id])', [
-                    '%name'=> $user->nusame,
-                    '%id'=> $user->id,
-                    '%product_name'=> $sub->name,
-                    '%product_id'=> $sub->id,
-                    '%module_name'=> $module->name,
-                    '%module_id'=> $module->id,
+                    '%name' => $user->nusame,
+                    '%id' => $user->id,
+                    '%product_name' => $sub->name,
+                    '%product_id' => $sub->id,
+                    '%module_name' => $module->name,
+                    '%module_id' => $module->id,
                 ]));
             }
         }
@@ -183,20 +185,19 @@ class SubProductController extends Controller
         if ($request->input('sync_new_modules') == 'on') {
 
             //查到所有的 proejct, 进行 new_modules 的 connect
-            foreach(Project::where('product_id', $id)->get() as $project) {
-
-                foreach($new_modules as $m) {
+            foreach (Project::where('product_id', $id)->get() as $project) {
+                foreach ($new_modules as $m) {
                     if (!$project->modules->contains($m)) {
                         $module = Module::find($m);
                         $project->modules()->save($module);
 
                         \Log::notice(strtr('项目模块增加: 用户(%name[%id] 添加了项目(%project_name[%product_id] 的模块 (%module_name[%module_id])', [
-                            '%name'=> $user->name,
-                            '%id'=> $user->id,
-                            '%project_name'=> $project->name,
-                            '%project_id'=> $project->id,
-                            '%module_name'=> $module->name,
-                            '%module_id'=> $module->id,
+                            '%name' => $user->name,
+                            '%id' => $user->id,
+                            '%project_name' => $project->name,
+                            '%project_id' => $project->id,
+                            '%module_name' => $module->name,
+                            '%module_id' => $module->id,
                         ]));
                     }
                 }
@@ -208,16 +209,17 @@ class SubProductController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function param_edit($id, Request $request) {
-
+    public function param_edit($id, Request $request)
+    {
         $user = \Sessin::get('user');
-        if (! $user->can('产品参数管理')) abort(401);
+        if (!$user->can('产品参数管理')) {
+            abort(401);
+        }
 
         $sub = SubProduct::find($id);
 
         $param_id = $request->input('param_id');
         $param = \App\Param::find($param_id);
-
 
         //获取子产品中该参数关联的 value
         $old_value = $sub->params()->where('param_id', $param->id)->first()->pivot->value;
@@ -232,62 +234,58 @@ class SubProductController extends Controller
             $sub->params()->detach($param_id);
 
             $sub->params()->save($param, [
-                'value'=> $value,
+                'value' => $value,
             ]);
 
             \Log::notice(strtr('子产品参数修改: 用户 (%name[%id]) 修改了子产品 (%product_name[%product_id] 的参数(%param_name[%param_id]) : %old_value -> %new_value', [
-                '%name'=> $user->name,
-                '%id'=> $user->id,
-                '%product_name'=> $sub->name,
-                '%product_id'=> $sub->id,
-                '%param_name'=> $param->name,
-                '%param_id'=> $param->id,
-                '%old_value'=> $old_value,
-                '%new_value'=> $value,
+                '%name' => $user->name,
+                '%id' => $user->id,
+                '%product_name' => $sub->name,
+                '%product_id' => $sub->id,
+                '%param_name' => $param->name,
+                '%param_id' => $param->id,
+                '%old_value' => $old_value,
+                '%new_value' => $value,
             ]));
-
         } else {
-
             $value = $request->input('value');
 
             $sub->params()->updateExistingPivot($param_id, [
-                'value'=> $value,
-                'manual'=> true,
+                'value' => $value,
+                'manual' => true,
             ]);
 
             \Log::notice(strtr('子产品参数修改: 用户 (%name[%id]) 修改了子产品 (%product_name[%product_id] 的参数(%param_name[%param_id]) : %old_value -> %new_value', [
-                '%name'=> $user->name,
-                '%id'=> $user->id,
-                '%product_name'=> $sub->name,
-                '%product_id'=> $sub->id,
-                '%param_name'=> $param->name,
-                '%param_id'=> $param->id,
-                '%old_value'=> $old_value,
-                '%new_value'=> $value,
+                '%name' => $user->name,
+                '%id' => $user->id,
+                '%product_name' => $sub->name,
+                '%product_id' => $sub->id,
+                '%param_name' => $param->name,
+                '%param_id' => $param->id,
+                '%old_value' => $old_value,
+                '%new_value' => $value,
             ]));
         }
 
-        foreach($sub->projects as $project) {
-
+        foreach ($sub->projects as $project) {
             $project_param = $project->params()->where('param_id', $param->id)->first();
             $old_value = $project_param->pivot->value;
 
             //如果为默认 (不为手动), 则修改
-            if (! $project_param->pivot->manual) {
-
+            if (!$project_param->pivot->manual) {
                 $project->params()->updateExistingPivot($param->id, [
-                    'value'=> $value,
+                    'value' => $value,
                 ]);
 
                 \Log::notice(strtr('项目参数修改: 用户 (%name[%id]) 修改了项目 (%project_name[%project_id] 的参数(%param_name[%param_id]) : %old_value -> %new_value', [
-                    '%name'=> $user->name,
-                    '%id'=> $user->id,
-                    '%project_name'=> $project->name,
-                    '%project_id'=> $project->id,
-                    '%param_name'=> $param->name,
-                    '%param_id'=> $param->id,
-                    '%old_value'=> $old_value,
-                    '%new_value'=> $value,
+                    '%name' => $user->name,
+                    '%id' => $user->id,
+                    '%project_name' => $project->name,
+                    '%project_id' => $project->id,
+                    '%param_name' => $param->name,
+                    '%param_id' => $param->id,
+                    '%old_value' => $old_value,
+                    '%new_value' => $value,
                 ]));
             }
         }

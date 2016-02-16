@@ -13,11 +13,11 @@ class Role extends Model
     public $timestamps = false;
 
     protected $casts = [
-        'perms'=> 'array',
+        'perms' => 'array',
     ];
 
-    public function users() {
+    public function users()
+    {
         return $this->belongsToMany('App\User',  'user_roles', 'role_id', 'user_id');
     }
-
 }

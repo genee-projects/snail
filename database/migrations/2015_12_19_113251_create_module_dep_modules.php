@@ -7,13 +7,11 @@ class CreateModuleDepModules extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         //
-        Schema::create('module_dep_modules', function(Blueprint $table) {
+        Schema::create('module_dep_modules', function (Blueprint $table) {
             $table->integer('module_id')->unsigned()->index();
             $table->foreign('module_id')->references('id')->on('modules');
 
@@ -25,8 +23,6 @@ class CreateModuleDepModules extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

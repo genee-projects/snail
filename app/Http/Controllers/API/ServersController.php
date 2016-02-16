@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Server;
 
@@ -16,28 +14,7 @@ class ServersController extends Controller
      * @apiVersion 0.0.1
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
-[
-    {
-        "barcode": "583757629",
-        "cpu": "64",
-        "customer_provide": "0",
-        "database": "Mariadb 10.0",
-        "deleted_at": null,
-        "description": "南开大学",
-        "disk": "1024",
-        "fqdn": "e143502.server.genee.cn",
-        "id": "1",
-        "memory": "120",
-        "model": "Dell  T1000",
-        "name": "南开大学校级 CF 服务器",
-        "os": "ubuntu 14.04 LTS",
-        "project_id": "3",
-        "sn": "323-63452-6567227-34",
-        "vpn": "10.0.10.56"
-    }
-]
      */
-
     public function index()
     {
         //
@@ -53,7 +30,6 @@ class ServersController extends Controller
     {
         //
     }
-
 
     /**
      * @api {POST} /servers/ 创建新的 server
@@ -74,7 +50,6 @@ class ServersController extends Controller
      * @apiSuccess {String} vpn VPN 地址
      * @apiSuccess {String} description 备注信息
      * @apiSuccess {String} deleted_at 删除时间
-     *
      */
     public function store(Request $request)
     {
@@ -84,7 +59,8 @@ class ServersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -95,7 +71,8 @@ class ServersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -141,7 +118,6 @@ class ServersController extends Controller
      *     HTTP/1.1 200 OK
      * @apiErrorExample {json} Error-Response:
      *     HTTP/1/1 404 Not Found
-     *
      */
     public function destroy($id)
     {

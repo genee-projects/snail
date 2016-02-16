@@ -4,7 +4,6 @@ namespace App\Gini\Gapper;
 
 class Client
 {
-
     private static $_RPC;
     private static function getRPC()
     {
@@ -25,11 +24,12 @@ class Client
     private static $sessionKey = 'gapper.client';
     private static function prepareSession()
     {
-        \Session::set(self::$sessionKey, \Session::get(self::$sessionKey) ? : []);
+        \Session::set(self::$sessionKey, \Session::get(self::$sessionKey) ?: []);
     }
     private static function hasSession($key)
     {
         $data = \Session::get(self::$sessionKey);
+
         return isset($data[$key]) ? true : false;
     }
 
@@ -51,7 +51,6 @@ class Client
         \Session::set(self::$sessionKey, $data);
 
         session(self::$sessionKey, $data);
-
     }
     private static function unsetSession($key)
     {
@@ -66,7 +65,6 @@ class Client
 
     public static function init()
     {
-
         $gapperGroup = \Request::get('gapper-group');
 
         //其他 Group 登录到当前 CRM
@@ -82,17 +80,15 @@ class Client
 
     public static function loginByUserName($username)
     {
-
         @list($name, $backend) = explode('|', $username, 2);
-        $backend = $backend ? : 'gapper';
+        $backend = $backend ?: 'gapper';
 
-        return self::setUserName($name. '|'. $backend);
+        return self::setUserName($name.'|'.$backend);
     }
 
     public static function loginByToken($token)
     {
         $user = self::getRPC()->gapper->user->authorizeByToken($token);
-
 
         if ($user && $user['username']) {
             return self::loginByUserName($user['username']);
@@ -101,16 +97,16 @@ class Client
         return false;
     }
 
-    public static function getMembers($groupId) {
-
+    public static function getMembers($groupId)
+    {
         $members = [];
 
         try {
             $members = self::getRPC()->gapper->group->getMembers($groupId, null, 0, 100);
-        } catch(\App\Gini\RPC\Exception $e) {
+        } catch (\App\Gini\RPC\Exception $e) {
         }
 
-        return $members ? : [];
+        return $members ?: [];
     }
 
     private static $keyUserName = 'username';
@@ -153,7 +149,6 @@ class Client
 
     public static function getUserInfo()
     {
-
         if (!self::getUserName()) {
             return false;
         }
@@ -212,6 +207,7 @@ class Client
     {
         if (self::hasSession(self::$keyGroupID)) {
             $groupID = self::getSession(self::$keyGroupID);
+
             return self::getRPC()->gapper->group->getInfo((int) $groupID);
         }
     }
@@ -225,15 +221,14 @@ class Client
 
     public static function logout()
     {
-
         $user = \Session::get('user');
 
         //可能用户未登录, 直接 $user->name 会报错!
         //故进行判断
         if ($user) {
             \Log::info(strtr('用户登出: %name[%id]', [
-                '%name'=> $user->name,
-                '%id'=> $user->id,
+                '%name' => $user->name,
+                '%id' => $user->id,
             ]));
         }
 
@@ -249,8 +244,8 @@ class Client
         //\Gini\CGI::redirect($url);
     }
 
-    public static function getApps($groupID) {
-
+    public static function getApps($groupID)
+    {
         try {
             $apps = self::getRPC()->gapper->group->getApps((int) $groupID);
         } catch (\Exception $e) {
@@ -260,13 +255,14 @@ class Client
         return $apps;
     }
 
-    public static function initUser() {
+    public static function initUser()
+    {
         $userInfo = \App\Gini\Gapper\Client::getUserInfo();
 
         $user = \App\User::where('gapper_id', $userInfo['id'])->first();
 
-        if (! $user) {
-            $user = new \App\User;
+        if (!$user) {
+            $user = new \App\User();
 
             $user->gapper_id = $userInfo['id'];
             $user->name = $userInfo['name'];
@@ -277,8 +273,8 @@ class Client
         //设定当前用户
         \Session::set('user', $user);
         \Log::info(strtr('用户登录: %name[%id]', [
-            '%name'=> $user->name,
-            '%id'=> $user->id,
+            '%name' => $user->name,
+            '%id' => $user->id,
         ]));
     }
 }

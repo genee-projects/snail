@@ -3,22 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Hardware;
 
 class HardWareController extends Controller
 {
+    public function index()
+    {
+        if (!\Session::get('user')->can('硬件查看')) {
+            abort(401);
+        }
 
-    public function index() {
-
-        if (!\Session::get('user')->can('硬件查看')) abort(401);
-
-        return view('hardwares/index', ['hardwares'=> Hardware::all()]);
-
+        return view('hardwares/index', ['hardwares' => Hardware::all()]);
     }
-    public function add(Request $request) {
-
-        if (!\Session::get('user')->can('硬件管理')) abort(401);
+    public function add(Request $request)
+    {
+        if (!\Session::get('user')->can('硬件管理')) {
+            abort(401);
+        }
 
         $hardware = new Hardware();
         $hardware->name = $request->input('name');
@@ -31,10 +32,10 @@ class HardWareController extends Controller
         $user = \Session::get('user');
 
         \Log::notice(strtr('硬件增加: 用户(%name[%id]) 增加了硬件 (%hardware[%hardware_id])', [
-            '%name'=> $user->name,
-            '%id'=> $user->id,
-            '%hardware'=> $hardware->name,
-            '%hardware_id'=> $hardware->id,
+            '%name' => $user->name,
+            '%id' => $user->id,
+            '%hardware' => $hardware->name,
+            '%hardware_id' => $hardware->id,
         ]));
 
         return redirect()->back()
@@ -44,7 +45,9 @@ class HardWareController extends Controller
 
     public function delete($id)
     {
-        if (!\Session::get('user')->can('硬件管理')) abort(401);
+        if (!\Session::get('user')->can('硬件管理')) {
+            abort(401);
+        }
 
         $hardware = Hardware::find($id);
 
@@ -56,10 +59,10 @@ class HardWareController extends Controller
         $user = \Session::get('user');
 
         \Log::notice(strtr('硬件删除: 用户(%name[%id]) 删除了硬件 (%hardware[%hardware_id])', [
-            '%name'=> $user->name,
-            '%id'=> $user->id,
-            '%hardware'=> $hardware_name,
-            '%hardware_id'=> $hardware_id,
+            '%name' => $user->name,
+            '%id' => $user->id,
+            '%hardware' => $hardware_name,
+            '%hardware_id' => $hardware_id,
         ]));
 
         return redirect()->back()
@@ -67,9 +70,11 @@ class HardWareController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function edit(Request $request) {
-
-        if (!\Session::get('user')->can('硬件管理')) abort(401);
+    public function edit(Request $request)
+    {
+        if (!\Session::get('user')->can('硬件管理')) {
+            abort(401);
+        }
 
         $hardware = Hardware::find($request->input('id'));
 
@@ -84,7 +89,7 @@ class HardWareController extends Controller
 
         $user = \Session::get('user');
 
-        foreach(array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
+        foreach (array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
             $old = $old_attributes[$key];
             $new = $new_attributes[$key];
 
@@ -94,13 +99,13 @@ class HardWareController extends Controller
             }
 
             \Log::notice(strtr('硬件修改: 用户(%name[%id]) 修改了硬件 (%hardware[%hardware_id]) 的基本信息: [%key] %old --> %new', [
-                '%name'=> $user->name,
-                '%id'=> $user->id,
-                '%hardware'=> $hardware->name,
-                '%hardware_id'=> $hardware->id,
-                '%key'=> $key,
-                '%old'=> $old,
-                '%new'=> $new,
+                '%name' => $user->name,
+                '%id' => $user->id,
+                '%hardware' => $hardware->name,
+                '%hardware_id' => $hardware->id,
+                '%key' => $key,
+                '%old' => $old,
+                '%new' => $new,
             ]));
         }
 

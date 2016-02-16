@@ -14,7 +14,7 @@ class RPC
     {
         $this->_url = $url;
         $this->_path = $path;
-        $this->_cookie = $cookie ?: new \App\Gini\RPC\Cookie;
+        $this->_cookie = $cookie ?: new \App\Gini\RPC\Cookie();
         $this->_header = (array) $header;
     }
 
@@ -35,7 +35,7 @@ class RPC
 
         $id = base_convert($this->_uniqid++, 10, 36);
 
-        $rpcTimeout = config('rpc.timeout') ? : 5;
+        $rpcTimeout = config('rpc.timeout') ?: 5;
         $timeout = $rpcTimeout[$method] ?: $rpcTimeout['default'];
 
         $raw_data = $this->post(json_encode([
@@ -56,7 +56,7 @@ class RPC
                 throw new \App\Gini\RPC\Exception($message, -32400);
             } elseif ($id != $data['id']) {
                 $message = 'wrong response id!';
-		throw new \App\Gini\RPC\Exception($message, -32400);
+                throw new \App\Gini\RPC\Exception($message, -32400);
             }
         }
 

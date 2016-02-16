@@ -7,13 +7,11 @@ class CreateUserRoles extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         //
-        Schema::create('user_roles', function(Blueprint $table) {
+        Schema::create('user_roles', function (Blueprint $table) {
 
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
@@ -26,8 +24,6 @@ class CreateUserRoles extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

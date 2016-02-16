@@ -9,14 +9,14 @@ class GapperMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-
-        if (!\App\Gini\Gapper\Client::getUserName() && ! in_array($request->url(), [route('root'), route('login')])) {
+        if (!\App\Gini\Gapper\Client::getUserName() && !in_array($request->url(), [route('root'), route('login')])) {
             return redirect()->to(route('root'));
         }
 

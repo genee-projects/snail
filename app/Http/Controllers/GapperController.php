@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -25,8 +24,8 @@ class GapperController extends Controller
         return self::$_RPC;
     }
 
-    public function go() {
-
+    public function go()
+    {
         $paths = func_get_args();
 
         $config = config('gapper.rpc');
@@ -56,21 +55,16 @@ class GapperController extends Controller
         return redirect()->to($url);
     }
 
-    public function login(Request $request) {
-
+    public function login(Request $request)
+    {
         $username = $request->input('username');
         $password = $request->input('password');
 
         try {
-
             $verify = self::getRPC()->gapper->user->verify($username, $password);
 
-
-
             if ($verify) {
-
                 \App\Gini\Gapper\Client::loginByUserName($username);
-
 
                 // 错误的client信息，用户无法登陆
                 $config = config('gapper.rpc');
@@ -78,7 +72,7 @@ class GapperController extends Controller
                 $app = self::getRPC()->gapper->app->getInfo($client_id);
 
                 if (!isset($app['id'])) {
-                   throw new \Exception('异常访问 !');
+                    throw new \Exception('异常访问 !');
                 }
 
                 //crm 是一个 group 的 app, 判断用户是否有该 App 即可
@@ -117,16 +111,19 @@ class GapperController extends Controller
             }
 
             throw new \Exception('登录失败! 请重试!');
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $message = $e->getMessage();
             \App\Gini\Gapper\Client::logout($username);
+
             return redirect()->back()
                 ->with('message', $message);
         }
     }
 
-    public function logout() {
+    public function logout()
+    {
         \App\Gini\Gapper\Client::logout();
+
         return redirect()->to(route('root'));
     }
 }

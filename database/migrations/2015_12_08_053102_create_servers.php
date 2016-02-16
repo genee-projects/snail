@@ -8,13 +8,11 @@ class CreateServers extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         //server, 服务器结构
-        Schema::create('servers', function(Blueprint $table) {
+        Schema::create('servers', function (Blueprint $table) {
             $table->increments('id');               // 自增 ID
             $table->string('name');                 // 服务器名称
             $table->integer('provider')->nullable()->default(Server::PROVIDER_COMPANY);   //服务器提供方, 默认为公司提供
@@ -34,8 +32,6 @@ class CreateServers extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

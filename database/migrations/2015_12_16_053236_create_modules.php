@@ -7,13 +7,11 @@ class CreateModules extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         //
-        Schema::create('modules', function(Blueprint $table) {
+        Schema::create('modules', function (Blueprint $table) {
             $table->increments('id');       // 自增 ID
             $table->string('name');         // 名称
             $table->string('description');  // 描述
@@ -24,8 +22,6 @@ class CreateModules extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

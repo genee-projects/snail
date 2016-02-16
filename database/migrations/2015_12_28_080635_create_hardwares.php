@@ -7,13 +7,11 @@ class CreateHardwares extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         //
-        Schema::create('hardwares', function(Blueprint $table) {
+        Schema::create('hardwares', function (Blueprint $table) {
 
             $table->increments('id');       // 自增 ID
             $table->string('name');         // 名称
@@ -26,8 +24,6 @@ class CreateHardwares extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

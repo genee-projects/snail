@@ -7,13 +7,11 @@ class CreateSubProducts extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         //
-        Schema::create('sub_products', function(Blueprint $table) {
+        Schema::create('sub_products', function (Blueprint $table) {
             $table->increments('id');       // 自增 ID
             $table->integer('product_id');  // 产品 ID
             $table->string('name');         // 子产品名称
@@ -24,8 +22,6 @@ class CreateSubProducts extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

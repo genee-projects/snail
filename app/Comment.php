@@ -13,7 +13,8 @@ class Comment extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function object() {
+    public function object()
+    {
         return $this->morphTo();
     }
 }

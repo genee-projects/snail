@@ -7,13 +7,11 @@ class CreateSubProductModules extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         //
-        Schema::create('sub_product_modules', function(Blueprint $table) {
+        Schema::create('sub_product_modules', function (Blueprint $table) {
             $table->integer('sub_product_id')->unsigned()->index();
             $table->foreign('sub_product_id')->references('id')->on('sub_products');
 
@@ -24,8 +22,6 @@ class CreateSubProductModules extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

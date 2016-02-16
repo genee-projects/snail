@@ -1,37 +1,39 @@
 <?php
 
-namespace app\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Client;
-
 use App\Clog;
 
 class ClientController extends Controller
 {
-
-    public function clients() {
-
-        if (! \Session::get('user')->can('客户查看')) abort(401);
+    public function clients()
+    {
+        if (!\Session::get('user')->can('客户查看')) {
+            abort(401);
+        }
 
         return view('clients/index', [
-            'clients'=> Client::where('parent_id', 0)->get(),
+            'clients' => Client::where('parent_id', 0)->get(),
         ]);
     }
 
-    public function profile($id) {
-
+    public function profile($id)
+    {
         $client = Client::find($id);
 
         return view('clients/profile', [
-            'client'=> $client,
+            'client' => $client,
         ]);
     }
 
-    public function add(Request $request) {
-
-        if (! \Session::get('user')->can('客户信息管理')) abort(401);
+    public function add(Request $request)
+    {
+        if (!\Session::get('user')->can('客户信息管理')) {
+            abort(401);
+        }
 
         $client = new Client();
 
@@ -55,10 +57,10 @@ class ClientController extends Controller
         $user = \Session::get('user');
 
         \Log::notice(strtr('客户添加: 用户(%name[%id]) 添加了客户 (%client[%client_id])', [
-            '%name'=> $user->name,
-            '%id'=> $user->id,
-            '%client'=> $client->name,
-            '%client_id'=> $client->id,
+            '%name' => $user->name,
+            '%id' => $user->id,
+            '%client' => $client->name,
+            '%client_id' => $client->id,
         ]));
 
         //如果有父元素
@@ -80,7 +82,7 @@ class ClientController extends Controller
 
         //添加子项目, 跳转到子项目页面
         if ($request->input('parent_id')) {
-            return redirect()->to(route('client.profile', ['id'=> $client->id]))
+            return redirect()->to(route('client.profile', ['id' => $client->id]))
                 ->with('message_content', '添加成功!')
                 ->with('message_type', 'info');
         }
@@ -91,9 +93,11 @@ class ClientController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function edit(Request $request) {
-
-        if (! \Session::get('user')->can('客户信息管理')) abort(401);
+    public function edit(Request $request)
+    {
+        if (!\Session::get('user')->can('客户信息管理')) {
+            abort(401);
+        }
 
         $client = Client::find($request->input('id'));
 
@@ -114,53 +118,60 @@ class ClientController extends Controller
         $change = [];
 
         $helper = [
-            'name'=> '名称',
-            'address'=> '地址',
-            'description'=> '备注',
-            'url'=> '网站/链接',
-            'seller_url'=> '纷享销客链接',
-            'type'=> '客户类型',
-            'region'=> '客户区域',
+            'name' => '名称',
+            'address' => '地址',
+            'description' => '备注',
+            'url' => '网站/链接',
+            'seller_url' => '纷享销客链接',
+            'type' => '客户类型',
+            'region' => '客户区域',
         ];
 
         $user = \Session::get('user');
 
-        foreach(array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
-
+        foreach (array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
             $old_value = $old_attributes[$key];
-            if ($old_value == null) $old_value = '空';
+            if ($old_value == null) {
+                $old_value = '空';
+            }
 
             $new_value = $new_attributes[$key];
 
-            if ($new_value == null) $new_value = '空';
+            if ($new_value == null) {
+                $new_value = '空';
+            }
 
             $change[$key] = [
-                'old'=> $old_value,
-                'new'=> $new_value,
-                'title'=> $helper[$key],
+                'old' => $old_value,
+                'new' => $new_value,
+                'title' => $helper[$key],
             ];
 
             \Log::notice(strtr('客户修改: 用户(%name[%id]) 修改了客户 (%client[%client_id])的基本信息: %key : %old --> %new', [
-                '%name'=> $user->name,
-                '%id'=> $user->id,
-                '%client'=> $client->name,
-                '%client_id'=> $client->id,
-                '%key'=> $key,
-                '%old'=> $old_value,
-                '%new'=> $new_value,
+                '%name' => $user->name,
+                '%id' => $user->id,
+                '%client' => $client->name,
+                '%client_id' => $client->id,
+                '%key' => $key,
+                '%old' => $old_value,
+                '%new' => $new_value,
             ]));
         }
 
-        if (count($change)) Clog::add($client, '修改基本信息', $change, Clog::LEVEL_NOTICE);
+        if (count($change)) {
+            Clog::add($client, '修改基本信息', $change, Clog::LEVEL_NOTICE);
+        }
 
-        return redirect()->to(route('client.profile', ['id'=> $client->id]))
+        return redirect()->to(route('client.profile', ['id' => $client->id]))
             ->with('message_content', '修改成功!')
             ->with('message_type', 'info');
     }
 
-    public function delete($id) {
-
-        if (! \Session::get('user')->can('客户信息管理')) abort(401);
+    public function delete($id)
+    {
+        if (!\Session::get('user')->can('客户信息管理')) {
+            abort(401);
+        }
 
         $client = Client::find($id);
 
@@ -174,10 +185,10 @@ class ClientController extends Controller
         $user = \Session::get('user');
 
         \Log::notice(strtr('客户删除: 用户(%name[%id]) 删除了客户 (%client[%client_id])', [
-            '%name'=> $user->name,
-            '%id'=> $user->id,
-            '%client'=> $client_name,
-            '%client_id'=> $client_id,
+            '%name' => $user->name,
+            '%id' => $user->id,
+            '%client' => $client_name,
+            '%client_id' => $client_id,
         ]));
 
         return redirect()->to(route('clients'))

@@ -7,13 +7,11 @@ class CreateProjects extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         //client_product, 项目结构
-        Schema::create('projects', function(Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');                       // 自增 ID
             $table->string('ref_no')->nullable();           //项目编号
             $table->integer('client_id');                   // 客户
@@ -38,8 +36,6 @@ class CreateProjects extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

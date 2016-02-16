@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Controllers\Controller;
-use App\Service;
 use App\Item;
 
 class ItemController extends Controller
 {
-
     public function add(Request $request)
     {
         //
@@ -19,7 +15,6 @@ class ItemController extends Controller
         $object_name = ucwords($request->input('object_type'));
 
         $object_id = $request->input('object_id');
-
 
         $object = $object_name::find($object_id);
 
@@ -35,7 +30,8 @@ class ItemController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $item = Item::find($id);
 
         $item->delete();

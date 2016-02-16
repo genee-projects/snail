@@ -7,13 +7,11 @@ class CreateItems extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         //
-        Schema::create('items', function(Blueprint $table) {
+        Schema::create('items', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('key');
@@ -26,8 +24,6 @@ class CreateItems extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

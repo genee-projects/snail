@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Gini\RPC;
 
 class Cookie

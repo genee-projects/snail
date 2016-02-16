@@ -13,8 +13,8 @@ class Clog extends Model
     public $timestamps = false;
 
     protected $casts = [
-        'change'=> 'array',
-        'time'=> 'date',
+        'change' => 'array',
+        'time' => 'date',
     ];
 
     //此处没有使用 RFC 5424
@@ -24,16 +24,15 @@ class Clog extends Model
     const LEVEL_NOTICE = 2;     //需要被关注点信息变动等级, 必须
     const LEVEL_WARNING = 3;    //参数\模块等重要信息变动 !
 
-
     public static $level_class = [
         self::LEVEL_INFO => 'info',
         self::LEVEL_NOTICE => 'warning',
-        self::LEVEL_WARNING=> 'danger',
+        self::LEVEL_WARNING => 'danger',
     ];
 
-    public static function add($object, $action, $change = [], $level = self::LEVEL_INFO) {
-
-        $clog = new CLog;
+    public static function add($object, $action, $change = [], $level = self::LEVEL_INFO)
+    {
+        $clog = new self();
 
         $clog->action = $action;
         $clog->change = $change;
@@ -47,15 +46,17 @@ class Clog extends Model
         $clog->save();
     }
 
-    public function object() {
+    public function object()
+    {
         return $this->morphTo();
     }
 
-    public function __toString() {
-
+    public function __toString()
+    {
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('App\User', 'user_id');
     }
 }

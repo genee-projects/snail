@@ -3,23 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Controllers\Controller;
 use App\User;
 use App\Gini\Gapper\Client;
 
 class UserController extends Controller
 {
-    public function users() {
-
-        if (!\Session::get('user')->is_admin()) abort(401);
+    public function users()
+    {
+        if (!\Session::get('user')->is_admin()) {
+            abort(401);
+        }
 
         return view('users/index', ['users' => User::all()]);
     }
 
-    public function refresh() {
-
-        if (!\Session::get('user')->is_admin()) abort(401);
+    public function refresh()
+    {
+        if (!\Session::get('user')->is_admin()) {
+            abort(401);
+        }
 
         $group_id = config('gapper.group_id');
 
@@ -28,18 +30,16 @@ class UserController extends Controller
         if (count($members)) {
             $deleted_users = User::all()->lists('gapper_id', 'id')->toArray();
 
-            foreach($members as $member) {
-
+            foreach ($members as $member) {
                 $id = $member['id'];
-                $user = User::where('gapper_id', $id)->first();;
+                $user = User::where('gapper_id', $id)->first();
 
                 if (!$user) {
-                    $user = new \App\User;
+                    $user = new \App\User();
 
                     $user->gapper_id = $member['id'];
                     $user->name = $member['name'];
                     $user->icon = $member['icon'];
-
                 } else {
                     $user->name = $member['name'];
                     $user->icon = $member['icon'];
@@ -66,24 +66,27 @@ class UserController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function users_json() {
-
-        if (!\Session::get('user')->is_admin()) abort(401);
+    public function users_json()
+    {
+        if (!\Session::get('user')->is_admin()) {
+            abort(401);
+        }
 
         return response()->json(User::all());
     }
 
-    public function view(Request $request) {
-
-        if (!\Session::get('user')->is_admin()) abort(401);
+    public function view(Request $request)
+    {
+        if (!\Session::get('user')->is_admin()) {
+            abort(401);
+        }
 
         $id = $request->input('id');
         $user = User::find($id);
 
-
         return response()->json([
-            'id'=> $user->id,
-            'view'=> (string) view('users/view', ['user'=> $user]),
+            'id' => $user->id,
+            'view' => (string) view('users/view', ['user' => $user]),
         ]);
     }
 }

@@ -15,10 +15,11 @@ class Hardware extends Model
     protected $dates = ['deleted_at'];
 
     protected $casts = [
-        'self_produce'=> 'bool',
+        'self_produce' => 'bool',
     ];
 
-    public function product() {
+    public function product()
+    {
         return $this->belongsTo('App\Product', 'product_id');
     }
 }

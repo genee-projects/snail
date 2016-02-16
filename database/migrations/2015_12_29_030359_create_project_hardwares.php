@@ -7,13 +7,11 @@ class CreateProjectHardwares extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         //
-        Schema::create('project_hardwares', function(Blueprint $table) {
+        Schema::create('project_hardwares', function (Blueprint $table) {
             $table->integer('project_id')->unsigned()->index();
             $table->foreign('project_id')->references('id')->on('projects');
 
@@ -28,8 +26,6 @@ class CreateProjectHardwares extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

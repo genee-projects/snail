@@ -7,13 +7,11 @@ class CreateRoles extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         //
-        Schema::create('roles', function(Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
 
             $table->increments('id');
             $table->string('name');
@@ -27,8 +25,6 @@ class CreateRoles extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

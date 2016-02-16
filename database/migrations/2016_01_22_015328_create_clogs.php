@@ -7,13 +7,11 @@ class CreateClogs extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         //
-        Schema::create('clogs', function(Blueprint $table) {
+        Schema::create('clogs', function (Blueprint $table) {
             $table->increments('id');
             $table->dateTime('time');   //记录时间
             $table->integer('user_id'); //操作用户
@@ -31,8 +29,6 @@ class CreateClogs extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

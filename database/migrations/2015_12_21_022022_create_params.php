@@ -7,13 +7,11 @@ class CreateParams extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         //
-        Schema::create('params', function(Blueprint $table) {
+        Schema::create('params', function (Blueprint $table) {
 
             $table->increments('id');
 
@@ -28,8 +26,6 @@ class CreateParams extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

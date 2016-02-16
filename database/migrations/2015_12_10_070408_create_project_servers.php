@@ -7,13 +7,11 @@ class CreateProjectServers extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         //
-        Schema::create('project_servers', function(Blueprint $table) {
+        Schema::create('project_servers', function (Blueprint $table) {
             $table->integer('project_id')->unsigned()->index();
             $table->foreign('project_id')->references('id')->on('projects');
 
@@ -27,8 +25,6 @@ class CreateProjectServers extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

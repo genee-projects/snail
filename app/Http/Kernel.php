@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Http;
+namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -26,6 +26,6 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'gapper'=> \App\Http\Middleware\GapperMiddleware::class,
+        'gapper' => \App\Http\Middleware\GapperMiddleware::class,
     ];
 }
