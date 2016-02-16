@@ -27,6 +27,11 @@ class RoleController extends Controller
 
         if (!$user->roles->contains($role->id)) {
             $user->roles()->save($role);
+            \Log::warning(strtr('角色设定: 用户(%name[%id]) 设定为角色[%role]', [
+                '%name'=> $user->name,
+                '%id'=> $user->id,
+                '%role'=>$role->name,
+            ]));
 
             return response()->json(true);
         }
@@ -43,6 +48,14 @@ class RoleController extends Controller
 
         if ($user->roles->contains($role->id)) {
             $user->roles()->detach([$role->id]);
+
+            \Log::warning(strtr('角色设定: 用户(%name[%id]) 取消设定角色[%role]', [
+                '%name'=> $user->name,
+                '%id'=> $user->id,
+                '%role'=>$role->name,
+            ]));
+
+
             return response()->json(true);
         }
 
@@ -67,6 +80,12 @@ class RoleController extends Controller
 
             if ($user) {
                 $role->users()->save($user);
+
+                \Log::warning(strtr('角色设定: 用户(%name[%id]) 设定为角色[%role]', [
+                    '%name'=> $user->name,
+                    '%id'=> $user->id,
+                    '%role'=>$role->name,
+                ]));
             }
         }
 

@@ -52,6 +52,15 @@ class ClientController extends Controller
 
         Clog::add($client, '添加客户');
 
+        $user = \Session::get('user');
+
+        \Log::notice(strtr('客户添加: 用户(%name[%id]) 添加了客户 (%client[%client_id])', [
+            '%name'=> $user->name,
+            '%id'=> $user->id,
+            '%client'=> $client->name,
+            '%client_id'=> $client->id,
+        ]));
+
         //如果有父元素
         if ($request->input('parent_id')) {
             Clog::add($client->parent, '添加子层级客户', [
@@ -114,6 +123,8 @@ class ClientController extends Controller
             'region'=> '客户区域',
         ];
 
+        $user = \Session::get('user');
+
         foreach(array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
 
             $old_value = $old_attributes[$key];
@@ -128,6 +139,16 @@ class ClientController extends Controller
                 'new'=> $new_value,
                 'title'=> $helper[$key],
             ];
+
+            \Log::notice(strtr('客户修改: 用户(%name[%id]) 修改了客户 (%client[%client_id])的基本信息: %key : %old --> %new', [
+                '%name'=> $user->name,
+                '%id'=> $user->id,
+                '%client'=> $client->name,
+                '%client_id'=> $client->id,
+                '%key'=> $key,
+                '%old'=> $old_value,
+                '%new'=> $new_value,
+            ]));
         }
 
         if (count($change)) Clog::add($client, '修改基本信息', $change, Clog::LEVEL_NOTICE);
@@ -143,9 +164,22 @@ class ClientController extends Controller
 
         $client = Client::find($id);
 
-        Clog::add($client, '删除客户');
+        $client_name = $client->name;
+        $client_id = $client->id;
 
         $client->delete();
+
+        Clog::add($client, '删除客户');
+
+        $user = \Session::get('user');
+
+        \Log::notice(strtr('客户删除: 用户(%name[%id]) 删除了客户 (%client[%client_id])', [
+            '%name'=> $user->name,
+            '%id'=> $user->id,
+            '%client'=> $client_name,
+            '%client_id'=> $client_id,
+        ]));
+
         return redirect()->to(route('clients'))
             ->with('message_content', '删除成功!')
             ->with('message_type', 'info');

@@ -26,7 +26,8 @@ class ProjectController extends Controller
 
     public function add(Request $request) {
 
-        if (! \Session::get('user')->can('项目签约')) abort(401);
+        $user = \Session::get('user');
+        if (! $user->can('项目签约')) abort(401);
 
         $sub = SubProduct::find($request->input('product_id'));
         $client = Client::find($request->input('client_id'));
@@ -75,6 +76,17 @@ class ProjectController extends Controller
                 $project->name,
             ], Clog::LEVEL_WARNING);
 
+            \Log::notice(strtr('客户项目签约: 用户(%name[%id]) 签约了项目: (%project_name[%project_id]), 客户: (%client_name[%client_id], 子产品: (%product_name[%product_id])', [
+                '%name'=> $user->name,
+                '%id'=> $user->id,
+                '%project_name'=> $project->name,
+                '%project_id'=> $project->id,
+                '%client_name'=> $client->name,
+                '%client_id'=> $client->id,
+                '%product_name'=> $sub->name,
+                '%product_id'=> $sub->id,
+            ]));
+
             return redirect(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '签约成功!')
                 ->with('message_type', 'info');
@@ -83,7 +95,8 @@ class ProjectController extends Controller
 
     public function edit(Request $request) {
 
-        if (! \Session::get('user')->can('项目信息管理')) abort(401);
+        $user = \Session::get('user');
+        if (! $user->can('项目信息管理')) abort(401);
 
         $project = Project::find($request->input('id'));
         $product = SubProduct::find($request->input('product_id'));
@@ -227,7 +240,21 @@ class ProjectController extends Controller
                 ];
             }
 
-            if (count($change)) Clog::add($project, '修改基本信息', $change);
+            if (count($change)) {
+                Clog::add($project, '修改基本信息', $change);
+
+                foreach($change as $c) {
+                    \Log::notice(strtr('项目基本信息修改: 用户(%name[%id]) 修改了项目 (%project_name[%project_id] 的基本信息(%title) %old_value -> %new_value', [
+                        '%name'=> $user->name,
+                        '%id'=> $user->id,
+                        '%project_name'=> $project->name,
+                        '%project_id'=> $project->id,
+                        '%title'=> $c['title'],
+                        '%old_value'=> $c['old'],
+                        '%new_value'=> $c['new'],
+                    ]));
+                }
+            }
 
             return redirect(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '修改成功!')
@@ -248,11 +275,20 @@ class ProjectController extends Controller
 
     public function delete($id) {
 
-        if (! \Session::get('user')->can('项目信息管理')) abort(401);
+        $user = \Session::get('user');
+        if (! $user->can('项目信息管理')) abort(401);
 
         $project = Project::find($id);
 
+        \Log::notice(strtr('项目解约: 用户(%name[%id]) 对项目(%project_name[%project_id]) 进行了解约', [
+            '%name'=> $user->name,
+            '%id'=> $user->id,
+            '%project_name'=> $project->name,
+            '%project_id'=> $project->id,
+        ]));
+
         Clog::add($project, '解约项目', Clog::LEVEL_WARNING);
+
 
         $project->delete();
 
@@ -263,7 +299,9 @@ class ProjectController extends Controller
 
     public function servers($id, Request $request) {
 
-        if (!\Session::get('user')->can('项目服务器管理')) abort(401);
+        $user = \Session::get('user');
+
+        if (! $user->can('项目服务器管理')) abort(401);
 
         $project = Project::find($id);
 
@@ -284,6 +322,16 @@ class ProjectController extends Controller
                 $server->name,
             ], Clog::LEVEL_WARNING);
 
+            \Log::notice(strtr('项目服务器关联: 用户(%name[%id]) 对项目(%project_name[%project_id]) 关联了服务器(%server_name[%server_id)], 部署时间(%time)', [
+                '%name'=> $user->name,
+                '%id'=> $user->id,
+                '%project_name'=> $project->name,
+                '%project_id'=> $project->id,
+                '%server_name'=> $server->name,
+                '%server_id'=> $server->id,
+                '%time'=> $deploy_time,
+            ]));
+
             return redirect(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '关联成功!')
                 ->with('message_type', 'info')
@@ -298,7 +346,8 @@ class ProjectController extends Controller
 
     public function server_disconnect($id, $server_id, Request $request) {
 
-        if (!\Session::get('user')->can('项目服务器管理')) abort(401);
+        $user = \Session::get('user');
+        if (! $user->can('项目服务器管理')) abort(401);
 
         $project = Project::find($id);
         $server = Server::find($server_id);
@@ -310,6 +359,15 @@ class ProjectController extends Controller
                 $server->name,
             ], Clog::LEVEL_WARNING);
 
+            \Log::notice(strtr('项目服务器解除关联: 用户(%name[%id]) 解除了项目(%project_name[%project_id]) 关联的服务器(%server_name[%server_id])', [
+                '%name'=> $user->name,
+                '%id'=> $user->id,
+                '%project_name'=> $project->name,
+                '%project_id'=> $project->id,
+                '%server_name'=> $server->name,
+                '%server_id'=> $server->id,
+            ]));
+
             return redirect()->to(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '解除关联成功')
                 ->with('message_type', 'info')
@@ -319,7 +377,8 @@ class ProjectController extends Controller
 
     public function server_edit($id, Request $request) {
 
-        if (!\Session::get('user')->can('项目服务器管理')) abort(401);
+        $user = \Session::get('user');
+        if (! $user->can('项目服务器管理')) abort(401);
 
         $project = Project::find($id);
         $server = Server::find($request->input('server_id'));
@@ -346,14 +405,26 @@ class ProjectController extends Controller
                 'deploy_time'=> $deploy_time,
             ]);
 
+            $old = $old_deploy_time->format('Y/m/d');
+            $new = $deploy_time->format('Y/m/d');
             Clog::add($project, '修改服务器部署时间', [
                 [
-                    'old'=> $old_deploy_time->format('Y/m/d'),
-                    'new'=> $deploy_time->format('Y/m/d'),
+                    'old'=> $old,
+                    'new'=> $new,
                     'title'=> '部署时间',
                 ],
             ]);
 
+            \Log::notice(strtr('项目服务器部署时间修改: 用户(%name[%id]) 修改了项目(%project_name[%project_id]) 关联的服务器(%server_name[%server_id]) 的部署时间: %old -> %new', [
+                '%name'=> $user->name,
+                '%id'=> $user->id,
+                '%project_name'=> $project->name,
+                '%project_id'=> $project->id,
+                '%server_name'=> $server->name,
+                '%server_id'=> $server->id,
+                '%old'=> $old,
+                '%new'=> $new,
+            ]));
 
             return redirect()->to(route('project.profile', ['id'=> $project->id]))
                 ->with('message_content', '修改成功')
@@ -365,7 +436,8 @@ class ProjectController extends Controller
 
     public function modules($id, Request $request) {
 
-        if (!\Session::get('user')->can('项目模块管理')) abort(401);
+        $user = \Session::get('user');
+        if (! $user->can('项目模块管理')) abort(401);
 
         $project = Project::find($id);
 
@@ -380,7 +452,7 @@ class ProjectController extends Controller
 
         $new_modules = $request->input('modules', []);
 
-        //重新对选定的 module 进行 link, 类型为 type
+
         foreach($new_modules as $module_id) {
 
             $module = Module::find($module_id);
@@ -396,6 +468,20 @@ class ProjectController extends Controller
             Clog::add($project, '添加模块', [
                 join(',', \App\Module::whereIn('id', $d1)->lists('name')->all()),
             ], Clog::LEVEL_WARNING);
+
+
+            foreach($d1 as $m) {
+
+                $module = Module::find($m);
+                \Log::notice(strtr('项目模块增加: 用户(%name[%id] 添加了项目(%project_name[%project_id] 的模块 (%module_name[%module_id])', [
+                    '%name'=> $user->name,
+                    '%id'=> $user->id,
+                    '%project_name'=> $project->name,
+                    '%project_id'=> $project->id,
+                    '%module_name'=> $module->name,
+                    '%module_id'=> $module->id,
+                ]));
+            }
         }
 
         if (count($d2)) {
@@ -403,6 +489,19 @@ class ProjectController extends Controller
             Clog::add($project, '删除模块', [
                 join(',', \App\Module::whereIn('id', $d2)->lists('name')->all()),
             ], Clog::LEVEL_WARNING);
+
+            foreach($d2 as $m) {
+                $module = Module::find($m);
+
+                \Log::notice(strtr('项目模块删除: 用户(%name[%id] 删除了项目(%project_name[%project_id] 的模块 (%module_name[%module_id])', [
+                    '%name'=> $user->name,
+                    '%id'=> $user->id,
+                    '%project_name'=> $project->name,
+                    '%project_id'=> $project->id,
+                    '%module_name'=> $module->name,
+                    '%module_id'=> $module->id,
+                ]));
+            }
         }
 
         return redirect()->back()
@@ -413,7 +512,8 @@ class ProjectController extends Controller
 
     public function param_edit($id, Request $request) {
 
-        if (!\Session::get('user')->can('项目参数管理')) abort(401);
+        $user = \Session::get('user');
+        if (! $user->can('项目参数管理')) abort(401);
 
         $param_id = $request->input('param_id');
 
@@ -421,23 +521,23 @@ class ProjectController extends Controller
 
         $project = Project::find($id);
 
-        $old_vaule = $project->params()->where('param_id', $param->id)->first()->pivot->value;
+        $old_value = $project->params()->where('param_id', $param->id)->first()->pivot->value;
 
         //如果设定了需要重置,
         if ($request->input('reset') == 'on') {
 
-            $value = $project->product->params()->where('param_id', $param->id)->first()->pivot->value;
+            $new_value = $project->product->params()->where('param_id', $param->id)->first()->pivot->value;
 
             $project->params()->detach($param_id);
 
             $project->params()->save($param, [
-                'value'=> $value,
+                'value'=> $new_value,
             ]);
 
             Clog::add($project, '重置参数', [
                 [
-                    'old'=> $old_vaule,
-                    'new'=> $value,
+                    'old'=> $old_value,
+                    'new'=> $new_value,
                     'title'=> $param->name,
                 ]
             ], Clog::LEVEL_WARNING);
@@ -446,19 +546,32 @@ class ProjectController extends Controller
 
             $project->params()->detach($param_id);
 
+            $new_value = $request->input('value');
+
             $project->params()->save($param, [
-                'value' => $request->input('value'),
+                'value' => $new_value,
                 'manual'=> true,
             ]);
 
             Clog::add($project, '更新参数', [
                 [
-                    'old'=> $old_vaule,
-                    'new'=> $request->input('value'),
+                    'old'=> $old_value,
+                    'new'=> $new_value,
                     'title'=> $param->name,
                 ]
             ], Clog::LEVEL_WARNING);
         }
+
+        \Log::notice(strtr('项目参数修改: 用户(%name[%id]) 修改了项目(%project_name[%project_id]) 的参数 (%param_name[%param_id]): %old -> %new', [
+            '%name'=> $user->name,
+            '%id'=> $user->id,
+            '%project_name'=> $project->name,
+            '%project_id'=> $project->id,
+            '%param_name'=> $param->name,
+            '%param_id'=> $param->id,
+            '%old'=> $old_value,
+            '%new'=> $new_value,
+        ]));
 
         return redirect()->back()
             ->with('message_content', '参数修改成功!')
@@ -468,7 +581,8 @@ class ProjectController extends Controller
 
     public function hardwares($id, Request $request) {
 
-        if (!\Session::get('user')->can('项目硬件管理')) abort(401);
+        $user = \Session::get('user');
+        if (! $user->can('项目硬件管理')) abort(401);
 
         $project = Project::find($id);
 
@@ -496,6 +610,21 @@ class ProjectController extends Controller
 
         //3. detach
         if (count($detach)) {
+
+            foreach($detach as $id) {
+
+                $hardware = Hardware::find($id);
+
+                \Log::notice(strtr('项目硬件取消关联: 用户(%name[%id]) 取消关联了项目(%project_name[%project_id]) 中的硬件 (%hardware_name[%hardware_id])', [
+                    '%name'=> $user->name,
+                    '%id'=> $user->id,
+                    '%project_name'=> $project->name,
+                    '%project_id'=> $project->id,
+                    '%hardware_name'=> $hardware->name,
+                    '%hardware_id'=> $hardware->id,
+                ]));
+            }
+
             $project->hardwares()->detach($detach);
 
             Clog::add($project, '取消关联硬件', [
@@ -515,6 +644,14 @@ class ProjectController extends Controller
                 $project->hardwares()->save($hardware);
                 $hsn[] = $hardware->name;
 
+                \Log::notice(strtr('项目硬件关联: 用户(%name[%id]) 关联了项目(%project_name[%project_id]) 中的硬件 (%hardware_name[%hardware_id])', [
+                    '%name' => $user->name,
+                    '%id' => $user->id,
+                    '%project_name' => $project->name,
+                    '%project_id' => $project->id,
+                    '%hardware_name' => $hardware->name,
+                    '%hardware_id' => $hardware->id,
+                ]));
             }
 
             Clog::add($project, '关联硬件', [
@@ -528,10 +665,10 @@ class ProjectController extends Controller
             ->with('tab', 'hardwares');
     }
 
-
     public function hardware_edit($id, Request $request) {
 
-        if (!\Session::get('user')->can('项目硬件管理')) abort(401);
+        $user = \Session::get('user');
+        if (! $user->can('项目硬件管理')) abort(401);
 
         $hardware_id = $request->input('hardware_id');
 
@@ -575,7 +712,23 @@ class ProjectController extends Controller
             }
         }
 
-        Clog::add($project, '关联硬件基本信息修改', $change, Clog::LEVEL_WARNING);
+        if (count($change)) {
+
+            foreach($change as $c) {
+
+                \Log::notice(strtr('项目关联硬件信息修改: 用户(%name[%id]) 修改了项目(%project_name[%project_id]) 关联硬件的信息: %title  %old -> %new', [
+                    '%name'=> $user->name,
+                    '%id'=> $user->id,
+                    '%project_name'=> $project->name,
+                    '%project_id'=> $project->id,
+                    '%title'=> $c['title'],
+                    '%old'=> $c['old'],
+                    '%new'=> $c['new'],
+                ]));
+            }
+
+            Clog::add($project, '关联硬件基本信息修改', $change, Clog::LEVEL_WARNING);
+        }
 
         return redirect()->back()
             ->with('message_content', '硬件修改成功!')

@@ -84,7 +84,6 @@ class GapperController extends Controller
                 //crm 是一个 group 的 app, 判断用户是否有该 App 即可
                 $groups = \App\Gini\Gapper\Client::getGroups();
 
-
                 if (!$groups) {
                     throw new \Exception('用户无管理组!');
                 } else {

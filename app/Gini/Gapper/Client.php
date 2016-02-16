@@ -225,6 +225,18 @@ class Client
 
     public static function logout()
     {
+
+        $user = \Session::get('user');
+
+        //可能用户未登录, 直接 $user->name 会报错!
+        //故进行判断
+        if ($user) {
+            \Log::info(strtr('用户登出: %name[%id]', [
+                '%name'=> $user->name,
+                '%id'=> $user->id,
+            ]));
+        }
+
         self::unsetSession(self::$keyGroupID);
         self::unsetSession(self::$keyUserName);
 
@@ -264,5 +276,9 @@ class Client
         }
         //设定当前用户
         \Session::set('user', $user);
+        \Log::info(strtr('用户登录: %name[%id]', [
+            '%name'=> $user->name,
+            '%id'=> $user->id,
+        ]));
     }
 }
