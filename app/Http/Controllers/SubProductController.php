@@ -211,7 +211,7 @@ class SubProductController extends Controller
 
     public function param_edit($id, Request $request)
     {
-        $user = \Sessin::get('user');
+        $user = \Session::get('user');
         if (!$user->can('产品参数管理')) {
             abort(401);
         }
