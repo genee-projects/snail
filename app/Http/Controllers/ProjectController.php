@@ -312,7 +312,7 @@ class ProjectController extends Controller
             '%project_id' => $project->id,
         ]));
 
-        Clog::add($project, '解约项目', Clog::LEVEL_WARNING);
+        Clog::add($project, '解约项目', [], Clog::LEVEL_WARNING);
 
         $project->delete();
 
