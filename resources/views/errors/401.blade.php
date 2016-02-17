@@ -6,8 +6,8 @@
     <tbody>
     <tr>
         <td style="text-align: center;">
-            <p style="font-size: 100px;"> 404 </p>
-            <p style="font-size: 100px;"> Not Found </p>
+            <p style="font-size: 100px;"> 401 </p>
+            <p style="font-size: 100px;"> Unauthorized </p>
         </td>
     </tr>
     </tbody>

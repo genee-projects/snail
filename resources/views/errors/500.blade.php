@@ -6,7 +6,8 @@
     <tbody>
     <tr>
         <td style="text-align: center;">
-            <p style="font-size: 100px;"> 500 (内部错误) </p>
+            <p style="font-size: 100px;"> 500 </p>
+            <p style="font-size: 100px;"> Internal Server Error </p>
         </td>
     </tr>
     </tbody>
