@@ -48,6 +48,10 @@ class ProjectController extends Controller
         if (!$signed_time) {
             $signed_time = null;
         }
+        else {
+            $signed_time = \Carbon\Carbon::createFromFormat('Y/m/d', $signed_time)->format('Y-m-d H:i:s');
+        }
+
         $project->signed_time = $signed_time;     // 签约时间
 
         $cancelled_time = $request->input('cancelled_time');
@@ -55,6 +59,10 @@ class ProjectController extends Controller
         if (!$cancelled_time) {
             $cancelled_time = null;
         }
+        else {
+            $cancelled_time = \Carbon\Carbon::createFromFormat('Y/m/d', $cancelled_time)->format('Y-m-d H:i:s');
+        }
+
         $project->cancelled_time = $cancelled_time;   // 服务到期时间
 
         $project->description = $request->input('description');
