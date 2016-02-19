@@ -8,4 +8,4 @@ crm:
     - /etc/localtime:/etc/localtime:ro
   container_name: crm
   environment:
-    - VIRTUAL_HOST=crm.reserva.genee.cn,crm.reserva.genee.in
+    - VIRTUAL_HOST=crm.genee.cn
