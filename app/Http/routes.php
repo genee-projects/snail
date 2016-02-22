@@ -325,13 +325,14 @@ Route::get('/nfs/list/{project_id}/{path}', [
 ])->where(['path' => '[\w\W]*']);
 
 # 下载
-Route::get('/nfs/download/{project_id}/{file}', [
+Route::get('/nfs/download/{project_id}/{file}/download', [
     'as' => 'nfs.download',
     'uses' => 'NFSController@download',
 ])->where(['file' => '[\w\W]*']);
 
 # 删除
-Route::get('/nfs/delete/{project_id}/{file}', [
+# 增加 index 是为了让 nginx 正常解析
+Route::get('/nfs/delete/{project_id}/{file}/delete', [
     'as' => 'nfs.delete',
     'uses' => 'NFSController@delete',
 ])->where(['file' => '[\w\W]*']);
