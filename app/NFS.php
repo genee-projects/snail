@@ -143,7 +143,7 @@ class NFS
             if (is_array($dir)) {
                 $path = strtr('%root/project/%id/%path', [
                     '%root' => $root,
-                    '%%id' => $id,
+                    '%id' => $id,
                     '%path' => $key,
                 ]);
 
