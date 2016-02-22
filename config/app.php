@@ -196,7 +196,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
-    'managers'=> [
+    'managers' => [
     ],
     'version' => '0.5.5',
+    'nfs_root' => env('NFS_ROOT', '/data/crm/'),
 ];

@@ -244,6 +244,12 @@
                                     <i class="fa fa-comment-o"></i> 备注信息
                                 </a>
                             </li>
+
+                            <li role="presentation">
+                                <a href="{{ route('nfs.path', ['project_id'=> $project->id, 'path'=> 'root']) }}" target="_blank">
+                                    <i class="fa fa-file"></i> 文件系统
+                                </a>
+                            </li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -301,7 +307,7 @@
         requirejs(['jquery', 'bootstrap'], function($) {
 
 
-            $('ul.profile a').bind('click', function(e) {
+            $('ul.profile a[role=tab]').bind('click', function(e) {
                 e.preventDefault();
 
                 var type = $(this).data('type');

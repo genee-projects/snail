@@ -77,4 +77,23 @@ class Project extends Model
 
         return parent::newPivot($this->parent, $attributes, $this->table, $exists);
     }
+
+    public function save(array $options = [])
+    {
+        $to_init_nfs = false;
+
+        //save 的时候, 检查是否包含了 ID, 如果 ID 不存在, 需初始化 nfs
+        if (!$this->id) {
+            $to_init_nfs = true;
+        }
+
+        $result = parent::save($options);
+
+        if ($to_init_nfs && $result) {
+            $id = $this->id;
+            \App\NFS::nfs_init($this);
+        }
+
+        return $result;
+    }
 }

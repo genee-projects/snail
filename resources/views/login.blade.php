@@ -46,7 +46,7 @@
                                     <div class="gapper-auth-login-form-placeholder">Password</div>
                                     <input class="form-control" type="password" name="password" placeholder="密码" />
                                     <div class="text-right">
-                                        <a href="{{ route('gapper.go', ['type'=> 'forgot-password']) }}" class="text-muted" target="_blank">
+                                        <a href="http://gapper.in/forgot-password" class="text-muted" target="_blank">
                                             <small>忘记密码?</small>
                                         </a>
                                     </div>

@@ -238,12 +238,6 @@ class Client
         return true;
     }
 
-    public static function goLogin()
-    {
-        //$url = \Gini\URI::url('gapper/client/login', ['redirect' => $_SERVER['REQUEST_URI']]);
-        //\Gini\CGI::redirect($url);
-    }
-
     public static function getApps($groupID)
     {
         try {
