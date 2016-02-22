@@ -90,10 +90,14 @@ class Project extends Model
         $result = parent::save($options);
 
         if ($to_init_nfs && $result) {
-            $id = $this->id;
-            \App\NFS::nfs_init($this);
+            $this->init_nfs();
         }
 
         return $result;
+    }
+
+    public function init_nfs()
+    {
+        \App\NFS::nfs_init($this);
     }
 }

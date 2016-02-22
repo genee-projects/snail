@@ -25,6 +25,11 @@ class NFSController extends Controller
             $view = 'nfs/other';
         }
 
+        if (!is_dir(\App\NFS::full_path($project, '/')))
+        {
+            $project->init_nfs();
+        }
+
         return view($view, ['project' => $project, 'path' => $path]);
     }
 
