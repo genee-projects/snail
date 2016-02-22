@@ -9,12 +9,6 @@ class NFSController extends Controller
 {
     public function path($project_id, $path)
     {
-        $user = \Session::get('user');
-
-        if (!$user->can('项目信息管理')) {
-            abort(401);
-        }
-
         $project = Project::find($project_id);
 
         $path = ltrim($path, 'root');
@@ -37,10 +31,6 @@ class NFSController extends Controller
     {
         $user = \Session::get('user');
 
-        if (!$user->can('项目信息管理')) {
-            abort(401);
-        }
-
         $project = Project::find($project_id);
 
         $full_path = \App\NFS::full_path($project, $file);
@@ -57,10 +47,6 @@ class NFSController extends Controller
     public function delete($project_id, $file)
     {
         $user = \Session::get('user');
-
-        if (!$user->can('项目信息管理')) {
-            abort(401);
-        }
 
         $project = Project::find($project_id);
 
@@ -82,10 +68,6 @@ class NFSController extends Controller
     public function rename(Request $request)
     {
         $user = \Session::get('user');
-
-        if (!$user->can('项目信息管理')) {
-            abort(401);
-        }
 
         $project = Project::find($request->input('project_id'));
 
@@ -113,7 +95,7 @@ class NFSController extends Controller
             } while (file_exists($full_file));
         }
 
-        $rename = basename($full_file);
+        $rename = substr($full_file, strrpos($full_file, '/') + 1);
 
         \App\NFS::rename(\App\NFS::full_path($project, $path), $file, $rename);
 
@@ -133,10 +115,6 @@ class NFSController extends Controller
     public function upload($project_id, Request $request)
     {
         $user = \Session::get('user');
-
-        if (!$user->can('项目信息管理')) {
-            abort(401);
-        }
 
         $project = Project::find($project_id);
 
@@ -165,7 +143,7 @@ class NFSController extends Controller
                 } while (file_exists($full_file));
             }
 
-            $file = basename($full_file);
+            $file = substr($full_file, strrpos($full_file, '/') + 1);
 
             \Log::notice(strtr('文件上传: 用户(%name[%id]) 在路径 %path 中上传了文件 %file', [
                 '%name' => $user->name,
