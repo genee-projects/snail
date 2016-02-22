@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class ProjectServerPivot extends Pivot
 {
     protected $casts = [
-        'deploy_time'=> 'date',
+        'deploy_time' => 'date',
     ];
 }

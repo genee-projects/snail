@@ -226,12 +226,12 @@
                                 </a>
                             </li>
 
-
-                            <li role="presentation">
-                                <a data-type="trello" href="#trello-tab" role="tab">
-                                    <i class="fa fa-wrench"></i> 部署情况
-                                </a>
-                            </li>
+                            {{--目前部署进度先进行隐藏--}}
+                            {{--<li role="presentation">--}}
+                                {{--<a data-type="trello" href="#trello-tab" role="tab">--}}
+                                    {{--<i class="fa fa-wrench"></i> 部署情况--}}
+                                {{--</a>--}}
+                            {{--</li>--}}
 
                             <li role="presentation">
                                 <a data-type="informations" href="#informations-tab" role="tab">
@@ -239,9 +239,15 @@
                                 </a>
                             </li>
 
-                            <li role="presentation" >
+                            <li role="presentation">
                                 <a data-type="comments" href="#comments-tab" role="tab">
                                     <i class="fa fa-comment-o"></i> 备注信息
+                                </a>
+                            </li>
+
+                            <li role="presentation">
+                                <a href="{{ route('nfs.path', ['project_id'=> $project->id, 'path'=> 'root']) }}" target="_blank">
+                                    <i class="fa fa-file"></i> 文件系统
                                 </a>
                             </li>
                         </ul>
@@ -289,6 +295,7 @@
                                     <i class="fa fa-spinner fa-spin fa-2x"></i>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -300,7 +307,7 @@
         requirejs(['jquery', 'bootstrap'], function($) {
 
 
-            $('ul.profile a').bind('click', function(e) {
+            $('ul.profile a[role=tab]').bind('click', function(e) {
                 e.preventDefault();
 
                 var type = $(this).data('type');

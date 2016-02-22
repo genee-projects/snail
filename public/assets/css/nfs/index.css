@@ -1,0 +1,60 @@
+body #content {
+  position: inherit;
+  margin: 0 0 0 0;
+  padding: 0 30px; }
+  body #content .panel-body {
+    background-color: #fefefe; }
+  body #content ul.items {
+    margin: 0;
+    padding: 0;
+    list-style: none; }
+    body #content ul.items li.item.hover {
+      background-color: #fefefe;
+      box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2); }
+      body #content ul.items li.item.hover a {
+        color: #44a5ff; }
+    body #content ul.items li.item {
+      box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.2);
+      border-radius: 2px;
+      overflow: hidden;
+      margin: 8px;
+      position: relative;
+      white-space: nowrap;
+      background: #fff; }
+      body #content ul.items li.item a {
+        width: 84%;
+        display: block;
+        color: rgba(0, 0, 0, 0.87);
+        cursor: pointer;
+        text-decoration: none;
+        float: left; }
+        body #content ul.items li.item a span.square {
+          position: relative;
+          top: 10px;
+          margin-left: 10px; }
+        body #content ul.items li.item a span.label {
+          line-height: 40px;
+          display: inline-block;
+          vertical-align: top;
+          width: 180px;
+          padding: 0 8px;
+          color: inherit;
+          font-size: 12px;
+          font-weight: 400;
+          text-align: left; }
+      body #content ul.items li.item a.action {
+        float: right;
+        width: 8%; }
+        body #content ul.items li.item a.action i {
+          width: 20px;
+          height: 20px;
+          position: relative;
+          top: 10px; }
+
+@media (min-width: 768px) {
+  body #content ul.items li.item a {
+    width: 96%; }
+  body #content ul.items li.item a.action {
+    width: 2%; } }
+
+/*# sourceMappingURL=index.css.map */

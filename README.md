@@ -7,11 +7,19 @@ Genee 的 CRM
 # 部署文档
 
 * 本地安装 make 命令: `apt-get install -y build-essential`
-* 进行容器构建: `make build`
-* 进行依赖安装: `make init`
-* 部署容器: `make up`
+* 进行容器构建: `sudo make build`
+* 进行依赖安装: `sudo make init`
+* 部署容器: `sudo make up`
+* 进行宿主机 **dnsmasq** 安装: `sudo apt-get install -y dnsmasq`
+* 宿主机 **dnsmasq** 增加 **gapper.in** 配置: `echo 'address=/gapper.in/123.59.70.173' > /etc/dnsmasq.d/common`
 
-如有需要, 进行 API 文档生成: `make docs`
+
+注意:
+
+* 宿主机进行 **gapper.in** 地址增加, 需要使用 `root` 用户执行, 如果有其他 **DNS** 服务, 请参照该 **DNS** 服务配置文档增加 **gapper.in** 地址
+
+* 如有需要, 进行 API 文档生成: `sudo make docs`
+
 
 # 权限设计
 

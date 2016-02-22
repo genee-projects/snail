@@ -11,3 +11,6 @@ up:
 
 docs:
 	./docs.sh
+
+fix:
+	./fix.sh

@@ -26,5 +26,7 @@ elixir(function(mix) {
 
     mix.sass('roles/index.scss', 'public/assets/css/roles/index.css');
 
+    mix.sass('nfs/index.scss', 'public/assets/css/nfs/index.css');
+
     mix.sass('login.scss', 'public/assets/css/login.css');
 });

@@ -308,11 +308,6 @@ Route::post('/roles/users', [
     'uses' => 'RoleController@user_connect_many',
 ]);
 
-Route::get('/gapper/go/{type}', [
-    'as' => 'gapper.go',
-    'uses' => 'GapperController@go',
-]);
-
 Route::post('/gapper/login', [
     'as' => 'login',
     'uses' => 'GapperController@login',
@@ -321,4 +316,33 @@ Route::post('/gapper/login', [
 Route::get('/gapper/logout', [
     'as' => 'logout',
     'uses' => 'GapperController@logout',
+]);
+
+# 进行路径匹配
+Route::get('/nfs/list/{project_id}/{path}', [
+    'as' => 'nfs.path',
+    'uses' => 'NFSController@path',
+])->where(['path' => '[\w\W]*']);
+
+# 下载
+Route::get('/nfs/download/{project_id}/{file}', [
+    'as' => 'nfs.download',
+    'uses' => 'NFSController@download',
+])->where(['file' => '[\w\W]*']);
+
+# 删除
+Route::get('/nfs/delete/{project_id}/{file}', [
+    'as' => 'nfs.delete',
+    'uses' => 'NFSController@delete',
+])->where(['file' => '[\w\W]*']);
+
+# 重命名
+Route::post('/nfs/rename', [
+    'as' => 'nfs.rename',
+    'uses' => 'NFSController@rename',
+]);
+
+Route::post('/nfs/upload/{project_id}', [
+    'as' => 'nfs.upload',
+    'uses' => 'NFSController@upload',
 ]);

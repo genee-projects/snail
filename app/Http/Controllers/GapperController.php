@@ -24,37 +24,6 @@ class GapperController extends Controller
         return self::$_RPC;
     }
 
-    public function go()
-    {
-        $paths = func_get_args();
-
-        $config = config('gapper.rpc');
-        $client_id = $config['client_id'];
-        $url = config('gapper.url');
-
-        if (empty($paths)) {
-            $group_id = \App\Gini\Gapper\Client::getGroupID();
-            if ($group_id) {
-                $url .= '/dashboard/group/'.$group_id;
-            }
-        } else {
-            $url .= '/'.implode('/', $paths);
-        }
-
-        $user = \App\Gini\Gapper\Client::getUserInfo();
-
-        $token = null;
-        if ($user['id']) {
-            $token = self::getRPC()->gapper->user->getLoginToken((int) $user['id'], $client_id);
-        }
-
-        if ($token) {
-            $url = url($url, '?gapper-token='.$token);
-        }
-
-        return redirect()->to($url);
-    }
-
     public function login(Request $request)
     {
         $username = $request->input('username');
