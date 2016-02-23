@@ -48,6 +48,10 @@ class NFSController extends Controller
     {
         $user = \Session::get('user');
 
+        if (!$user->can('项目文件管理')) {
+            abort(401);
+        }
+
         $project = Project::find($project_id);
 
         $full_path = \App\NFS::full_path($project, $file);
@@ -67,7 +71,12 @@ class NFSController extends Controller
 
     public function edit(Request $request)
     {
+
         $user = \Session::get('user');
+
+        if (!$user->can('项目文件管理')) {
+            abort(401);
+        }
 
         $project = Project::find($request->input('project_id'));
 
@@ -115,6 +124,10 @@ class NFSController extends Controller
     public function upload($project_id, Request $request)
     {
         $user = \Session::get('user');
+
+        if (!$user->can('项目文件管理')) {
+            abort(401);
+        }
 
         $project = Project::find($project_id);
 

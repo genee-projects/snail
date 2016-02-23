@@ -82,7 +82,6 @@
 
                 $modal.modal();
                 return false;
-
             });
         });
 

@@ -134,6 +134,12 @@ Genee 的 CRM
 		<td></td>
 	</tr>
 	<tr>
+		<td>项目文件管理</td>
+		<td></td>
+		<td>√</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td colspan="4"><strong>服务器管理</strong></td>
 	</tr>
 	<tr>

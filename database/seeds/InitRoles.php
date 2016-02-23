@@ -12,7 +12,12 @@ class InitRoles extends Seeder
     {
         //初始化系统默认 Role
         foreach (['销售', '售后', '产品', '硬件'] as $name) {
-            $role = new Role();
+            $role = Role::where('name', $name)->firstOrFail();
+
+            if (!$role->id) {
+                $role = new Role();
+            }
+
             $role->name = $name;
             $role->system = true;
             $role->save();
@@ -55,6 +60,7 @@ class InitRoles extends Seeder
             '项目硬件管理',
             '项目服务器管理',
             '服务器信息管理',
+            '项目文件管理',
         ];
 
         $role->save();

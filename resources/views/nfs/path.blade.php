@@ -1,3 +1,4 @@
+{{--*/ $can_manage_nfs = \Session::get('user')->can('项目文件管理') /*--}}
 <ul class="items">
     @foreach (\App\NFS::path($project, $path, 'directory') as $directory)
     <li class="item">
@@ -25,32 +26,29 @@
                </a>
            </div>
 
-
+           @if ($can_manage_nfs)
            <div class="action">
                <span>
-
                    <form method="post" action="{{ route('nfs.delete', ['project'=> $project, 'file'=> $path. '/'. $file]) }}">
                        <button type="submit" class="btn btn-danger btn-sm delete">
                            <i class="fa fa-fw fa-times"></i>
                        </button>
                    </form>
-
                </span>
                <span>
-
                    <button data-path="{{ $path }}" data-file="{{ $file }}" data-project-id="{{ $project->id }}" class="btn edit-btn btn-primary btn-sm" href="#">
                        <i class="fa fa-fw fa-edit"></i>
                    </button>
-
                </span>
-
            </div>
-
+           @endif
 
        </li>
     @endforeach
 </ul>
 
+
+@if ($can_manage_nfs)
 <form method="post" style="width: 40%;float: right; margin-right: 20px;" enctype="multipart/form-data" action="{{ route('nfs.upload', ['project'=> $project]) }}">
 
     <p class="pull-right">
@@ -92,3 +90,4 @@
         </div>
     </div>
 </div>
+@endif
