@@ -2,39 +2,50 @@
     @foreach (\App\NFS::path($project, $path, 'directory') as $directory)
     <li class="item">
         <a href="{{ route('nfs.path', ['project_id'=> $project->id, 'path'=> $path. '/'. $directory]) }}">
-
             <span class="square">
-
                 <img src="assets/svg/folder.svg" alt="folder">
-
             </span>
             <span class="label">
                 {{ $directory }}
             </span>
-
         </a>
-
     </li>
     @endforeach
 
     @foreach (\App\NFS::path($project, $path, 'file') as $file)
        <li class="item">
-           <a href="{{ route('nfs.download', ['project_id'=> $project->id, 'file'=> $path. '/'. $file]) }}">
+           <div>
+               <a href="{{ route('nfs.download', ['project_id'=> $project->id, 'file'=> $path. '/'. $file]) }}">
                <span class="square">
                     <img src="assets/svg/file.svg" alt="folder">
                </span>
                <span class="label">
                    {{ $file }}
                </span>
-           </a>
+               </a>
+           </div>
 
-           <a class="action hidden delete" href="{{ route('nfs.delete', ['project'=> $project, 'file'=> $path. '/'. $file]) }}">
-               <i class="fa fa-times fa-lg"></i>
-           </a>
 
-           <a data-path="{{ $path }}" data-file="{{ $file }}" data-project-id="{{ $project->id }}" class="action hidden edit" href="#">
-               <i class="fa fa-edit fa-lg"></i>
-           </a>
+           <div class="action">
+               <span>
+
+                   <form method="post" action="{{ route('nfs.delete', ['project'=> $project, 'file'=> $path. '/'. $file]) }}">
+                       <button type="submit" class="btn btn-danger btn-sm delete">
+                           <i class="fa fa-fw fa-times"></i>
+                       </button>
+                   </form>
+
+               </span>
+               <span>
+
+                   <button data-path="{{ $path }}" data-file="{{ $file }}" data-project-id="{{ $project->id }}" class="btn edit-btn btn-primary btn-sm" href="#">
+                       <i class="fa fa-fw fa-edit"></i>
+                   </button>
+
+               </span>
+
+           </div>
+
 
        </li>
     @endforeach
@@ -48,7 +59,7 @@
     </p>
 </form>
 
-<div class="modal fade" id="file-rename" tabindex="-1" role="dialog" aria-labelledby="file-rename-modal-label">
+<div class="modal fade" id="file-edit" tabindex="-1" role="dialog" aria-labelledby="file-edit-modal-label">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -56,7 +67,7 @@
                 <h4 class="modal-title" id="edit-server-modal-label">文件重命名</h4>
             </div>
             <div class="modal-body">
-                <form id="edit-client-form" class="form-horizontal" method="post" action="{{ route('nfs.rename') }}">
+                <form id="edit-client-form" class="form-horizontal" method="post" action="{{ route('nfs.edit') }}">
                     <input type="hidden" name="project_id">
                     <input type="hidden" name="path">
                     <input type='hidden' name="file">

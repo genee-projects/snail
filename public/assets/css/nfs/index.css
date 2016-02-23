@@ -22,7 +22,7 @@ body #content {
       white-space: nowrap;
       background: #fff; }
       body #content ul.items li.item a {
-        width: 84%;
+        width: 60%;
         display: block;
         color: rgba(0, 0, 0, 0.87);
         cursor: pointer;
@@ -42,19 +42,22 @@ body #content {
           font-size: 12px;
           font-weight: 400;
           text-align: left; }
-      body #content ul.items li.item a.action {
+      body #content ul.items li.item .action {
+        display: block;
         float: right;
-        width: 8%; }
-        body #content ul.items li.item a.action i {
-          width: 20px;
-          height: 20px;
-          position: relative;
-          top: 10px; }
+        width: 40%;
+        padding: 5px; }
+        body #content ul.items li.item .action span {
+          float: right;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+          margin-right: 2px; }
 
 @media (min-width: 768px) {
   body #content ul.items li.item a {
-    width: 96%; }
-  body #content ul.items li.item a.action {
-    width: 2%; } }
+    width: 92%; }
+  body #content ul.items li.item .action {
+    width: 8%; } }
 
 /*# sourceMappingURL=index.css.map */

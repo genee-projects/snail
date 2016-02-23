@@ -328,19 +328,19 @@ Route::get('/nfs/list/{project_id}/{path}', [
 Route::get('/nfs/download/{project_id}/{file}/download', [
     'as' => 'nfs.download',
     'uses' => 'NFSController@download',
-])->where(['file' => '[\w\W]*']);
+])->where(['file' => '.*']);
 
 # 删除
-# 增加 index 是为了让 nginx 正常解析
-Route::get('/nfs/delete/{project_id}/{file}/delete', [
+# 增加 delete 是为了让 nginx 正常解析
+Route::post('/nfs/delete/{project_id}/{file}/delete', [
     'as' => 'nfs.delete',
     'uses' => 'NFSController@delete',
-])->where(['file' => '[\w\W]*']);
+])->where(['file' => '.*']);
 
 # 重命名
-Route::post('/nfs/rename', [
-    'as' => 'nfs.rename',
-    'uses' => 'NFSController@rename',
+Route::post('/nfs/edit', [
+    'as' => 'nfs.edit',
+    'uses' => 'NFSController@edit',
 ]);
 
 Route::post('/nfs/upload/{project_id}', [

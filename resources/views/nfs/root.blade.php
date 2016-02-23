@@ -65,15 +65,15 @@
 
             $('ul li.item').hover(function() {
                 $(this).addClass('hover');
-                $(this).find('a.action').removeClass('hidden');
+                $(this).find('.action').removeClass('hidden');
             }, function() {
                 $(this).removeClass('hover');
-                $(this).find('a.action').addClass('hidden');
+                $(this).find('.action').addClass('hidden');
             });
 
-            $('ul li.item a.edit').bind('click', function() {
+            $('ul li.item button.edit-btn').bind('click', function() {
 
-                var $modal = $('#file-rename');
+                var $modal = $('#file-edit');
 
                 $modal.find(':input[name=project_id]').val($(this).data('project-id'));
                 $modal.find(':input[name=file]').val($(this).data('file'));

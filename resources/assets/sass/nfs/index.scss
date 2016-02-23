@@ -33,7 +33,7 @@ body {
 
         a {
 
-          width: 84%;
+          width: 60%;
           display: block;
           color: rgba(0, 0, 0, 0.87);
           cursor: pointer;
@@ -60,14 +60,15 @@ body {
           }
         }
 
-        a.action {
-          float: right;
-          width: 8%;
-          i {
-            width: 20px;
-            height: 20px;
-            position: relative;
-            top: 10px;
+        .action {
+          display: block;
+          float:right;
+          width: 40%;
+          padding: 5px;
+          span {
+            float: right;
+            display: flex;
+            margin-right: 2px;
           }
         }
       }
@@ -82,11 +83,11 @@ body {
       ul.items {
         li.item {
           a {
-            width: 96%;
+            width: 92%;
           }
 
-          a.action {
-            width: 2%;
+          .action {
+            width: 8%
           }
         }
       }

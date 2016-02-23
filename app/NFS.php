@@ -21,6 +21,22 @@ class NFS
             '%file' => $file,
         ]);
 
+        if (file_exists($new_path)) {
+            $dirname = dirname($new_path).'/';
+
+            $info = \App\NFS::pathinfo($new_path);
+            $extension = $info['extension'] ? '.'.$info['extension'] : '';
+            $name = substr($file, 0, strrpos($file, '.') ?: strlen($file));
+
+            $suffix_count = 2;
+
+            do {
+                $file_name = $name.'('.$suffix_count.')'.$extension;
+                $new_path = $dirname.'.'.$file_name;
+                ++$suffix_count;
+            } while (file_exists($new_path));
+        }
+
         return rename($path, $new_path);
     }
 
@@ -65,17 +81,21 @@ class NFS
 
         switch ($type) {
             case '*':
-                return [
+                $return = [
                     'directory' => $directory,
                     'file' => $file,
                 ];
             break;
             case 'directory':
-                return $directory;
+                $return = $directory;
             break;
             case 'file':
-                return $file;
+                $return = $file;
+            break;
+            default:
         }
+
+        return $return;
     }
 
     //返回此路径的去除点，空格等后的合法路径$path

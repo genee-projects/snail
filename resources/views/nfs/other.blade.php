@@ -68,7 +68,7 @@
 
             $('ul li.item a.edit').bind('click', function() {
 
-                var $modal = $('#file-rename');
+                var $modal = $('#file-edit');
 
                 $modal.find(':input[name=project_id]').val($(this).data('project-id'));
                 $modal.find(':input[name=file]').val($(this).data('file'));

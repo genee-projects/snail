@@ -65,7 +65,7 @@ class NFSController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function rename(Request $request)
+    public function edit(Request $request)
     {
         $user = \Session::get('user');
 
