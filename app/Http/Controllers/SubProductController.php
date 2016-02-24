@@ -102,7 +102,7 @@ class SubProductController extends Controller
             \Log::notice(strtr('产品修改: 用户(%name[%id]) 修改了子产品 (%sub_product[%sub_product_id]): [%key] %old --> %new', [
                 '%name' => $user->name,
                 '%id' => $user->id,
-                '%%sub_product' => $sub->name,
+                '%sub_product' => $sub->name,
                 '%sub_product_id' => $sub->id,
                 '%key' => $key,
                 '%old' => $old_attributes[$key],
