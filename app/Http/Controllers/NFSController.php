@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Project;
 
 class NFSController extends Controller
@@ -41,7 +42,16 @@ class NFSController extends Controller
             '%file' => $full_path,
         ]));
 
-        return response()->download($full_path);
+        $filename = substr($file, strrpos($file, '/') + 1);
+
+        return (new Response(file_get_contents($full_path), 200))
+            ->header('Content-Type', 'application/force-download')
+            ->header('Cache-Control', 'public, must-revalidate, max-age=0')
+            ->header('Pragma', 'no-cache')
+            ->header('Accept-Ranges', 'bytes')
+            ->header('Content-Disposition', "inline; filename=\"$filename\"")
+            ->header('Content-Transfer-Encoding', 'binary')
+            ->header('Connection', 'close');
     }
 
     public function delete($project_id, $file)
