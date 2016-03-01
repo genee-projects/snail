@@ -15,7 +15,22 @@ class Project extends Model
         'signed_time' => 'date',         //签约时间
         'cancelled_time' => 'date',      //解约时间
         'vip' => 'bool',
-        'official' => 'bool',
+    ];
+
+
+    # 售前支持
+    const SIGNED_STATUS_PENDING = 2;
+
+    # 试用客户
+    const SIGNED_STATUS_PROBATIONARY = 0;
+
+    # 正式客户
+    const SIGNED_STATUS_OFFICIAL = 1;
+
+    static $signed_status = [
+        self::SIGNED_STATUS_PENDING => '售前支持',
+        self::SIGNED_STATUS_PROBATIONARY => '试用客户',
+        self::SIGNED_STATUS_OFFICIAL => '正式客户',
     ];
 
     //需要注意, 项目的 product 为 SubProduct, 不为的 Product

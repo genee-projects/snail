@@ -36,7 +36,8 @@ class ProjectController extends Controller
         $project->client()->associate($client);
 
         $project->vip = (bool) ($request->input('vip') == 'on');
-        $project->official = (bool) ($request->input('official') == 'on');
+
+        $project->signed_status = $request->input('signed_status');
 
         $project->ref_no = $request->input('ref_no');
         $project->name = $request->input('name');
@@ -116,7 +117,8 @@ class ProjectController extends Controller
         $project->name = $request->input('name');                   // 项目名称
 
         $project->vip = (bool) ($request->input('vip') == 'on');
-        $project->official = (bool) ($request->input('official') == 'on');
+
+        $project->signed_status = $request->input('signed_status');
 
         $old_product_id = $project->product->id;
         $new_product_id = $product->id;
@@ -201,7 +203,7 @@ class ProjectController extends Controller
                 'signed_time' => '签约时间',
                 'cancelled_time' => '合同到期时间',
                 'vip' => '重点项目状态',
-                'official' => '正式/试用状态',
+                'signed_status' => '正式/试用/售前支持状态',
                 'login_url' => '登录地址',
             ];
 
@@ -216,10 +218,10 @@ class ProjectController extends Controller
                         $old_value = ($old_value === true) ? '重点项目' : '普通项目';
 
                         break;
-                    case 'official':
+                    case 'signed_status':
 
-                        $new_value = ($new_value === true) ? '正式项目' : '试用项目';
-                        $old_value = ($old_value === true) ? '正式项目' : '试用项目';
+                        $new_value = \App\Project::$signed_status[$new_value];
+                        $old_value = \App\Project::$signed_status[$old_value];
 
                         break;
 

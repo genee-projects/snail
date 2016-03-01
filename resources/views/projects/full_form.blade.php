@@ -38,7 +38,7 @@
                 <optgroup label="{{ $product->name }}">
                     @foreach($product->sub_products as $sub)
                         <option @if ($project->product->id == $sub->id)
-                                   c selected="selected"
+                                   selected="selected"
                                 @endif
                                 value="{{ $sub->id }}">{{ $sub->name }}</option>
                     @endforeach
@@ -59,10 +59,18 @@
     </div>
     <label for="project-official" class="col-sm-2 control-label">签约状态</label>
     <div class="col-sm-4">
-        <input @if ($project->official)
-                checked="checked"
-               @endif
-                type="checkbox" data-width="140" name="official" data-on="正式项目" data-off="试用项目" data-toggle="toggle">
+
+        <select class="selectpicker form-control" name="signed_status">
+            @foreach(\App\Project::$signed_status as $value => $display)
+                <option
+                    value="{{ $value }}"
+                    @if ($project->signed_status == $value)
+                        selected="selected"
+                    @endif
+                >{{ $display }}
+                </option>
+            @endforeach
+        </select>
     </div>
 </div>
 

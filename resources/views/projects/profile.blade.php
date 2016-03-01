@@ -71,11 +71,17 @@
                                     <span class="label label-danger">重点项目</span>
                                 @endif
 
-                                @if ($project->official)
-                                    <span class="label label-info">正式</span>
-                                @else
-                                    <span class="label label-default">试用</span>
-                                @endif
+                                {{--*/
+                                $signed_status_label_class = [
+                                    \App\Project::SIGNED_STATUS_PENDING => 'warning',
+                                    \App\Project::SIGNED_STATUS_PROBATIONARY => 'default',
+                                    \App\Project::SIGNED_STATUS_OFFICIAL => 'info',
+                                ];
+                                /*--}}
+
+                                <span class="label label-{{$signed_status_label_class[$project->signed_status]}}">
+                                    {{ \App\Project::$signed_status[$project->signed_status] }}
+                                </span>
                             </td>
                         </tr>
                         <tr>

@@ -52,7 +52,13 @@
     </div>
     <label for="project-official" class="col-sm-2 control-label">签约状态</label>
     <div class="col-sm-4">
-        <input type="checkbox" data-width="140" name="official" checked="checked" data-on="正式项目" data-off="试用项目" data-toggle="toggle">
+
+        <select class="selectpicker form-control" name="signed_status">
+            @foreach(\App\Project::$signed_status as $value => $display)
+                <option value="{{ $value }}">{{ $display }}
+                </option>
+            @endforeach
+        </select>
     </div>
 </div>
 
