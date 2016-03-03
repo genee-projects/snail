@@ -40,11 +40,11 @@
                                     @endif
 
                                     {{--*/
-                                   $signed_status_label_class = [
-                                       \App\Project::SIGNED_STATUS_PENDING => 'warning',
-                                       \App\Project::SIGNED_STATUS_PROBATIONARY => 'default',
-                                   ];
-                                   /*--}}
+                                       $signed_status_label_class = [
+                                           \App\Project::SIGNED_STATUS_PENDING => 'warning',
+                                           \App\Project::SIGNED_STATUS_PROBATIONARY => 'default',
+                                       ];
+                                    /*--}}
 
                                     @if ($project->signed_status != \App\Project::SIGNED_STATUS_OFFICIAL)
                                         <span class="label label-{{$signed_status_label_class[$project->signed_status]}}">
