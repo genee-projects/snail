@@ -72,11 +72,24 @@
 </div>
 
 <div class="form-group">
-    <label for="project-time" class="col-sm-2 control-label">合同到期时间</label>
-    <div class="col-sm-10">
-        <div class="date datetimepicker">
-            <input type="text" class="datetimepicker form-control" name="cancelled_time">
-        </div>
+    <label for="project-service-time" class="col-sm-2 control-label">维保时长</label>
+
+    <div class="col-sm-4">
+        <input type="text" class="form-control" name="service_value" placeholder="3" value="3">
+    </div>
+
+    <div class="col-sm-6">
+        <select class="selectpicker form-control" name="service_unit">
+            @foreach(\App\Project::$service_units as $value => $display)
+                <option value="{{ $value }}"
+                    @if ($value == \App\Project::SERVICE_UNIT_MONTH)
+                        selected="selected"
+                    @endif
+                >{{ $display }}
+
+                </option>
+            @endforeach
+        </select>
     </div>
 </div>
 <div class="form-group">

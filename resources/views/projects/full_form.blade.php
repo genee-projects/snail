@@ -108,14 +108,34 @@
         </div>
     </div>
 
-    <label for="project-divorced-time" class="col-sm-2 control-label">合同到期时间</label>
+    <label for="project-divorced-time" class="col-sm-2 control-label">实际验收时间</label>
     <div class="col-sm-4">
         <div class="date">
-            <input type="text" class="datetimepicker form-control" name="cancelled_time" value="{{ $project->cancelled_time }}" placeholder="2017/12/01">
+            <input type="text" class="datetimepicker form-control" name="check_time" value="{{ $project->check_time }}" placeholder="2017/12/01">
         </div>
     </div>
 </div>
 
+<div class="form-group">
+    <label for="project-service-time" class="col-sm-2 control-label">维保时长</label>
+
+    <div class="col-sm-2">
+        <input type="text" class="form-control" name="service_value" placeholder="3" value="{{ $project->service_value }}">
+    </div>
+
+    <div class="col-sm-2">
+        <select class="selectpicker form-control" name="service_unit">
+            @foreach(\App\Project::$service_units as $value => $display)
+                <option value="{{ $value }}"
+                @if ($value == $project->service_unit)
+                    selected="selected"
+                @endif
+                >{{ $display }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
 
 <div class="form-group">
 

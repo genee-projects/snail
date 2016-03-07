@@ -101,11 +101,31 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>合同到期时间</td>
+                            <td>计划验收时间</td>
                             <td>
-                                @if ($project->cancelled_time)
-                                    {{ $project->cancelled_time->format('Y/m/d') }}
+                                {{ $project->planned_check_time }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>实际验收时间</td>
+                            <td>
+                                @if ($project->check_time)
+                                    {{ $project->check_time->format('Y/m/d') }}
+                                @else
+                                    未验收
                                 @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>维保时长</td>
+                            <td>
+                                {{ $project->service }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>维保范围</td>
+                            <td>
+                                {{ $project->service_duration }}
                             </td>
                         </tr>
                         <tr>

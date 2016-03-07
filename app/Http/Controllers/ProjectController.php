@@ -55,16 +55,12 @@ class ProjectController extends Controller
 
         $project->signed_time = $signed_time;     // 签约时间
 
-        $cancelled_time = $request->input('cancelled_time');
+        $service_unit = $request->input('service_unit');
+        $service_value = $request->input('service_value');
 
-        if (!$cancelled_time) {
-            $cancelled_time = null;
-        }
-        else {
-            $cancelled_time = \Carbon\Carbon::createFromFormat('Y/m/d', $cancelled_time)->format('Y-m-d H:i:s');
-        }
-
-        $project->cancelled_time = $cancelled_time;   // 服务到期时间
+        # 维保时间
+        $project->service_unit = $service_unit;
+        $project->service_value = $service_value;
 
         $project->description = $request->input('description');
 
@@ -140,15 +136,21 @@ class ProjectController extends Controller
 
         $project->signed_time = $signed_time;
 
-        $cancelled_time = $request->input('cancelled_time');
+        # 实际验收时间
+        $check_time = $request->input('check_time');
 
-        if (!$cancelled_time) {
-            $cancelled_time = null;
+        if (!$check_time) {
+            $check_time = null;
         } else {
-            $cancelled_time = \Carbon\Carbon::createFromFormat('Y/m/d', $cancelled_time)->format('Y-m-d H:i:s');
-        }   // 服务到期时间
+            $check_time = \Carbon\Carbon::createFromFormat('Y/m/d', $check_time)->format('Y-m-d H:i:s');
+        }
 
-        $project->cancelled_time = $cancelled_time;
+        $project->check_time = $check_time;
+
+        # 维保时间
+        $project->service_unit = $request->input('service_unit');
+        $project->service_value = $request->input('service_value');
+
         $project->seller = $request->input('seller');               // 销售人员
         $project->engineer = $request->input('engineer');           // 工程师
         $project->description = $request->input('description'); //
@@ -201,10 +203,12 @@ class ProjectController extends Controller
                 'description' => '备注',
                 'way' => '乘车路线',
                 'signed_time' => '签约时间',
-                'cancelled_time' => '合同到期时间',
+                'check_time' => '实际验收时间',
                 'vip' => '重点项目状态',
                 'signed_status' => '正式/试用/售前支持状态',
                 'login_url' => '登录地址',
+                'service_unit'=> '维保时长',
+                'service_value'=> '维保时长',
             ];
 
             foreach (array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
@@ -240,7 +244,7 @@ class ProjectController extends Controller
                         }
 
                         break;
-                    case 'cancelled_time':
+                    case 'check_time':
 
                         if ($new_value) {
                             $new_value = $new_value->format('Y/m/d');
@@ -254,6 +258,14 @@ class ProjectController extends Controller
                             continue 2;
                         }
 
+                        break;
+                    case 'service_unit':
+                    case 'service_value':
+
+                        $old_value = $old_attributes['service_value']. \App\Project::$service_units[$old_attributes['service_unit']];
+                        $new_value = $new_attributes['service_value']. \App\Project::$service_units[$new_attributes['service_unit']];
+
+                        $key = 'service_value';
                         break;
                     default:
                         if ($old_value === null) {

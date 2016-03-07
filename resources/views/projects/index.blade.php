@@ -28,7 +28,7 @@
                             <td>项目名称</td>
                             <td>签约客户</td>
                             <td>项目联系人</td>
-                            <td>到期时间</td>
+                            <td class="text-right">维保结束时间</td>
                         </tr>
                         @foreach($projects as $project)
                             <tr>
@@ -55,20 +55,20 @@
                                 </td>
                                 <td>{!! $project->client->path() !!}</td>
                                 <td>{{ $project->contact_user }}</td>
-                                <td class="text-right">@if ($project->cancelled_time)
+                                <td class="text-right">
+                                    @if ($project->check_time)
                                         {{--*/
                                         $now = \Carbon\Carbon::now();
-                                        $cancelled_time = $project->cancelled_time;
                                         /*--}}
 
-                                        @if ($now->gt($cancelled_time))
+                                        @if ($now->gt($project->service_end_time))
                                             <strong class="text-danger">
                                         @endif
 
-                                        {{ $project->cancelled_time->format('Y/m/d') }}
+                                        {{ $project->service_end_time->format('Y/m/d') }}
 
-                                        @if ($now->gt($cancelled_time))
-                                            <label>已到期!</label></strong>
+                                        @if ($now->gt($project->service_end_time))
+                                            <label>已过维保!</label></strong>
                                         @endif
                                      @endif
                                 </td>
