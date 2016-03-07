@@ -23,10 +23,9 @@ class UpdateProjectTimes extends Migration
             //会手动进行导出 cancelled_time 交付给相关人员
             $table->dropColumn('cancelled_time');
 
-            //service_unit 默认为 月
-            //默认为 3 个月
-            $table->tinyInteger('service_unit')->nullable()->default(\App\Project::SERVICE_UNIT_MONTH);
-            $table->tinyInteger('service_value')->nullable()->default(3);
+            //默认为 1 年
+            $table->tinyInteger('service_unit')->nullable()->default(\App\Project::SERVICE_UNIT_YEAR);
+            $table->tinyInteger('service_value')->nullable()->default(1);
             $table->dateTime('check_time')->nullable();
         });
     }
