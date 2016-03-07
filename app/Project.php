@@ -64,6 +64,10 @@ class Project extends Model
         return $this->morphMany('App\Comment', 'object');
     }
 
+    public function records() {
+        return $this->hasMany('App\Record', 'project_id');
+    }
+
     public function client()
     {
         return $this->belongsTo('App\Client', 'client_id');

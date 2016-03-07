@@ -824,5 +824,10 @@ class ProjectController extends Controller
     {
         return view('projects/profile/trello', ['project' => $project]);
     }
+
+    private function _profile_records($project)
+    {
+        return view('projects/profile/records', ['project'=> $project]);
+    }
     //profile 信息 end
 }

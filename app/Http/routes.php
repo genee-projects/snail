@@ -268,6 +268,11 @@ Route::post('/hardware/edit', [
     'uses' => 'HardWareController@edit',
 ]);
 
+Route::get('/hardwares.json', [
+    'as' => 'hardwares.json',
+    'uses' => 'HardwareController@hardwares_json',
+]);
+
 Route::get('/users', [
     'as' => 'users',
     'uses' => 'UserController@users',
@@ -346,4 +351,15 @@ Route::post('/nfs/edit', [
 Route::post('/nfs/upload/{project_id}', [
     'as' => 'nfs.upload',
     'uses' => 'NFSController@upload',
+]);
+
+
+Route::post('/records/add', [
+    'as'=> 'record.add',
+    'uses'=> 'RecordController@add',
+]);
+
+Route::get('/records/delete/{id}', [
+    'as'=> 'record.delete',
+    'uses'=> 'RecordController@delete',
 ]);

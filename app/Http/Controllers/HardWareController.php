@@ -115,4 +115,8 @@ class HardWareController extends Controller
             ->with('message_content', '修改成功!')
             ->with('message_type', 'info');
     }
+
+    public function hardwares_json() {
+        return response()->json(Hardware::all());
+    }
 }

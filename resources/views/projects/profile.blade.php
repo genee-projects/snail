@@ -272,6 +272,12 @@
                             </li>
 
                             <li role="presentation">
+                                <a data-type="records" href="#records-tab" role="tab">
+                                    <i class="fa fa-cab"></i> 外出记录
+                                </a>
+                            </li>
+
+                            <li role="presentation">
                                 <a href="{{ route('nfs.path', ['project_id'=> $project->id, 'path'=> 'root']) }}" target="_blank">
                                     <i class="fa fa-file"></i> 文件系统
                                 </a>
@@ -322,6 +328,14 @@
                                 </div>
                             </div>
 
+                            <!-- record -->
+                            <div role="tabpanel" class="tab-pane" id="records-tab">
+                                <div class="text-center loading">
+                                    <i class="fa fa-spinner fa-spin fa-2x"></i>
+                                </div>
+                            </div>
+                            <!-- end-->
+
                         </div>
                     </div>
                 </div>
@@ -348,6 +362,7 @@
 
                 $(this).tab('show');
             });
+
             $('ul.profile li a[data-type={{ session('tab', 'softwares') }}]').trigger('click');
         });
     </script>
