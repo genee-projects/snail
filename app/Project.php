@@ -13,10 +13,30 @@ class Project extends Model
 
     protected $casts = [
         'signed_time' => 'date',         //签约时间
-        'cancelled_time' => 'date',      //解约时间
+        'check_time' => 'date',      //实际验收时间
         'vip' => 'bool',
     ];
 
+    # 维保单位 日
+    const SERVICE_UNIT_DAY = 1;
+
+    # 维保单位 月
+    const SERVICE_UNIT_MONTH = 2;
+
+    # 维保单位 年
+    const SERVICE_UNIT_YEAR = 3;
+
+    static $service_units = [
+        self::SERVICE_UNIT_DAY => '天',
+        self::SERVICE_UNIT_MONTH => '月',
+        self::SERVICE_UNIT_YEAR => '年',
+    ];
+
+    static $service_unit_values = [
+        self::SERVICE_UNIT_DAY => 3600,
+        self::SERVICE_UNIT_MONTH => 2678400, # 3600 * 31 * 24
+        self::SERVICE_UNIT_YEAR => 31536000, # 3600 * 365 * 24
+    ];
 
     # 售前支持
     const SIGNED_STATUS_PENDING = 2;
@@ -114,5 +134,66 @@ class Project extends Model
     public function init_nfs()
     {
         \App\NFS::nfs_init($this);
+    }
+
+    # 获取计划的验收时间
+    # 原计划验收时间为签约时间 + 90 天
+    public function getPlannedCheckTimeAttribute($value) {
+
+
+        if ($this->signed_time) {
+            return $this->signed_time->addMonths(3)->format('Y/m/d');
+        }
+
+        return '未签约';
+    }
+
+    # 获取维保时长
+    public function getServiceAttribute() {
+        return $this->service_value. self::$service_units[$this->service_unit];
+    }
+
+    # 获取维保范围
+    public function getServiceDurationAttribute() {
+
+        if ($this->check_time) {
+            $start_time = $this->check_time;
+
+            switch($this->service_unit) {
+                case self::SERVICE_UNIT_MONTH :
+                    $end_time = $start_time->copy()->addMonths($this->service_value);
+                    break;
+                case self::SERVICE_UNIT_YEAR :
+                    $end_time = $start_time->copy()->addYears($this->service_value);
+                    break;
+                case self::SERVICE_UNIT_DAY :
+
+                    $end_time = $start_time->copy()->addDays($this->service_value);
+                    break;
+            }
+
+            return $start_time->format('Y/m/d'). ' ~ '. $end_time->format('Y/m/d');
+        }
+
+        return '未验收';
+    }
+
+    # 获取维保结束时间
+    public function getServiceEndTimeAttribute() {
+
+        if ($this->check_time) {
+
+            switch($this->service_unit) {
+                case self::SERVICE_UNIT_MONTH :
+                    return $this->check_time->copy()->addMonths($this->service_value);
+                    break;
+                case self::SERVICE_UNIT_YEAR :
+                    return $this->check_time->copy()->addYears($this->service_value);
+                    break;
+                case self::SERVICE_UNIT_DAY :
+                    return $this->check_time->copy()->addDays($this->service_value);
+                    break;
+            }
+        }
     }
 }
