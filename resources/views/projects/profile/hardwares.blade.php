@@ -5,8 +5,7 @@
             <td>名称</td>
             <td>规格/型号</td>
             <td>生产类型</td>
-            <td>部署数量</td>
-            <td>签约数量</td>
+            <td>计划部署数量</td>
             <td>备注</td>
         </tr>
 
@@ -23,17 +22,13 @@
 
                 </td>
                 <td>
-                    {{ $hardware->pivot->deployed_count }}
+                    {{ $hardware->pivot->count }}
                 </td>
-                <td>
-                    {{ $hardware->pivot->plan_count }}
-                </td>
-
                 <td>
                     {{ $hardware->pivot->description }}
                     @if ($can_manage_hardware)
                         <span class="pull-right">
-                              <i class="fa fa-fw fa-edit edit-hardware edit" data-model="{{ $hardware->model }}" data-description="{{ $hardware->pivot->description }}" data-id="{{ $hardware->id }}" data-name="{{ $hardware->name }}" data-plan-count="{{ $hardware->pivot->plan_count }}" data-deployed-count="{{ $hardware->pivot->deployed_count }}"></i>
+                              <i class="fa fa-fw fa-edit edit-hardware edit" data-model="{{ $hardware->model }}" data-description="{{ $hardware->pivot->description }}" data-id="{{ $hardware->id }}" data-name="{{ $hardware->name }}" data-count="{{ $hardware->pivot->count }}"></i>
                         </span>
                     @endif
                 </td>
@@ -74,7 +69,7 @@
                             @endif
 
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-8">
                                     <div data-id="{{ $hardware->id }}" class="hardware-btn btn {{ $btn_class }}">
                                         {{ $hardware->name }}
                                         @if ($hardware->model)
@@ -84,6 +79,13 @@
                                     @if($selected)
                                         <input type="hidden" name="hardwares[]" value="{{ $hardware->id }}" />
                                     @endif
+                                </div>
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control"
+                                        @if ($project_hardware && $project_hardware->pivot->count)
+                                            value="{{ $project_hardware->pivot->count }}"
+                                        @endif
+                                    placeholder="计划部署数量" name="count[{{ $hardware->id }}]">
                                 </div>
                             </div>
                         @endforeach
@@ -148,13 +150,7 @@
 
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" name="deployed_count" placeholder="部署数量">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" name="plan_count" placeholder="签约数量">
+                                <input type="text" class="form-control" name="count" placeholder="计划部署数量">
                             </div>
                         </div>
 
@@ -181,9 +177,14 @@
             $('.edit-hardware').bind('click', function() {
                 var $modal = $('#edit-hardware');
                 $modal.find(':input[name=name]').val($(this).data('name'));
-                $modal.find(':input[name=model]').val($(this).data('model'));
-                $modal.find(':input[name=plan_count]').val($(this).data('plan-count'));
-                $modal.find(':input[name=deployed_count]').val($(this).data('deployed-count'));
+
+                if ($(this).data('model')) {
+                    $modal.find(':input[name=model]').show().val($(this).data('model'));
+                } else {
+                    $modal.find(':input[name=model]').hide();
+                }
+
+                $modal.find(':input[name=count]').val($(this).data('count'));
                 $modal.find(':input[name=description]').val($(this).data('description'));
 
                 $modal.find(':input[name=hardware_id]').val($(this).data('id'));

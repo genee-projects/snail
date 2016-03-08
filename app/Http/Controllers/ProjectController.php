@@ -678,21 +678,29 @@ class ProjectController extends Controller
         //4. 获取 $param 和 1.中交集的差集, 进行 save
         $save = array_diff((array) $hardwares, $intersect);
 
+        $counts = $request->input('count');
+
         if (count($save)) {
             $hsn = [];
             foreach ($save as $hardware_id) {
                 $hardware = Hardware::find($hardware_id);
 
-                $project->hardwares()->save($hardware);
+                $count = $counts[$hardware_id];
+
+                $project->hardwares()->save($hardware, [
+                    'count'=> $count,
+                ]);
+
                 $hsn[] = $hardware->name;
 
-                \Log::notice(strtr('项目硬件关联: 用户(%name[%id]) 关联了项目(%project_name[%project_id]) 中的硬件 (%hardware_name[%hardware_id])', [
+                \Log::notice(strtr('项目硬件关联: 用户(%name[%id]) 关联了项目(%project_name[%project_id]) 中的硬件 (%hardware_name[%hardware_id]), 计划部署数量: %count', [
                     '%name' => $user->name,
                     '%id' => $user->id,
                     '%project_name' => $project->name,
                     '%project_id' => $project->id,
                     '%hardware_name' => $hardware->name,
                     '%hardware_id' => $hardware->id,
+                    '%count'=> $count,
                 ]));
             }
 
@@ -724,14 +732,12 @@ class ProjectController extends Controller
 
         $old = [
             'description' => $h->pivot->description,
-            'deployed_count' => $h->pivot->deployed_count,
-            'plan_count' => $h->pivot->plan_count,
+            'count' => $h->pivot->count,
         ];
 
         $new = [
             'description' => $request->input('description'),
-            'deployed_count' => $request->input('deployed_count'),
-            'plan_count' => $request->input('plan_count'),
+            'count' => $request->input('count'),
         ];
 
         $project->hardwares()->detach($hardware_id);
@@ -742,8 +748,7 @@ class ProjectController extends Controller
 
         $diff_helper = [
             'description' => '描述',
-            'deployed_count' => '部署数量',
-            'plan_count' => '签约数量',
+            'count' => '计划部署数量',
         ];
 
         foreach (array_keys($diff_helper) as $item) {

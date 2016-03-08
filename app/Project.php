@@ -98,8 +98,7 @@ class Project extends Model
     public function hardwares()
     {
         return $this->belongsToMany('App\Hardware', 'project_hardwares')
-            ->withPivot('deployed_count')
-            ->withPivot('plan_count')
+            ->withPivot('count')
             ->withPivot('description');
     }
 
