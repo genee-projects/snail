@@ -398,3 +398,8 @@ Route::post('/hardware_item/edit', [
     'as'=> 'hardware_item.edit',
     'uses'=> 'HardwareItemController@edit',
 ]);
+
+Route::get('/hardware_item/profile/{id}', [
+    'as'=> 'hardware_item.profile',
+    'uses'=> 'HardwareItemController@profile',
+]);

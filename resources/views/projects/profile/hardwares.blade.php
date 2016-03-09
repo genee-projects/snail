@@ -19,9 +19,6 @@
         @foreach($project->hardwares as $hardware)
             <tr>
                 <td>
-                    <div class="pull-right  hardware-drawer">
-                        <span class="caret"></span>
-                    </div>
                     <a href="{{ route('hardware.profile', ['id'=> $hardware->id]) }}">
                         {{ $hardware->name }}
                     </a>
@@ -41,6 +38,7 @@
                     {{ $hardware->pivot->description }}
                     @if ($can_manage_hardware)
                         <span class="pull-right">
+                            <i class="fa fa-fw fa-eye edit hardware-drawer"></i>
                             <i class="fa fa-fw fa-edit edit-hardware edit" data-model="{{ $hardware->model }}" data-description="{{ $hardware->pivot->description }}" data-id="{{ $hardware->id }}" data-name="{{ $hardware->name }}" data-count="{{ $hardware->pivot->count }}"></i>
                             <i class="fa fa-fw fa-plus add-hardware-item edit" data-id="{{ $hardware->id }}"></i>
                         </span>
@@ -137,7 +135,7 @@
                                 </div>
                             </div>
                         </p>
-                        <table class="table">
+                        <table class="table table-hover table-striped">
                             <tr>
                                 <td>仪器名称</td>
                                 <td class="text-right">CF-ID</td>
@@ -162,8 +160,11 @@
                                             {{ \App\HardwareItem::$status[$i->status] }}
                                         </span>
 
-                                        <span class="pull-right edit edit-hardware-item" data-id="{{ $i->id }}">
-                                            <i class="fa fa-fw fa-edit"></i>
+                                        <span class="pull-right" data-id="{{ $i->id }}">
+                                            <a href="{{ route('hardware_item.profile', ['id'=> $i->id]) }}">
+                                                <i class="fa fa-fw fa-eye edit"></i>
+                                            </a>
+                                            <i class="fa fa-fw fa-edit edit edit-hardware-item"></i>
                                         </span>
                                     </td>
                                 </tr>

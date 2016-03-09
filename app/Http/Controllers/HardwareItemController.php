@@ -61,4 +61,11 @@ class HardwareItemController extends Controller
             ->with('message_content', '修改部署硬件成功!')
             ->with('tab', 'hardwares');
     }
+
+    public function profile($id) {
+
+        $item = HardwareItem::find($id);
+
+        return view('hardwares/item', ['item'=> $item]);
+    }
 }
