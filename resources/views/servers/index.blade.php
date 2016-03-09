@@ -4,7 +4,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <h1 class="page-header">服务器列表</h1>
         </div>
     </div>
@@ -52,7 +52,7 @@
             <div class="panel-body">
 
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-md-12">
                         <table class="table table-hover table-striped table-bordered">
 
                             <tr>

@@ -22,4 +22,17 @@ class Hardware extends Model
     {
         return $this->belongsTo('App\Product', 'product_id');
     }
+
+    public function items()
+    {
+        return $this->morphMany('App\Item', 'object');
+    }
+
+    public function fields() {
+        return $this->hasMany('\App\HardwareField', 'hardware_id');
+    }
+
+    public function hardware_items() {
+        return $this->hasMany('App\HardwareItem', 'hardware_id');
+    }
 }

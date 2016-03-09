@@ -14,10 +14,10 @@
         });
     </script>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <h1 class="page-header">{{ $project->name }}</h1>
         </div>
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-user"> 基本信息</i>
@@ -59,7 +59,7 @@
                 <div class="panel-body">
                     <table class="table table-striped table-bordered table-hover">
                         <tr>
-                            <td class="col-lg-2">客户名称</td>
+                            <td class="col-md-2">客户名称</td>
                             <td><a href="{{ route('client.profile', ['id'=> $project->client->id]) }}">{{ $project->client->name }}</a></td>
                         </tr>
                         <tr>
@@ -224,7 +224,7 @@
             </div>
         </div>
 
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-user"> 其他信息</i>

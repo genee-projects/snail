@@ -268,6 +268,11 @@ Route::post('/hardware/edit', [
     'uses' => 'HardWareController@edit',
 ]);
 
+Route::get('/hardwares/profile/{id}', [
+    'as'=> 'hardware.profile',
+    'uses'=> 'HardWareController@profile',
+]);
+
 Route::get('/hardwares.json', [
     'as' => 'hardwares.json',
     'uses' => 'HardwareController@hardwares_json',
@@ -362,4 +367,34 @@ Route::post('/records/add', [
 Route::get('/records/delete/{id}', [
     'as'=> 'record.delete',
     'uses'=> 'RecordController@delete',
+]);
+
+Route::post('/hardware_field/add', [
+    'as'=> 'hardware_field.add',
+    'uses'=> 'HardwareFieldController@add',
+]);
+
+Route::post('/hardware_field/edit', [
+    'as'=> 'hardware_field.edit',
+    'uses'=> 'HardwareFieldController@edit',
+]);
+
+Route::get('/hardware_field/delete/{id}', [
+    'as'=> 'hardware_field.delete',
+    'uses'=> 'HardwareFieldController@delete',
+]);
+
+Route::post('/hardware_item/add', [
+    'as'=> 'hardware_item.add',
+    'uses'=> 'HardwareItemController@add',
+]);
+
+Route::post('/hardware_item/form', [
+    'as'=> 'hardware_item.form',
+    'uses'=> 'HardwareItemController@form',
+]);
+
+Route::post('/hardware_item/edit', [
+    'as'=> 'hardware_item.edit',
+    'uses'=> 'HardwareItemController@edit',
 ]);

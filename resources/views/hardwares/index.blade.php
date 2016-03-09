@@ -5,11 +5,11 @@
 
     <link rel="stylesheet" href="assets/css/hardwares/index.css">
 
-    <div class="col-lg-12">
+    <div class="col-md-12">
         <h1 class="page-header">硬件列表</h1>
     </div>
 
-    <div class="col-lg-12">
+    <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading ">
                 <span>
@@ -78,7 +78,11 @@
 
                     @foreach($hardwares as $hardware)
                         <tr>
-                            <td>{{ $hardware->name }}</td>
+                            <td>
+                                <a href="{{ route('hardware.profile', ['id'=> $hardware->id]) }}">
+                                    {{ $hardware->name }}
+                                </a>
+                            </td>
                             <td>{{ $hardware->model }}</td>
                             <td>
                                 @if ($hardware->self_produce)

@@ -3,13 +3,13 @@
 @section('content')
     <link rel="stylesheet" href="assets/css/products/profile.css">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <h1 class="page-header">{{ $product->name }}</h1>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading ">
                     <i class="fa fa-linux"></i> 基本信息
@@ -57,7 +57,7 @@
 
                     <table class="table table-hover table-striped">
                         <tr>
-                            <td class="col-lg-3">名称</td>
+                            <td class="col-md-3">名称</td>
                             <td>{{ $product->name }}</td>
                         </tr>
                         <tr>
@@ -71,7 +71,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
 
             <div class="panel panel-default">
 
@@ -191,7 +191,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <p>
@@ -252,7 +252,7 @@
                 <div class="panel-body">
                     <table class="table table-hover table-striped">
                         <tr>
-                            <td class="col-lg-3">名称</td>
+                            <td class="col-md-3">名称</td>
                             <td>依赖模块</td>
                             <td>简述</td>
                         </tr>
@@ -461,7 +461,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading ">
                     <p>

@@ -116,6 +116,14 @@ class HardWareController extends Controller
             ->with('message_type', 'info');
     }
 
+    public function profile($id) {
+        $hardware = Hardware::find($id);
+
+        return view('hardwares/profile', [
+            'hardware'=> $hardware,
+        ]);
+    }
+
     public function hardwares_json() {
         return response()->json(Hardware::all());
     }

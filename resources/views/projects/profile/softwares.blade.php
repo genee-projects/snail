@@ -2,7 +2,7 @@
     <h4>模块列表</h4>
 
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-md-12">
             <table class="table-striped table-hover table">
 
                 {{--*/
@@ -192,7 +192,7 @@
     {{--*/ $can_manage_param = \Session::get('user')->can('项目参数管理')/*--}}
     <h4>参数列表</h4>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-md-12">
             <table class="table-striped table-hover table">
 
 
@@ -273,19 +273,19 @@
                             <form id="edit-project-param-form" class="form-horizontal" method="post" action="{{ route('project.param.edit', ['id'=> $project->id]) }}">
 
                                 <div class="form-group">
-                                    <div class="col-sm-12">
+                                    <div class="col-md-12">
                                         <input type="text" class="form-control" name="name" disabled="disabled">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-sm-12">
+                                    <div class="col-md-12">
                                         <input type="text" class="form-control" name="value">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-sm-12">
+                                    <div class="col-md-12">
                                         <div class="checkbox">
                                             <label>
                                                 <input type="checkbox" name="reset"> 恢复默认参数 (勾选该参数后, 上述修改无效)

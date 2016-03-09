@@ -6,10 +6,10 @@
         require(['css!../css/timeline'], function() {});
     </script>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <h1 class="page-header">{{ $client->name }} </h1>
         </div>
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-user"> 基本信息</i>
@@ -52,7 +52,7 @@
                 <div class="panel-body">
                     <table class="table table-striped table-bordered table-hover">
                         <tr>
-                            <td class="col-lg-2">客户名称</td>
+                            <td class="col-md-2">客户名称</td>
                             <td>{{ $client->name }}</td>
                         </tr>
 
@@ -146,9 +146,9 @@
 
         <div class="
         @if ($can_manage_client)
-            col-lg-4
+            col-md-4
         @else
-                col-lg-12
+                col-md-12
         @endif
         ">
             <div class="panel panel-default">
@@ -160,9 +160,9 @@
                     <p><a href="{{ route('client.profile', ['id'=> $client->root()->id]) }}">{{ $client->root()->name }}</a></p>
 
                     @foreach($client->root()->children as $c)
-                        <p class="col-sm-offset-1">├ <a href="{{ route('client.profile', ['id'=> $c->id]) }}">{{ $c->name }}</a></p>
+                        <p class="col-md-offset-1">├ <a href="{{ route('client.profile', ['id'=> $c->id]) }}">{{ $c->name }}</a></p>
                             @foreach($c->children as $_c)
-                                <p class="col-sm-offset-2">├ <a href="{{ route('client.profile', ['id'=> $_c->id]) }}">{{ $_c->name }}</a></p>
+                                <p class="col-md-offset-2">├ <a href="{{ route('client.profile', ['id'=> $_c->id]) }}">{{ $_c->name }}</a></p>
                             @endforeach
                     @endforeach
                 </div>
@@ -170,7 +170,7 @@
         </div>
 
         @if ($can_manage_client)
-        <div class="col-lg-8">
+        <div class="col-md-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-facebook"> 增加子级</i>
@@ -180,8 +180,8 @@
                     <form class="form-horizontal" method="post" action="{{ route('client.add') }}">
                         @include('clients/form_lite', ['client'=> new \App\Client, 'parent'=> $client])
                         <div class="form-group">
-                            <label for="client-name" class="col-sm-2 control-label"></label>
-                            <div class="col-sm-10">
+                            <label for="client-name" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
                                 <button type="submit" class="btn btn-primary">添加</button>
                             </div>
                         </div>
@@ -191,7 +191,7 @@
         </div>
         @endif
 
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-list-alt"> 项目信息</i>
@@ -256,7 +256,7 @@
             </div>
         </div>
 
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-user"> 其他信息</i>
