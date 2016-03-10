@@ -48,8 +48,7 @@ class ProjectController extends Controller
 
         if (!$signed_time) {
             $signed_time = null;
-        }
-        else {
+        } else {
             $signed_time = \Carbon\Carbon::createFromFormat('Y/m/d', $signed_time)->format('Y-m-d H:i:s');
         }
 
@@ -207,8 +206,8 @@ class ProjectController extends Controller
                 'vip' => '重点项目状态',
                 'signed_status' => '正式/试用/售前支持状态',
                 'login_url' => '登录地址',
-                'service_unit'=> '维保时长',
-                'service_value'=> '维保时长',
+                'service_unit' => '维保时长',
+                'service_value' => '维保时长',
             ];
 
             foreach (array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
@@ -262,8 +261,8 @@ class ProjectController extends Controller
                     case 'service_unit':
                     case 'service_value':
 
-                        $old_value = $old_attributes['service_value']. \App\Project::$service_units[$old_attributes['service_unit']];
-                        $new_value = $new_attributes['service_value']. \App\Project::$service_units[$new_attributes['service_unit']];
+                        $old_value = $old_attributes['service_value'].\App\Project::$service_units[$old_attributes['service_unit']];
+                        $new_value = $new_attributes['service_value'].\App\Project::$service_units[$new_attributes['service_unit']];
 
                         $key = 'service_value';
                         break;
@@ -688,7 +687,7 @@ class ProjectController extends Controller
                 $count = $counts[$hardware_id];
 
                 $project->hardwares()->save($hardware, [
-                    'count'=> $count,
+                    'count' => $count,
                 ]);
 
                 $hsn[] = $hardware->name;
@@ -700,7 +699,7 @@ class ProjectController extends Controller
                     '%project_id' => $project->id,
                     '%hardware_name' => $hardware->name,
                     '%hardware_id' => $hardware->id,
-                    '%count'=> $count,
+                    '%count' => $count,
                 ]));
             }
 
@@ -832,7 +831,7 @@ class ProjectController extends Controller
 
     private function _profile_records($project)
     {
-        return view('projects/profile/records', ['project'=> $project]);
+        return view('projects/profile/records', ['project' => $project]);
     }
     //profile 信息 end
 }

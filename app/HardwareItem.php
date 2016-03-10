@@ -23,18 +23,20 @@ class HardwareItem extends Model
     const STATUS_DEPLOYED = 3;   //已部署
     const STATUS_WASTED = 4;   //废弃了的
 
-    static $status = [
+    public static $status = [
         self::STATUS_ON_THE_WAY => '在途',
         self::STATUS_DELIVERED => '交付',
         self::STATUS_DEPLOYED => '部署',
         self::STATUS_WASTED => '回收',
     ];
 
-    public function hardware() {
+    public function hardware()
+    {
         return $this->belongsTo('\App\Hardware', 'hardware_id');
     }
 
-    public function project() {
+    public function project()
+    {
         return $this->belongsTo('\App\Project', 'project_id');
     }
 }

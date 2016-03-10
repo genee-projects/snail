@@ -22,9 +22,12 @@
                                 <i class="fa fa-fw fa-edit"></i>
                             </a>
 
-                            <a href="{{ route('subproduct.delete', ['id' => $subproduct->id]) }}">
-                                <i class="fa fa-fw fa-times"></i>
-                            </a>
+                            <form class="delete display-inline" method="POST" action="{{ route('subproduct.delete', ['id' => $subproduct->id]) }}">
+                                {{ method_field('DELETE') }}
+                                <button type="submit" class="edit">
+                                    <i class="fa fa-fw fa-times"></i>
+                                </button>
+                            </form>
                         </span>
 
                         <div class="modal fade" id="edit-server" tabindex="-1" role="dialog" aria-labelledby="edit-server-modal-label">

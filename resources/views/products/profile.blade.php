@@ -19,10 +19,12 @@
                             <a href="#" data-toggle="modal" data-target="#edit-product">
                                 <i class="fa fa-fw fa-edit"></i>
                             </a>
-
-                            <a href="{{ route('product.delete', ['id' => $product->id]) }}">
-                                <i class="fa fa-fw fa-times"></i>
-                            </a>
+                            <form class="delete display-inline" method="POST" action="{{ route('product.delete', ['id' => $product->id]) }}">
+                                {{ method_field('DELETE') }}
+                                <button type="submit" class="edit">
+                                    <i class="fa fa-fw fa-times"></i>
+                                </button>
+                            </form>
                         </span>
                         <div class="modal fade" id="edit-product" tabindex="-1" role="dialog" aria-labelledby="edit-product-modal-label">
                             <div class="modal-dialog" role="document">
@@ -228,8 +230,8 @@
                                                     <div>
                                                         @foreach($product->modules as $module)
                                                             <span data-id="{{ $module->id }}" class="module-btn btn btn-default text-center">
-                                                        {{ $module->name }}
-                                                    </span>
+                                                                {{ $module->name }}
+                                                            </span>
                                                         @endforeach
                                                     </div>
                                                 </div>
@@ -274,9 +276,12 @@
                                         <span class="pull-right">
 
                                             <i data-dep-modules="{{ join(',', $module->dep_modules_ids()) }}" data-description="{{ $module->description }}" data-id="{{ $module->id }}" data-name="{{ $module->name }}" class="edit edit-module fa fa-edit fa-fw"></i>
-                                            <a href="{{ route('module.delete', ['id'=> $module->id]) }}">
-                                                <i class="fa fa-times"></i>
-                                            </a>
+                                            <form class="delete display-inline" method="POST" action="{{ route('module.delete', ['id'=> $module->id]) }}">
+                                                {{ method_field('DELETE') }}
+                                                <button type="submit" class="edit">
+                                                    <i class="fa fa-fw fa-times"></i>
+                                                </button>
+                                            </form>
                                         </span>
                                     @endif
                                 </td>
@@ -541,9 +546,12 @@
                                     @if ($can_manage_param)
                                         <span class="pull-right">
                                             <i data-value="{{ $param->value }}" data-code="{{ $param->code }}" data-description="{{ $param->description }}" data-id="{{ $param->id }}" data-name="{{ $param->name }}" class="edit edit-param fa fa-edit fa-fw"></i>
-                                            <a href="{{ route('param.delete', ['id'=> $param->id]) }}">
-                                                <i class="fa fa-times"></i>
-                                            </a>
+                                            <form class="delete display-inline" method="POST" action="{{ route('param.delete', ['id'=> $param->id]) }}">
+                                                {{ method_field('DELETE') }}
+                                                <button type="submit" class="edit">
+                                                    <i class="fa fa-fw fa-times"></i>
+                                                </button>
+                                            </form>
                                         </span>
                                     @endif
                                 </td>

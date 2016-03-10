@@ -66,7 +66,8 @@
                 $(this).find('a.action').addClass('hidden');
             });
 
-            $('ul li.item a.edit').bind('click', function() {
+
+            $('ul li.item button.edit-btn').bind('click', function() {
 
                 var $modal = $('#file-edit');
 
@@ -77,7 +78,6 @@
 
                 $modal.modal();
                 return false;
-
             });
         });
 

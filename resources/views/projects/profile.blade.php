@@ -31,7 +31,6 @@
                             <a href="{{ route('project.delete', ['id'=> $project->id]) }}">
                                 <i class="fa fa-fw fa-times"></i>
                             </a>
-                            <div class="clearfix"></div>
 
                             <div class="modal fade" id="edit-project" tabindex="-1" role="dialog" aria-labelledby="edit-project-modal-label">
                                 <div class="modal-dialog modal-lg" role="document">
@@ -171,7 +170,12 @@
                                 <td>
                                     {{ $item->value }}
                                     <span class="pull-right">
-                                        <a href="{{ route('item.delete', ['id'=> $item->id]) }}"><i class="fa fa-times"></i></a>
+                                       <form class="delete display-inline" method="POST" action="{{ route('item.delete', ['id'=> $item->id]) }}">
+                                           {{ method_field('DELETE') }}
+                                           <button type="submit" class="edit">
+                                               <i class="fa fa-fw fa-times"></i>
+                                           </button>
+                                       </form>
                                     </span>
                                 </td>
                             </tr>

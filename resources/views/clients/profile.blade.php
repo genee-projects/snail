@@ -18,13 +18,16 @@
 
                     @if ($can_manage_client)
                         <span class="pull-right">
-                             <a href="#" data-toggle="modal" data-target="#edit-client">
-                                 <i class="fa fa-fw fa-edit"></i>
-                             </a>
-
-                            <a href="{{ route('client.delete', ['id'=> $client->id]) }}">
-                                <i class="fa fa-fw fa-times"></i>
+                            <a href="#" data-toggle="modal" data-target="#edit-client">
+                                <i class="fa fa-fw fa-edit"></i>
                             </a>
+
+                            <form class="delete display-inline" method="POST" action="{{ route('client.delete', ['id'=> $client->id]) }}">
+                                {{ method_field('DELETE') }}
+                                <button type="submit" class="edit">
+                                    <i class="fa fa-fw fa-times"></i>
+                                </button>
+                            </form>
                         </span>
 
                         <div class="modal fade" id="edit-client" tabindex="-1" role="dialog" aria-labelledby="edit-server-modal-label">
@@ -90,7 +93,13 @@
                                 <td>
                                     {{ $item->value }}
                                     <span class="pull-right">
-                                        <a href="{{ route('item.delete', ['id'=> $item->id]) }}"><i class="fa fa-times"></i></a>
+
+                                        <form class="delete display-inline" method="POST" action="{{ route('item.delete', ['id'=> $item->id]) }}">
+                                            {{ method_field('DELETE') }}
+                                            <button type="submit" class="edit">
+                                                <i class="fa fa-fw fa-times"></i>
+                                            </button>
+                                        </form>
                                     </span>
                                 </td>
                             </tr>
@@ -325,6 +334,7 @@
                             <div role="tabpanel" class="tab-pane" id="info">
                                 <ul class="timeline">
                                     {{--*/ $class = 'timeline-inverted';/*--}}
+
                                     @foreach($client->logs()->orderBy('time', 'desc')->get() as $log)
                                         {{--*/
                                         if ($class == 'timeline-inverted') $class = null;
@@ -337,7 +347,11 @@
                                             <div class="timeline-panel">
                                                 <div class="timeline-heading">
                                                     <h4 class="timeline-title">{{ $log->action }}</h4>
-                                                    <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{ $log->time->format('Y/m/d') }} via <strong>{{ $log->user->name }}</strong></small></p>
+                                                    <p>
+                                                        <small class="text-muted">
+                                                            <i class="fa fa-clock-o"></i> {{ $log->time->format('Y/m/d') }} via <strong>{{ $log->user->name }}</strong>
+                                                        </small>
+                                                    </p>
                                                 </div>
                                                 <div class="timeline-body">
                                                     @if (count($log->change))

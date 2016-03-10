@@ -3,18 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
 use App\Project;
 use App\Record;
 
 class RecordController extends Controller
 {
-
-    public function add(Request $request) {
-
+    public function add(Request $request)
+    {
         $record = new Record();
         $record->project()->associate(Project::find($request->input('project_id')));
         $record->user()->associate(\Session::get('user'));
@@ -45,7 +40,8 @@ class RecordController extends Controller
             ->with('tab', 'records');
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $record = Record::find($id);
 
         $record->delete();

@@ -38,7 +38,7 @@
                     {{ $hardware->pivot->description }}
                     @if ($can_manage_hardware)
                         <span class="pull-right">
-                            <i class="fa fa-fw fa-eye edit hardware-drawer"></i>
+                            <i class="fa fa-fw fa-eye edit hardware-drawer" data-id="{{ $hardware->id }}"></i>
                             <i class="fa fa-fw fa-edit edit-hardware edit" data-model="{{ $hardware->model }}" data-description="{{ $hardware->pivot->description }}" data-id="{{ $hardware->id }}" data-name="{{ $hardware->name }}" data-count="{{ $hardware->pivot->count }}"></i>
                             <i class="fa fa-fw fa-plus add-hardware-item edit" data-id="{{ $hardware->id }}"></i>
                         </span>
@@ -119,7 +119,7 @@
                 </td>
             </tr>
 
-            <tr class="item-list hidden">
+            <tr class="item-list-{{ $hardware->id }} hidden">
                 <td colspan="5">
 
                     {{--*/
@@ -362,7 +362,7 @@
 
             $('.hardware-drawer').bind('click', function() {
 
-                var $item_list = $(this).parents('tr').next('.item-list');
+                var $item_list = $(this).parents('table').find('.item-list-' + $(this).data('id'));
 
                 if ($item_list.hasClass('hidden')) {
                     $item_list.removeClass('hidden');

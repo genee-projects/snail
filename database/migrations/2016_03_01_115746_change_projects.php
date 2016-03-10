@@ -2,15 +2,12 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
 use App\Project;
 
 class ChangeProjects extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -26,13 +23,13 @@ class ChangeProjects extends Migration
         //3. 删除 official
 
         //1.
-        Schema::table('projects', function(Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             $table->tinyInteger('signed_status')->default(Project::SIGNED_STATUS_PROBATIONARY);
         });
 
         //2.
 
-        foreach(Project::withTrashed()->get() as $project) {
+        foreach (Project::withTrashed()->get() as $project) {
             //正式客户
             if ($project->official) {
                 $project->signed_status = Project::SIGNED_STATUS_OFFICIAL;
@@ -44,16 +41,13 @@ class ChangeProjects extends Migration
         }
 
         //3.
-        Schema::table('projects', function(Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             $table->dropColumn('official');
         });
-
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
@@ -64,14 +58,14 @@ class ChangeProjects extends Migration
         // 3. 删除 signed_status
 
         //1. 创建 official
-        Schema::table('projects', function(Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             $table->boolean('official')->default(true); //正式客户
         });
 
         //2. 数据迁移
 
-        foreach(Project::withTrashed() as $project) {
-            switch($project->signed_status) {
+        foreach (Project::withTrashed() as $project) {
+            switch ($project->signed_status) {
                 // 正式客户
                 case Project::SIGNED_STATUS_OFFICIAL:
                     $project->official = true;
@@ -88,7 +82,7 @@ class ChangeProjects extends Migration
         }
 
         //3. 删除 signed_status
-        Schema::table('projects', function(Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             $table->dropColumn('signed_status');
         });
     }

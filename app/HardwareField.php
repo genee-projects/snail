@@ -12,7 +12,8 @@ class HardwareField extends Model
 
     public $timestamps = false;
 
-    public function hardware() {
+    public function hardware()
+    {
         return $this->belongsTo('\App\Hardware', 'hardware_id');
     }
 }

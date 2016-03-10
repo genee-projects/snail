@@ -28,11 +28,13 @@ class Hardware extends Model
         return $this->morphMany('App\Item', 'object');
     }
 
-    public function fields() {
+    public function fields()
+    {
         return $this->hasMany('\App\HardwareField', 'hardware_id');
     }
 
-    public function hardware_items() {
+    public function hardware_items()
+    {
         return $this->hasMany('App\HardwareItem', 'hardware_id');
     }
 }

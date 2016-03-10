@@ -3,18 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\HardwareField;
-use App\Project;
 use App\Hardware;
-
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
 
 class HardwareFieldController extends Controller
 {
-    public function add(Request $request) {
+    public function add(Request $request)
+    {
         $field = new HardwareField();
         $field->name = $request->input('name');
 
@@ -25,12 +20,13 @@ class HardwareFieldController extends Controller
         $field->save();
 
         return redirect()
-            ->to(route('hardware.profile', ['id'=> $hardware->id]))
+            ->to(route('hardware.profile', ['id' => $hardware->id]))
             ->with('message_content', '添加成功!')
             ->with('message_type', 'info');
     }
 
-    public function edit(Request $request) {
+    public function edit(Request $request)
+    {
         $field = HardwareField::find($request->input('id'));
 
         $field->name = $request->input('name');
@@ -38,13 +34,13 @@ class HardwareFieldController extends Controller
         $field->save();
 
         return redirect()
-            ->to(route('hardware.profile', ['id'=> $field->hardware->id]))
+            ->to(route('hardware.profile', ['id' => $field->hardware->id]))
             ->with('message_content', '修改成功!')
             ->with('message_type', 'info');
     }
 
-    public function delete($id) {
-
+    public function delete($id)
+    {
         $field = HardwareField::find($id);
 
         $hardware_id = $field->hardware->id;
@@ -52,7 +48,7 @@ class HardwareFieldController extends Controller
         $field->delete();
 
         return redirect()
-            ->to(route('hardware.profile', ['id'=> $hardware_id]))
+            ->to(route('hardware.profile', ['id' => $hardware_id]))
             ->with('message_content', '删除成功 !')
             ->with('message_type', 'info');
     }

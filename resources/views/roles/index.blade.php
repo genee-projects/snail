@@ -154,6 +154,7 @@
 
                 // ajax 操作
                 $.post('roles/' + role_id + '/user/' + user_id + '/delete', {
+                    '_method': 'DELETE'
                 }).done(function(data) {
                     if (data === true) {
                         $user.remove();

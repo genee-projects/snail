@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Hardware;
 
-class HardWareController extends Controller
+class HardwareController extends Controller
 {
     public function index()
     {
@@ -65,7 +65,7 @@ class HardWareController extends Controller
             '%hardware_id' => $hardware_id,
         ]));
 
-        return redirect()->back()
+        return redirect()->to(route('hardwares'))
             ->with('message_content', '删除成功!')
             ->with('message_type', 'info');
     }
@@ -116,15 +116,17 @@ class HardWareController extends Controller
             ->with('message_type', 'info');
     }
 
-    public function profile($id) {
+    public function profile($id)
+    {
         $hardware = Hardware::find($id);
 
         return view('hardwares/profile', [
-            'hardware'=> $hardware,
+            'hardware' => $hardware,
         ]);
     }
 
-    public function hardwares_json() {
+    public function hardwares_json()
+    {
         return response()->json(Hardware::all());
     }
 }

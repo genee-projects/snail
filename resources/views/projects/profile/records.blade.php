@@ -138,9 +138,13 @@
                         <td>{{ $record->hardware_count }}</td>
                         <td>{{ $record->content }}</td>
                         <td>
-                            <a class="pull-right" href="{{ route('record.delete', ['id'=> $record->id]) }}">
-                                <i class="fa fa-fw fa-times"></i>
-                            </a>
+
+                            <form class="delete display-inline" method="POST" action="{{ route('record.delete', ['id'=> $record->id]) }}">
+                                {{ method_field('DELETE') }}
+                                <button type="submit" class="pull-right edit">
+                                    <i class="fa fa-fw fa-times"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

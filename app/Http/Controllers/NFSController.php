@@ -20,8 +20,7 @@ class NFSController extends Controller
             $view = 'nfs/other';
         }
 
-        if (!is_dir(\App\NFS::full_path($project, '/')))
-        {
+        if (!is_dir(\App\NFS::full_path($project, '/'))) {
             $project->init_nfs();
         }
 
@@ -81,7 +80,6 @@ class NFSController extends Controller
 
     public function edit(Request $request)
     {
-
         $user = \Session::get('user');
 
         if (!$user->can('项目文件管理')) {

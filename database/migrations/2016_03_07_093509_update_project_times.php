@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
 use App\Project;
 
 class UpdateProjectTimes extends Migration
@@ -12,12 +11,12 @@ class UpdateProjectTimes extends Migration
      * 1. check_time 为实际验收时间
      * 2. service_unit 维保单位, int
      * 3. service_value 维保值, int,
-     * 维保时间为 check_time 到 check_time + service_unit 对应的值 * service_value
+     * 维保时间为 check_time 到 check_time + service_unit 对应的值 * service_value.
      */
     public function up()
     {
         //
-        Schema::table('projects', function(Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
 
             //cancelled_time 进行删除
             //会手动进行导出 cancelled_time 交付给相关人员
@@ -32,13 +31,11 @@ class UpdateProjectTimes extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
         //
-        Schema::table('projects', function(Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             $table->dropColumn('service_unit');
             $table->dropColumn('service_value');
             $table->dropColumn('check_time');

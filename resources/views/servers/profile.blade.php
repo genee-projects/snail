@@ -22,9 +22,12 @@
                         <i class="fa fa-fw fa-edit"></i>
                     </a>
 
-                    <a href="{{ route('server.delete', ['id'=> $server->id]) }}">
-                        <i class="fa fa-fw fa-times"></i>
-                    </a>
+                    <form class="delete display-inline" method="POST" action="{{ route('server.delete', ['id'=> $server->id]) }}">
+                        {{ method_field('DELETE') }}
+                        <button type="submit" class="edit">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                    </form>
                 </span>
 
                 <div class="modal fade" id="edit-server" tabindex="-1" role="dialog" aria-labelledby="edit-server-modal-label">
@@ -131,7 +134,12 @@
                             <td>
                                 {{ $item->value }}
                                 <span class="pull-right">
-                                    <a href="{{ route('item.delete', ['id'=> $item->id]) }}"><i class="fa fa-times"></i></a>
+                                    <form class="delete display-inline" method="POST" action="{{ route('item.delete', ['id'=> $item->id]) }}">
+                                        {{ method_field('DELETE') }}
+                                        <button type="submit" class="edit">
+                                            <i class="fa fa-fw fa-times"></i>
+                                        </button>
+                                    </form>
                                 </span>
                             </td>
                         </tr>

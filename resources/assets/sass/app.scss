@@ -15,6 +15,30 @@ body{
     color: #337ab7;
     text-decoration:none;
   }
+
+  .display-inline {
+    display: inline;
+  }
+
+  .display-block {
+    display: block;
+  }
+
+  .display-flex {
+    display: flex;
+  }
+
+  .display-inline-block {
+    display: inline-block;
+  }
+
+  form.delete {
+    button {
+      padding: 0;
+      border: 0;
+      background-color: transparent;
+    }
+  }
   /* 通用样式 */
 
   #wrapper {
@@ -23,7 +47,7 @@ body{
     #content {
       padding: 0 15px;
       background-color: #fff;
-      min-height: auto;
+      min-height: default;
     }
 
     #nav {

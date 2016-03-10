@@ -12,9 +12,9 @@ class InitRoles extends Seeder
     {
         //初始化系统默认 Role
         foreach (['销售', '售后', '产品', '硬件'] as $name) {
-            $role = Role::where('name', $name)->firstOrFail();
+            $role = Role::where('name', $name)->first();
 
-            if (!$role->id) {
+            if (!$role) {
                 $role = new Role();
             }
 

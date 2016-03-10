@@ -6,400 +6,473 @@ Route::get('/', [
     'uses' => 'DashboardController@index',
 ]);
 
+# 返回 json 的基础服务
+#json
+Route::group(['prefix' => 'json'], function () {
+
+    Route::get('/servers', [
+        'as' => 'servers.json',
+        'uses' => 'ServerController@servers_json',
+    ]);
+
+    Route::get('/hardwares', [
+        'as' => 'hardwares.json',
+        'uses' => 'HardwareController@hardwares_json',
+    ]);
+
+    Route::get('/users', [
+        'as' => 'users.json',
+        'uses' => 'UserController@users_json',
+    ]);
+});
+#json end
+
 #clients
-Route::get('/clients', [
-    'as' => 'clients',
-    'uses' => 'ClientController@clients',
-]);
+Route::group(['prefix' => 'clients'], function () {
 
-Route::get('/clients/profile/{id}', [
-    'as' => 'client.profile',
-    'uses' => 'ClientController@profile',
-]);
+   Route::get('/', [
+       'as' => 'clients',
+       'uses' => 'ClientController@clients',
+   ]);
 
-Route::post('/clients/add', [
-    'as' => 'client.add',
-    'uses' => 'ClientController@add',
-]);
+    Route::get('/profile/{id}', [
+        'as' => 'client.profile',
+        'uses' => 'ClientController@profile',
+    ]);
 
-Route::post('/clients/edit', [
-    'as' => 'client.edit',
-    'uses' => 'ClientController@edit',
-]);
+    Route::post('/add', [
+        'as' => 'client.add',
+        'uses' => 'ClientController@add',
+    ]);
 
-Route::get('/clients/delete/{id}', [
-    'as' => 'client.delete',
-    'uses' => 'ClientController@delete',
-]);
+    Route::post('/edit', [
+        'as' => 'client.edit',
+        'uses' => 'ClientController@edit',
+    ]);
+
+    Route::delete('/delete/{id}', [
+        'as' => 'client.delete',
+        'uses' => 'ClientController@delete',
+    ]);
+});
 #clients end
 
 #products
-Route::get('/products', [
-    'as' => 'products',
-    'uses' => 'ProductController@products',
-]);
+Route::group(['prefix' => 'products'], function () {
 
-Route::get('/products/profile/{id}', [
-    'as' => 'product.profile',
-    'uses' => 'ProductController@profile',
-]);
+    Route::get('/', [
+        'as' => 'products',
+        'uses' => 'ProductController@products',
+    ]);
 
-Route::post('/products/add', [
-    'as' => 'product.add',
-    'uses' => 'ProductController@add',
+    Route::get('/profile/{id}', [
+        'as' => 'product.profile',
+        'uses' => 'ProductController@profile',
+    ]);
 
-]);
+    Route::post('/add', [
+        'as' => 'product.add',
+        'uses' => 'ProductController@add',
+    ]);
 
-Route::get('/products/delete/{id}', [
-    'as' => 'product.delete',
-    'uses' => 'ProductController@delete',
-]);
+    Route::delete('/delete/{id}', [
+        'as' => 'product.delete',
+        'uses' => 'ProductController@delete',
+    ]);
 
-Route::post('/products/edit', [
-    'as' => 'product.edit',
-    'uses' => 'ProductController@edit',
-]);
+    Route::post('/edit', [
+        'as' => 'product.edit',
+        'uses' => 'ProductController@edit',
+    ]);
 
-Route::post('/products/{id}/modules', [
-    'as' => 'product.module',
-    'uses' => 'ProductController@modules',
-]);
+    Route::post('/{id}/modules', [
+        'as' => 'product.module',
+        'uses' => 'ProductController@modules',
+    ]);
+});
+#products end
+
+#subproduct
+Route::group(['prefix' => 'subproduct'], function () {
+
+    Route::post('/add', [
+        'as' => 'subproduct.add',
+        'uses' => 'SubProductController@add',
+    ]);
+
+    Route::delete('/delete/{id}', [
+        'as' => 'subproduct.delete',
+        'uses' => 'SubProductController@delete',
+    ]);
+
+    Route::post('/edit', [
+        'as' => 'subproduct.edit',
+        'uses' => 'SubProductController@edit',
+    ]);
+
+    Route::get('/profile/{id}', [
+        'as' => 'subproduct.profile',
+        'uses' => 'SubProductController@profile',
+    ]);
+
+    Route::post('/{id}/modules', [
+        'as' => 'subproduct.modules',
+        'uses' => 'SubProductController@modules',
+    ]);
+
+    Route::post('/{id}/param', [
+        'as' => 'subproduct.param.edit',
+        'uses' => 'SubProductController@param_edit',
+    ]);
+});
+#subproduct end
 
 #servers
-Route::get('/servers', [
-    'as' => 'servers',
-    'uses' => 'ServerController@servers',
-]);
+Route::group(['prefix' => 'servers'], function () {
 
-Route::get('/servers.json', [
-    'as' => 'servers.json',
-    'uses' => 'ServerController@servers_json',
-]);
+    Route::get('/', [
+        'as' => 'servers',
+        'uses' => 'ServerController@servers',
+    ]);
 
-Route::post('/servers/add', [
-    'as' => 'server.add',
-    'uses' => 'ServerController@add',
-]);
+    Route::post('/add', [
+        'as' => 'server.add',
+        'uses' => 'ServerController@add',
+    ]);
 
-Route::get('/servers/profile/{id}', [
-    'as' => 'server.profile',
-    'uses' => 'ServerController@profile',
-]);
+    Route::get('/profile/{id}', [
+        'as' => 'server.profile',
+        'uses' => 'ServerController@profile',
+    ]);
 
-Route::post('/servers/edit', [
-    'as' => 'server.edit',
-    'uses' => 'ServerController@edit',
-]);
+    Route::post('/edit', [
+        'as' => 'server.edit',
+        'uses' => 'ServerController@edit',
+    ]);
 
-Route::get('/servers/delete/{id}', [
-    'as' => 'server.delete',
-    'uses' => 'ServerController@delete',
-]);
+    Route::delete('/delete/{id}', [
+        'as' => 'server.delete',
+        'uses' => 'ServerController@delete',
+    ]);
+});
+#servers end
 
 #comments
-Route::post('/comments/add', [
-    'as' => 'comment.add',
-    'uses' => 'CommentController@add',
-]);
+Route::group(['prefix' => 'comments'], function () {
 
-Route::get('/comments/delete/{id}', [
-    'as' => 'comment.delete',
-    'uses' => 'CommentController@delete',
-]);
+    Route::post('/add', [
+        'as' => 'comment.add',
+        'uses' => 'CommentController@add',
+    ]);
+});
+#comments end
 
 #projects
-Route::get('/projects', [
-    'as' => 'projects',
-    'uses' => 'ProjectController@index',
-]);
+Route::group(['prefix' => 'projects'], function () {
 
-Route::post('/projects/add', [
-    'as' => 'project.add',
-    'uses' => 'ProjectController@add',
-]);
+    Route::get('/', [
+        'as' => 'projects',
+        'uses' => 'ProjectController@index',
+    ]);
 
-Route::get('/projects/profile/{id}', [
-    'as' => 'project.profile',
-    'uses' => 'ProjectController@profile',
-]);
+    Route::post('/add', [
+        'as' => 'project.add',
+        'uses' => 'ProjectController@add',
+    ]);
 
-Route::post('/projects/{id}/servers', [
-    'as' => 'project.servers',
-    'uses' => 'ProjectController@servers',
-]);
-Route::get('/projects/{id}/server/{server_id}', [
-    'as' => 'project.server.disconnect',
-    'uses' => 'ProjectController@server_disconnect',
-]);
+    Route::get('/profile/{id}', [
+        'as' => 'project.profile',
+        'uses' => 'ProjectController@profile',
+    ]);
 
-Route::get('/projects/delete/{id}', [
-    'as' => 'project.delete',
-    'uses' => 'ProjectController@delete',
-]);
+    Route::post('/{id}/servers', [
+        'as' => 'project.servers',
+        'uses' => 'ProjectController@servers',
+    ]);
+    Route::get('/{id}/server/{server_id}', [
+        'as' => 'project.server.disconnect',
+        'uses' => 'ProjectController@server_disconnect',
+    ]);
 
-Route::post('/projects/edit', [
-    'as' => 'project.edit',
-    'uses' => 'ProjectController@edit',
-]);
+    Route::delete('/delete/{id}', [
+        'as' => 'project.delete',
+        'uses' => 'ProjectController@delete',
+    ]);
 
-Route::post('/projects/{id}/modules', [
-    'as' => 'project.modules',
-    'uses' => 'ProjectController@modules',
-]);
+    Route::post('/edit', [
+        'as' => 'project.edit',
+        'uses' => 'ProjectController@edit',
+    ]);
 
-Route::post('/projects/{id}/hardwares', [
-    'as' => 'project.hardwares',
-    'uses' => 'ProjectController@hardwares',
-]);
+    Route::post('/{id}/modules', [
+        'as' => 'project.modules',
+        'uses' => 'ProjectController@modules',
+    ]);
 
-Route::post('/projects/{id}/param', [
-    'as' => 'project.param.edit',
-    'uses' => 'ProjectController@param_edit',
-]);
+    Route::post('/{id}/hardwares', [
+        'as' => 'project.hardwares',
+        'uses' => 'ProjectController@hardwares',
+    ]);
 
-Route::post('/projects/{id}/hardware', [
-    'as' => 'project.hardware.edit',
-    'uses' => 'ProjectController@hardware_edit',
-]);
+    Route::post('/{id}/param', [
+        'as' => 'project.param.edit',
+        'uses' => 'ProjectController@param_edit',
+    ]);
 
-Route::post('/projects/{id}/server', [
-    'as' => 'project.server.edit',
-    'uses' => 'ProjectController@server_edit',
-]);
+    Route::post('/{id}/hardware', [
+        'as' => 'project.hardware.edit',
+        'uses' => 'ProjectController@hardware_edit',
+    ]);
 
-Route::post('/projects/{id}/profile_item', [
-    'as' => 'project.profile.item',
-    'uses' => 'ProjectController@profile_item',
-]);
+    Route::post('/{id}/server', [
+        'as' => 'project.server.edit',
+        'uses' => 'ProjectController@server_edit',
+    ]);
 
-# item start
-Route::post('/items/add', [
-    'as' => 'item.add',
-    'uses' => 'ItemController@add',
-]);
+    Route::post('/{id}/profile_item', [
+        'as' => 'project.profile.item',
+        'uses' => 'ProjectController@profile_item',
+    ]);
+});
+#projects end
 
-Route::get('/items/delete/{id}', [
-    'as' => 'item.delete',
-    'uses' => 'ItemController@delete',
-]);
-# item end
+# items start
+Route::group(['prefix' => 'items'], function () {
+
+    Route::post('/add', [
+        'as' => 'item.add',
+        'uses' => 'ItemController@add',
+    ]);
+
+    Route::delete('/delete/{id}', [
+        'as' => 'item.delete',
+        'uses' => 'ItemController@delete',
+    ]);
+});
+# items end
 
 # modules start
-Route::post('/modules/add', [
-    'as' => 'module.add',
-    'uses' => 'ModuleController@add',
-]);
+Route::group(['prefix' => 'modules'], function () {
 
-Route::get('/modules/delete/{id}', [
-    'as' => 'module.delete',
-    'uses' => 'ModuleController@delete',
-]);
+    Route::post('/add', [
+        'as' => 'module.add',
+        'uses' => 'ModuleController@add',
+    ]);
 
-Route::post('/modules/edit/', [
-    'as' => 'module.edit',
-    'uses' => 'ModuleController@edit',
-]);
+    Route::delete('/delete/{id}', [
+        'as' => 'module.delete',
+        'uses' => 'ModuleController@delete',
+    ]);
+
+    Route::post('/edit/', [
+        'as' => 'module.edit',
+        'uses' => 'ModuleController@edit',
+    ]);
+});
 # modules end
 
 #params start
-Route::post('/params/add', [
-    'as' => 'param.add',
-    'uses' => 'ParamController@add',
-]);
+Route::group(['prefix' => 'params'], function () {
 
-Route::get('/params/delete/{id}', [
-    'as' => 'param.delete',
-    'uses' => 'ParamController@delete',
-]);
+    Route::post('/add', [
+        'as' => 'param.add',
+        'uses' => 'ParamController@add',
+    ]);
 
-Route::post('/params/edit', [
-    'as' => 'param.edit',
-    'uses' => 'ParamController@edit',
-]);
+    Route::delete('/delete/{id}', [
+        'as' => 'param.delete',
+        'uses' => 'ParamController@delete',
+    ]);
+
+    Route::post('/edit', [
+        'as' => 'param.edit',
+        'uses' => 'ParamController@edit',
+    ]);
+});
 #params end
 
-Route::post('/subproduct/add', [
-    'as' => 'subproduct.add',
-    'uses' => 'SubProductController@add',
-]);
+#hardwares
+Route::group(['prefix' => 'hardwares'], function () {
 
-Route::get('/subproduct/delete/{id}', [
-    'as' => 'subproduct.delete',
-    'uses' => 'SubProductController@delete',
-]);
+    Route::get('/', [
+        'as' => 'hardwares',
+        'uses' => 'HardwareController@index',
+    ]);
 
-Route::post('/subproduct/edit', [
-    'as' => 'subproduct.edit',
-    'uses' => 'SubProductController@edit',
-]);
+    Route::post('/add', [
+        'as' => 'hardware.add',
+        'uses' => 'HardwareController@add',
+    ]);
 
-Route::get('/subproduct/profile/{id}', [
-    'as' => 'subproduct.profile',
-    'uses' => 'SubProductController@profile',
-]);
+    Route::delete('/delete/{id}', [
+        'as' => 'hardware.delete',
+        'uses' => 'HardwareController@delete',
+    ]);
 
-Route::post('/subporduct/{id}/modules', [
-    'as' => 'subproduct.modules',
-    'uses' => 'SubProductController@modules',
-]);
+    Route::post('/edit', [
+        'as' => 'hardware.edit',
+        'uses' => 'HardwareController@edit',
+    ]);
 
-Route::post('/subproduct/{id}/param', [
-    'as' => 'subproduct.param.edit',
-    'uses' => 'SubProductController@param_edit',
-]);
+    Route::get('/profile/{id}', [
+        'as' => 'hardware.profile',
+        'uses' => 'HardwareController@profile',
+    ]);
+});
 
-Route::get('/hardwares', [
-    'as' => 'hardwares',
-    'uses' => 'HardWareController@index',
-]);
+#users
+Route::group(['prefix' => 'users'], function () {
 
-Route::post('/hardware/add', [
-    'as' => 'hardware.add',
-    'uses' => 'HardWareController@add',
-]);
+    Route::get('/', [
+        'as' => 'users',
+        'uses' => 'UserController@users',
+    ]);
 
-Route::get('/hardware/delete/{id}', [
-    'as' => 'hardware.delete',
-    'uses' => 'HardWareController@delete',
-]);
+    Route::get('/refresh', [
+        'as' => 'user.refresh',
+        'uses' => 'UserController@refresh',
+    ]);
 
-Route::post('/hardware/edit', [
-    'as' => 'hardware.edit',
-    'uses' => 'HardWareController@edit',
-]);
+    Route::get('/view', [
+        'as' => 'user.view',
+        'uses' => 'UserController@view',
+    ]);
 
-Route::get('/hardwares/profile/{id}', [
-    'as'=> 'hardware.profile',
-    'uses'=> 'HardWareController@profile',
-]);
+});
+#users end
 
-Route::get('/hardwares.json', [
-    'as' => 'hardwares.json',
-    'uses' => 'HardwareController@hardwares_json',
-]);
+#roles
+Route::group(['prefix' => 'roles'], function () {
 
-Route::get('/users', [
-    'as' => 'users',
-    'uses' => 'UserController@users',
-]);
+    Route::get('/', [
+        'as' => 'roles',
+        'uses' => 'RoleController@roles',
+    ]);
 
-Route::get('/users/refresh', [
-    'as' => 'user.refresh',
-    'uses' => 'UserController@refresh',
-]);
+    Route::post('/{role_id}/user/{user_id}', [
+        'as' => 'role.user.connect',
+        'uses' => 'RoleController@user_connect',
+    ]);
 
-Route::get('/users.json', [
-    'as' => 'users.json',
-    'uses' => 'UserController@users_json',
-]);
+    Route::delete('/{role_id}/user/{user_id}/delete', [
+        'as' => 'role.user.disconnect',
+        'uses' => 'RoleController@user_disconnect',
+    ]);
 
-Route::get('/users/view', [
-    'as' => 'user.view',
-    'uses' => 'UserController@view',
-]);
+    Route::post('/users', [
+        'as' => 'role.user.connect_many',
+        'uses' => 'RoleController@user_connect_many',
+    ]);
+});
+#roles end
 
-Route::get('/roles', [
-    'as' => 'roles',
-    'uses' => 'RoleController@roles',
-]);
+#gapper
+Route::group(['prefix' => 'gapper'], function () {
 
-Route::post('/roles/{role_id}/user/{user_id}', [
-    'as' => 'role.user.connect',
-    'uses' => 'RoleController@user_connect',
-]);
+    Route::post('/login', [
+        'as' => 'login',
+        'uses' => 'GapperController@login',
+    ]);
 
-Route::post('/roles/{role_id}/user/{user_id}/delete', [
-    'as' => 'role.user.disconnect',
-    'uses' => 'RoleController@user_disconnect',
-]);
+    Route::get('/logout', [
+        'as' => 'logout',
+        'uses' => 'GapperController@logout',
+    ]);
+});
+#gapper end
 
-Route::post('/roles/users', [
-    'as' => 'role.user.connect_many',
-    'uses' => 'RoleController@user_connect_many',
-]);
+#nfs
+Route::group(['prefix' => 'nfs'], function () {
 
-Route::post('/gapper/login', [
-    'as' => 'login',
-    'uses' => 'GapperController@login',
-]);
+    # 进行路径匹配
+    Route::get('/list/{project_id}/{path}', [
+        'as' => 'nfs.path',
+        'uses' => 'NFSController@path',
+    ])->where(['path' => '[\w\W]*']);
 
-Route::get('/gapper/logout', [
-    'as' => 'logout',
-    'uses' => 'GapperController@logout',
-]);
+    # 下载
+    Route::get('/download/{project_id}/{file}/download', [
+        'as' => 'nfs.download',
+        'uses' => 'NFSController@download',
+    ])->where(['file' => '.*']);
 
-# 进行路径匹配
-Route::get('/nfs/list/{project_id}/{path}', [
-    'as' => 'nfs.path',
-    'uses' => 'NFSController@path',
-])->where(['path' => '[\w\W]*']);
+    # 删除
+    # 增加 delete 是为了让 nginx 正常解析
+    Route::post('/delete/{project_id}/{file}/delete', [
+        'as' => 'nfs.delete',
+        'uses' => 'NFSController@delete',
+    ])->where(['file' => '.*']);
 
-# 下载
-Route::get('/nfs/download/{project_id}/{file}/download', [
-    'as' => 'nfs.download',
-    'uses' => 'NFSController@download',
-])->where(['file' => '.*']);
+    # 重命名
+    Route::post('/edit', [
+        'as' => 'nfs.edit',
+        'uses' => 'NFSController@edit',
+    ]);
 
-# 删除
-# 增加 delete 是为了让 nginx 正常解析
-Route::post('/nfs/delete/{project_id}/{file}/delete', [
-    'as' => 'nfs.delete',
-    'uses' => 'NFSController@delete',
-])->where(['file' => '.*']);
+    Route::post('/upload/{project_id}', [
+        'as' => 'nfs.upload',
+        'uses' => 'NFSController@upload',
+    ]);
+});
+#nfs end
 
-# 重命名
-Route::post('/nfs/edit', [
-    'as' => 'nfs.edit',
-    'uses' => 'NFSController@edit',
-]);
+#records
+Route::group(['prefix' => 'records'], function () {
 
-Route::post('/nfs/upload/{project_id}', [
-    'as' => 'nfs.upload',
-    'uses' => 'NFSController@upload',
-]);
+    Route::post('/add', [
+        'as' => 'record.add',
+        'uses' => 'RecordController@add',
+    ]);
 
+    Route::delete('/delete/{id}', [
+        'as' => 'record.delete',
+        'uses' => 'RecordController@delete',
+    ]);
+});
+#records end
 
-Route::post('/records/add', [
-    'as'=> 'record.add',
-    'uses'=> 'RecordController@add',
-]);
+#hardware_field
+Route::group(['prefix' => 'hardware_field'], function () {
 
-Route::get('/records/delete/{id}', [
-    'as'=> 'record.delete',
-    'uses'=> 'RecordController@delete',
-]);
+    Route::post('/add', [
+        'as' => 'hardware_field.add',
+        'uses' => 'HardwareFieldController@add',
+    ]);
 
-Route::post('/hardware_field/add', [
-    'as'=> 'hardware_field.add',
-    'uses'=> 'HardwareFieldController@add',
-]);
+    Route::post('/edit', [
+        'as' => 'hardware_field.edit',
+        'uses' => 'HardwareFieldController@edit',
+    ]);
 
-Route::post('/hardware_field/edit', [
-    'as'=> 'hardware_field.edit',
-    'uses'=> 'HardwareFieldController@edit',
-]);
+    Route::get('/delete/{id}', [
+        'as' => 'hardware_field.delete',
+        'uses' => 'HardwareFieldController@delete',
+    ]);
+});
+#hardware_field end
 
-Route::get('/hardware_field/delete/{id}', [
-    'as'=> 'hardware_field.delete',
-    'uses'=> 'HardwareFieldController@delete',
-]);
+#hardware_item
+Route::group(['prefix' => 'hardware_item'], function () {
 
-Route::post('/hardware_item/add', [
-    'as'=> 'hardware_item.add',
-    'uses'=> 'HardwareItemController@add',
-]);
+    Route::post('/add', [
+        'as' => 'hardware_item.add',
+        'uses' => 'HardwareItemController@add',
+    ]);
 
-Route::post('/hardware_item/form', [
-    'as'=> 'hardware_item.form',
-    'uses'=> 'HardwareItemController@form',
-]);
+    Route::post('/form', [
+        'as' => 'hardware_item.form',
+        'uses' => 'HardwareItemController@form',
+    ]);
 
-Route::post('/hardware_item/edit', [
-    'as'=> 'hardware_item.edit',
-    'uses'=> 'HardwareItemController@edit',
-]);
+    Route::post('/edit', [
+        'as' => 'hardware_item.edit',
+        'uses' => 'HardwareItemController@edit',
+    ]);
 
-Route::get('/hardware_item/profile/{id}', [
-    'as'=> 'hardware_item.profile',
-    'uses'=> 'HardwareItemController@profile',
-]);
+    Route::get('/profile/{id}', [
+        'as' => 'hardware_item.profile',
+        'uses' => 'HardwareItemController@profile',
+    ]);
+});
+#hardware_item end
+

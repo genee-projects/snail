@@ -7,13 +7,10 @@ use App\HardwareItem;
 use App\Project;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
 class HardwareItemController extends Controller
 {
-    public function add(Request $request) {
-
+    public function add(Request $request)
+    {
         $item = new HardwareItem();
 
         $project = Project::find($request->input('project_id'));
@@ -25,25 +22,25 @@ class HardwareItemController extends Controller
         $item->project()->associate($project);
 
         $item->status = $request->input('status');
-        $item->extra = $request->input('fields');
+        $item->extra = $request->input('fields', []);
 
         $item->save();
 
-        return redirect()->to(route('project.profile', ['id'=> $project->id]))
+        return redirect()->to(route('project.profile', ['id' => $project->id]))
             ->with('message_type', 'info')
             ->with('message_content', '添加部署硬件成功!')
             ->with('tab', 'hardwares');
     }
 
-    public function form(Request $request) {
-
+    public function form(Request $request)
+    {
         $item = HardwareItem::find($request->input('id'));
 
-        return view('hardwares/form', ['item'=> $item]);
+        return view('hardwares/form', ['item' => $item]);
     }
 
-    public function edit(Request $request) {
-
+    public function edit(Request $request)
+    {
         $item = HardwareItem::find($request->input('id'));
 
         $item->status = $request->input('status');
@@ -52,20 +49,20 @@ class HardwareItemController extends Controller
         $item->equipment_name = $request->input('equipment_name');
         $item->equipment_id = $request->input('equipment_id');
 
-        $item->extra = $request->input('fields');
+        $item->extra = $request->input('fields', []);
 
         $item->save();
 
-        return redirect()->to(route('project.profile', ['id'=> $item->project->id]))
+        return redirect()->to(route('project.profile', ['id' => $item->project->id]))
             ->with('message_type', 'info')
             ->with('message_content', '修改部署硬件成功!')
             ->with('tab', 'hardwares');
     }
 
-    public function profile($id) {
-
+    public function profile($id)
+    {
         $item = HardwareItem::find($id);
 
-        return view('hardwares/item', ['item'=> $item]);
+        return view('hardwares/item', ['item' => $item]);
     }
 }
