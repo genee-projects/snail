@@ -51,4 +51,35 @@ class RecordController extends Controller
             ->with('message_type', 'info')
             ->with('tab', 'records');
     }
+
+    public function edit(Request $request) {
+
+        $record = Record::find($request->input('id'));
+
+        $time = $request->input('time');
+
+        if (!$time) {
+            $time = null;
+        } else {
+            $time = \Carbon\Carbon::createFromFormat('Y/m/d', $time)->format('Y-m-d H:i:s');
+        }
+
+        $record->time = $time;
+
+        $record->content = $request->input('content');
+        $record->contact = $request->input('contact');
+        $record->phone = $request->input('phone');
+        $record->software_count = $request->input('software_count');
+
+        $record->hardware_name = $request->input('hardware_name');
+        $record->hardware_count = $request->input('hardware_count');
+
+        $record->save();
+
+        return redirect()->back()
+            ->with('message_content', '外出记录修改成功!')
+            ->with('message_type', 'info')
+            ->with('tab', 'records');
+
+    }
 }

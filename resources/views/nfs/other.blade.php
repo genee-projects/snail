@@ -66,7 +66,6 @@
                 $(this).find('a.action').addClass('hidden');
             });
 
-
             $('ul li.item button.edit-btn').bind('click', function() {
 
                 var $modal = $('#file-edit');

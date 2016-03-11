@@ -139,12 +139,28 @@
                         <td>{{ $record->content }}</td>
                         <td>
 
-                            <form class="delete display-inline" method="POST" action="{{ route('record.delete', ['id'=> $record->id]) }}">
-                                {{ method_field('DELETE') }}
-                                <button type="submit" class="pull-right edit">
-                                    <i class="fa fa-fw fa-times"></i>
-                                </button>
-                            </form>
+                            <div class="pull-right">
+                                <span class="edit edit-record"
+                                      data-id="{{ $record->id }}"
+                                      data-user_name="{{ $record->user->name }}"
+                                      data-time="{{ $record->time->format('Y/m/d') }}"
+                                      data-contact="{{ $record->contact }}"
+                                      data-phone="{{ $record->phone }}"
+                                      data-softwarecount="{{ $record->software_count }}"
+                                      data-hardwarename="{{ $record->hardware_name }}"
+                                      data-hardwarecount="{{ $record->hardware_count }}"
+                                      data-content="{{ $record->content }}"
+                                >
+                                    <i class="fa fa-fw fa-edit"></i>
+                                </span>
+
+                                <form class="delete display-inline" method="POST" action="{{ route('record.delete', ['id'=> $record->id]) }}">
+                                    {{ method_field('DELETE') }}
+                                    <button type="submit" class="pull-right edit">
+                                        <i class="fa fa-fw fa-times"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
@@ -152,3 +168,98 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="edit-record-modal" tabindex="-1" role="dialog" aria-labelledby="edit-record-modal-label">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="edit-record-modal-label">修改记录</h4>
+            </div>
+            <div class="modal-body">
+
+                <form id="edit-record-form" method="post" action="{{ route('record.edit') }}" class="form-horizontal">
+
+                    <input type="hidden" name="id" />
+
+                    <div class="form-group">
+                        <label for="record-user" class="col-sm-2 control-label">外出人员</label>
+                        <div class="col-sm-4">
+                            <input name="user_name" type="text" value="{{ \Session::get('user')->name }}" disabled="disabled" class="form-control" id="record-user">
+                        </div>
+
+                        <label for="record-time" class="col-sm-2 control-label">外出时间</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="time" class="form-control datetimepicker">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="record-contact" class="col-sm-2 control-label">联系人</label>
+                        <div class="col-sm-4">
+                            <input name="contact" type="text" class="form-control" id="record-contact" placeholder="曹老师">
+                        </div>
+
+                        <label for="record-phone" class="col-sm-2 control-label">联系方式</label>
+                        <div class="col-sm-4">
+                            <input name="phone" type="text" class="form-control" id="record-phone">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="record-hardware-count" class="col-sm-2 control-label">硬件名称/版本</label>
+                        <div class="col-sm-10">
+                            <input name="hardware_name" autocomplete="off" class="form-control" id="record-hardware-name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="record-hardware-count" class="col-sm-2 control-label">硬件数量</label>
+                        <div class="col-sm-4">
+                            <input name="hardware_count" type="text" class="form-control" id="record-hardware-count" placeholder="10">
+                        </div>
+                        <label for="record-software-count" class="col-sm-2 control-label">软件数量</label>
+                        <div class="col-sm-4">
+                            <input name="software_count" type="text" class="form-control" id="record-software-count" placeholder="10">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="record-content" class="col-sm-2 control-label">工作内容</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="record-content" name="content" rows="3" placeholder="工作内容"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="submit" class="btn btn-primary" form="edit-record-form">添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    require(['jquery'], function($) {
+
+        $('.edit-record').bind('click', function() {
+
+            var $modal = $('#edit-record-modal');
+
+            $modal.find(':input[name=id]').val($(this).data('id'));
+            $modal.find(':input[name=user_name]').val($(this).data('user_name'));
+            $modal.find(':input[name=time]').val($(this).data('time'));
+            $modal.find(':input[name=contact]').val($(this).data('contact'));
+            $modal.find(':input[name=phone]').val($(this).data('phone'));
+            $modal.find(':input[name=hardware_name]').val($(this).data('hardwarename'));
+            $modal.find(':input[name=hardware_count]').val($(this).data('hardwarecount'));
+            $modal.find(':input[name=software_count]').val($(this).data('softwarecount'));
+            $modal.find(':input[name=content]').val($(this).data('content'));
+
+            $modal.modal();
+        });
+    });
+
+</script>

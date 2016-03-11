@@ -428,6 +428,11 @@ Route::group(['prefix' => 'records'], function () {
         'as' => 'record.delete',
         'uses' => 'RecordController@delete',
     ]);
+
+    Route::post('/edit', [
+        'as'=> 'record.edit',
+        'uses'=> 'RecordController@edit',
+    ]);
 });
 #records end
 
@@ -475,4 +480,3 @@ Route::group(['prefix' => 'hardware_item'], function () {
     ]);
 });
 #hardware_item end
-
