@@ -61,6 +61,7 @@ class InitRoles extends Seeder
             '项目服务器管理',
             '服务器信息管理',
             '项目文件管理',
+            '项目外出记录管理',
         ];
 
         $role->save();

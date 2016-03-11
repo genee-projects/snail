@@ -12,6 +12,10 @@ class RecordController extends Controller
     {
         $user = \Session::get('user');
 
+        if (!$user->can('项目外出记录管理')) {
+            abort(401);
+        }
+
         $record = new Record();
         $project = Project::find($request->input('project_id'));
 
@@ -56,6 +60,10 @@ class RecordController extends Controller
     {
         $user = \Session::get('user');
 
+        if (!$user->can('项目外出记录管理')) {
+            abort(401);
+        }
+
         $record = Record::find($id);
         $record_id = $record->id;
         $project = $record->project;
@@ -67,7 +75,7 @@ class RecordController extends Controller
             '%id' => $user->id,
             '%project' => $project->name,
             '%project_id' => $project->id,
-            '%record_id' => $record->id,
+            '%record_id' => $record_id,
         ]));
 
         return redirect()->back()
@@ -79,6 +87,10 @@ class RecordController extends Controller
     public function edit(Request $request)
     {
         $user = \Session::get('user');
+
+        if (!$user->can('项目外出记录管理')) {
+            abort(401);
+        }
 
         $record = Record::find($request->input('id'));
         $project = $record->project;
