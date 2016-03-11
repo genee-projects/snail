@@ -206,8 +206,17 @@ class NFS
 
         $pathinfo['dirname'] = $dirname;
         $pathinfo['basename'] = $name;
-        $pathinfo['extension'] = $exp[1];
-        $pathinfo['filename'] = $filename[1];
+
+        if (isset($exp[1])) {
+            $pathinfo['extension'] = $exp[1];
+        } else {
+            $pathinfo['extension'] = null;
+        }
+        if (isset($filename[1])) {
+            $pathinfo['filename'] = $filename[1];
+        } else {
+            $pathinfo['filename'] = null;
+        }
 
         return $pathinfo;
     }
