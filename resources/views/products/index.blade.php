@@ -3,19 +3,15 @@
 @section('content')
     <link rel="stylesheet" href="assets/css/products/index.css">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <h1 class="page-header">产品列表</h1>
         </div>
 
         @foreach($products as $product)
-            <div class="col-lg-12">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-cube"></i> <a href="{{ route('product.profile', ['id'=> $product->id]) }}">{{ $product->name }}</a>
-
-                        @if (\Session::get('user')->can('产品信息管理'))
-                            <p class="pull-right"><a href="{{ route('product.delete', ['id'=> $product->id]) }}" ><i class="fa fa-fw fa-small fa-times">&#160;</i></a></p>
-                        @endif
                     </div>
                     <div class="panel-body">
                         {{ $product->description }}
@@ -41,7 +37,7 @@
         @endforeach
 
         @if (\Session::get('user')->can('产品信息管理'))
-            <div class="col-lg-12">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-cube"></i> 添加产品

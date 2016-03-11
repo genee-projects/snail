@@ -14,10 +14,10 @@
         });
     </script>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <h1 class="page-header">{{ $project->name }}</h1>
         </div>
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-user"> 基本信息</i>
@@ -31,7 +31,6 @@
                             <a href="{{ route('project.delete', ['id'=> $project->id]) }}">
                                 <i class="fa fa-fw fa-times"></i>
                             </a>
-                            <div class="clearfix"></div>
 
                             <div class="modal fade" id="edit-project" tabindex="-1" role="dialog" aria-labelledby="edit-project-modal-label">
                                 <div class="modal-dialog modal-lg" role="document">
@@ -59,7 +58,7 @@
                 <div class="panel-body">
                     <table class="table table-striped table-bordered table-hover">
                         <tr>
-                            <td class="col-lg-2">客户名称</td>
+                            <td class="col-md-2">客户名称</td>
                             <td><a href="{{ route('client.profile', ['id'=> $project->client->id]) }}">{{ $project->client->name }}</a></td>
                         </tr>
                         <tr>
@@ -171,7 +170,12 @@
                                 <td>
                                     {{ $item->value }}
                                     <span class="pull-right">
-                                        <a href="{{ route('item.delete', ['id'=> $item->id]) }}"><i class="fa fa-times"></i></a>
+                                       <form class="delete display-inline" method="POST" action="{{ route('item.delete', ['id'=> $item->id]) }}">
+                                           {{ method_field('DELETE') }}
+                                           <button type="submit" class="edit">
+                                               <i class="fa fa-fw fa-times"></i>
+                                           </button>
+                                       </form>
                                     </span>
                                 </td>
                             </tr>
@@ -224,7 +228,7 @@
             </div>
         </div>
 
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-user"> 其他信息</i>

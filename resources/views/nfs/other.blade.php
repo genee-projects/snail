@@ -24,7 +24,7 @@
         require(['css!../css/nfs/index.css'], function() {});
     </script>
 
-    <div class="col-lg-12">
+    <div class="col-md-12">
 
         <hr/>
 
@@ -77,7 +77,6 @@
 
                 $modal.modal();
                 return false;
-
             });
         });
 

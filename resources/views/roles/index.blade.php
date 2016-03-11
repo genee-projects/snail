@@ -3,13 +3,13 @@
 @section('content')
     <link rel="stylesheet" href="assets/css/roles/index.css">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <h1 class="page-header">角色设置</h1>
         </div>
 
-        <div class="col-lg-12" id="role-board">
+        <div class="col-md-12" id="role-board">
 
-            <div class="role-board-container col-lg-8">
+            <div class="role-board-container col-md-8">
                 @foreach(App\Role::all() as $role)
                     <div data-role-id="{{ $role->id }}" class="role panel panel-default role-card">
                         <div class="panel-heading role-card-header">
@@ -28,7 +28,7 @@
                 @endforeach
             </div>
 
-            <div class="col-lg-4 users">
+            <div class="col-md-4 users">
                 <input type="text" class="form-control" id="user_selector">
 
                 <hr />
@@ -154,6 +154,7 @@
 
                 // ajax 操作
                 $.post('roles/' + role_id + '/user/' + user_id + '/delete', {
+                    '_method': 'DELETE'
                 }).done(function(data) {
                     if (data === true) {
                         $user.remove();

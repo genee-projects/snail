@@ -7,13 +7,11 @@ class CreateRecords extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         // records 为外出记录
-        Schema::create('records', function(Blueprint $table) {
+        Schema::create('records', function (Blueprint $table) {
             $table->increments('id');                   // 自增 ID
             $table->integer('user_id');                 // 工程师 ID
             $table->integer('project_id');              // 项目 ID
@@ -30,8 +28,6 @@ class CreateRecords extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

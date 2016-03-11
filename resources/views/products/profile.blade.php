@@ -3,13 +3,13 @@
 @section('content')
     <link rel="stylesheet" href="assets/css/products/profile.css">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <h1 class="page-header">{{ $product->name }}</h1>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading ">
                     <i class="fa fa-linux"></i> 基本信息
@@ -19,10 +19,12 @@
                             <a href="#" data-toggle="modal" data-target="#edit-product">
                                 <i class="fa fa-fw fa-edit"></i>
                             </a>
-
-                            <a href="{{ route('product.delete', ['id' => $product->id]) }}">
-                                <i class="fa fa-fw fa-times"></i>
-                            </a>
+                            <form class="delete display-inline" method="POST" action="{{ route('product.delete', ['id' => $product->id]) }}">
+                                {{ method_field('DELETE') }}
+                                <button type="submit" class="edit">
+                                    <i class="fa fa-fw fa-times"></i>
+                                </button>
+                            </form>
                         </span>
                         <div class="modal fade" id="edit-product" tabindex="-1" role="dialog" aria-labelledby="edit-product-modal-label">
                             <div class="modal-dialog" role="document">
@@ -57,7 +59,7 @@
 
                     <table class="table table-hover table-striped">
                         <tr>
-                            <td class="col-lg-3">名称</td>
+                            <td class="col-md-3">名称</td>
                             <td>{{ $product->name }}</td>
                         </tr>
                         <tr>
@@ -71,7 +73,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
 
             <div class="panel panel-default">
 
@@ -191,7 +193,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <p>
@@ -228,8 +230,8 @@
                                                     <div>
                                                         @foreach($product->modules as $module)
                                                             <span data-id="{{ $module->id }}" class="module-btn btn btn-default text-center">
-                                                        {{ $module->name }}
-                                                    </span>
+                                                                {{ $module->name }}
+                                                            </span>
                                                         @endforeach
                                                     </div>
                                                 </div>
@@ -252,7 +254,7 @@
                 <div class="panel-body">
                     <table class="table table-hover table-striped">
                         <tr>
-                            <td class="col-lg-3">名称</td>
+                            <td class="col-md-3">名称</td>
                             <td>依赖模块</td>
                             <td>简述</td>
                         </tr>
@@ -274,9 +276,12 @@
                                         <span class="pull-right">
 
                                             <i data-dep-modules="{{ join(',', $module->dep_modules_ids()) }}" data-description="{{ $module->description }}" data-id="{{ $module->id }}" data-name="{{ $module->name }}" class="edit edit-module fa fa-edit fa-fw"></i>
-                                            <a href="{{ route('module.delete', ['id'=> $module->id]) }}">
-                                                <i class="fa fa-times"></i>
-                                            </a>
+                                            <form class="delete display-inline" method="POST" action="{{ route('module.delete', ['id'=> $module->id]) }}">
+                                                {{ method_field('DELETE') }}
+                                                <button type="submit" class="edit">
+                                                    <i class="fa fa-fw fa-times"></i>
+                                                </button>
+                                            </form>
                                         </span>
                                     @endif
                                 </td>
@@ -461,7 +466,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading ">
                     <p>
@@ -541,9 +546,12 @@
                                     @if ($can_manage_param)
                                         <span class="pull-right">
                                             <i data-value="{{ $param->value }}" data-code="{{ $param->code }}" data-description="{{ $param->description }}" data-id="{{ $param->id }}" data-name="{{ $param->name }}" class="edit edit-param fa fa-edit fa-fw"></i>
-                                            <a href="{{ route('param.delete', ['id'=> $param->id]) }}">
-                                                <i class="fa fa-times"></i>
-                                            </a>
+                                            <form class="delete display-inline" method="POST" action="{{ route('param.delete', ['id'=> $param->id]) }}">
+                                                {{ method_field('DELETE') }}
+                                                <button type="submit" class="edit">
+                                                    <i class="fa fa-fw fa-times"></i>
+                                                </button>
+                                            </form>
                                         </span>
                                     @endif
                                 </td>

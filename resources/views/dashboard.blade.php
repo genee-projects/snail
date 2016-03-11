@@ -3,21 +3,21 @@
 @section('content')
     <link rel="stylesheet" href="assets/css/dashboard.css">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <h1 class="page-header">DashBoard</h1>
         </div>
-        <!-- /.col-lg-12 -->
+        <!-- /.col-md-12 -->
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-lg-3 col-md-6">
+        <div class="col-md-3 col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-xs-3">
+                        <div class="col-md-3">
                             <i class="fa fa-users fa-5x"></i>
                         </div>
-                        <div class="col-xs-9 text-right">
+                        <div class="col-md-9 text-right">
                             <div class="huge">{{ $clients_count }}</div>
                             <div>客户</div>
                         </div>
@@ -32,14 +32,14 @@
                 </a>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-md-3 col-md-6">
             <div class="panel panel-red">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-xs-3">
+                        <div class="col-md-3">
                             <i class="fa fa-list-alt fa-5x"></i>
                         </div>
-                        <div class="col-xs-9 text-right">
+                        <div class="col-md-9 text-right">
                             <div class="huge">{{ $projects_count }}</div>
                             <div>项目</div>
                         </div>
@@ -55,14 +55,14 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-md-3 col-md-6">
             <div class="panel panel-yellow">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-xs-3">
+                        <div class="col-md-3">
                             <i class="fa fa-cubes fa-5x"></i>
                         </div>
-                        <div class="col-xs-9 text-right">
+                        <div class="col-md-9 text-right">
                             <div class="huge">{{ $products_count }}</div>
                             <div>产品列表</div>
                         </div>
@@ -78,14 +78,14 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-md-3 col-md-6">
             <div class="panel panel-green">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-xs-3">
+                        <div class="col-md-3">
                             <i class="fa fa-linux fa-5x"></i>
                         </div>
-                        <div class="col-xs-9 text-right">
+                        <div class="col-md-9 text-right">
                             <div class="huge">{{ $servers_count }}</div>
                             <div>服务器</div>
                         </div>

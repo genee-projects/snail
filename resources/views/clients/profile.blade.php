@@ -6,10 +6,10 @@
         require(['css!../css/timeline'], function() {});
     </script>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <h1 class="page-header">{{ $client->name }} </h1>
         </div>
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-user"> 基本信息</i>
@@ -18,13 +18,16 @@
 
                     @if ($can_manage_client)
                         <span class="pull-right">
-                             <a href="#" data-toggle="modal" data-target="#edit-client">
-                                 <i class="fa fa-fw fa-edit"></i>
-                             </a>
-
-                            <a href="{{ route('client.delete', ['id'=> $client->id]) }}">
-                                <i class="fa fa-fw fa-times"></i>
+                            <a href="#" data-toggle="modal" data-target="#edit-client">
+                                <i class="fa fa-fw fa-edit"></i>
                             </a>
+
+                            <form class="delete display-inline" method="POST" action="{{ route('client.delete', ['id'=> $client->id]) }}">
+                                {{ method_field('DELETE') }}
+                                <button type="submit" class="edit">
+                                    <i class="fa fa-fw fa-times"></i>
+                                </button>
+                            </form>
                         </span>
 
                         <div class="modal fade" id="edit-client" tabindex="-1" role="dialog" aria-labelledby="edit-server-modal-label">
@@ -52,7 +55,7 @@
                 <div class="panel-body">
                     <table class="table table-striped table-bordered table-hover">
                         <tr>
-                            <td class="col-lg-2">客户名称</td>
+                            <td class="col-md-2">客户名称</td>
                             <td>{{ $client->name }}</td>
                         </tr>
 
@@ -90,7 +93,13 @@
                                 <td>
                                     {{ $item->value }}
                                     <span class="pull-right">
-                                        <a href="{{ route('item.delete', ['id'=> $item->id]) }}"><i class="fa fa-times"></i></a>
+
+                                        <form class="delete display-inline" method="POST" action="{{ route('item.delete', ['id'=> $item->id]) }}">
+                                            {{ method_field('DELETE') }}
+                                            <button type="submit" class="edit">
+                                                <i class="fa fa-fw fa-times"></i>
+                                            </button>
+                                        </form>
                                     </span>
                                 </td>
                             </tr>
@@ -146,9 +155,9 @@
 
         <div class="
         @if ($can_manage_client)
-            col-lg-4
+            col-md-4
         @else
-                col-lg-12
+                col-md-12
         @endif
         ">
             <div class="panel panel-default">
@@ -160,9 +169,9 @@
                     <p><a href="{{ route('client.profile', ['id'=> $client->root()->id]) }}">{{ $client->root()->name }}</a></p>
 
                     @foreach($client->root()->children as $c)
-                        <p class="col-sm-offset-1">├ <a href="{{ route('client.profile', ['id'=> $c->id]) }}">{{ $c->name }}</a></p>
+                        <p class="col-md-offset-1">├ <a href="{{ route('client.profile', ['id'=> $c->id]) }}">{{ $c->name }}</a></p>
                             @foreach($c->children as $_c)
-                                <p class="col-sm-offset-2">├ <a href="{{ route('client.profile', ['id'=> $_c->id]) }}">{{ $_c->name }}</a></p>
+                                <p class="col-md-offset-2">├ <a href="{{ route('client.profile', ['id'=> $_c->id]) }}">{{ $_c->name }}</a></p>
                             @endforeach
                     @endforeach
                 </div>
@@ -170,7 +179,7 @@
         </div>
 
         @if ($can_manage_client)
-        <div class="col-lg-8">
+        <div class="col-md-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-facebook"> 增加子级</i>
@@ -180,8 +189,8 @@
                     <form class="form-horizontal" method="post" action="{{ route('client.add') }}">
                         @include('clients/form_lite', ['client'=> new \App\Client, 'parent'=> $client])
                         <div class="form-group">
-                            <label for="client-name" class="col-sm-2 control-label"></label>
-                            <div class="col-sm-10">
+                            <label for="client-name" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
                                 <button type="submit" class="btn btn-primary">添加</button>
                             </div>
                         </div>
@@ -191,7 +200,7 @@
         </div>
         @endif
 
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-list-alt"> 项目信息</i>
@@ -256,7 +265,7 @@
             </div>
         </div>
 
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-user"> 其他信息</i>
@@ -325,6 +334,7 @@
                             <div role="tabpanel" class="tab-pane" id="info">
                                 <ul class="timeline">
                                     {{--*/ $class = 'timeline-inverted';/*--}}
+
                                     @foreach($client->logs()->orderBy('time', 'desc')->get() as $log)
                                         {{--*/
                                         if ($class == 'timeline-inverted') $class = null;
@@ -337,7 +347,11 @@
                                             <div class="timeline-panel">
                                                 <div class="timeline-heading">
                                                     <h4 class="timeline-title">{{ $log->action }}</h4>
-                                                    <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{ $log->time->format('Y/m/d') }} via <strong>{{ $log->user->name }}</strong></small></p>
+                                                    <p>
+                                                        <small class="text-muted">
+                                                            <i class="fa fa-clock-o"></i> {{ $log->time->format('Y/m/d') }} via <strong>{{ $log->user->name }}</strong>
+                                                        </small>
+                                                    </p>
                                                 </div>
                                                 <div class="timeline-body">
                                                     @if (count($log->change))

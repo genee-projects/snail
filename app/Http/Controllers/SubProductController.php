@@ -59,6 +59,7 @@ class SubProductController extends Controller
         }
 
         $sub = SubProduct::find($id);
+        $product = $sub->product;
 
         $sub_name = $sub->name;
         $sub_id = $sub->id;
@@ -74,7 +75,7 @@ class SubProductController extends Controller
             '%sub_product_id' => $sub_id,
         ]));
 
-        return redirect()->back()
+        return redirect()->to(route('product.profile', ['id' => $product->id]))
             ->with('message_content', '删除成功!')
             ->with('message_type', 'info');
     }

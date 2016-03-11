@@ -12,16 +12,17 @@ class Record extends Model
 
     public $timestamps = false;
 
-
     protected $casts = [
         'time' => 'date',        //配置信息
     ];
 
-    public function project() {
+    public function project()
+    {
         return $this->belongsTo('\App\Project', 'project_id');
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('\App\User', 'user_id');
     }
 }

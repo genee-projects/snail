@@ -14,7 +14,6 @@ class CommentController extends Controller
      */
     public function add(Request $request)
     {
-        //
         $comment = new Comment();
 
         $object_name = ucwords($request->input('object_type'));

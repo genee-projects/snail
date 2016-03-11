@@ -2,13 +2,13 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <h1 class="page-header">项目列表</h1>
         </div>
     </div>
     <div class="row">
 
-        <div class="col-lg-12">
+        <div class="col-md-12">
 
             <div class="panel panel-default">
                 <div class="panel-heading ">

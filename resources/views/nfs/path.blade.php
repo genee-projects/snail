@@ -71,13 +71,13 @@
                     <input type='hidden' name="file">
 
                     <div class="form-group">
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
                             <input type="text" disabled="disabled" name="display_file" class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
                             <input type="text" name="rename" class="form-control" placeholder="新名称">
                         </div>
                     </div>

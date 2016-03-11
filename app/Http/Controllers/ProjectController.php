@@ -48,8 +48,7 @@ class ProjectController extends Controller
 
         if (!$signed_time) {
             $signed_time = null;
-        }
-        else {
+        } else {
             $signed_time = \Carbon\Carbon::createFromFormat('Y/m/d', $signed_time)->format('Y-m-d H:i:s');
         }
 
@@ -207,8 +206,8 @@ class ProjectController extends Controller
                 'vip' => '重点项目状态',
                 'signed_status' => '正式/试用/售前支持状态',
                 'login_url' => '登录地址',
-                'service_unit'=> '维保时长',
-                'service_value'=> '维保时长',
+                'service_unit' => '维保时长',
+                'service_value' => '维保时长',
             ];
 
             foreach (array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
@@ -262,8 +261,8 @@ class ProjectController extends Controller
                     case 'service_unit':
                     case 'service_value':
 
-                        $old_value = $old_attributes['service_value']. \App\Project::$service_units[$old_attributes['service_unit']];
-                        $new_value = $new_attributes['service_value']. \App\Project::$service_units[$new_attributes['service_unit']];
+                        $old_value = $old_attributes['service_value'].\App\Project::$service_units[$old_attributes['service_unit']];
+                        $new_value = $new_attributes['service_value'].\App\Project::$service_units[$new_attributes['service_unit']];
 
                         $key = 'service_value';
                         break;
@@ -678,21 +677,29 @@ class ProjectController extends Controller
         //4. 获取 $param 和 1.中交集的差集, 进行 save
         $save = array_diff((array) $hardwares, $intersect);
 
+        $counts = $request->input('count');
+
         if (count($save)) {
             $hsn = [];
             foreach ($save as $hardware_id) {
                 $hardware = Hardware::find($hardware_id);
 
-                $project->hardwares()->save($hardware);
+                $count = $counts[$hardware_id];
+
+                $project->hardwares()->save($hardware, [
+                    'count' => $count,
+                ]);
+
                 $hsn[] = $hardware->name;
 
-                \Log::notice(strtr('项目硬件关联: 用户(%name[%id]) 关联了项目(%project_name[%project_id]) 中的硬件 (%hardware_name[%hardware_id])', [
+                \Log::notice(strtr('项目硬件关联: 用户(%name[%id]) 关联了项目(%project_name[%project_id]) 中的硬件 (%hardware_name[%hardware_id]), 计划部署数量: %count', [
                     '%name' => $user->name,
                     '%id' => $user->id,
                     '%project_name' => $project->name,
                     '%project_id' => $project->id,
                     '%hardware_name' => $hardware->name,
                     '%hardware_id' => $hardware->id,
+                    '%count' => $count,
                 ]));
             }
 
@@ -724,14 +731,12 @@ class ProjectController extends Controller
 
         $old = [
             'description' => $h->pivot->description,
-            'deployed_count' => $h->pivot->deployed_count,
-            'plan_count' => $h->pivot->plan_count,
+            'count' => $h->pivot->count,
         ];
 
         $new = [
             'description' => $request->input('description'),
-            'deployed_count' => $request->input('deployed_count'),
-            'plan_count' => $request->input('plan_count'),
+            'count' => $request->input('count'),
         ];
 
         $project->hardwares()->detach($hardware_id);
@@ -742,8 +747,7 @@ class ProjectController extends Controller
 
         $diff_helper = [
             'description' => '描述',
-            'deployed_count' => '部署数量',
-            'plan_count' => '签约数量',
+            'count' => '计划部署数量',
         ];
 
         foreach (array_keys($diff_helper) as $item) {
@@ -827,7 +831,7 @@ class ProjectController extends Controller
 
     private function _profile_records($project)
     {
-        return view('projects/profile/records', ['project'=> $project]);
+        return view('projects/profile/records', ['project' => $project]);
     }
     //profile 信息 end
 }

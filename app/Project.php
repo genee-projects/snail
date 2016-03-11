@@ -26,13 +26,13 @@ class Project extends Model
     # 维保单位 年
     const SERVICE_UNIT_YEAR = 3;
 
-    static $service_units = [
+    public static $service_units = [
         self::SERVICE_UNIT_DAY => '天',
         self::SERVICE_UNIT_MONTH => '月',
         self::SERVICE_UNIT_YEAR => '年',
     ];
 
-    static $service_unit_values = [
+    public static $service_unit_values = [
         self::SERVICE_UNIT_DAY => 3600,
         self::SERVICE_UNIT_MONTH => 2678400, # 3600 * 31 * 24
         self::SERVICE_UNIT_YEAR => 31536000, # 3600 * 365 * 24
@@ -47,7 +47,7 @@ class Project extends Model
     # 正式客户
     const SIGNED_STATUS_OFFICIAL = 1;
 
-    static $signed_status = [
+    public static $signed_status = [
         self::SIGNED_STATUS_PENDING => '售前支持',
         self::SIGNED_STATUS_PROBATIONARY => '试用客户',
         self::SIGNED_STATUS_OFFICIAL => '正式客户',
@@ -64,7 +64,8 @@ class Project extends Model
         return $this->morphMany('App\Comment', 'object');
     }
 
-    public function records() {
+    public function records()
+    {
         return $this->hasMany('App\Record', 'project_id');
     }
 
@@ -98,8 +99,7 @@ class Project extends Model
     public function hardwares()
     {
         return $this->belongsToMany('App\Hardware', 'project_hardwares')
-            ->withPivot('deployed_count')
-            ->withPivot('plan_count')
+            ->withPivot('count')
             ->withPivot('description');
     }
 
@@ -142,9 +142,8 @@ class Project extends Model
 
     # 获取计划的验收时间
     # 原计划验收时间为签约时间 + 90 天
-    public function getPlannedCheckTimeAttribute($value) {
-
-
+    public function getPlannedCheckTimeAttribute($value)
+    {
         if ($this->signed_time) {
             return $this->signed_time->addMonths(3)->format('Y/m/d');
         }
@@ -153,17 +152,18 @@ class Project extends Model
     }
 
     # 获取维保时长
-    public function getServiceAttribute() {
-        return $this->service_value. self::$service_units[$this->service_unit];
+    public function getServiceAttribute()
+    {
+        return $this->service_value.self::$service_units[$this->service_unit];
     }
 
     # 获取维保范围
-    public function getServiceDurationAttribute() {
-
+    public function getServiceDurationAttribute()
+    {
         if ($this->check_time) {
             $start_time = $this->check_time;
 
-            switch($this->service_unit) {
+            switch ($this->service_unit) {
                 case self::SERVICE_UNIT_MONTH :
                     $end_time = $start_time->copy()->addMonths($this->service_value);
                     break;
@@ -176,18 +176,17 @@ class Project extends Model
                     break;
             }
 
-            return $start_time->format('Y/m/d'). ' ~ '. $end_time->format('Y/m/d');
+            return $start_time->format('Y/m/d').' ~ '.$end_time->format('Y/m/d');
         }
 
         return '未验收';
     }
 
     # 获取维保结束时间
-    public function getServiceEndTimeAttribute() {
-
+    public function getServiceEndTimeAttribute()
+    {
         if ($this->check_time) {
-
-            switch($this->service_unit) {
+            switch ($this->service_unit) {
                 case self::SERVICE_UNIT_MONTH :
                     return $this->check_time->copy()->addMonths($this->service_value);
                     break;

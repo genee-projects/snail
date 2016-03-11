@@ -63,13 +63,13 @@
                     <form id="edit-project-server-form" class="form-horizontal" method="post" action="{{ route('project.server.edit', ['id'=> $project->id]) }}">
 
                         <div class="form-group">
-                            <div class="col-sm-12">
+                            <div class="col-md-12">
                                 <input type="text" class="form-control" name="name" disabled="disabled">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="col-sm-12">
+                            <div class="col-md-12">
                                 <input type="text" class="datetimepicker form-control" name="deploy_time">
                             </div>
                         </div>
@@ -91,15 +91,15 @@
     <form class="form-horizontal" method="post" action="{{ route('project.servers', ['id'=> $project->id]) }}">
 
         <div class="form-group">
-            <label for="server_selector" class="col-sm-2 control-label">选择服务器</label>
-            <div class="col-sm-10">
+            <label for="server_selector" class="col-md-2 control-label">选择服务器</label>
+            <div class="col-md-10">
                 <input class="form-control" type="text" data-provide="typeahead" id="server_selector">
             </div>
         </div>
 
         <div class="form-group">
-            <label for="server_deploy_time" class="col-sm-2 control-label">部署时间</label>
-            <div class="col-sm-10">
+            <label for="server_deploy_time" class="col-md-2 control-label">部署时间</label>
+            <div class="col-md-10">
 
                 <div class="date">
                     <input type="text" class="datetimepicker form-control" name="deploy_time" id="server_deploy_time">
@@ -108,7 +108,7 @@
         </div>
 
         <div class="form-group">
-            <div class="col-sm-10 col-sm-offset-2">
+            <div class="col-md-10 col-md-offset-2">
                 <button type="submit" class="btn btn-primary">
                     <i class="fa fa-plus-circle"></i> 追加服务器
                 </button>

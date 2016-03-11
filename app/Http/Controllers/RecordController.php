@@ -3,21 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
 use App\Project;
 use App\Record;
+use App\User;
 
 class RecordController extends Controller
 {
+    public function add(Request $request)
+    {
+        $me = \Session::get('user');
 
-    public function add(Request $request) {
+        if (!$me->can('项目外出记录管理')) {
+            abort(401);
+        }
+
+        $user = User::find($request->input('user_id'));
 
         $record = new Record();
-        $record->project()->associate(Project::find($request->input('project_id')));
-        $record->user()->associate(\Session::get('user'));
+
+        $project = Project::find($request->input('project_id'));
+
+        $record->project()->associate($project);
+        $record->user()->associate($user);
 
         $time = $request->input('time');
 
@@ -38,6 +45,14 @@ class RecordController extends Controller
         $record->hardware_count = $request->input('hardware_count');
 
         $record->save();
+
+        \Log::notice(strtr('外出记录添加: 用户(%name[%id]) 添加了项目 %project[%project_id] 的外出记录 %record_id', [
+            '%name' => $me->name,
+            '%id' => $me->id,
+            '%project' => $project->name,
+            '%project_id' => $project->id,
+            '%record_id' => $record->id,
+        ]));
 
         return redirect()->back()
             ->with('message_content', '外出记录添加成功!')
@@ -45,10 +60,27 @@ class RecordController extends Controller
             ->with('tab', 'records');
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
+        $user = \Session::get('user');
+
+        if (!$user->can('项目外出记录管理')) {
+            abort(401);
+        }
+
         $record = Record::find($id);
+        $record_id = $record->id;
+        $project = $record->project;
 
         $record->delete();
+
+        \Log::notice(strtr('外出记录删除: 用户(%name[%id]) 删除了项目 %project[%project_id] 的外出记录 %record_id', [
+            '%name' => $user->name,
+            '%id' => $user->id,
+            '%project' => $project->name,
+            '%project_id' => $project->id,
+            '%record_id' => $record_id,
+        ]));
 
         return redirect()->back()
             ->with('message_content', '外出记录删除成功!')
@@ -56,9 +88,21 @@ class RecordController extends Controller
             ->with('tab', 'records');
     }
 
-    public function edit(Request $request) {
+    public function edit(Request $request)
+    {
+        $me = \Session::get('user');
+
+        if (!$me->can('项目外出记录管理')) {
+            abort(401);
+        }
 
         $record = Record::find($request->input('id'));
+        $project = $record->project;
+
+        $user = User::find($request->input('user_id'));
+        $record->user()->associate($user);
+
+        $old_attributes = $record->attributesToArray();
 
         $time = $request->input('time');
 
@@ -80,10 +124,48 @@ class RecordController extends Controller
 
         $record->save();
 
+        $new_attributes = $record->attributesToArray();
+
+        foreach (array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
+            $changed = false;
+            $old_value = $old_attributes[$key];
+            if ($old_value == null) {
+                $old_value = '空';
+            }
+
+            $new_value = $new_attributes[$key];
+
+            if ($new_value == null) {
+                $new_value = '空';
+            }
+
+            switch ($key) {
+                case 'time':
+                    if ($old_value->format('Y/m/d') != $new_value->format('Y/m/d')) {
+                        $changed = true;
+                    }
+                    break;
+                default:
+                    $changed = true;
+            }
+
+            if ($changed) {
+                \Log::notice(strtr('外出记录修改: 用户(%name[%id]) 修改了项目 %project[%project_id] 的外出记录 %record_id: %key : %old --> %new', [
+                    '%name' => $me->name,
+                    '%id' => $me->id,
+                    '%project' => $project->name,
+                    '%project_id' => $project->id,
+                    '%record_id' => $record->id,
+                    '%key' => $key,
+                    '%old' => $old_value,
+                    '%new' => $new_value,
+                ]));
+            }
+        }
+
         return redirect()->back()
             ->with('message_content', '外出记录修改成功!')
             ->with('message_type', 'info')
             ->with('tab', 'records');
-
     }
 }
