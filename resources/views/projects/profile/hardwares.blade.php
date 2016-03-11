@@ -12,7 +12,7 @@
             <td>名称</td>
             <td>规格/型号</td>
             <td>生产类型</td>
-            <td>计划部署数量</td>
+            <td class="text-right">数量 (实际 / 计划 )</td>
             <td>备注</td>
         </tr>
 
@@ -31,8 +31,10 @@
                         外采
                     @endif
                 </td>
-                <td>
-                    {{ $hardware->pivot->count }}
+                <td class="text-right">
+                    <strong>
+                        {{ \App\HardwareItem::where('project_id', $project->id)->where('hardware_id', $hardware->id)->count()}} / {{ $hardware->pivot->count }}
+                    </strong>
                 </td>
                 <td>
                     {{ $hardware->pivot->description }}
