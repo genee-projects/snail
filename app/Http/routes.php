@@ -363,3 +363,8 @@ Route::get('/records/delete/{id}', [
     'as'=> 'record.delete',
     'uses'=> 'RecordController@delete',
 ]);
+
+Route::post('/records/edit', [
+    'as'=> 'record.edit',
+    'uses'=> 'RecordController@edit',
+]);
