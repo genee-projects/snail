@@ -5,18 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Project;
 use App\Record;
+use App\User;
 
 class RecordController extends Controller
 {
     public function add(Request $request)
     {
-        $user = \Session::get('user');
+        $me = \Session::get('user');
 
-        if (!$user->can('项目外出记录管理')) {
+        if (!$me->can('项目外出记录管理')) {
             abort(401);
         }
 
+        $user = User::find($request->input('user_id'));
+
         $record = new Record();
+
         $project = Project::find($request->input('project_id'));
 
         $record->project()->associate($project);
@@ -43,8 +47,8 @@ class RecordController extends Controller
         $record->save();
 
         \Log::notice(strtr('外出记录添加: 用户(%name[%id]) 添加了项目 %project[%project_id] 的外出记录 %record_id', [
-            '%name' => $user->name,
-            '%id' => $user->id,
+            '%name' => $me->name,
+            '%id' => $me->id,
             '%project' => $project->name,
             '%project_id' => $project->id,
             '%record_id' => $record->id,
@@ -86,14 +90,17 @@ class RecordController extends Controller
 
     public function edit(Request $request)
     {
-        $user = \Session::get('user');
+        $me = \Session::get('user');
 
-        if (!$user->can('项目外出记录管理')) {
+        if (!$me->can('项目外出记录管理')) {
             abort(401);
         }
 
         $record = Record::find($request->input('id'));
         $project = $record->project;
+
+        $user = User::find($request->input('user_id'));
+        $record->user()->associate($user);
 
         $old_attributes = $record->attributesToArray();
 
@@ -144,8 +151,8 @@ class RecordController extends Controller
 
             if ($changed) {
                 \Log::notice(strtr('外出记录修改: 用户(%name[%id]) 修改了项目 %project[%project_id] 的外出记录 %record_id: %key : %old --> %new', [
-                    '%name' => $user->name,
-                    '%id' => $user->id,
+                    '%name' => $me->name,
+                    '%id' => $me->id,
                     '%project' => $project->name,
                     '%project_id' => $project->id,
                     '%record_id' => $record->id,
