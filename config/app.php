@@ -96,7 +96,7 @@ return [
     */
 
     'log' => 'daily',
-
+    'log_max_files'=> 365,  # 设定 Log 文件可存储 365 个
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -144,7 +144,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-    Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
