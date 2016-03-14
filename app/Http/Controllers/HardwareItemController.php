@@ -11,6 +11,12 @@ class HardwareItemController extends Controller
 {
     public function add(Request $request)
     {
+        $user = \Session::get('user');
+
+        if (!$user->can('项目硬件部署管理')) {
+            abort(401);
+        }
+
         $item = new HardwareItem();
 
         $project = Project::find($request->input('project_id'));
@@ -51,6 +57,12 @@ class HardwareItemController extends Controller
 
     public function edit(Request $request)
     {
+        $user = \Session::get('user');
+
+        if (!$user->can('项目硬件部署管理')) {
+            abort(401);
+        }
+
         $item = HardwareItem::find($request->input('id'));
 
         $item->status = $request->input('status');

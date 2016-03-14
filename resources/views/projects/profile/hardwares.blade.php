@@ -1,4 +1,5 @@
 {{--*/ $can_manage_hardware = \Session::get('user')->can('项目硬件管理') /*--}}
+{{--*/ $can_manage_hardware_item = \Session::get('user')->can('项目硬件部署管理')/*--}}
 
 <script type="text/javascript">
     require(['jquery', 'bootstrap-select', 'bootstrap-datetimepicker', 'moment/locale/zh-cn'], function($) {
@@ -14,6 +15,7 @@
     });
 </script>
 <div class="panel-body">
+
     <table class="table">
         <tr>
             <td>名称</td>
@@ -24,6 +26,11 @@
         </tr>
 
         @foreach($project->hardwares as $hardware)
+
+
+
+
+
             <tr>
                 <td>
                     <a href="{{ route('hardware.profile', ['id'=> $hardware->id]) }}">
@@ -45,93 +52,98 @@
                 </td>
                 <td>
                     {{ $hardware->pivot->description }}
-                    @if ($can_manage_hardware)
-                        <span class="pull-right">
-                            <i class="fa fa-fw fa-eye edit hardware-drawer" data-id="{{ $hardware->id }}"></i>
+                    <span class="pull-right">
+
+                        <i class="fa fa-fw fa-eye edit hardware-drawer" data-id="{{ $hardware->id }}"></i>
+
+                        @if ($can_manage_hardware)
                             <i class="fa fa-fw fa-edit edit-hardware edit" data-model="{{ $hardware->model }}" data-description="{{ $hardware->pivot->description }}" data-id="{{ $hardware->id }}" data-name="{{ $hardware->name }}" data-count="{{ $hardware->pivot->count }}"></i>
+                        @endif
+
+                        @if ($can_manage_hardware_item)
                             <i class="fa fa-fw fa-plus add-hardware-item edit" data-id="{{ $hardware->id }}"></i>
-                        </span>
 
-                        <div class="modal fade" id="add-hardware-item{{$hardware->id}}" tabindex="-1" role="dialog" aria-labelledby="add-hardware-item-modal-label">
-                            <div class="modal-dialog " role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="add-hardware-item-modal-label">部署硬件明细</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="add-hardware-item-form{{$hardware->id}}" class="form-horizontal" method="post" action="{{ route('hardware_item.add') }}">
-
-                                            <div class="form-group">
-                                                <label for="add-hardware-item-{{$hardware->id}}-project-name" class="col-md-2 control-label">项目名称</label>
-                                                <div class="col-md-10">
-                                                    <input type="text" id="add-hardware-item-{{$hardware->id}}-project-name" class="form-control" value="{{ $project->name }}" disabled="disabled">
-                                                </div>
+                            <div class="modal fade" id="add-hardware-item{{$hardware->id}}" tabindex="-1" role="dialog" aria-labelledby="add-hardware-item-modal-label">
+                                    <div class="modal-dialog " role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="add-hardware-item-modal-label">部署硬件明细</h4>
                                             </div>
+                                            <div class="modal-body">
 
-                                            <div class="form-group">
-                                                <label for="add-hardware-item-{{$hardware->id}}-hardware-name" class="col-md-2 control-label">硬件名称</label>
-                                                <div class="col-md-10">
-                                                    <input type="text" id="add-hardware-item-{{$hardware->id}}-hardware-name" class="form-control" value="{{ $hardware->name }}" disabled="disabled">
-                                                </div>
-                                            </div>
+                                                <form id="add-hardware-item-form{{$hardware->id}}" class="form-horizontal" method="post" action="{{ route('hardware_item.add') }}">
 
-
-                                            <div class="form-group">
-                                                <label for="add-hardware-{{$hardware->id}}-equipment-name" class="col-md-2 control-label">仪器名称</label>
-                                                <div class="col-md-10">
-                                                    <input type="text" id="add-hardware-{{$hardware->id}}-equipment-name" class="form-control" name="equipment_name">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="add-hardware-item-{{$hardware->id}}-equipment-id" class="col-md-2 control-label">CF-ID</label>
-                                                <div class="col-md-10">
-                                                    <input type="text" id="add-hardware-item-{{$hardware->id}}-equipment-id" class="form-control" name="equipment_id">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="add-hardware-item-{{$hardware->id}}-time" class="col-md-2 control-label">操作时间</label>
-                                                <div class="col-md-10">
-                                                    <input type="text" id="add-hardware-item-{{$hardware->id}}-time" class="datetimepicker form-control" name="time">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="add-hardware-item-{{$hardware->id}}-status" class="col-md-2 control-label">状态</label>
-                                                <div class="col-md-10">
-                                                    <select class="selectpicker" name="status">
-                                                        @foreach(\App\HardwareItem::$status as $value=>$display)
-                                                            <option value="{{ $value }}">{{ $display }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            @foreach($hardware->fields as $field)
-                                                <div class="form-group">
-                                                    <label for="edit-hardware-{{ $hardware->id }}-{{$field->name}}" class="col-md-2 control-label">{{ $field->name }}</label>
-                                                    <div class="col-md-10">
-                                                        <input id="edit-hardware-{{ $hardware->id }}-{{$field->name}}" type="text" class="form-control" name="fields[{{ $field->id }}]">
+                                                    <div class="form-group">
+                                                        <label for="add-hardware-item-{{$hardware->id}}-project-name" class="col-md-2 control-label">项目名称</label>
+                                                        <div class="col-md-10">
+                                                            <input type="text" id="add-hardware-item-{{$hardware->id}}-project-name" class="form-control" value="{{ $project->name }}" disabled="disabled">
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                            @endforeach
+                                                    <div class="form-group">
+                                                        <label for="add-hardware-item-{{$hardware->id}}-hardware-name" class="col-md-2 control-label">硬件名称</label>
+                                                        <div class="col-md-10">
+                                                            <input type="text" id="add-hardware-item-{{$hardware->id}}-hardware-name" class="form-control" value="{{ $hardware->name }}" disabled="disabled">
+                                                        </div>
+                                                    </div>
 
-                                            <input type="hidden" name="hardware_id" value="{{ $hardware->id }}">
-                                            <input type="hidden" name="project_id" value="{{ $project->id }}">
 
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                        <button type="submit" class="btn btn-primary" form="add-hardware-item-form{{$hardware->id}}">添加</button>
+                                                    <div class="form-group">
+                                                        <label for="add-hardware-{{$hardware->id}}-equipment-name" class="col-md-2 control-label">仪器名称</label>
+                                                        <div class="col-md-10">
+                                                            <input type="text" id="add-hardware-{{$hardware->id}}-equipment-name" class="form-control" name="equipment_name">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="add-hardware-item-{{$hardware->id}}-equipment-id" class="col-md-2 control-label">CF-ID</label>
+                                                        <div class="col-md-10">
+                                                            <input type="text" id="add-hardware-item-{{$hardware->id}}-equipment-id" class="form-control" name="equipment_id">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="add-hardware-item-{{$hardware->id}}-time" class="col-md-2 control-label">操作时间</label>
+                                                        <div class="col-md-10">
+                                                            <input type="text" id="add-hardware-item-{{$hardware->id}}-time" class="datetimepicker form-control" name="time">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="add-hardware-item-{{$hardware->id}}-status" class="col-md-2 control-label">状态</label>
+                                                        <div class="col-md-10">
+                                                            <select class="selectpicker" name="status">
+                                                                @foreach(\App\HardwareItem::$status as $value=>$display)
+                                                                    <option value="{{ $value }}">{{ $display }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    @foreach($hardware->fields as $field)
+                                                        <div class="form-group">
+                                                            <label for="edit-hardware-{{ $hardware->id }}-{{$field->name}}" class="col-md-2 control-label">{{ $field->name }}</label>
+                                                            <div class="col-md-10">
+                                                                <input id="edit-hardware-{{ $hardware->id }}-{{$field->name}}" type="text" class="form-control" name="fields[{{ $field->id }}]">
+                                                            </div>
+                                                        </div>
+
+                                                    @endforeach
+
+                                                    <input type="hidden" name="hardware_id" value="{{ $hardware->id }}">
+                                                    <input type="hidden" name="project_id" value="{{ $project->id }}">
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                <button type="submit" class="btn btn-primary" form="add-hardware-item-form{{$hardware->id}}">添加</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    @endif
+                        @endif
+                    </span>
                 </td>
             </tr>
 
@@ -182,7 +194,10 @@
                                             <a href="{{ route('hardware_item.profile', ['id'=> $i->id]) }}">
                                                 <i class="fa fa-fw fa-eye edit"></i>
                                             </a>
-                                            <i data-id="{{ $i->id }}" class="fa fa-fw fa-edit edit edit-hardware-item"></i>
+
+                                            @if ($can_manage_hardware_item)
+                                                <i data-id="{{ $i->id }}" class="fa fa-fw fa-edit edit edit-hardware-item"></i>
+                                            @endif
                                         </span>
                                     </td>
                                 </tr>
@@ -191,145 +206,196 @@
                     </div>
                 </td>
             </tr>
+
         @endforeach
 
         @if ($can_manage_hardware)
-        <tr>
-            <td colspan="6">
-                <span class="pull-right">
-                    <button data-toggle="modal" data-target="#hardwares" type="button" class="btn btn-primary"><i class="fa fa-wrench"></i> 设置硬件</button>
-                </span>
-            </td>
-        </tr>
+            <tr>
+                <td colspan="6">
+                    <span class="pull-right">
+                        <button data-toggle="modal" data-target="#hardwares" type="button" class="btn btn-primary">
+                            <i class="fa fa-wrench"></i> 设置硬件
+                        </button>
+                    </span>
+                </td>
+            </tr>
         @endif
     </table>
 
+
     @if ($can_manage_hardware)
-    <div class="modal fade" id="hardwares" tabindex="-1" role="dialog" aria-labelledby="hardwares-modal-label">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="hardwares-modal-label">设置硬件</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="add-hardware-form" class="form-horizontal" method="post" action="{{ route('project.hardwares', ['id'=> $project->id]) }}">
-                        @foreach(\App\Hardware::all() as $hardware)
+        <div class="modal fade" id="hardwares" tabindex="-1" role="dialog" aria-labelledby="hardwares-modal-label">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="hardwares-modal-label">设置硬件</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="hardware-form" class="form-horizontal" method="post" action="{{ route('project.hardwares', ['id'=> $project->id]) }}">
+                            @foreach(\App\Hardware::all() as $hardware)
 
-                            {{--*/ $selected = false /*--}}
-                            {{--*/ $btn_class = 'btn-default' /*--}}
+                                {{--*/ $selected = false /*--}}
+                                {{--*/ $btn_class = 'btn-default' /*--}}
 
-                            {{--*/ $project_hardware = $project->hardwares->find($hardware->id)/*--}}
+                                {{--*/ $project_hardware = $project->hardwares->find($hardware->id)/*--}}
 
-                            @if($project_hardware)
-                                {{--*/ $selected = true /*--}}
-                                {{--*/ $btn_class = 'btn-primary' /*--}}
-                            @endif
+                                @if($project_hardware)
+                                    {{--*/ $selected = true /*--}}
+                                    {{--*/ $btn_class = 'btn-primary' /*--}}
+                                @endif
 
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div data-id="{{ $hardware->id }}" class="hardware-btn btn {{ $btn_class }}">
-                                        {{ $hardware->name }}
-                                        @if ($hardware->model)
-                                            ({{$hardware->model}})
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div data-id="{{ $hardware->id }}" class="hardware-btn btn {{ $btn_class }}">
+                                            {{ $hardware->name }}
+                                            @if ($hardware->model)
+                                                ({{$hardware->model}})
+                                            @endif
+                                        </div>
+                                        @if($selected)
+                                            <input type="hidden" name="hardwares[]" value="{{ $hardware->id }}" />
                                         @endif
                                     </div>
-                                    @if($selected)
-                                        <input type="hidden" name="hardwares[]" value="{{ $hardware->id }}" />
-                                    @endif
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control"
+                                            @if ($project_hardware && $project_hardware->pivot->count)
+                                                value="{{ $project_hardware->pivot->count }}"
+                                            @endif
+                                        placeholder="计划部署数量" name="count[{{ $hardware->id }}]">
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control"
-                                        @if ($project_hardware && $project_hardware->pivot->count)
-                                            value="{{ $project_hardware->pivot->count }}"
-                                        @endif
-                                    placeholder="计划部署数量" name="count[{{ $hardware->id }}]">
-                                </div>
-                            </div>
 
-                        @endforeach
+                            @endforeach
 
-                        <script type="text/javascript">
+                            <script type="text/javascript">
 
-                            require(['jquery'], function($) {
+                                require(['jquery'], function($) {
 
-                                $('.hardware-btn').bind('click', function() {
+                                    $('.hardware-btn').bind('click', function() {
 
-                                    $input = $('<input type="hidden" name="hardwares[]" />');
+                                        $input = $('<input type="hidden" name="hardwares[]" />');
 
-                                    var $div = $(this);
+                                        var $div = $(this);
 
-                                    if ($div.hasClass('btn-default')) {
-                                        $div.removeClass('btn-default');
-                                        $div.addClass('btn-primary');
-                                        $input.val($div.data('id'));
+                                        if ($div.hasClass('btn-default')) {
+                                            $div.removeClass('btn-default');
+                                            $div.addClass('btn-primary');
+                                            $input.val($div.data('id'));
 
-                                        $div.after($input);
-                                    }
-                                    else {
-                                        $div.removeClass('btn-primary');
-                                        $div.addClass('btn-default');
-                                        $div.next(":input").remove();
-                                    }
+                                            $div.after($input);
+                                        }
+                                        else {
+                                            $div.removeClass('btn-primary');
+                                            $div.addClass('btn-default');
+                                            $div.next(":input").remove();
+                                        }
+                                    });
                                 });
-                            });
-                        </script>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="submit" class="btn btn-primary" form="add-hardware-form">设置</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="edit-hardware" tabindex="-1" role="dialog" aria-labelledby="edit-hardware-modal-label">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="edit-hardware-modal-label">修改硬件信息</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="edit-project-hardware-form" class="form-horizontal" method="post" action="{{ route('project.hardware.edit', ['id'=> $project->id]) }}">
-
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <input type="text" class="form-control" name="name" disabled="disabled">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <input type="text" class="form-control" name="model" disabled="disabled">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <input type="text" class="form-control" name="count" placeholder="计划部署数量">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <textarea class="form-control" name="description" rows="3" placeholder="备注"></textarea>
-                            </div>
-                        </div>
-                        <input type="hidden" name="hardware_id">
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="submit" class="btn btn-primary" form="edit-project-hardware-form">修改</button>
+                            </script>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary" form="hardware-form">设置</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="modal fade" id="edit-hardware" tabindex="-1" role="dialog" aria-labelledby="edit-hardware-modal-label">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="edit-hardware-modal-label">修改硬件信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="edit-project-hardware-form" class="form-horizontal" method="post" action="{{ route('project.hardware.edit', ['id'=> $project->id]) }}">
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" name="name" disabled="disabled">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" name="model" disabled="disabled">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" name="count" placeholder="计划部署数量">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <textarea class="form-control" name="description" rows="3" placeholder="备注"></textarea>
+                                </div>
+                            </div>
+                            <input type="hidden" name="hardware_id">
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary" form="edit-project-hardware-form">修改</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <script type="text/javascript">
+        require(['jquery'], function($) {
+
+            $('.hardware-drawer').bind('click', function () {
+
+                var $item_list = $(this).parents('table').find('.item-list-' + $(this).data('id'));
+
+                if ($item_list.hasClass('hidden')) {
+                    $item_list.removeClass('hidden');
+                } else {
+                    $item_list.addClass('hidden');
+                }
+            });
+        });
+    </script>
 
 
+    @if ($can_manage_hardware)
+    <script type="text/javascript">
+        require(['jquery'], function($) {
+
+            $('.edit-hardware').bind('click', function () {
+                var $modal = $('#edit-hardware');
+                $modal.find(':input[name=name]').val($(this).data('name'));
+
+                if ($(this).data('model')) {
+                    $modal.find(':input[name=model]').show().val($(this).data('model'));
+                } else {
+                    $modal.find(':input[name=model]').hide();
+                }
+
+                $modal.find(':input[name=count]').val($(this).data('count'));
+                $modal.find(':input[name=description]').val($(this).data('description'));
+
+                $modal.find(':input[name=hardware_id]').val($(this).data('id'));
+
+                $modal.modal();
+            });
+
+
+        });
+
+    </script>
+    @endif
+
+
+    @if ($can_manage_hardware_item)
     <div class="modal fade" id="edit-hardware-item-modal" tabindex="-1" role="dialog" aria-labelledby="edit-hardware-item-modal-label">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -353,40 +419,11 @@
     <script type="text/javascript">
         require(['jquery'], function($) {
 
-            $('.edit-hardware').bind('click', function() {
-                var $modal = $('#edit-hardware');
-                $modal.find(':input[name=name]').val($(this).data('name'));
-
-                if ($(this).data('model')) {
-                    $modal.find(':input[name=model]').show().val($(this).data('model'));
-                } else {
-                    $modal.find(':input[name=model]').hide();
-                }
-
-                $modal.find(':input[name=count]').val($(this).data('count'));
-                $modal.find(':input[name=description]').val($(this).data('description'));
-
-                $modal.find(':input[name=hardware_id]').val($(this).data('id'));
-
-                $modal.modal();
-            });
-
             $('.add-hardware-item').bind('click', function() {
 
                 var $modal = $('#add-hardware-item' + $(this).data('id'));
 
                 $modal.modal();
-            });
-
-            $('.hardware-drawer').bind('click', function() {
-
-                var $item_list = $(this).parents('table').find('.item-list-' + $(this).data('id'));
-
-                if ($item_list.hasClass('hidden')) {
-                    $item_list.removeClass('hidden');
-                } else {
-                    $item_list.addClass('hidden');
-                }
             });
 
             $('.edit-hardware-item').bind('click', function() {
@@ -402,7 +439,8 @@
                 $modal.modal();
             });
         });
-    </script>
 
+    </script>
     @endif
+
 </div>
