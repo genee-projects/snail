@@ -1,9 +1,16 @@
 {{--*/ $can_manage_hardware = \Session::get('user')->can('项目硬件管理') /*--}}
 
 <script type="text/javascript">
-    require(['jquery', 'bootstrap-select'], function($) {
+    require(['jquery', 'bootstrap-select', 'bootstrap-datetimepicker', 'moment/locale/zh-cn'], function($) {
         require(['css!../css/bootstrap-select.min'], function() {});
+        require(['css!../css/bootstrap-datetimepicker.min'], function() {});
+
         $('select').selectpicker();
+
+        $('.datetimepicker').datetimepicker({
+            format: 'YYYY/MM/DD',
+            locale: 'zh-cn'
+        });
     });
 </script>
 <div class="panel-body">
@@ -85,6 +92,13 @@
                                             </div>
 
                                             <div class="form-group">
+                                                <label for="add-hardware-item-{{$hardware->id}}-time" class="col-md-2 control-label">操作时间</label>
+                                                <div class="col-md-10">
+                                                    <input type="text" id="add-hardware-item-{{$hardware->id}}-time" class="datetimepicker form-control" name="time">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
                                                 <label for="add-hardware-item-{{$hardware->id}}-status" class="col-md-2 control-label">状态</label>
                                                 <div class="col-md-10">
                                                     <select class="selectpicker" name="status">
@@ -141,6 +155,7 @@
                             <tr>
                                 <td>仪器名称</td>
                                 <td class="text-right">CF-ID</td>
+                                <td class="text-right">操作时间</td>
                                 <td>状态</td>
                             </tr>
 
@@ -148,6 +163,7 @@
                                 <tr>
                                     <td>{{ $i->equipment_name }}</td>
                                     <td class="text-right"><strong>{{ $i->equipment_id }}</strong></td>
+                                    <td class="text-right">{{ $i->time->format('Y/m/d') }}</td>
                                     <td>
                                         {{--*/
                                         $status_label_class = [
@@ -166,7 +182,7 @@
                                             <a href="{{ route('hardware_item.profile', ['id'=> $i->id]) }}">
                                                 <i class="fa fa-fw fa-eye edit"></i>
                                             </a>
-                                            <i class="fa fa-fw fa-edit edit edit-hardware-item"></i>
+                                            <i data-id="{{ $i->id }}" class="fa fa-fw fa-edit edit edit-hardware-item"></i>
                                         </span>
                                     </td>
                                 </tr>

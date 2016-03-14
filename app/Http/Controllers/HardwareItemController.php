@@ -24,6 +24,16 @@ class HardwareItemController extends Controller
         $item->status = $request->input('status');
         $item->extra = $request->input('fields', []);
 
+        $time = $request->input('time');
+
+        if (!$time) {
+            $time = null;
+        } else {
+            $time = \Carbon\Carbon::createFromFormat('Y/m/d', $time)->format('Y-m-d H:i:s');
+        }
+
+        $item->time = $time;
+
         $item->save();
 
         return redirect()->to(route('project.profile', ['id' => $project->id]))
@@ -50,6 +60,16 @@ class HardwareItemController extends Controller
         $item->equipment_id = $request->input('equipment_id');
 
         $item->extra = $request->input('fields', []);
+
+        $time = $request->input('time');
+
+        if (!$time) {
+            $time = null;
+        } else {
+            $time = \Carbon\Carbon::createFromFormat('Y/m/d', $time)->format('Y-m-d H:i:s');
+        }
+
+        $item->time = $time;
 
         $item->save();
 

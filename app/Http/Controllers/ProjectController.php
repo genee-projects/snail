@@ -355,8 +355,11 @@ class ProjectController extends Controller
         $server = Server::find($request->input('server_id'));
 
         $deploy_time = $request->input('deploy_time');
+
         if (!$deploy_time) {
             $deploy_time = null;
+        } else {
+            $deploy_time = \Carbon\Carbon::createFromFormat('Y/m/d', $deploy_time)->format('Y-m-d H:i:s');
         }
 
         if (!$project->servers()->find($request->input('server_id'))) {

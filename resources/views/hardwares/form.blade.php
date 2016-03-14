@@ -5,9 +5,17 @@ $extra = $item->extra;
 /*--}}
 
 <script type="text/javascript">
-    require(['jquery', 'bootstrap-select'], function($) {
+    require(['jquery', 'bootstrap-select', 'bootstrap-datetimepicker', 'moment/locale/zh-cn'], function($) {
         require(['css!../css/bootstrap-select.min'], function() {});
+        require(['css!../css/bootstrap-datetimepicker.min'], function() {});
+
         $('select').selectpicker();
+
+        $('.datetimepicker').datetimepicker({
+            format: 'YYYY/MM/DD',
+            locale: 'zh-cn'
+        });
+
     });
 </script>
 <form id="edit-hardware-item-form" class="form-horizontal" method="post" action="{{ route('hardware_item.edit') }}">
@@ -37,6 +45,13 @@ $extra = $item->extra;
         <label for="edit-hardware-item-{{$hardware->id}}-equipment-id" class="col-md-2 control-label">CF-ID</label>
         <div class="col-md-10">
             <input value="{{ $item->equipment_id }}" type="text" id="edit-hardware-item-{{$hardware->id}}-equipment-id" class="form-control" name="equipment_id">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="edit-hardware-item-{{ $hardware->id }}-time" class="col-md-2 control-label">操作时间</label>
+        <div class="col-md-10">
+            <input value="{{ $item->time }}" type="text" id="edit-hardware-item-{{$hardware->id}}-time" class="datetimepicker form-control" name="time">
         </div>
     </div>
 

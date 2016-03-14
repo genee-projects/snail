@@ -15,6 +15,7 @@ class HardwareItem extends Model
 
     protected $casts = [
         'extra' => 'array',
+        'time' => 'date',
     ];
 
     const STATUS_STOCK = 0;     //库存

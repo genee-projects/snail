@@ -19,6 +19,7 @@ class CreateHardwareItem extends Migration
             $table->integer('equipment_id')->nullable();    //仪器 CF-ID
             $table->json('extra');              //附加参数
             $table->tinyInteger('status')->default(\App\HardwareItem::STATUS_ON_THE_WAY);   //默认状态, 在途中
+            $table->dateTime('time')->nullable(); // 部署时间
             $table->softDeletes();
 
         });
