@@ -73,6 +73,12 @@
                                 </span>
                             </td>
                         </tr>
+                        <tr>
+                            <td>操作时间</td>
+                            <td>
+                                {{ $item->time->format('Y/m/d') }}
+                            </td>
+                        </tr>
 
 
                         @foreach($hardware->fields as $field)
