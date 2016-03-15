@@ -243,7 +243,7 @@
                             <td>操作时间</td>
                             <td>状态</td>
                         </tr>
-                        @foreach($hardware->hardware_items as $i)
+                        @foreach($hardware->hardware_items()->orderBy('project_id')->get() as $i)
                             <tr>
                                 <td>
                                     <a href="{{ route('project.profile', ['id'=> $i->project->id]) }}">
