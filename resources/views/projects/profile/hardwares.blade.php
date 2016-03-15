@@ -85,6 +85,13 @@
                                                     </div>
 
                                                     <div class="form-group">
+                                                        <label for="add-hardware-item-{{$hardware->id}}-ref-no" class="col-md-2 control-label">硬件序号</label>
+                                                        <div class="col-md-10">
+                                                            <input type="text" id="add-hardware-item-{{$hardware->id}}-ref-no" class="form-control" name="ref_no">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
                                                         <label for="add-hardware-item-{{$hardware->id}}-time" class="col-md-2 control-label">操作时间</label>
                                                         <div class="col-md-10">
                                                             <input type="text" id="add-hardware-item-{{$hardware->id}}-time" class="datetimepicker form-control" name="time">

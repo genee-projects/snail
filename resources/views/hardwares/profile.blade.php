@@ -39,7 +39,6 @@
                                     }
 
                                     $modal.modal();
-
                                 });
                             });
                         </script>
