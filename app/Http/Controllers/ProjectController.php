@@ -704,11 +704,16 @@ class ProjectController extends Controller
                     '%hardware_id' => $hardware->id,
                     '%count' => $count,
                 ]));
-            }
 
-            Clog::add($project, '关联硬件', [
-                implode(',', $hsn),
-            ], Clog::LEVEL_WARNING);
+                Clog::add($project, '关联硬件', [
+                    [
+                        'title'=> strtr('关联了硬件 %hardware_name, 计划部署数量: %count', [
+                            '%hardware_name'=> $hardware->name,
+                            '%count'=> $count,
+                        ]),
+                    ]
+                ], CLog::LEVEL_WARNING);
+            }
         }
 
         foreach($project->hardwares as $h) {
@@ -806,6 +811,10 @@ class ProjectController extends Controller
                     '%new' => $c['new'],
                 ]));
             }
+
+            array_unshift($change, [
+                'title'=> strtr('项目硬件: %hardware_name', ['%hardware_name'=> $hardware->name]),
+            ]);
 
             Clog::add($project, '关联硬件基本信息修改', $change, Clog::LEVEL_WARNING);
         }
