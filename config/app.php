@@ -96,7 +96,7 @@ return [
     */
 
     'log' => 'daily',
-    'log_max_files'=> 365,  # 设定 Log 文件可存储 365 个
+    'log_max_files' => 365,  # 设定 Log 文件可存储 365 个
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -198,6 +198,6 @@ return [
     ],
     'managers' => [
     ],
-    'version' => '0.7.0',
+    'version' => '0.7.1',
     'nfs_root' => env('NFS_ROOT', '/data/crm/'),
 ];
