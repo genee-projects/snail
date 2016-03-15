@@ -7,6 +7,7 @@ use App\HardwareItem;
 use App\Project;
 use App\HardwareField;
 use Illuminate\Http\Request;
+use App\Clog;
 
 class HardwareItemController extends Controller
 {
@@ -41,7 +42,14 @@ class HardwareItemController extends Controller
 
         $item->save();
 
-       \Log::notice(strtr('项目硬件明细增加: 用户(%name[%id]) 添加了项目(%project_name[%project_id]) 硬件 (%hardware_name[%hardware_id]) 的 明细信息: %hardware_item_id', [
+        Clog::add($project, '硬件明细添加', [
+            strtr( '添加硬件 (%hardware_name) 下新的硬件明细 [%item_id]', [
+                '%hardware_name'=> $hardware->name,
+                '%item_id'=> $item->id
+            ])
+        ], Clog::LEVEL_NOTICE);
+
+        \Log::notice(strtr('项目硬件明细增加: 用户(%name[%id]) 添加了项目(%project_name[%project_id]) 硬件 (%hardware_name[%hardware_id]) 的 明细信息: %hardware_item_id', [
            '%name' => $user->name,
            '%id' => $user->id,
            '%project_name' => $project->name,
@@ -101,6 +109,8 @@ class HardwareItemController extends Controller
         $new_extra = $new_attributes['extra'];
 
 
+        $change = [];
+
         foreach(array_diff_assoc($old_extra, $new_extra) as $key => $value) {
 
             if (isset($old_extra[$key])) {
@@ -130,10 +140,25 @@ class HardwareItemController extends Controller
                 '%old' => $old_extra_value,
                 '%new' => $new_extra_value,
             ]));
+
+            $change[] = [
+                'title'=> $title,
+                'old'=> $old_extra_value,
+                'new'=> $new_extra_value,
+            ];
+        }
+
+        if (count($change)) {
+            array_unshift($change, [
+                'title' => strtr('硬件 (%hardware_name) 下新的硬件明细 %item_id', ['%hardware_name'=> $hardware->name, '%item_id'=> $item->id]),
+            ]);
+
+            Clog::add($project, '项目硬件明细修改', $change, Clog::LEVEL_INFO);
         }
 
         $helper = [
             'time' => '操作时间',
+            'status' => '状态',
         ];
 
         $change = [];
@@ -177,7 +202,6 @@ class HardwareItemController extends Controller
             ];
         }
 
-
         if (count($change)) {
 
             foreach($change as $c) {
@@ -195,8 +219,13 @@ class HardwareItemController extends Controller
                     '%new' => $c['new'],
                 ]));
             }
-        }
 
+            array_unshift($change, [
+                'title' => strtr('硬件 (%hardware_name) 下新的硬件明细 %item_id', ['%hardware_name'=> $hardware->name, '%item_id'=> $item->id]),
+            ]);
+
+            Clog::add($project, '项目硬件明细修改', $change, Clog::LEVEL_INFO);
+        }
 
         return redirect()->to(route('project.profile', ['id' => $item->project->id]))
             ->with('message_type', 'info')

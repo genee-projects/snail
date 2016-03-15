@@ -43,7 +43,7 @@
                 </td>
                 <td class="text-right">
                     <strong>
-                        {{ \App\HardwareItem::where('project_id', $project->id)->where('hardware_id', $hardware->id)->count()}} / {{ $hardware->pivot->count }}
+                        {{ \App\HardwareItem::where('project_id', $project->id)->where('hardware_id', $hardware->id)->where('status', \App\HardwareItem::STATUS_DEPLOYED)->count()}} / {{ $hardware->pivot->count }}
                     </strong>
                 </td>
                 <td>

@@ -18,7 +18,9 @@
                         @foreach($log->change as $c)
                             @if (isset($c['title']))
                                 <p> {{ $c['title'] or ''}}:
+                                    @if (isset($c['old']))
                                     <mark>「{{ $c['old'] }}」</mark>-&gt;<mark>「{{ $c['new'] }}」</mark>
+                                    @endif
                                 </p>
                             @else
                                 <p>{{ $c }}</p>

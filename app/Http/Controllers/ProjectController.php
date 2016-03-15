@@ -730,10 +730,17 @@ class ProjectController extends Controller
                         '%old'=> $h->pivot->count,
                         '%new' => $counts[$h->id],
                     ]));
+
+                    Clog::add($project, '修改硬件部署数量', [
+                        [
+                            'title'=> $h->name,
+                            'old' => $h->pivot->count,
+                            'new' => $counts[$h->id],
+                        ]
+                    ], Clog::LEVEL_NOTICE);
                 }
             }
         }
-
 
         return redirect()->back()
             ->with('message_content', '硬件设置成功!')
