@@ -266,9 +266,25 @@
                                     ];
                                     /*--}}
 
-                                    <span class="label label-{{$status_label_class[$i->status]}}">
-                                        {{ \App\HardwareItem::$status[$i->status] }}
-                                    </span>
+                                    @foreach(\App\HardwareItem::$status as $value => $display)
+
+                                        @if ($i->status == $value)
+                                            {{--*/ $label_class = $status_label_class[$i->status];/*--}}
+                                        @else
+                                            {{--*/ $label_class = 'default';/*--}}
+                                        @endif
+
+                                        <span class="label label-{{$label_class}}">
+                                            {{ $display }}
+                                        </span>
+
+                                        @if (end(\App\HardwareItem::$status) != $display)
+                                            &#160;
+                                            --
+                                            &#160;
+                                        @endif
+
+                                    @endforeach
                                 </td>
                             </tr>
                         @endforeach
