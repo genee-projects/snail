@@ -196,9 +196,12 @@
                                             <i class="fa fa-fw fa-edit"></i>
                                         </span>
 
-                                        <a href="{{ route('hardware_field.delete', ['id'=> $field->id]) }}">
-                                            <i class="fa fa-fw fa-times"></i>
-                                        </a>
+                                         <form class="delete display-inline" method="POST" action="{{ route('hardware_field.delete', ['id'=> $field->id]) }}">
+                                             {{ method_field('DELETE') }}
+                                             <button type="submit" class="edit">
+                                                 <i class="fa fa-fw fa-times"></i>
+                                             </button>
+                                         </form>
                                     </span>
                                 </td>
                             </tr>

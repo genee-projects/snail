@@ -449,7 +449,7 @@ Route::group(['prefix' => 'hardware_field'], function () {
         'uses' => 'HardwareFieldController@edit',
     ]);
 
-    Route::get('/delete/{id}', [
+    Route::delete('/delete/{id}', [
         'as' => 'hardware_field.delete',
         'uses' => 'HardwareFieldController@delete',
     ]);
