@@ -27,7 +27,7 @@
                             <td>项目编号</td>
                             <td>项目名称</td>
                             <td>签约客户</td>
-                            <td>项目联系人</td>
+                            <td>销售负责人</td>
                             <td class="text-right">维保结束时间</td>
                         </tr>
                         @foreach($projects as $project)
@@ -54,7 +54,7 @@
 
                                 </td>
                                 <td>{!! $project->client->path() !!}</td>
-                                <td>{{ $project->contact_user }}</td>
+                                <td>{{ $project->seller }}</td>
                                 <td class="text-right">
                                     @if ($project->check_time)
                                         {{--*/

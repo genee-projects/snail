@@ -707,22 +707,20 @@ class ProjectController extends Controller
 
                 Clog::add($project, '关联硬件', [
                     [
-                        'title'=> strtr('关联了硬件 %hardware_name, 计划部署数量: %count', [
-                            '%hardware_name'=> $hardware->name,
-                            '%count'=> $count,
+                        'title' => strtr('关联了硬件 %hardware_name, 计划部署数量: %count', [
+                            '%hardware_name' => $hardware->name,
+                            '%count' => $count,
                         ]),
-                    ]
+                    ],
                 ], CLog::LEVEL_WARNING);
             }
         }
 
-        foreach($project->hardwares as $h) {
-
+        foreach ($project->hardwares as $h) {
             if (array_key_exists($h->id, $counts)) {
                 if ($h->pivot->count != $counts[$h->id]) {
-
                     $project->hardwares()->updateExistingPivot($h->id, [
-                        'count'=> $counts[$h->id],
+                        'count' => $counts[$h->id],
                     ]);
 
                     \Log::notice(strtr('项目硬件关联: 用户(%name[%id]) 设置了项目(%project_name[%project_id]) 中的硬件 (%hardware_name[%hardware_id]) 的计划部署数量: %old -> %new', [
@@ -732,16 +730,16 @@ class ProjectController extends Controller
                         '%project_id' => $project->id,
                         '%hardware_name' => $h->name,
                         '%hardware_id' => $h->id,
-                        '%old'=> $h->pivot->count,
+                        '%old' => $h->pivot->count,
                         '%new' => $counts[$h->id],
                     ]));
 
                     Clog::add($project, '修改硬件部署数量', [
                         [
-                            'title'=> $h->name,
+                            'title' => $h->name,
                             'old' => $h->pivot->count,
                             'new' => $counts[$h->id],
-                        ]
+                        ],
                     ], Clog::LEVEL_NOTICE);
                 }
             }
@@ -813,7 +811,7 @@ class ProjectController extends Controller
             }
 
             array_unshift($change, [
-                'title'=> strtr('项目硬件: %hardware_name', ['%hardware_name'=> $hardware->name]),
+                'title' => strtr('项目硬件: %hardware_name', ['%hardware_name' => $hardware->name]),
             ]);
 
             Clog::add($project, '关联硬件基本信息修改', $change, Clog::LEVEL_WARNING);
