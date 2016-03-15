@@ -156,6 +156,8 @@ class ProjectController extends Controller
         $project->deploy_address = $request->input('deploy_address');
         $project->way = $request->input('way');
 
+        $project->updateServiceEndTime();
+
         if ($project->save()) {
 
             //修改了签约类型
@@ -266,6 +268,8 @@ class ProjectController extends Controller
 
                         $key = 'service_value';
                         break;
+                    case 'service_end_time':
+                        break 2;
                     default:
                         if ($old_value === null) {
                             $old_value = '空';

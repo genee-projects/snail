@@ -15,6 +15,7 @@ class Project extends Model
         'signed_time' => 'date',         //签约时间
         'check_time' => 'date',      //实际验收时间
         'vip' => 'bool',
+        'service_end_time' => 'date',
     ];
 
     # 维保单位 日
@@ -162,7 +163,19 @@ class Project extends Model
     {
         if ($this->check_time) {
             $start_time = $this->check_time;
+            $end_time = $this->service_end_time;
 
+            return $start_time->format('Y/m/d').' ~ '.$end_time->format('Y/m/d');
+        }
+
+        return '未验收';
+    }
+
+    public function updateServiceEndTime() {
+
+        if ($this->check_time) {
+
+            $start_time = $this->check_time;
             switch ($this->service_unit) {
                 case self::SERVICE_UNIT_MONTH :
                     $end_time = $start_time->copy()->addMonths($this->service_value);
@@ -171,32 +184,13 @@ class Project extends Model
                     $end_time = $start_time->copy()->addYears($this->service_value);
                     break;
                 case self::SERVICE_UNIT_DAY :
-
                     $end_time = $start_time->copy()->addDays($this->service_value);
                     break;
             }
 
-            return $start_time->format('Y/m/d').' ~ '.$end_time->format('Y/m/d');
+            $this->service_end_time = $end_time;
         }
 
-        return '未验收';
-    }
-
-    # 获取维保结束时间
-    public function getServiceEndTimeAttribute()
-    {
-        if ($this->check_time) {
-            switch ($this->service_unit) {
-                case self::SERVICE_UNIT_MONTH :
-                    return $this->check_time->copy()->addMonths($this->service_value);
-                    break;
-                case self::SERVICE_UNIT_YEAR :
-                    return $this->check_time->copy()->addYears($this->service_value);
-                    break;
-                case self::SERVICE_UNIT_DAY :
-                    return $this->check_time->copy()->addDays($this->service_value);
-                    break;
-            }
-        }
+        return $this;
     }
 }
