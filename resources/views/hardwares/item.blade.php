@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h1 class="page-header">{{ $hardware->name }} ({{ $item->equipment_name }} {{ $item->equipment_id }})</h1>
+            <h1 class="page-header">{{ $hardware->name }}</h1>
         </div>
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -55,9 +55,8 @@
                         </tr>
 
                         <tr>
-                            <td>仪器名称 / CF-ID</td>
+                            <td>状态</td>
                             <td>
-                                {{ $item->equipment_name }} / {{ $item->equipment_id }}
 
                                 {{--*/
                                  $status_label_class = [

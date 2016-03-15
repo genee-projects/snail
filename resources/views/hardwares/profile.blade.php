@@ -238,8 +238,9 @@
                     <table class="table table-hover">
                         <tr>
                             <td>项目名称</td>
-                            <td>仪器名称</td>
-                            <td>仪器 ID</td>
+                            @foreach($hardware->fields as $field)
+                                <td>{{ $field->name }}</td>
+                            @endforeach
                             <td>操作时间</td>
                             <td>状态</td>
                         </tr>
@@ -250,8 +251,10 @@
                                         {{ $i->project->name }}
                                     </a>
                                 </td>
-                                <td>{{ $i->equipment_name }}</td>
-                                <td>{{ $i->equipment_id }}</td>
+                                {{--*/ $extra = $i->extra;/*--}}
+                                @foreach($hardware->fields as $field)
+                                    <td>{{ $extra[$field->id] or '' }}</td>
+                                @endforeach
                                 <td>{{ $i->time->format('Y/m/d') }}</td>
                                 <td>
                                     {{--*/

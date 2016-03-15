@@ -35,20 +35,6 @@ $extra = $item->extra;
     </div>
 
     <div class="form-group">
-        <label for="edit-hardware-{{$hardware->id}}-equipment-name" class="col-md-2 control-label">仪器名称</label>
-        <div class="col-md-10">
-            <input value="{{ $item->equipment_name }}" type="text" id="edit-hardware-{{$hardware->id}}-equipment-name" class="form-control" name="equipment_name">
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="edit-hardware-item-{{$hardware->id}}-equipment-id" class="col-md-2 control-label">CF-ID</label>
-        <div class="col-md-10">
-            <input value="{{ $item->equipment_id }}" type="text" id="edit-hardware-item-{{$hardware->id}}-equipment-id" class="form-control" name="equipment_id">
-        </div>
-    </div>
-
-    <div class="form-group">
         <label for="edit-hardware-item-{{ $hardware->id }}-time" class="col-md-2 control-label">操作时间</label>
         <div class="col-md-10">
             <input value="{{ $item->time }}" type="text" id="edit-hardware-item-{{$hardware->id}}-time" class="datetimepicker form-control" name="time">

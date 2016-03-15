@@ -23,8 +23,6 @@ class HardwareItemController extends Controller
         $project = Project::find($request->input('project_id'));
         $hardware = Hardware::find($request->input('hardware_id'));
 
-        $item->equipment_name = $request->input('equipment_name');
-        $item->equipment_id = $request->input('equipment_id');
         $item->hardware()->associate($hardware);
         $item->project()->associate($project);
 
@@ -83,9 +81,6 @@ class HardwareItemController extends Controller
 
         $item->status = $request->input('status');
 
-        $item->equipment_name = $request->input('equipment_name');
-        $item->equipment_id = $request->input('equipment_id');
-
         $item->extra = $request->input('fields', []);
 
         $time = $request->input('time');
@@ -138,8 +133,6 @@ class HardwareItemController extends Controller
         }
 
         $helper = [
-            'equipment_name' => '仪器名称',
-            'equipment_id' => '仪器 CF-ID',
             'time' => '操作时间',
         ];
 
@@ -175,13 +168,6 @@ class HardwareItemController extends Controller
                     }
 
                     break;
-                default:
-                    if ($old_value === null) {
-                        $old_value = '空';
-                    }
-                    if ($new_value === null) {
-                        $new_value = '空';
-                    }
             }
 
             $change[$key] = [

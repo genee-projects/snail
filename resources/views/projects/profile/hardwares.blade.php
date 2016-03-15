@@ -84,21 +84,6 @@
                                                         </div>
                                                     </div>
 
-
-                                                    <div class="form-group">
-                                                        <label for="add-hardware-{{$hardware->id}}-equipment-name" class="col-md-2 control-label">仪器名称</label>
-                                                        <div class="col-md-10">
-                                                            <input type="text" id="add-hardware-{{$hardware->id}}-equipment-name" class="form-control" name="equipment_name">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="add-hardware-item-{{$hardware->id}}-equipment-id" class="col-md-2 control-label">CF-ID</label>
-                                                        <div class="col-md-10">
-                                                            <input type="text" id="add-hardware-item-{{$hardware->id}}-equipment-id" class="form-control" name="equipment_id">
-                                                        </div>
-                                                    </div>
-
                                                     <div class="form-group">
                                                         <label for="add-hardware-item-{{$hardware->id}}-time" class="col-md-2 control-label">操作时间</label>
                                                         <div class="col-md-10">
@@ -161,16 +146,19 @@
                         </p>
                         <table class="table table-hover table-striped">
                             <tr>
-                                <td>仪器名称</td>
-                                <td class="text-right">CF-ID</td>
+                                @foreach($hardware->fields as $field)
+                                    <td>{{ $field->name }}</td>
+                                @endforeach
                                 <td class="text-right">操作时间</td>
                                 <td>状态</td>
                             </tr>
 
                             @foreach(\App\HardwareItem::where('project_id', $project->id)->where('hardware_id', $hardware->id)->get() as $i)
                                 <tr>
-                                    <td>{{ $i->equipment_name }}</td>
-                                    <td class="text-right"><strong>{{ $i->equipment_id }}</strong></td>
+                                    {{--*/ $extra = $i->extra;/*--}}
+                                    @foreach($hardware->fields as $field)
+                                        <td>{{ $extra[$field->id] or '' }}</td>
+                                    @endforeach
                                     <td class="text-right">{{ $i->time->format('Y/m/d') }}</td>
                                     <td>
                                         {{--*/
