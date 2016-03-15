@@ -260,7 +260,7 @@
                                     {{--*/
                                     $status_label_class = [
                                         \App\HardwareItem::STATUS_ON_THE_WAY => 'warning',
-                                        \App\HardwareItem::STATUS_DELIVERED => 'default',
+                                        \App\HardwareItem::STATUS_DELIVERED => 'info',
                                         \App\HardwareItem::STATUS_DEPLOYED => 'success',
                                         \App\HardwareItem::STATUS_WASTED => 'danger',
                                     ];
