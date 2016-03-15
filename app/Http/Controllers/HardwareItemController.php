@@ -27,6 +27,8 @@ class HardwareItemController extends Controller
         $item->hardware()->associate($hardware);
         $item->project()->associate($project);
 
+        $item->ref_no = $request->input('ref_no');
+
         $item->status = $request->input('status');
         $item->extra = $request->input('fields', []);
 
@@ -43,10 +45,10 @@ class HardwareItemController extends Controller
         $item->save();
 
         Clog::add($project, '硬件明细添加', [
-            strtr( '添加硬件 (%hardware_name) 下新的硬件明细 [%item_id]', [
-                '%hardware_name'=> $hardware->name,
-                '%item_id'=> $item->id
-            ])
+            strtr('添加硬件 (%hardware_name) 下新的硬件明细 [%item_id]', [
+                '%hardware_name' => $hardware->name,
+                '%item_id' => $item->id,
+            ]),
         ], Clog::LEVEL_NOTICE);
 
         \Log::notice(strtr('项目硬件明细增加: 用户(%name[%id]) 添加了项目(%project_name[%project_id]) 硬件 (%hardware_name[%hardware_id]) 的 明细信息: %hardware_item_id', [
@@ -91,6 +93,8 @@ class HardwareItemController extends Controller
 
         $item->extra = $request->input('fields', []);
 
+        $item->ref_no = $request->input('ref_no');
+
         $time = $request->input('time');
 
         if (!$time) {
@@ -108,11 +112,9 @@ class HardwareItemController extends Controller
         $old_extra = $old_attributes['extra'];
         $new_extra = $new_attributes['extra'];
 
-
         $change = [];
 
-        foreach(array_diff_assoc($old_extra, $new_extra) as $key => $value) {
-
+        foreach (array_diff_assoc($old_extra, $new_extra) as $key => $value) {
             if (isset($old_extra[$key])) {
                 $old_extra_value = $old_extra[$key];
             } else {
@@ -142,15 +144,15 @@ class HardwareItemController extends Controller
             ]));
 
             $change[] = [
-                'title'=> $title,
-                'old'=> $old_extra_value,
-                'new'=> $new_extra_value,
+                'title' => $title,
+                'old' => $old_extra_value,
+                'new' => $new_extra_value,
             ];
         }
 
         if (count($change)) {
             array_unshift($change, [
-                'title' => strtr('硬件 (%hardware_name) 下新的硬件明细 %item_id', ['%hardware_name'=> $hardware->name, '%item_id'=> $item->id]),
+                'title' => strtr('硬件 (%hardware_name) 下新的硬件明细 %item_id', ['%hardware_name' => $hardware->name, '%item_id' => $item->id]),
             ]);
 
             Clog::add($project, '项目硬件明细修改', $change, Clog::LEVEL_INFO);
@@ -159,6 +161,7 @@ class HardwareItemController extends Controller
         $helper = [
             'time' => '操作时间',
             'status' => '状态',
+            'ref_no' => '硬件序号',
         ];
 
         $change = [];
@@ -167,7 +170,6 @@ class HardwareItemController extends Controller
         unset($new_attributes['extra']);
 
         foreach (array_diff_assoc($old_attributes, $new_attributes) as $key => $value) {
-
             $old_value = $old_attributes[$key];
             $new_value = $new_attributes[$key];
 
@@ -203,9 +205,7 @@ class HardwareItemController extends Controller
         }
 
         if (count($change)) {
-
-            foreach($change as $c) {
-
+            foreach ($change as $c) {
                 \Log::notice(strtr('项目硬件明细修改: 用户(%name[%id]) 修改了项目(%project_name[%project_id]) 硬件 (%hardware_name[%hardware_id]) 的 明细信息: %hardware_item_id, %title : %old -> %new', [
                     '%name' => $user->name,
                     '%id' => $user->id,
@@ -221,7 +221,7 @@ class HardwareItemController extends Controller
             }
 
             array_unshift($change, [
-                'title' => strtr('硬件 (%hardware_name) 下新的硬件明细 %item_id', ['%hardware_name'=> $hardware->name, '%item_id'=> $item->id]),
+                'title' => strtr('硬件 (%hardware_name) 下新的硬件明细 %item_id', ['%hardware_name' => $hardware->name, '%item_id' => $item->id]),
             ]);
 
             Clog::add($project, '项目硬件明细修改', $change, Clog::LEVEL_INFO);

@@ -35,6 +35,13 @@ $extra = $item->extra;
     </div>
 
     <div class="form-group">
+        <label for="edit-hardware-item-{{$hardware->id}}-ref-no" class="col-md-2 control-label">硬件序号</label>
+        <div class="col-md-10">
+            <input value="{{ $item->ref_no }}" type="text" id="edit-hardware-item-{{$hardware->id}}-ref-no" class="form-control">
+        </div>
+    </div>
+
+    <div class="form-group">
         <label for="edit-hardware-item-{{ $hardware->id }}-time" class="col-md-2 control-label">操作时间</label>
         <div class="col-md-10">
             <input value="{{ $item->time }}" type="text" id="edit-hardware-item-{{$hardware->id}}-time" class="datetimepicker form-control" name="time">

@@ -26,8 +26,8 @@ class HardwareItem extends Model
 
     public static $status = [
         self::STATUS_ON_THE_WAY => '在途',
-        self::STATUS_DELIVERED => '交付',
-        self::STATUS_DEPLOYED => '部署',
+        self::STATUS_DELIVERED => '硬件交付',
+        self::STATUS_DEPLOYED => '部署完成',
         self::STATUS_WASTED => '回收',
     ];
 
