@@ -682,6 +682,27 @@ class ProjectController extends Controller
 
         $counts = $request->input('count');
 
+
+
+        foreach($project->hardwares as $h) {
+
+            if (array_key_exists($h->id, $counts)) {
+                if ($h->pivot->count != $counts[$h->id]) {
+
+                    \Log::notice(strtr('项目硬件关联: 用户(%name[%id]) 设置了项目(%project_name[%project_id]) 中的硬件 (%hardware_name[%hardware_id]) 的计划部署数量: %old -> %new', [
+                        '%name' => $user->name,
+                        '%id' => $user->id,
+                        '%project_name' => $project->name,
+                        '%project_id' => $project->id,
+                        '%hardware_name' => $h->name,
+                        '%hardware_id' => $h->id,
+                        '%old'=> $h->pivot->count,
+                        '%new' => $counts[$h->id],
+                ]));
+                }
+            }
+        }
+
         if (count($save)) {
             $hsn = [];
             foreach ($save as $hardware_id) {
@@ -705,6 +726,7 @@ class ProjectController extends Controller
                     '%count' => $count,
                 ]));
             }
+
 
             Clog::add($project, '关联硬件', [
                 implode(',', $hsn),

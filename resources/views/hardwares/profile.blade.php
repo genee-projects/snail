@@ -240,6 +240,7 @@
                             <td>项目名称</td>
                             <td>仪器名称</td>
                             <td>仪器 ID</td>
+                            <td>操作时间</td>
                             <td>状态</td>
                         </tr>
                         @foreach($hardware->hardware_items as $i)
@@ -251,6 +252,7 @@
                                 </td>
                                 <td>{{ $i->equipment_name }}</td>
                                 <td>{{ $i->equipment_id }}</td>
+                                <td>{{ $i->time->format('Y/m/d') }}</td>
                                 <td>
                                     {{--*/
                                     $status_label_class = [

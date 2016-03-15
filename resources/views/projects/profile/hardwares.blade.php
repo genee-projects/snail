@@ -27,10 +27,6 @@
 
         @foreach($project->hardwares as $hardware)
 
-
-
-
-
             <tr>
                 <td>
                     <a href="{{ route('hardware.profile', ['id'=> $hardware->id]) }}">

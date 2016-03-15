@@ -84,7 +84,7 @@
                         @foreach($hardware->fields as $field)
                             <tr>
                                 <td>{{ $field->name }}</td>
-                                <td>{{ $extra[$field->id] }}</td>
+                                <td>{{ $extra[$field->id] or '' }}</td>
                             </tr>
                         @endforeach
                     </table>

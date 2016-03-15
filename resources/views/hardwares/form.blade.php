@@ -74,7 +74,7 @@ $extra = $item->extra;
         <div class="form-group">
             <label for="edit-hardware-{{ $hardware->id }}-{{$field->name}}" class="col-md-2 control-label">{{ $field->name }}</label>
             <div class="col-md-10">
-                <input value="{{ $extra[$field->id] }}" id="edit-hardware-{{ $hardware->id }}-{{$field->name}}" type="text" class="form-control" name="fields[{{ $field->id }}]">
+                <input value="{{ $extra[$field->id] or ''}}" id="edit-hardware-{{ $hardware->id }}-{{$field->name}}" type="text" class="form-control" name="fields[{{ $field->id }}]">
             </div>
         </div>
     @endforeach
