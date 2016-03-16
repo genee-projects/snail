@@ -16,8 +16,13 @@ class ProjectController extends Controller
 {
     public function index()
     {
+        $now = \Carbon\Carbon::now()->format('Y-m-d H:i:s');
         return view('projects/index', [
-            'projects' => Project::all(),
+            'projects' => Project::orderByRaw(strtr("if (check_time > '%now', 1, 0)", ['%now'=> $now]))
+                ->orderByRaw(strtr("if (service_end_time > '%now', 1, 0)", ['%now'=> $now]))
+                ->orderBy('signed_status', 'asc')
+                ->orderBy('service_end_time', 'asc')
+                ->get()
         ]);
     }
 

@@ -140,7 +140,12 @@
 
                     {{--*/
                     $items = \App\HardwareItem::where('project_id', $project->id)->where('hardware_id', $hardware->id);
-                    $process = (int) (((float) $items->where('status', App\HardwareItem::STATUS_DEPLOYED)->count()) / $hardware->pivot->count * 100);
+
+                    if ($hardware->pivot->count) {
+                        $process = (int) (((float) $items->where('status', App\HardwareItem::STATUS_DEPLOYED)->count()) / $hardware->pivot->count * 100);
+                    } else {
+                        $process = 0;
+                    }
                     /*--}}
                     <div class="col-md-12">
                         <p>
