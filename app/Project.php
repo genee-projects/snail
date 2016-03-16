@@ -171,10 +171,9 @@ class Project extends Model
         return '未验收';
     }
 
-    public function updateServiceEndTime() {
-
+    public function updateServiceEndTime()
+    {
         if ($this->check_time) {
-
             $start_time = $this->check_time;
             switch ($this->service_unit) {
                 case self::SERVICE_UNIT_MONTH :
