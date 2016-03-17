@@ -186,6 +186,15 @@
                         <tr>
                             <td>名称</td>
                         </tr>
+                        <tr>
+                            <td>硬件序列号</td>
+                        </tr>
+                        <tr>
+                            <td>操作时间</td>
+                        </tr>
+                        <tr>
+                            <td>状态</td>
+                        </tr>
                         @foreach($hardware->fields as $field)
                             <tr>
                                 <td>
