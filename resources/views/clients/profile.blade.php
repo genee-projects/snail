@@ -61,12 +61,12 @@
 
                         <tr>
                             <td>网站/链接</td>
-                            <td><a href="{{ $client->url }}">{{ $client->url }}</a></td>
+                            <td><a target="_blank" href="{{ $client->url }}">{{ $client->url }}</a></td>
                         </tr>
 
                         <tr>
                             <td>纷享销客链接</td>
-                            <td><a href="{{ $client->seller_url }}">{{ $client->seller_url }}</a></td>
+                            <td><a target="_blank" href="{{ $client->seller_url }}">{{ $client->seller_url }}</a></td>
                         </tr>
                         <tr>
                             <td>客户类型</td>

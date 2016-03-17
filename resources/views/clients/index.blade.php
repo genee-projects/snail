@@ -56,17 +56,17 @@
                     @foreach($clients as $client)
                         <tr>
                             <td>
-                                <a href="/clients/profile/{{ $client->id }}">
+                                <a href="{{ route('client.profile', ['id'=> $client->id]) }}">
                                     {{ $client->name }}
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ $client->url }}}">
+                                <a target="_blank" href="{{ $client->url }}">
                                     {{ $client->url}}
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ $client->seller_url }}">
+                                <a target="_blank" href="{{ $client->seller_url }}">
                                     {{ $client->seller_url }}
                                 </a>
                             </td>
