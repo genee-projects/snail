@@ -21,7 +21,7 @@
             <td>名称</td>
             <td>规格/型号</td>
             <td>生产类型</td>
-            <td class="text-right">数量 (实际 / 计划 )</td>
+            <td class="text-right">数量 ( 已部署 / 未回收 / 总数 / 计划 )</td>
             <td>备注</td>
         </tr>
 
@@ -43,7 +43,15 @@
                 </td>
                 <td class="text-right">
                     <strong>
-                        {{ \App\HardwareItem::where('project_id', $project->id)->where('hardware_id', $hardware->id)->where('status', \App\HardwareItem::STATUS_DEPLOYED)->count()}} / {{ $hardware->pivot->count }}
+                        {{ \App\HardwareItem::where('project_id', $project->id)->where('hardware_id', $hardware->id)->where('status', \App\HardwareItem::STATUS_DEPLOYED)->count()}}
+                        /
+                        {{ \App\HardwareItem::where('project_id', $project->id)->where('hardware_id', $hardware->id)->where('status', '!=', \App\HardwareItem::STATUS_WASTED)->count()}}
+                        /
+                        {{ \App\HardwareItem::where('project_id', $project->id)->where('hardware_id', $hardware->id)->count()}}
+                        /
+                        <mark>
+                            {{ $hardware->pivot->count }}
+                        </mark>
                     </strong>
                 </td>
                 <td>
@@ -60,76 +68,76 @@
                             <i class="fa fa-fw fa-plus add-hardware-item edit" data-id="{{ $hardware->id }}"></i>
 
                             <div class="modal fade" id="add-hardware-item{{$hardware->id}}" tabindex="-1" role="dialog" aria-labelledby="add-hardware-item-modal-label">
-                                    <div class="modal-dialog " role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="add-hardware-item-modal-label">部署硬件明细</h4>
-                                            </div>
-                                            <div class="modal-body">
+                                <div class="modal-dialog " role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="add-hardware-item-modal-label">部署硬件明细</h4>
+                                        </div>
+                                        <div class="modal-body">
 
-                                                <form id="add-hardware-item-form{{$hardware->id}}" class="form-horizontal" method="post" action="{{ route('hardware_item.add') }}">
+                                            <form id="add-hardware-item-form{{$hardware->id}}" class="form-horizontal" method="post" action="{{ route('hardware_item.add') }}">
 
+                                                <div class="form-group">
+                                                    <label for="add-hardware-item-{{$hardware->id}}-project-name" class="col-md-2 control-label">项目名称</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" id="add-hardware-item-{{$hardware->id}}-project-name" class="form-control" value="{{ $project->name }}" disabled="disabled">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="add-hardware-item-{{$hardware->id}}-hardware-name" class="col-md-2 control-label">硬件名称</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" id="add-hardware-item-{{$hardware->id}}-hardware-name" class="form-control" value="{{ $hardware->name }}" disabled="disabled">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="add-hardware-item-{{$hardware->id}}-ref-no" class="col-md-2 control-label">硬件序号</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" id="add-hardware-item-{{$hardware->id}}-ref-no" class="form-control" name="ref_no">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="add-hardware-item-{{$hardware->id}}-time" class="col-md-2 control-label">操作时间</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" id="add-hardware-item-{{$hardware->id}}-time" class="datetimepicker form-control" name="time">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="add-hardware-item-{{$hardware->id}}-status" class="col-md-2 control-label">状态</label>
+                                                    <div class="col-md-10">
+                                                        <select class="selectpicker" name="status">
+                                                            @foreach(\App\HardwareItem::$status as $value=>$display)
+                                                                <option value="{{ $value }}">{{ $display }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                @foreach($hardware->fields as $field)
                                                     <div class="form-group">
-                                                        <label for="add-hardware-item-{{$hardware->id}}-project-name" class="col-md-2 control-label">项目名称</label>
+                                                        <label for="edit-hardware-{{ $hardware->id }}-{{$field->name}}" class="col-md-2 control-label">{{ $field->name }}</label>
                                                         <div class="col-md-10">
-                                                            <input type="text" id="add-hardware-item-{{$hardware->id}}-project-name" class="form-control" value="{{ $project->name }}" disabled="disabled">
+                                                            <input id="edit-hardware-{{ $hardware->id }}-{{$field->name}}" type="text" class="form-control" name="fields[{{ $field->id }}]">
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group">
-                                                        <label for="add-hardware-item-{{$hardware->id}}-hardware-name" class="col-md-2 control-label">硬件名称</label>
-                                                        <div class="col-md-10">
-                                                            <input type="text" id="add-hardware-item-{{$hardware->id}}-hardware-name" class="form-control" value="{{ $hardware->name }}" disabled="disabled">
-                                                        </div>
-                                                    </div>
+                                                @endforeach
 
-                                                    <div class="form-group">
-                                                        <label for="add-hardware-item-{{$hardware->id}}-ref-no" class="col-md-2 control-label">硬件序号</label>
-                                                        <div class="col-md-10">
-                                                            <input type="text" id="add-hardware-item-{{$hardware->id}}-ref-no" class="form-control" name="ref_no">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="add-hardware-item-{{$hardware->id}}-time" class="col-md-2 control-label">操作时间</label>
-                                                        <div class="col-md-10">
-                                                            <input type="text" id="add-hardware-item-{{$hardware->id}}-time" class="datetimepicker form-control" name="time">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="add-hardware-item-{{$hardware->id}}-status" class="col-md-2 control-label">状态</label>
-                                                        <div class="col-md-10">
-                                                            <select class="selectpicker" name="status">
-                                                                @foreach(\App\HardwareItem::$status as $value=>$display)
-                                                                    <option value="{{ $value }}">{{ $display }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                    @foreach($hardware->fields as $field)
-                                                        <div class="form-group">
-                                                            <label for="edit-hardware-{{ $hardware->id }}-{{$field->name}}" class="col-md-2 control-label">{{ $field->name }}</label>
-                                                            <div class="col-md-10">
-                                                                <input id="edit-hardware-{{ $hardware->id }}-{{$field->name}}" type="text" class="form-control" name="fields[{{ $field->id }}]">
-                                                            </div>
-                                                        </div>
-
-                                                    @endforeach
-
-                                                    <input type="hidden" name="hardware_id" value="{{ $hardware->id }}">
-                                                    <input type="hidden" name="project_id" value="{{ $project->id }}">
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                                <button type="submit" class="btn btn-primary" form="add-hardware-item-form{{$hardware->id}}">添加</button>
-                                            </div>
+                                                <input type="hidden" name="hardware_id" value="{{ $hardware->id }}">
+                                                <input type="hidden" name="project_id" value="{{ $project->id }}">
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                            <button type="submit" class="btn btn-primary" form="add-hardware-item-form{{$hardware->id}}">添加</button>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                         @endif
                     </span>
                 </td>
