@@ -68,10 +68,6 @@ class UserController extends Controller
 
     public function users_json()
     {
-        if (!\Session::get('user')->is_admin()) {
-            abort(401);
-        }
-
         return response()->json(User::all());
     }
 

@@ -37,7 +37,27 @@ $can_manage_record = $user->can('项目外出记录管理');
 
         $.get('{{ route('users.json') }}', function(data) {
 
-            var $selector = $('.record-user-selector');
+            var $selector = $('.add-record-user-selector');
+
+            var $input = $('<input name="user_id" type="hidden">');
+            $input.val($selector.data('id'));
+            $selector.after($input);
+
+            $selector.typeahead({
+                source:data,
+                displayText: function(item) {
+                    return item.name;
+                },
+                afterSelect: function(item) {
+                    $input.val(item.id);
+                }
+            });
+        }, 'json');
+
+
+        $.get('{{ route('users.json') }}', function(data) {
+
+            var $selector = $('.edit-record-user-selector');
 
             var $input = $('<input name="user_id" type="hidden">');
             $input.val($selector.data('id'));
@@ -80,7 +100,7 @@ $can_manage_record = $user->can('项目外出记录管理');
                                 <div class="form-group">
                                     <label for="record-user" class="col-md-2 control-label">外出人员</label>
                                     <div class="col-md-4">
-                                        <input type="text" value="{{ $user->name }}" name="user_name" class="record-user-selector form-control" id="record-user">
+                                        <input type="text" value="{{ $user->name }}" name="user_name" data-id="{{ \Session::get('user')->id }}" class="add-record-user-selector form-control" id="record-user">
                                     </div>
 
                                     <label for="record-time" class="col-md-2 control-label">外出时间</label>
@@ -215,7 +235,7 @@ $can_manage_record = $user->can('项目外出记录管理');
                         <div class="form-group">
                             <label for="record-user" class="col-md-2 control-label">外出人员</label>
                             <div class="col-md-4">
-                                <input autocomplete="off" name="user_name" type="text" class="record-user-selector form-control" id="record-user">
+                                <input autocomplete="off" name="user_name" type="text" class="edit-record-user-selector form-control" id="record-user">
                             </div>
 
                             <label for="record-time" class="col-md-2 control-label">外出时间</label>
@@ -279,7 +299,7 @@ $can_manage_record = $user->can('项目外出记录管理');
                 var $modal = $('#edit-record-modal');
 
                 $modal.find(':input[name=id]').val($(this).data('id'));
-                $modal.find(':input[name=user_name]').data('id', $(this).data('user_id'));
+                $modal.find(':input[name=user_id]').data('id', $(this).data('user_id'));
                 $modal.find(':input[name=user_name]').val($(this).data('user_name'));
                 $modal.find(':input[name=time]').val($(this).data('time'));
                 $modal.find(':input[name=contact]').val($(this).data('contact'));
