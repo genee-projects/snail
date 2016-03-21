@@ -126,7 +126,7 @@
 
             require(['css!../css/bootstrap-datetimepicker.min'], function() {});
 
-            $.get('/servers.json', function(data){
+            $.get('{{ route('servers.json') }}', function(data){
 
                 var $selector = $("#server_selector");
                 $selector.typeahead({
