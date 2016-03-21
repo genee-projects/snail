@@ -188,6 +188,8 @@ class Project extends Model
             }
 
             $this->service_end_time = $end_time;
+        } else {
+            $this->service_end_time = null;
         }
 
         return $this;
