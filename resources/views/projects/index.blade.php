@@ -24,11 +24,15 @@
 
                     <table class="table table-hover table-striped table-bordered">
                         <tr>
-                            <td>项目编号</td>
-                            <td>项目名称</td>
-                            <td>签约客户</td>
-                            <td>销售负责人</td>
-                            <td class="text-right">维保结束时间</td>
+                            <td class="text-nowrap">项目编号</td>
+                            <td class="text-nowrap">项目名称</td>
+                            <td class="text-nowrap">签约客户</td>
+                            <td class="text-nowrap">销售负责人</td>
+                            <td class="text-nowrap text-right">签约时间</td>
+                            <td class="text-nowrap text-right">计划验收时间</td>
+                            <td class="text-nowrap text-right">实际验收时间</td>
+                            <td class="text-nowrap text-right">维保结束时间</td>
+                            <td class="text-nowrap">硬件部署进度</td>
                         </tr>
                         @foreach($projects as $project)
                             <tr>
@@ -55,6 +59,21 @@
                                 </td>
                                 <td>{!! $project->client->path() !!}</td>
                                 <td>{{ $project->seller }}</td>
+                                <td>
+                                    @if ($project->signed_time)
+                                        {{ $project->signed_time->format('Y/m/d') }}
+                                    @endif
+                                </td>
+                                <td>
+                                    {{ $project->planned_check_time }}
+                                </td>
+                                <td>
+                                    @if ($project->check_time)
+                                        {{ $project->check_time->format('Y/m/d') }}
+                                    @else
+                                        未验收
+                                    @endif
+                                </td>
                                 <td class="text-right">
                                     @if ($project->check_time)
                                         {{--*/
@@ -71,6 +90,22 @@
                                             <label>已过维保!</label></strong>
                                         @endif
                                      @endif
+                                </td>
+                                <td class="text-right">
+                                    {{--*/  $all = 0; $deployed = 0; /*--}}
+                                    @foreach($project->hardwares as $hardware)
+                                        {{--*/ $all += $hardware->pivot->count /*--}}
+                                        {{--*/
+                                        foreach(\App\HardwareItem::where('project_id', $project->id)
+                                            ->where('hardware_id', $hardware->id)
+                                            ->where('status', \App\HardwareItem::STATUS_DEPLOYED)
+                                            ->get() as $item) {
+                                            $deployed ++;
+                                        }
+
+                                        /*--}}
+                                    @endforeach
+                                    {{ $deployed }} / {{ $all }}
                                 </td>
                             </tr>
                         @endforeach
