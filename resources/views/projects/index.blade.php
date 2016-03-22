@@ -69,7 +69,14 @@
                                 </td>
                                 <td>
                                     @if ($project->check_time)
+                                        @if ($project->check_time->gt(\Carbon\Carbon::now()))
+                                            <strong class="text-danger">
+                                        @endif
                                         {{ $project->check_time->format('Y/m/d') }}
+
+                                        @if ($project->check_time->gt(\Carbon\Carbon::now()))
+                                            </strong>
+                                        @endif
                                     @else
                                         未验收
                                     @endif
