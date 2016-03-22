@@ -101,7 +101,7 @@
 
 
 <div class="form-group">
-    <label for="project-signed-time" class="col-md-2 control-label">签约时间</label>
+    <label for="project-signed-time" class="col-md-2 control-label">签约/试用时间</label>
     <div class="col-md-4">
         <div class="date">
             <input type="text" class="datetimepicker form-control" name="signed_time" value="{{ $project->signed_time }}" placeholder="2015/12/01">

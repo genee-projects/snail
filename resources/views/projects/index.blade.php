@@ -60,7 +60,7 @@
                                 <td>{!! $project->client->path() !!}</td>
                                 <td>{{ $project->seller }}</td>
                                 <td>
-                                    @if ($project->signed_time)
+                                    @if ($project->signed_time && $project->signed_status == \App\Project::SIGNED_STATUS_OFFICIAL)
                                         {{ $project->signed_time->format('Y/m/d') }}
                                     @endif
                                 </td>

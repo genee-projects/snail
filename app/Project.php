@@ -40,13 +40,13 @@ class Project extends Model
     ];
 
     # 售前支持
-    const SIGNED_STATUS_PENDING = 2;
+    const SIGNED_STATUS_PENDING = 3;
 
     # 试用客户
-    const SIGNED_STATUS_PROBATIONARY = 0;
+    const SIGNED_STATUS_PROBATIONARY = 4;
 
     # 正式客户
-    const SIGNED_STATUS_OFFICIAL = 1;
+    const SIGNED_STATUS_OFFICIAL = 5;
 
     public static $signed_status = [
         self::SIGNED_STATUS_PENDING => '售前支持',
@@ -145,7 +145,7 @@ class Project extends Model
     # 原计划验收时间为签约时间 + 90 天
     public function getPlannedCheckTimeAttribute($value)
     {
-        if ($this->signed_time) {
+        if ($this->signed_time && $this->signed_status == self::SIGNED_STATUS_OFFICIAL) {
             return $this->signed_time->addMonths(3)->format('Y/m/d');
         }
 

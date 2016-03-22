@@ -92,7 +92,13 @@
                             <td><a href="{{ route('subproduct.profile', ['id'=> $project->product->id]) }}">{{ $project->product->name }} ({{ $project->product->product->name }})</a></td>
                         </tr>
                         <tr>
-                            <td>签约时间</td>
+                            <td>
+                                @if ($project->signed_status == \App\Project::SIGNED_STATUS_OFFICIAL)
+                                    签约时间
+                                @else
+                                    试用起始时间
+                                @endif
+                            </td>
                             <td>
                                 @if ($project->signed_time)
                                     {{ $project->signed_time->format('Y/m/d') }}
