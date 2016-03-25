@@ -22,22 +22,24 @@
                 </div>
                 <div class="panel-body">
 
-                    <table class="table table-hover table-striped table-bordered">
+                    <table id="projects" class="table table-hover table-striped table-bordered">
+			<thead>
                         <tr class="theader">
-                            <td class="td2">项目编号</td>
-                            <td class="td2">项目名称</td>
-                            <td class="td2">签约客户</td>
-                            <td class="td1">销售负责人</td>
-                            <td class="text-right td1"><small>签约时间</small></td>
-                            <td class="text-right td1"><small>计划验收时间</small></td>
-                            <td class="text-right td1"><small>实际验收时间</small></td>
-                            <td class="text-right td1"><small>维保结束时间</small></td>
-                            <td class="text-nowrap td1"><small>硬件部署进度</small></td>
+                            <th class="col-md-2" id="hahaha"><small>项目编号</small></th>
+                            <th class="col-md-2"><small>项目名称</small></th>
+                            <th class="col-md-2"><small>签约客户</small></th>
+                            <th class="col-md-1"><small>销售负责人</small></th>
+                            <th class="text-right col-md-1"><small>签约时间</small></th>
+                            <th class="text-right col-md-1"><small>计划验收时间</small></th>
+                            <th class="text-right col-md-1"><small>实际验收时间</small></th>
+                            <th class="text-right col-md-1"><small>维保结束时间</small></th>
+                            <th class="text-nowrap col-md-1"><small>硬件部署进度</small></th>
                         </tr>
+			</thead>
                         @foreach($projects as $project)
                             <tr>
-                                <td class="td2">{{ $project->ref_no }}</td>
-                                <td class="td2">
+                                <td class="col-md-2">{{ $project->ref_no }}</td>
+                                <td class="col-md-2">
                                     <a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a>
                                     @if ($project->vip)
                                         <span class="label label-danger">重点项目</span>
@@ -57,17 +59,17 @@
                                     @endif
 
                                 </td>
-                                <td class="td2">{!! $project->client->path() !!}</td>
-                                <td class="td1">{{ $project->seller }}</td>
-                                <td class="td1 text-right">
+                                <td class="col-md-2">{!! $project->client->path() !!}</td>
+                                <td class="col-md-1">{{ $project->seller }}</td>
+                                <td class="col-md-1 text-right">
                                     @if ($project->signed_time && $project->signed_status == \App\Project::SIGNED_STATUS_OFFICIAL)
                                         {{ $project->signed_time->format('Y/m/d') }}
                                     @endif
                                 </td>
-                                <td class="td1 text-right">
+                                <td class="col-md-1 text-right">
                                     {{ $project->planned_check_time }}
                                 </td>
-                                <td class="td1 text-right">
+                                <td class="col-md-1 text-right">
                                     @if ($project->check_time)
                                         @if ($project->check_time->gt(\Carbon\Carbon::now()))
                                             <strong class="text-danger">
@@ -81,7 +83,7 @@
                                         未验收
                                     @endif
                                 </td>
-                                <td class="text-right td1">
+                                <td class="text-right col-md-1">
                                     @if ($project->check_time)
                                         {{--*/
                                         $now = \Carbon\Carbon::now();
@@ -98,7 +100,7 @@
                                         @endif
                                      @endif
                                 </td>
-                                <td class="text-right td1">
+                                <td class="text-right col-md-1">
                                     {{--*/  $all = 0; $deployed = 0; /*--}}
                                     @foreach($project->hardwares as $hardware)
                                         {{--*/ $all += $hardware->pivot->count /*--}}
@@ -126,10 +128,10 @@
     <style type="text/css">
 
         .td2 {
-            width: 182px;
+            width: 16.66%;
         }
         .td1 {
-            width: 91px;
+            width: 8.33%;
         }
 
     </style>
@@ -137,29 +139,29 @@
     <script type="text/javascript">
 
         requirejs(['jquery'], function($) {
+            var trigger = 190, $theader = $('thead');
+            var width = $('#projects').width();
+            var nav = '<nav id="projects-nav">' +
+                    '<table class="table table-hover table-striped table-bordered">' +
+                    $theader.html()+ "</table></nav>";
 
-            var trigger = 180, $theader = $('.theader');
 
-            var ori_theader_width = $theader.width();
-
-            function theader() {
-
+	        function theader() {
                 var docScrollTop = $(document).scrollTop();
-
                 if (docScrollTop >= trigger) {
-                    $theader.css({
-                        position: 'fixed',
-                        top: '0px',
-                        width: ori_theader_width,
-                        'z-index': 10,
-                        'background-color': '#ffe'
-                    });
+                    if ($('#projects-nav').length < 1) {
+                        $('#projects').append(nav);
+                        $('#projects-nav').find('table').css({
+                            width: width,
+                            position: 'fixed',
+                            top: '0px'
+                        });
+                    }
                 } else {
-                    $theader.css({
-                        position: 'relative'
-                    });
+                    $('#projects-nav').remove();
                 }
             }
+
             $(window).scroll(function(){
                 theader();
             });
