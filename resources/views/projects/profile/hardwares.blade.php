@@ -166,6 +166,7 @@
                         </p>
                         <table class="table table-hover table-striped">
                             <tr>
+                                <td>硬件序号</td>
                                 @foreach($hardware->fields as $field)
                                     <td>{{ $field->name }}</td>
                                 @endforeach
@@ -175,6 +176,7 @@
 
                             @foreach(\App\HardwareItem::where('project_id', $project->id)->where('hardware_id', $hardware->id)->get() as $i)
                                 <tr>
+                                    <td>{{ $i->ref_no }}</td>
                                     {{--*/ $extra = $i->extra;/*--}}
                                     @foreach($hardware->fields as $field)
                                         <td>{{ $extra[$field->id] or '' }}</td>

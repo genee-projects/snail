@@ -37,7 +37,7 @@ $extra = $item->extra;
     <div class="form-group">
         <label for="edit-hardware-item-{{$hardware->id}}-ref-no" class="col-md-2 control-label">硬件序号</label>
         <div class="col-md-10">
-            <input value="{{ $item->ref_no }}" type="text" id="edit-hardware-item-{{$hardware->id}}-ref-no" class="form-control">
+            <input name="ref_no" value="{{ $item->ref_no }}" type="text" id="edit-hardware-item-{{$hardware->id}}-ref-no" class="form-control">
         </div>
     </div>
 
