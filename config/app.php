@@ -198,6 +198,6 @@ return [
     ],
     'managers' => [
     ],
-    'version' => '0.7.15',
+    'version' => '0.7.16',
     'nfs_root' => env('NFS_ROOT', '/data/crm/'),
 ];
