@@ -18,6 +18,9 @@ class RecordController extends Controller
         }
 
         $user = User::find($request->input('user_id'));
+        if (!$user) {
+            $user = $me;
+        }
 
         $record = new Record();
 
