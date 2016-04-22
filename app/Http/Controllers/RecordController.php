@@ -12,7 +12,6 @@ class RecordController extends Controller
     public function add(Request $request)
     {
         $me = \Session::get('user');
-
         if (!$me->can('项目外出记录管理')) {
             abort(401);
         }
@@ -94,7 +93,6 @@ class RecordController extends Controller
     public function edit(Request $request)
     {
         $me = \Session::get('user');
-
         if (!$me->can('项目外出记录管理')) {
             abort(401);
         }
@@ -103,6 +101,10 @@ class RecordController extends Controller
         $project = $record->project;
 
         $user = User::find($request->input('user_id'));
+        if (!$user) {
+            $user = $me;
+        }
+
         $record->user()->associate($user);
 
         $old_attributes = $record->attributesToArray();
