@@ -38,7 +38,11 @@
 			</thead>
                         @foreach($projects as $project)
                             <tr>
+                                @if ($project->ref_no)
                                 <td class="col-md-2">{{ $project->ref_no }}</td>
+                                @else
+                                <td class="col-md-2"><span class="text-muted">N/A</span></td>
+                                @endif
                                 <td class="col-md-2">
                                     <a href="{{ route('project.profile', ['id'=> $project->id]) }}">{{ $project->name }}</a>
                                     @if ($project->vip)
