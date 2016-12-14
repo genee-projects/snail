@@ -29,6 +29,7 @@
                             <th class="col-md-2"><small>项目名称</small></th>
                             <th class="col-md-2"><small>签约客户</small></th>
                             <th class="col-md-1"><small>销售负责人</small></th>
+                            <th class="col-md-1"><small>工程师负责人</small></th>
                             <th class="text-right col-md-1"><small>签约时间</small></th>
                             <th class="text-right col-md-1"><small>计划验收时间</small></th>
                             <th class="text-right col-md-1"><small>实际验收时间</small></th>
@@ -74,6 +75,7 @@
                                 </td>
                                 <td class="col-md-2">{!! $project->client->path() !!}</td>
                                 <td class="col-md-1">{{ $project->seller }}</td>
+                                <td class="col-md-1">{{ $project->engineer }}</td>
                                 <td class="col-md-1 text-right">
                                     @if ($project->signed_time && $project->signed_status == \App\Project::SIGNED_STATUS_OFFICIAL)
                                         {{ $project->signed_time->format('Y/m/d') }}
