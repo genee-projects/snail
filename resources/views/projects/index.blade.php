@@ -29,7 +29,7 @@
                             <th class="col-md-2"><small>项目名称</small></th>
                             <th class="col-md-2"><small>签约客户</small></th>
                             <th class="col-md-1"><small>销售负责人</small></th>
-                            <th class="col-md-1"><small>工程师负责人</small></th>
+                            <th class="col-md-1"><small>工程师</small></th>
                             <th class="text-right col-md-1"><small>签约时间</small></th>
                             <th class="text-right col-md-1"><small>计划验收时间</small></th>
                             <th class="text-right col-md-1"><small>实际验收时间</small></th>
