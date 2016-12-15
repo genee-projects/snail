@@ -42,7 +42,7 @@
                                 
                                 <td style="white-space:nowrap;width:1%">
                                     @if ($project->ref_no)
-                                        <span class="label label-primary">{{ $project->ref_no }}</span>
+                                        <span class="label label-primary text-center" style="display:block">{{ $project->ref_no }}</span>
                                     @else
                                         <span class="text-muted">N/A</span>
                                     @endif
