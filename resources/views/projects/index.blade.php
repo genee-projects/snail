@@ -21,21 +21,20 @@
                     </span>
                 </div>
                 <div class="panel-body">
-
+                    <div class="table-responsive">
                     <table id="projects" class="table table-hover table-striped">
 			<thead>
                         <tr class="theader">
                             <th style="white-space:nowrap;width:1%"><small>项目编号</small></th>
-                            <th class="col-md-2"><small>项目名称</small></th>
-                            <th class="col-md-2"><small>签约客户</small></th>
-                            <th class="col-md-1"><small>销售负责人</small></th>
-                            <th class="col-md-1"><small>工程师</small></th>
-                            <th class="col-md-1"><small>项目实施</small></th>
-                            <th class="text-right col-md-1"><small>签约时间</small></th>
-                            <th class="text-right col-md-1"><small>计划验收时间</small></th>
-                            <th class="text-right col-md-1"><small>实际验收时间</small></th>
-                            <th class="text-right col-md-1"><small>维保结束时间</small></th>
-                            <th class="text-nowrap col-md-1"><small>硬件部署进度</small></th>
+                            <th class="col-md-2" style="white-space:nowrap"><small>项目名称</small></th>
+                            <th class="col-md-2" style="white-space:nowrap"><small>签约客户</small></th>
+                            <th class="col-md-1" style="white-space:nowrap"><small>销售负责人</small></th>
+                            <th class="col-md-1" style="white-space:nowrap"><small>工程师</small></th>
+                            <th class="text-right col-md-1" style="white-space:nowrap"><small>签约时间</small></th>
+                            <th class="text-right col-md-1" style="white-space:nowrap"><small>计划验收时间</small></th>
+                            <th class="text-right col-md-1" style="white-space:nowrap"><small>实际验收时间</small></th>
+                            <th class="text-right col-md-1" style="white-space:nowrap"><small>维保结束时间</small></th>
+                            <th class="text-nowrap col-md-1" style="white-space:nowrap"><small>硬件部署进度</small></th>
                         </tr>
 			</thead>
                         @foreach($projects as $project)
@@ -43,7 +42,7 @@
                                 
                                 <td style="white-space:nowrap;width:1%">
                                     @if ($project->ref_no)
-                                        {{ $project->ref_no }}
+                                        <span class="label label-primary">{{ $project->ref_no }}</span>
                                     @else
                                         <span class="text-muted">N/A</span>
                                     @endif
@@ -135,6 +134,7 @@
                             </tr>
                         @endforeach
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
