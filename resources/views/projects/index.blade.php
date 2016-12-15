@@ -22,14 +22,15 @@
                 </div>
                 <div class="panel-body">
 
-                    <table id="projects" class="table table-hover table-striped table-bordered">
+                    <table id="projects" class="table table-hover table-striped">
 			<thead>
                         <tr class="theader">
-                            <th class="col-md-2" id="hahaha"><small>项目编号</small></th>
+                            <th style="white-space:nowrap;width:1%"><small>项目编号</small></th>
                             <th class="col-md-2"><small>项目名称</small></th>
                             <th class="col-md-2"><small>签约客户</small></th>
                             <th class="col-md-1"><small>销售负责人</small></th>
                             <th class="col-md-1"><small>工程师</small></th>
+                            <th class="col-md-1"><small>项目实施</small></th>
                             <th class="text-right col-md-1"><small>签约时间</small></th>
                             <th class="text-right col-md-1"><small>计划验收时间</small></th>
                             <th class="text-right col-md-1"><small>实际验收时间</small></th>
@@ -40,7 +41,7 @@
                         @foreach($projects as $project)
                             <tr>
                                 
-                                <td class="col-md-2">
+                                <td style="white-space:nowrap;width:1%">
                                     @if ($project->ref_no)
                                         {{ $project->ref_no }}
                                     @else
