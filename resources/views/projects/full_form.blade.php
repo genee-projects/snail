@@ -56,8 +56,7 @@
                 checked="checked"
                @endif
                 type="checkbox" data-width="140" data-onstyle="danger" name="vip" data-toggle="toggle" data-on="重点项目" data-off="普通项目">
-    </div>
-    <div class="col-md-4">
+        <br>
         <input @if ($project->deceased)
                 checked="checked"
                @endif
