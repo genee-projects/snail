@@ -20,6 +20,7 @@ class ProjectController extends Controller
             'projects' => Project::orderByRaw(strtr('if (check_time is null and signed_status = %status, 0, 1)', [
                     '%status' => Project::SIGNED_STATUS_OFFICIAL,
                 ]))
+                ->orderBy('deceased', 'asc')
                 ->orderByRaw(strtr("if (service_end_time < '%now' and check_time is not null, 0, 1)", ['%now' => \Carbon\Carbon::now()->format('Y-m-d H:i:s')]))
                 ->orderBy('signed_status', 'asc')
                 ->orderBy('service_end_time', 'asc')

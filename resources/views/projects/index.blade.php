@@ -99,21 +99,27 @@
                                     @endif
                                 </td>
                                 <td class="text-right col-md-1">
-                                    @if ($project->check_time)
-                                        {{--*/
-                                        $now = \Carbon\Carbon::now();
-                                        /*--}}
+                                    @if ($project->deceased)
+                                        <strong class="text-muted">
+                                            <label>中止服务</label>
+                                        </strong>
+                                    @else
+                                        @if ($project->check_time)
+                                            {{--*/
+                                            $now = \Carbon\Carbon::now();
+                                            /*--}}
 
-                                        @if ($now->gt($project->service_end_time))
-                                            <strong class="text-danger">
-                                        @endif
+                                            @if ($now->gt($project->service_end_time))
+                                                <strong class="text-danger">
+                                            @endif
 
-                                        {{ $project->service_end_time->format('Y/m/d') }}
+                                            {{ $project->service_end_time->format('Y/m/d') }}
 
-                                        @if ($now->gt($project->service_end_time))
-                                            <label>已过维保!</label></strong>
-                                        @endif
-                                     @endif
+                                            @if ($now->gt($project->service_end_time))
+                                                <label>已过维保!</label></strong>
+                                            @endif
+                                         @endif
+                                    @endif
                                 </td>
                                 <td class="text-right col-md-1">
                                     {{--*/  $all = 0; $deployed = 0; /*--}}
