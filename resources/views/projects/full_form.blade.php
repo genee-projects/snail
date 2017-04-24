@@ -57,6 +57,12 @@
                @endif
                 type="checkbox" data-width="140" data-onstyle="danger" name="vip" data-toggle="toggle" data-on="重点项目" data-off="普通项目">
     </div>
+    <div class="col-md-4">
+        <input @if ($project->deceased)
+                checked="checked"
+               @endif
+                type="checkbox" data-width="140" data-onstyle="danger" name="deceased" data-toggle="toggle" data-on="已中止" data-off="进行中">
+    </div>
     <label for="project-official" class="col-md-2 control-label">签约状态</label>
     <div class="col-md-4">
 

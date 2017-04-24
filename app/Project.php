@@ -16,6 +16,7 @@ class Project extends Model
         'check_time' => 'date',      //实际验收时间
         'vip' => 'bool',
         'service_end_time' => 'date',
+        'deceased' => 'bool'
     ];
 
     # 维保单位 日

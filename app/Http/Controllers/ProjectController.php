@@ -43,6 +43,7 @@ class ProjectController extends Controller
         $project->client()->associate($client);
 
         $project->vip = (bool) ($request->input('vip') == 'on');
+        $project->deceased = (bool) ($request->input('deceased') == 'on');
 
         $project->signed_status = $request->input('signed_status');
 
@@ -64,7 +65,7 @@ class ProjectController extends Controller
         $service_unit = $request->input('service_unit');
         $service_value = $request->input('service_value');
 
-        # 维保时间
+        // 维保时间
         $project->service_unit = $service_unit;
         $project->service_value = $service_value;
 
@@ -119,6 +120,8 @@ class ProjectController extends Controller
         $project->name = $request->input('name');                   // 项目名称
 
         $project->vip = (bool) ($request->input('vip') == 'on');
+        // 是否已经终止继续维护
+        $project->deceased = (bool) ($request->input('deceased') == 'on');
 
         $project->signed_status = $request->input('signed_status');
 
@@ -142,7 +145,7 @@ class ProjectController extends Controller
 
         $project->signed_time = $signed_time;
 
-        # 实际验收时间
+        // 实际验收时间
         $check_time = $request->input('check_time');
 
         if (!$check_time) {
@@ -153,7 +156,7 @@ class ProjectController extends Controller
 
         $project->check_time = $check_time;
 
-        # 维保时间
+        // 维保时间
         $project->service_unit = $request->input('service_unit');
         $project->service_value = $request->input('service_value');
 
