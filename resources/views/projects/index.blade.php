@@ -73,7 +73,7 @@
                                     @endif
 
                                 </td>
-                                <td class="col-md-2">{!! $project->client->path() !!}</td>
+                                <td class="col-md-2">{!! $project->client ? $project->client->path() : '未知客户' !!}</td>
                                 <td class="col-md-1">{{ $project->seller }}</td>
                                 <td class="col-md-1">{{ $project->engineer }}</td>
                                 <td class="col-md-1 text-right">
