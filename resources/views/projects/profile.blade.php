@@ -62,7 +62,13 @@
                     <table class="table table-striped table-bordered table-hover">
                         <tr>
                             <td class="col-md-2">客户名称</td>
-                            <td><a href="{{ route('client.profile', ['id'=> $project->client->id]) }}">{{ $project->client ? $project->client->name : '未知' }}</a></td>
+                            <td>
+                                @if ($project->client)
+                                    <a href="{{ route('client.profile', ['id'=> $project->client->id]) }}">{{ $project->client->name }}</a>
+                                @else
+                                    未知
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td>项目名称</td>
