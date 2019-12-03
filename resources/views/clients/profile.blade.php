@@ -349,7 +349,7 @@
                                                     <h4 class="timeline-title">{{ $log->action }}</h4>
                                                     <p>
                                                         <small class="text-muted">
-                                                            <i class="fa fa-clock-o"></i> {{ $log->time->format('Y/m/d') }} via <strong>{{ $log->user->name }}</strong>
+                                                            <i class="fa fa-clock-o"></i> {{ $log->time->format('Y/m/d') }} via <strong>{{ $log->user ? $log->user->name : '已删除用户' }}</strong>
                                                         </small>
                                                     </p>
                                                 </div>

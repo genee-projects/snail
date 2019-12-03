@@ -177,7 +177,7 @@ $can_manage_record = $user->can('项目外出记录管理');
                 @foreach($project->records()->orderBy('time', 'desc')->get() as $record)
                     <tr>
                         <td>{{ $record->time->format('Y/m/d') }}</td>
-                        <td>{{ $record->user->name }}</td>
+                        <td>{{ $record->user ? $record->user->name : '已删除用户' }}</td>
                         <td>{{ $record->contact }}</td>
                         <td>{{ $record->phone }}</td>
                         <td>{{ $record->software_count }}</td>
@@ -190,7 +190,7 @@ $can_manage_record = $user->can('项目外出记录管理');
                                     <span class="edit edit-record"
                                           data-id="{{ $record->id }}"
                                           data-user_id="{{ $record->user->id }}"
-                                          data-user_name="{{ $record->user->name }}"
+                                          data-user_name="{{ $record->user ? $record->user->name : '已删除用户' }}"
                                           data-time="{{ $record->time->format('Y/m/d') }}"
                                           data-contact="{{ $record->contact }}"
                                           data-phone="{{ $record->phone }}"
